@@ -1,0 +1,7 @@
+Apple Clang 4.0 and higher
+GCC 4.2 and higher
+Intel C++ Composer XE 2013 and higher
+LLVM 3.0 and higher
+Visual C++ 2010 and higher
+CUDA 4.0 and higher (experimental)
+Any conform C++98 or C++11 compiler

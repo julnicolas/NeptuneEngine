@@ -1,0 +1,9 @@
+# Visual Studio files exclusion
+
+**/Debug/
+**/Release/
+**/Final/
+
+**/*.*sdf
+**/*.suo
+**/*.vcxproj.user

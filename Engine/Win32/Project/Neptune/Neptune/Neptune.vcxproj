@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Final|Win32">
+      <Configuration>Final</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{268C5CFF-02A4-42F0-8478-1F2FA00E0E5D}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>Neptune</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v120</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup />
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_32BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;SDL2.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_32BIT;NEP_DEBUG;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;SDL2.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+    </Link>
+    <Lib>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>glew32.lib;SDL2.lib</AdditionalDependencies>
+    </Lib>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicProgram.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\ModelLoader\PLYLoader.cpp" />
+    <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicProgram.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Math.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\System\NeptuneTypes.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\App.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\ModelLoader\PLYLoader.h" />
+    <ClInclude Include="..\..\..\Core\Plateform.h" />
+    <ClInclude Include="..\..\..\HighLevel\Application\WinApp.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

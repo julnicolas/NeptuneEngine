@@ -1,0 +1,152 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform">
+      <UniqueIdentifier>{3a622613-6a6f-48cb-aacf-df467efec1ed}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32">
+      <UniqueIdentifier>{eacc1d18-645b-4fd1-a39e-b7ff0bbd29fb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\Core">
+      <UniqueIdentifier>{7b619455-8230-4507-a293-9e98c1b83a95}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\Core\Graphics">
+      <UniqueIdentifier>{0b3cf2af-d911-4377-bb48-86e8c87c4c2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\Core\Debug">
+      <UniqueIdentifier>{a64d713a-6d47-428f-8149-e067041191a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\Core\Input">
+      <UniqueIdentifier>{059603ff-4125-4ec0-87df-ad3e69a0d801}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\Core\Math">
+      <UniqueIdentifier>{41e6571a-e4ce-43fe-b55f-8af84b0fafe9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\Core\System">
+      <UniqueIdentifier>{711b0786-7e10-4c3d-9381-24c1d64ede4a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\HighLevel">
+      <UniqueIdentifier>{673920cd-4d04-4512-954e-ac2feebea4d9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\HighLevel\Application">
+      <UniqueIdentifier>{291bc704-a2d6-4255-994a-308fb0c749e8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\HighLevel\CameraController">
+      <UniqueIdentifier>{527c547e-2f2b-42c4-a28d-54cb6376bd3c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Multiplatform\HighLevel\ModelLoader">
+      <UniqueIdentifier>{2836c0f1-0fb4-431f-8cbc-6110bcebe0c8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Multiplatform">
+      <UniqueIdentifier>{848424ef-2055-4c16-9255-9a621f0d6315}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Win32">
+      <UniqueIdentifier>{bed438bf-ba55-4c59-89a0-23f7cf52de6d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Multiplatform\Core">
+      <UniqueIdentifier>{1bd340ba-6745-47a7-969e-6115b30ceecb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Multiplatform\Core\Graphics">
+      <UniqueIdentifier>{36e206c3-63b5-45fc-a466-a2ab2715de80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Multiplatform\HighLevel">
+      <UniqueIdentifier>{600b633f-c64a-41ca-bb4a-81e1b2de63ff}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Multiplatform\HighLevel\Application">
+      <UniqueIdentifier>{cfe9f8ea-202d-4d71-9667-920043081666}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Multiplatform\HighLevel\CameraController">
+      <UniqueIdentifier>{2892baaf-a3f9-4eab-afd9-f5d8cad0228f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Multiplatform\HighLevel\ModelLoader">
+      <UniqueIdentifier>{295f139a-d6b3-4cee-b998-3de3855916bd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32\Core">
+      <UniqueIdentifier>{cf14e806-5af9-440c-b132-1b1848d29cf5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32\HighLevel">
+      <UniqueIdentifier>{f79856e4-96ff-4c44-b0fe-b8ac0ae1711f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Win32\HighLevel">
+      <UniqueIdentifier>{d09cbba6-30e5-4a36-b872-c3af0412dd58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Win32\HighLevel\Application">
+      <UniqueIdentifier>{45ba3527-070f-421d-b97e-295c69644e5d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.cpp">
+      <Filter>Source Files\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicProgram.cpp">
+      <Filter>Source Files\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.cpp">
+      <Filter>Source Files\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
+      <Filter>Source Files\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp">
+      <Filter>Source Files\Multiplatform\HighLevel\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.cpp">
+      <Filter>Source Files\Multiplatform\HighLevel\CameraController</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\ModelLoader\PLYLoader.cpp">
+      <Filter>Source Files\Multiplatform\HighLevel\ModelLoader</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp">
+      <Filter>Source Files\Win32\HighLevel</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
+      <Filter>Header Files\Multiplatform\Core\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h">
+      <Filter>Header Files\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicProgram.h">
+      <Filter>Header Files\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.h">
+      <Filter>Header Files\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.h">
+      <Filter>Header Files\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h">
+      <Filter>Header Files\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Math.h">
+      <Filter>Header Files\Multiplatform\Core\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\System\NeptuneTypes.h">
+      <Filter>Header Files\Multiplatform\Core\System</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\App.h">
+      <Filter>Header Files\Multiplatform\HighLevel\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.h">
+      <Filter>Header Files\Multiplatform\HighLevel\CameraController</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\ModelLoader\PLYLoader.h">
+      <Filter>Header Files\Multiplatform\HighLevel\ModelLoader</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Plateform.h">
+      <Filter>Header Files\Win32\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\HighLevel\Application\WinApp.h">
+      <Filter>Header Files\Win32\HighLevel\Application</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
