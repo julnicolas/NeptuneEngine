@@ -1,11 +1,13 @@
 #pragma  once
 
 // Signed integers
-typedef long long int s64;
-typedef int           s32;
-typedef char          s8;
+typedef long long signed int s64;
+typedef long signed int      s32;
+typedef signed int           s16;
+typedef signed char          s8;
 
 // Unsigned integers
 typedef long long unsigned int u64;
-typedef unsigned int           u32;
+typedef long unsigned int      u32;
+typedef unsigned int           u16;
 typedef unsigned char          u8;
