@@ -81,6 +81,9 @@
     <Filter Include="Header Files\Win32\HighLevel\Application">
       <UniqueIdentifier>{45ba3527-070f-421d-b97e-295c69644e5d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Win32\Graphics">
+      <UniqueIdentifier>{6183a09e-c8d1-4526-aaaa-7fe294505917}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.cpp">
@@ -106,6 +109,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp">
       <Filter>Source Files\Win32\HighLevel</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp">
+      <Filter>Source Files\Win32\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -147,6 +153,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\HighLevel\Application\WinApp.h">
       <Filter>Header Files\Win32\HighLevel\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DisplayDeviceInterface.h">
+      <Filter>Header Files\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

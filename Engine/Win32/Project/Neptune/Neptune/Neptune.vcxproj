@@ -124,11 +124,13 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\ModelLoader\PLYLoader.cpp" />
+    <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp" />
     <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DisplayDeviceInterface.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicProgram.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.h" />
