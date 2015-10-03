@@ -87,7 +87,7 @@ void PLYLoader::load(const char* relativeFilePath)
 
 static const size_t getBiggestSupportedTypeSize()
 {
-	return Max( sizeof(unsigned int), sizeof(float) );
+	return Max( (u8) sizeof(unsigned int), (u8) sizeof(float) );
 }
 
 bool PLYLoader::parseHeaderLine(char* fileLine)
