@@ -1,6 +1,6 @@
 #pragma once
 
-#include "System/NeptuneTypes.h"
+#include "System/Type/Integers.h"
 
 namespace Neptune
 {

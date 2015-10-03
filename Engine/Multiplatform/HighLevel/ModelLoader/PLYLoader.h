@@ -1,7 +1,7 @@
 #ifndef NEPTUNE_PLY_LOADER_H
 #define NEPTUNE_PLY_LOADER_H
 
-#include "System/NeptuneTypes.h"
+#include "System/Type/Integers.h"
 #include <vector>
 #include <fstream>
 #include <GL/glew.h>
