@@ -3,9 +3,23 @@
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
-using namespace Neptune::DisplayDeviceInterface;
+using namespace Neptune;
 
-WindowHandle CreateWindow(const char* name, u32 width, u32 height, bool fullScreen /*= false*/)
+// Must be reimplemented on each platform that uses SDL
+static bool InitContext()
+{
+	glewExperimental = GL_TRUE;
+	if(glewInit() != GLEW_OK)
+	{
+		NEP_LOG("Error: Graphical Context couldn't be initialized");
+		SDL_Quit();
+		return false;
+	}
+
+	return true;
+}
+
+DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const char* name, u32 width, u32 height, bool fullScreen /*= false*/)
 {
 	// Initialize the SDL's video system
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -46,33 +60,34 @@ WindowHandle CreateWindow(const char* name, u32 width, u32 height, bool fullScre
 	return static_cast<WindowHandle>( window );
 }
 
-void DestroyWindow(WindowHandle handle)
+void DisplayDeviceInterface::DestroyWindow(WindowHandle handle)
 {
 	SDL_Window* window = static_cast<SDL_Window*>( handle );
 	SDL_DestroyWindow( window );
 }
 
-GraphicalContextHandle CreateGraphicalContext(WindowHandle window, u8 minCtxtVersion,u8 maxCtxtVersion)
+DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 minCtxtVersion,u8 maxCtxtVersion)
 {
 	// Platform specifics
 	const u8 Z_BUFFER_LENGTH = 32;
 	SDL_Window* win = static_cast<SDL_Window*>( window );
 
 	// Set the desired context version
-	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL,1); // Guarantees hardware acceleration
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION,maxCtxtVersion);
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION,minCtxtVersion);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE); // Uses OpenGL's core-profile
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL,1);                              // Guarantees hardware acceleration
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION,maxCtxtVersion);              // Wished work-version
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION,minCtxtVersion);              // Min supported version
 
 	// Set up buffer sizes
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,Z_BUFFER_LENGTH);
 
 	// Enable double buffering
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
-	
+
 	// Create an OpenGL context and attach it to the window
 	SDL_GLContext context = SDL_GL_CreateContext( win );
-	
-	if ( !InitContext() ) // Platform specific
+
+	if(!InitContext()) // Platform specific
 		return nullptr;
 
 	// Synchronize buffer swapping with the screen's refresh rate
@@ -81,27 +96,14 @@ GraphicalContextHandle CreateGraphicalContext(WindowHandle window, u8 minCtxtVer
 	return static_cast<GraphicalContextHandle*>( context );
 }
 
-void DestroyGraphicalContext(GraphicalContextHandle handle)
+void DisplayDeviceInterface::DestroyGraphicalContext(GraphicalContextHandle handle)
 {
 	SDL_GLContext* context = static_cast<SDL_GLContext*>( handle );
 	SDL_GL_DeleteContext( context );
 }
 
-void SwapBuffer(WindowHandle handle)
+void DisplayDeviceInterface::SwapBuffer(WindowHandle handle)
 {
 	SDL_Window* window = static_cast<SDL_Window*>( handle );
 	SDL_GL_SwapWindow( window );
-}
-
-// Must be implemented on each platform that uses SDL
-static bool InitContext()
-{
-	if ( glewInit() != GLEW_OK )
-	{
-		NEP_LOG("Error: Graphical Context couldn't be initialized");
-		SDL_Quit();
-		return false;
-	}
-
-	return true;
 }
