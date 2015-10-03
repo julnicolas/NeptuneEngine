@@ -69,7 +69,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -91,7 +91,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
@@ -113,7 +113,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -122,7 +122,11 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp" />
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.cpp">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\ModelLoader\PLYLoader.cpp" />
     <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp" />
     <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp" />
@@ -150,7 +154,11 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec4.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Type\Integers.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\App.h" />
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.h">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
+    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\ModelLoader\PLYLoader.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat2Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat2x3Implementation.h" />
