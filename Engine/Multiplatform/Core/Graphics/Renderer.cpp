@@ -1,7 +1,13 @@
 #include "Renderer.h"
-#include <GL/glew.h>
 #include "Debug/NeptuneDebug.h"
+#include <cstring>
 
+#ifdef NEP_WINDOWS
+	#define WIN32_LEAN_AND_MEAN
+	#include <Windows.h>
+	
+	#include <GL/glew.h>
+#endif
 
 // U T I L I T Y   F U N C T I O N S
 
@@ -32,7 +38,7 @@ Neptune::Renderer::~Renderer()
 	//deleteVAO();
 }
 
-void Neptune::Renderer::setVAO(GLuint vao_handle)
+void Neptune::Renderer::setVAO(u32 vao_handle)
 {
 	m_vertexArrayObject = vao_handle;
 }
@@ -49,6 +55,16 @@ void Neptune::Renderer::setBackgroundColor(GLfloat r, GLfloat g, GLfloat b, GLfl
 {
 	m_backgroundColor[0] = r; m_backgroundColor[1] = g;
 	m_backgroundColor[2] = b; m_backgroundColor[3] = a;
+}
+
+void Neptune::Renderer::setMVMatrix(const GLfloat mv[4][4])
+{
+	memcpy( m_mvMatrix, mv, 16*sizeof(GLfloat) );
+}
+
+void Neptune::Renderer::setProjMatrix(const GLfloat proj[4][4])
+{
+	memcpy( m_projMatrix, proj, 16*sizeof(GLfloat) );
 }
 
 void Neptune::Renderer::sendCTMMatrix()

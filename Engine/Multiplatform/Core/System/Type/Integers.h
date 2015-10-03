@@ -1,16 +1,19 @@
 #pragma  once
 
+// The engine's types comply with the following standards: ILP32, LLP64 (Windows), LP64 (OSX, Linux)
+// They don't comply with the C++ and LP32 standards.
+
 namespace Neptune
 {
 	// Signed integers
-	typedef long long signed int s64;
-	typedef long signed int      s32;
-	typedef signed int           s16;
+	typedef signed long long int s64;
+	typedef signed int           s32;
+	typedef signed short         s16;
 	typedef signed char          s8;
 	
 	// Unsigned integers
-	typedef long long unsigned int u64;
-	typedef long unsigned int      u32;
-	typedef unsigned int           u16;
+	typedef unsigned long long int u64;
+	typedef unsigned int           u32;
+	typedef unsigned short         u16;
 	typedef unsigned char          u8;
 }
