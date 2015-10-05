@@ -21,12 +21,24 @@ static bool InitContext()
 
 DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const char* name, u32 width, u32 height, bool fullScreen /*= false*/)
 {
+	const u8 OGL_MAJOR_VERSION   = 4;
+	const u8 OGL_MINOR_VERSION   = 3;
+
+	// The compatibility profile must be used on Windows because of a bug in Glew
+	// that causes invalid GL_ENUM_ERRORS to be raised.
+	const u8 OGL_CONTEXT_PROFILE = SDL_GL_CONTEXT_PROFILE_COMPATIBILITY;
+	
 	// Initialize the SDL's video system
 	if(SDL_Init(SDL_INIT_VIDEO) < 0)
 	{
 		NEP_LOG("ERROR: Couldn't Initialize video system\n");
 		return nullptr;
 	}
+
+	// Prior window-creation context-initialization
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  OGL_CONTEXT_PROFILE ); // Selects the OpenGl profile to use
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OGL_MAJOR_VERSION);    // Wished work-version
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OGL_MINOR_VERSION);    // Min supported version
 
 	// Create the main window
 	SDL_Window* window = nullptr;
@@ -72,15 +84,12 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	const u8 Z_BUFFER_LENGTH = 32;
 	SDL_Window* win = static_cast<SDL_Window*>( window );
 
-	// Set the desired context version
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE); // Uses OpenGL's core-profile
-	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL,1);                              // Guarantees hardware acceleration
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION,maxCtxtVersion);              // Wished work-version
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION,minCtxtVersion);              // Min supported version
+	// Enable hardware acceleration
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL,1);
 
 	// Set up buffer sizes
 	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,Z_BUFFER_LENGTH);
-
+	
 	// Enable double buffering
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
 
