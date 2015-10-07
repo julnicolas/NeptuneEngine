@@ -21,7 +21,7 @@ Neptune::Shader::Shader(const GLchar* file_name, GLuint shader_type):
 	file.seekg(0, file.beg);
 
 	GLchar* code = new GLchar[length];
-	std::memset(code, '\0', length);	// We won't get any unwanted caracter
+	std::memset(code, '\0', length);	// We won't get any unwanted character
 	
 	file.read( code, length );
 

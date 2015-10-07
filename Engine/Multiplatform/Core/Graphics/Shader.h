@@ -9,7 +9,7 @@ namespace Neptune
 	{
 	public:
 		Shader(const GLchar* file_name, GLuint shader_type);
-		virtual ~Shader();
+		~Shader();
 
 		GLuint getId()	{return m_shader;}
 	

@@ -1,7 +1,7 @@
 #ifndef NEPTUNE_GRAPHICS_PROGRAM_H_
 #define NEPTUNE_GRAPHICS_PROGRAM_H_
 
-#include <GL/glew.h>
+#include "System/Type/Integers.h"
 #include <map>
 
 namespace Neptune
@@ -18,21 +18,21 @@ namespace Neptune
 		GraphicProgram();
 		~GraphicProgram();
 
-		void add(GLuint shader);
+		void add(u32 shader);
 		bool build();
-		GLuint getId()				{return m_program;}
+		u32  getId()		  { return m_program; }
 
 		// You must prefix each variable name by "block_name."
 		// Returns the uniform buffer object handle of the newly created buffer
-		GLuint setUniformBlock(const GLchar* block_name, const GLchar** variables_name, const UniformBlockData* values, const GLuint size);
-		void deleteUniformBlock(const GLuint ubo_handle);
+		u32  setUniformBlock(const char* block_name, const char** variables_name, const UniformBlockData* values, const u32 size);
+		void deleteUniformBlock(const u32 ubo_handle);
 
-		void setUniformVariable(const GLchar* name, const UniformBlockData& value);
+		void setUniformVariable(const char* name, const UniformBlockData& value);
 		void listActiveUniformVariables() const;
 
 	private:
-		GLuint m_program;
-		std::map<GLuint, GLubyte*> m_uniform_block_buffers;
+		u32 m_program;
+		std::map<u32, u8*> m_uniform_block_buffers;
 	};
 }
 
