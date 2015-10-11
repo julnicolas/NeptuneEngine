@@ -1,34 +1,45 @@
-#include "GraphicProgram.h"
+#include "GraphicalProgram.h"
+#include "Debug/NeptuneDebug.h"
 #include <GL/glew.h>
 
 using namespace Neptune;
 
-GraphicProgram::GraphicProgram():
+GraphicalProgram::GraphicalProgram():
 	m_program(0)
 {
 	m_program = glCreateProgram();
 }
 
-GraphicProgram::~GraphicProgram()
+GraphicalProgram::~GraphicalProgram()
 {
-	std::map<u32, u8*>::iterator it_end = m_uniform_block_buffers.end();
-	for (std::map<u32, u8*>::iterator it = m_uniform_block_buffers.begin(); it != it_end; ++it)
-		delete[] it->second;
+	// Destroy the uniform variables
+	{
+		std::vector<UniformVarInput>::iterator it_end = m_uniformVars.end();
+		for(std::vector<UniformVarInput>::iterator it = m_uniformVars.begin(); it != it_end; ++it)
+			it->destruct();
+	}
+	
+	// Destroy the uniform blocks
+	{
+		std::map<u32, u8*>::iterator it_end = m_uniform_block_buffers.end();
+		for (std::map<u32, u8*>::iterator it = m_uniform_block_buffers.begin(); it != it_end; ++it)
+			delete[] it->second;
+	}
 }
 
-void GraphicProgram::add(u32 shader)
+void GraphicalProgram::add(u32 shader)
 {
 	glAttachShader(m_program, shader);
 }
 
-bool GraphicProgram::build()
+bool GraphicalProgram::build()
 {
 	glLinkProgram(m_program);
 
 	return true;
 }
 
-u32 GraphicProgram::setUniformBlock(const char* block_name, const char** variables_name, const UniformBlockData* values, const u32 size)
+u32 GraphicalProgram::addUniformBlock(const char* block_name, const char** variables_name, const UniformBlockData* values, const u32 size)
 {
 	
     // Get the index of the uniform block
@@ -41,7 +52,7 @@ u32 GraphicProgram::setUniformBlock(const char* block_name, const char** variabl
 	
 	u8* blockBuffer = new u8[blockSize];
 
-    // Query for the offsets of each block variable
+    // Query the offsets of each block variable
     u32* indices = new u32[size];
     glGetUniformIndices(m_program, size, variables_name, indices);
     
@@ -76,18 +87,38 @@ u32 GraphicProgram::setUniformBlock(const char* block_name, const char** variabl
 	return uboHandle;
 }
 
-void GraphicProgram::deleteUniformBlock(const u32 ubo_handle)
+void GraphicalProgram::rmUniformBlock(const u32 ubo_handle)
 {
 	delete[] m_uniform_block_buffers[ubo_handle];
 	m_uniform_block_buffers.erase(ubo_handle);
 }
 
-void GraphicProgram::setUniformVariable(const char* name, const UniformBlockData& value)
+void GraphicalProgram::addShaderInput(const ShaderInput& desc)
 {
-
+	m_shaderInputs.push_back( desc );
 }
 
-void GraphicProgram::listActiveUniformVariables() const
+void GraphicalProgram::addUniformVariable(const UniformVarInput& def)
 {
-
+	m_uniformVars.push_back( def );
 }
+
+GraphicalProgram::UniformVarInput::UniformVarInput(const char* name,Types type,u8 rows,u8 columns,u64 dataSize,const void* data):
+m_type(type),m_nbColumns(columns),m_nbRows(rows)
+{
+	NEP_ASSERT( name != nullptr && data != nullptr );
+	
+	char* u_name = new char[strlen(name) + 1];
+	strcpy(u_name,name);
+	m_name = u_name;
+
+	void* u_data = new char[dataSize];
+	m_data = u_data;
+}
+
+void GraphicalProgram::UniformVarInput::destruct()
+{
+	delete[] m_name;
+	delete[] m_data;
+}
+

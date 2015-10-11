@@ -65,15 +65,15 @@
     <Filter Include="Engine\Win32\Core\Math\Vectors">
       <UniqueIdentifier>{f27ce8ae-c56a-45e2-9eb1-05258402be21}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\Core\StdInterface">
+      <UniqueIdentifier>{397fb9ae-62b9-4da4-8ba1-49cf1418e838}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.cpp">
-      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicProgram.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.cpp">
@@ -94,15 +94,15 @@
     <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp">
       <Filter>Engine\Win32\HighLevel\Application</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
       <Filter>Engine\Multiplatform\Core\Debug</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h">
-      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicProgram.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.h">
@@ -209,6 +209,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec4Implementation.h">
       <Filter>Engine\Win32\Core\Math\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\StdInterface\Updatable.h">
+      <Filter>Engine\Multiplatform\Core\StdInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -221,7 +221,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.cpp" />
-    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicProgram.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp" />
@@ -241,7 +241,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DisplayDeviceInterface.h" />
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicProgram.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h" />
@@ -258,6 +258,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec2.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec3.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec4.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\StdInterface\Updatable.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Type\Integers.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\App.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.h">
