@@ -104,13 +104,13 @@ namespace Neptune
 		/// \Param nbValues Number of UniformBlockData held by values.
 		/// \Return The id of the newly created uniform block buffer.
 		///
-		u32  addUniformBlock(const char* blockName,const char** variablesName,const UniformBlockData* values,const u32 nbValues);
+		void addUniformBlock(const char* blockName,const char** variablesName,const UniformBlockData* values,const u32 nbValues);
 		void rmUniformBlock(const u32 ubo_handle); /// Delete an uniform block from VRAM.
 
 	private:
 		u32 m_program;
-		std::vector<UniformVarInput> m_uniformVars; /// Contains every vertex-shader's uniform variables.
-		std::vector<ShaderInput> m_shaderInputs;    /// Contains every vertex-shader description.
-		std::map<u32, u8*> m_uniform_block_buffers; //! Must certainly be refactored
+		std::vector<UniformVarInput> m_uniformVars;      /// Contains every vertex-shader's uniform variables.
+		std::vector<ShaderInput>     m_shaderInputs;    /// Contains every vertex-shader description.
+		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored
 	};
 }

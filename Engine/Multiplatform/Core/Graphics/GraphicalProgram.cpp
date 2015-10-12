@@ -21,8 +21,8 @@ GraphicalProgram::~GraphicalProgram()
 	
 	// Destroy the uniform blocks
 	{
-		std::map<u32, u8*>::iterator it_end = m_uniform_block_buffers.end();
-		for (std::map<u32, u8*>::iterator it = m_uniform_block_buffers.begin(); it != it_end; ++it)
+		std::map<u32, u8*>::iterator it_end = m_uniformBlockBuffers.end();
+		for (std::map<u32, u8*>::iterator it = m_uniformBlockBuffers.begin(); it != it_end; ++it)
 			delete[] it->second;
 	}
 }
@@ -39,42 +39,44 @@ bool GraphicalProgram::build()
 	return true;
 }
 
-u32 GraphicalProgram::addUniformBlock(const char* block_name, const char** variables_name, const UniformBlockData* values, const u32 size)
+void GraphicalProgram::addUniformBlock(const char* blockName, const char** variablesName, const UniformBlockData* values, const u32 size)
 {
-	
     // Get the index of the uniform block
-    u32 blockIndex = glGetUniformBlockIndex(m_program, block_name);
+    u32 block_index = glGetUniformBlockIndex(m_program, blockName);
 
     // Allocate space for the buffer
-    s32 blockSize;
-    glGetActiveUniformBlockiv(m_program, blockIndex,
-                              GL_UNIFORM_BLOCK_DATA_SIZE, &blockSize);
+    s32 block_size;
+    glGetActiveUniformBlockiv(m_program, block_index,
+                              GL_UNIFORM_BLOCK_DATA_SIZE, &block_size);
 	
-	u8* blockBuffer = new u8[blockSize];
+	u8* block_buffer = new u8[block_size];
 
     // Query the offsets of each block variable
     u32* indices = new u32[size];
-    glGetUniformIndices(m_program, size, variables_name, indices);
+    glGetUniformIndices(m_program, size, variablesName, indices);
     
     s32* offset = new s32[size];
     glGetActiveUniformsiv(m_program, size, indices, GL_UNIFORM_OFFSET, offset);
 
     // Store data within the buffer at the appropriate offsets
     for (u32 i = 0; i < size; i++)
-		memcpy(blockBuffer + offset[i], values[i].m_data, values[i].m_size);
+		memcpy(block_buffer + offset[i], values[i].m_data, values[i].m_size);
 	
 
     // Create the buffer object and copy the data
-    u32 uboHandle;
-    glGenBuffers( 1, &uboHandle );
-    glBindBuffer( GL_UNIFORM_BUFFER, uboHandle );			// Bind to modify the buffer
-    glBufferData( GL_UNIFORM_BUFFER, blockSize, blockBuffer, GL_DYNAMIC_DRAW );
+    u32 ubo_handle;
+    glGenBuffers( 1, &ubo_handle );
+    glBindBuffer( GL_UNIFORM_BUFFER, ubo_handle );			// Bind to modify the buffer
+    glBufferData( GL_UNIFORM_BUFFER, block_size, block_buffer, GL_DYNAMIC_DRAW );
+
+	// Compute the value of the binding point
+	u32 binding_point = m_uniformBlockBuffers.size();
 
     // Bind the buffer object to the uniform block
-    glBindBufferBase( GL_UNIFORM_BUFFER, 1, uboHandle );	// Bind to use as a source parameter in the shader
+    glBindBufferBase( GL_UNIFORM_BUFFER, binding_point, ubo_handle );	// Bound to be used as a source parameter in the shader
     
     // We don't need this if we specify the binding within the shader
-	// glUniformBlockBinding(programHandle, blockIndex, 0);
+	// glUniformBlockBinding(programHandle, block_index, 0);
 
 	// Cleaning out 
 
@@ -83,14 +85,13 @@ u32 GraphicalProgram::addUniformBlock(const char* block_name, const char** varia
 
 	// Add the new buffer to the program list of uniform buffers
 
-	m_uniform_block_buffers[uboHandle] = blockBuffer;
-	return uboHandle;
+	m_uniformBlockBuffers[ubo_handle] = block_buffer;
 }
 
 void GraphicalProgram::rmUniformBlock(const u32 ubo_handle)
 {
-	delete[] m_uniform_block_buffers[ubo_handle];
-	m_uniform_block_buffers.erase(ubo_handle);
+	delete[] m_uniformBlockBuffers[ubo_handle];
+	m_uniformBlockBuffers.erase(ubo_handle);
 }
 
 void GraphicalProgram::addShaderInput(const ShaderInput& desc)
