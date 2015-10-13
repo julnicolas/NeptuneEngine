@@ -5,9 +5,9 @@
 using namespace Neptune;
 
 GraphicalProgram::GraphicalProgram():
-	m_program(0)
+	m_programId(0)
 {
-	m_program = glCreateProgram();
+	m_programId = glCreateProgram();
 }
 
 GraphicalProgram::~GraphicalProgram()
@@ -29,12 +29,12 @@ GraphicalProgram::~GraphicalProgram()
 
 void GraphicalProgram::add(u32 shader)
 {
-	glAttachShader(m_program, shader);
+	glAttachShader(m_programId, shader);
 }
 
 bool GraphicalProgram::build()
 {
-	glLinkProgram(m_program);
+	glLinkProgram(m_programId);
 
 	return true;
 }
@@ -42,21 +42,21 @@ bool GraphicalProgram::build()
 void GraphicalProgram::addUniformBlock(const char* blockName, const char** variablesName, const UniformBlockData* values, const u32 size)
 {
     // Get the index of the uniform block
-    u32 block_index = glGetUniformBlockIndex(m_program, blockName);
+    u32 block_index = glGetUniformBlockIndex(m_programId, blockName);
 
     // Allocate space for the buffer
     s32 block_size;
-    glGetActiveUniformBlockiv(m_program, block_index,
+    glGetActiveUniformBlockiv(m_programId, block_index,
                               GL_UNIFORM_BLOCK_DATA_SIZE, &block_size);
 	
 	u8* block_buffer = new u8[block_size];
 
     // Query the offsets of each block variable
     u32* indices = new u32[size];
-    glGetUniformIndices(m_program, size, variablesName, indices);
+    glGetUniformIndices(m_programId, size, variablesName, indices);
     
     s32* offset = new s32[size];
-    glGetActiveUniformsiv(m_program, size, indices, GL_UNIFORM_OFFSET, offset);
+    glGetActiveUniformsiv(m_programId, size, indices, GL_UNIFORM_OFFSET, offset);
 
     // Store data within the buffer at the appropriate offsets
     for (u32 i = 0; i < size; i++)
@@ -107,6 +107,8 @@ void GraphicalProgram::addUniformVariable(const UniformVarInput& def)
 GraphicalProgram::UniformVarInput::UniformVarInput(const char* name,Types type,u8 rows,u8 columns,u64 dataSize,const void* data):
 m_type(type),m_nbColumns(columns),m_nbRows(rows)
 {
+	NEP_ASSERT( m_nbRows > 0 && m_nbRows <= 4 );
+	NEP_ASSERT( m_nbColumns > 0 && m_nbColumns <= 4 );
 	NEP_ASSERT( name != nullptr && data != nullptr );
 	
 	char* u_name = new char[strlen(name) + 1];

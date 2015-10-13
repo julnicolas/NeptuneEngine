@@ -14,22 +14,30 @@ namespace Neptune
 	{
 	public:
 
+		//////////////////////////////////////////////////////////////////////////////
+		//
+		//								E N U M S
+		//
+		/////////////////////////////////////////////////////////////////////////////
+
+
 		///
 		/// Useful to determine which OpenGL function to use to pass an uniform.
 		///
 		enum Types : u8
 		{
-			U8,
-			U16,
 			U32,
-			U64,
-			S8,
-			S16,
 			S32,
-			S64,
-			FLOAT,
-			DOUBLE
+			FLOAT
 		};
+
+
+		//////////////////////////////////////////////////////////////////////////////
+		//
+		//			I N N E R   C L A S S E S   A N D  S T R U C T S 
+		//
+		/////////////////////////////////////////////////////////////////////////////
+
 
 		///
 		/// Structure used to describe a vertex shader input variable.
@@ -84,15 +92,45 @@ namespace Neptune
 			void*	m_data; /// Its value (ex: float x=0.0f; m_data = &x;)
 		};
 
+
+		//////////////////////////////////////////////////////////////////////////
+		//
+		//					T Y P E   D E F I N I T I O N S
+		//
+		/////////////////////////////////////////////////////////////////////////
+
+
+		typedef std::vector<UniformVarInput>::iterator       UniformVarIterator;
+		typedef std::vector<UniformVarInput>::const_iterator ConstUniformVarIterator;
+		typedef std::vector<ShaderInput>::iterator           ShaderInputIterator;
+		typedef std::vector<ShaderInput>::const_iterator     ConstShaderInputIterator;
+
+
+		/////////////////////////////////////////////////////////////////////////
+		//
+		//							M E T H O D S
+		//
+		////////////////////////////////////////////////////////////////////////
+
+
 		GraphicalProgram();
 		~GraphicalProgram();
 
 		void add(u32 shader);
 		bool build();
-		u32  getId() const		  { return m_program; }
+		u32  getId() const	{ return m_programId; }
 
-		void addShaderInput(const ShaderInput& desc); /// Add a vertex-shader-input-description.
+		void addShaderInput(const ShaderInput& desc); /// Adds a vertex-shader-input-description.
+		ShaderInputIterator      shaderInputBegin()         { return m_shaderInputs.begin();  }
+		ShaderInputIterator      shaderInputEnd()           { return m_shaderInputs.end();    }
+		ConstShaderInputIterator shaderInputCBegin() const  { return m_shaderInputs.cbegin(); }
+		ConstShaderInputIterator shaderInputCEnd()   const  { return m_shaderInputs.cend();   }
+
 		void addUniformVariable(const UniformVarInput& def);
+		UniformVarIterator uniformVarBegin()               { return m_uniformVars.begin();    }
+		UniformVarIterator uniformVarEnd()                 { return m_uniformVars.end();      }
+		ConstUniformVarIterator uniformVarCBegin() const   { return m_uniformVars.cbegin();   }
+		ConstUniformVarIterator uniformVarCEnd()   const   { return m_uniformVars.cend();     }
 
 		///
 		/// Creates an uniform block variable.
@@ -108,9 +146,10 @@ namespace Neptune
 		void rmUniformBlock(const u32 ubo_handle); /// Delete an uniform block from VRAM.
 
 	private:
-		u32 m_program;
+		u32 m_programId;
 		std::vector<UniformVarInput> m_uniformVars;      /// Contains every vertex-shader's uniform variables.
 		std::vector<ShaderInput>     m_shaderInputs;    /// Contains every vertex-shader description.
 		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored
+
 	};
 }
