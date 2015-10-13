@@ -67,7 +67,7 @@ namespace Neptune
 		~PLYLoader();
 		void  load(const char* relativeFilePath);
 		PropertyData& getPropertyBuffer(PropertyType prop) { return m_propertyBuffers[prop]; }
-		u64 getNbverticesToRender() const                  { return m_nbverticesToRender;    }
+		u32 getNbverticesToRender() const                  { return m_nbverticesToRender;    }
 		
 		// Returns a GL type
 		GLushort getIndicesType() const                    { return m_indicesType;   }
@@ -88,7 +88,7 @@ namespace Neptune
 		// Attributes
 		std::vector< Element >                m_propertyListReadOrder;
 		s8                                    m_activePropertyListIndex;
-		u64                                   m_nbverticesToRender;
+		u32                                   m_nbverticesToRender;
 		GLushort                              m_indicesType;
 		PropertyData                          m_propertyBuffers[PROPERTY_COUNT];
 	};

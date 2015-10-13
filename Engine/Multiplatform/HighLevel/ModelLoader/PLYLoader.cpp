@@ -102,7 +102,7 @@ bool PLYLoader::parseHeaderLine(char* fileLine)
 		if (!strcmp(word, "vertex"))
 		{
 			word = strtok(NULL, SEPARATION_CHAR);
-			sscanf( word, "%ull", &m_nbverticesToRender);
+			sscanf( word, "%u", &m_nbverticesToRender);
 			m_propertyListReadOrder.push_back( Element(m_nbverticesToRender) );
 			m_activePropertyListIndex++;
 			
