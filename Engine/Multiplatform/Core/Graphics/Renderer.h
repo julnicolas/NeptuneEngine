@@ -23,14 +23,13 @@ namespace Neptune
 		Renderer(const Renderer&)            = delete;
 		Renderer& operator=(const Renderer&) = delete;
 
-		bool init()      override;
-		bool update()    override;
-		void terminate() override;
-
 		GraphicalProgram& createProgram();
-
 		void setNbverticesToRender(u32 nbvertices)     { m_nbverticesToRender = nbvertices; }
-		void setDrawingPrimitve(DrawingPrimitive dp)   { m_drawingPrimitive = dp;           }
+		void setDrawingPrimitve(DrawingPrimitive dp)   { m_drawingPrimitive   = dp;         }
+
+		bool init()            override;
+		bool update()    final override;
+		void terminate()       override;
 
 		// Old interface
 
@@ -46,7 +45,17 @@ namespace Neptune
 		void setProjMatrix(const float proj[4][4]);
 
 	protected:
-		virtual void draw() = 0; /// Display graphics to the window
+
+		// Types
+		typedef std::vector<GraphicalProgram>::const_iterator ConstGraphicalProgramIterator;
+		typedef std::vector<GraphicalProgram>::iterator       GraphicalProgramIterator;
+		
+		typedef std::vector<u32>::const_iterator              ConstGLResourceIterator;
+		typedef std::vector<u32>::iterator                    GLResourceIterator;
+
+		// Methods
+		virtual void draw() = 0;                                             /// Display graphics to the window
+		virtual void bindShaderAttributes(const GraphicalProgram& pgm) = 0;
 
 		// Last version
 		u32                           m_nbverticesToRender;  /// Number of vertices that will be passed to the vertex shader
@@ -64,7 +73,6 @@ namespace Neptune
 		float  m_projMatrix[4][4];
 
 	private:
-		void bindUniformVars();
-		void sendCTMMatrix(); // CTM stands for Current Transform Matrix = Proj*MV
+		void bindUniformVars(ConstGraphicalProgramIterator& it);
 	};
 }

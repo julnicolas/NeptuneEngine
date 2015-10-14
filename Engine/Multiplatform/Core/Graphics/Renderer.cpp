@@ -29,12 +29,20 @@ bool Renderer::init()
 
 bool Renderer::update()
 {
-	draw();
+	// Browse the programs
+	std::vector<GraphicalProgram>::const_iterator it_end = m_programs.cend();
+	for(std::vector<GraphicalProgram>::const_iterator it = m_programs.cbegin(); it != it_end; ++it)
+	{
+		glUseProgram( it->getId() );
+		bindUniformVars( it );
+		bindShaderAttributes( *it );
+		draw();
+	}
 }
 
 void Renderer::terminate()
 {
-
+	
 }
 
 
@@ -223,8 +231,6 @@ static void SetMatrixUniform(s32 location, const GraphicalProgram::UniformVarInp
 
 static void SetUniform(s32 location, const GraphicalProgram::UniformVarInput& var)
 {
-	// glUniformMatrix4fv( location, 1, GL_FALSE, (const float*) var.getData() );
-
 	// First check if the data is a single value, a vector or a matrix
 
 	if ( var.getNbRows() > 1 ) // It's either a vector or a matrix
@@ -244,22 +250,17 @@ static void SetUniform(s32 location, const GraphicalProgram::UniformVarInput& va
 	}
 }
 
-void Renderer::bindUniformVars()
+void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 {
-	// Browse the programs
-	std::vector<GraphicalProgram>::const_iterator it_end = m_programs.cend();
-	for ( std::vector<GraphicalProgram>::const_iterator it = m_programs.cbegin(); it != it_end; ++it )
+	// Browse the uniform vars
+	GraphicalProgram::ConstUniformVarIterator uni_it_end = it->uniformVarCEnd();
+	for(GraphicalProgram::ConstUniformVarIterator uni_it = it->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it)
 	{
-		// Browse the uniform vars
-		GraphicalProgram::ConstUniformVarIterator uni_it_end = it->uniformVarCEnd();
-		for ( GraphicalProgram::ConstUniformVarIterator uni_it = it->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it )
-		{
-			s32 location = glGetUniformLocation( it->getId(), uni_it->getName() );
-			NEP_ASSERT( location >= 0 && glGetError() != GL_INVALID_VALUE && glGetError() != GL_INVALID_OPERATION);
+		s32 location = glGetUniformLocation(it->getId(),uni_it->getName());
+		NEP_ASSERT(location >= 0 && glGetError() != GL_INVALID_VALUE && glGetError() != GL_INVALID_OPERATION);
 
-			SetUniform( location, *uni_it );
-			//glUniformMatrix4fv(location,1,GL_FALSE,&m_mvMatrix[0][0]);
-		}
+		SetUniform(location,*uni_it);
+		//glUniformMatrix4fv(location,1,GL_FALSE,&m_mvMatrix[0][0]);
 	}
 }
 
