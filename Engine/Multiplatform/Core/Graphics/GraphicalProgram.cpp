@@ -12,19 +12,22 @@ GraphicalProgram::GraphicalProgram():
 
 GraphicalProgram::~GraphicalProgram()
 {
-	// Destroy the uniform variables
+	// Destroy its uniform variables
 	{
 		std::vector<UniformVarInput>::iterator it_end = m_uniformVars.end();
 		for(std::vector<UniformVarInput>::iterator it = m_uniformVars.begin(); it != it_end; ++it)
 			it->destruct();
 	}
 	
-	// Destroy the uniform blocks
+	// Destroy its uniform blocks
 	{
 		std::map<u32, u8*>::iterator it_end = m_uniformBlockBuffers.end();
 		for (std::map<u32, u8*>::iterator it = m_uniformBlockBuffers.begin(); it != it_end; ++it)
 			delete[] it->second;
 	}
+
+	// Delete the program from VRAM
+	glDeleteProgram( m_programId );
 }
 
 void GraphicalProgram::add(u32 shader)
@@ -94,9 +97,9 @@ void GraphicalProgram::rmUniformBlock(const u32 ubo_handle)
 	m_uniformBlockBuffers.erase(ubo_handle);
 }
 
-void GraphicalProgram::addShaderInput(const ShaderInput& desc)
+void GraphicalProgram::addShaderAttribute(const ShaderAttribute& desc)
 {
-	m_shaderInputs.push_back( desc );
+	m_shaderAttributes.push_back( desc );
 }
 
 void GraphicalProgram::addUniformVariable(const UniformVarInput& def)

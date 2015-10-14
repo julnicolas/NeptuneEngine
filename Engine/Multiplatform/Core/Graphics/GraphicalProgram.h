@@ -43,7 +43,7 @@ namespace Neptune
 		/// Structure used to describe a vertex shader input variable.
 		/// Because the data-size can be pretty big, the values will be directly passed to a renderer.
 		///
-		struct ShaderInput
+		struct ShaderAttribute
 		{
 			u8    m_layout;         /// Variable's layout within the vertex shader.
 			Types m_type;           /// Type of the values.
@@ -102,8 +102,8 @@ namespace Neptune
 
 		typedef std::vector<UniformVarInput>::iterator       UniformVarIterator;
 		typedef std::vector<UniformVarInput>::const_iterator ConstUniformVarIterator;
-		typedef std::vector<ShaderInput>::iterator           ShaderInputIterator;
-		typedef std::vector<ShaderInput>::const_iterator     ConstShaderInputIterator;
+		typedef std::vector<ShaderAttribute>::iterator       ShaderAttributeIterator;
+		typedef std::vector<ShaderAttribute>::const_iterator ConstShaderAttributeIterator;
 
 
 		/////////////////////////////////////////////////////////////////////////
@@ -120,15 +120,15 @@ namespace Neptune
 		bool build();
 		u32  getId() const	{ return m_programId; }
 
-		void addShaderInput(const ShaderInput& desc); /// Adds a vertex-shader-input-description.
-		ShaderInputIterator      shaderInputBegin()         { return m_shaderInputs.begin();  }
-		ShaderInputIterator      shaderInputEnd()           { return m_shaderInputs.end();    }
-		ConstShaderInputIterator shaderInputCBegin() const  { return m_shaderInputs.cbegin(); }
-		ConstShaderInputIterator shaderInputCEnd()   const  { return m_shaderInputs.cend();   }
+		void addShaderAttribute(const ShaderAttribute& desc); /// Adds a vertex-shader-input-description.
+		ShaderAttributeIterator      shaderAttributeBegin()         { return m_shaderAttributes.begin();  }
+		ShaderAttributeIterator      shaderAttributeEnd()           { return m_shaderAttributes.end();    }
+		ConstShaderAttributeIterator shaderAttributeCBegin() const  { return m_shaderAttributes.cbegin(); }
+		ConstShaderAttributeIterator shaderAttributeCEnd()   const  { return m_shaderAttributes.cend();   }
 
 		void addUniformVariable(const UniformVarInput& def);
-		UniformVarIterator uniformVarBegin()               { return m_uniformVars.begin();    }
-		UniformVarIterator uniformVarEnd()                 { return m_uniformVars.end();      }
+		UniformVarIterator      uniformVarBegin()          { return m_uniformVars.begin();    }
+		UniformVarIterator      uniformVarEnd()            { return m_uniformVars.end();      }
 		ConstUniformVarIterator uniformVarCBegin() const   { return m_uniformVars.cbegin();   }
 		ConstUniformVarIterator uniformVarCEnd()   const   { return m_uniformVars.cend();     }
 
@@ -147,8 +147,8 @@ namespace Neptune
 
 	private:
 		u32 m_programId;
-		std::vector<UniformVarInput> m_uniformVars;      /// Contains every vertex-shader's uniform variables.
-		std::vector<ShaderInput>     m_shaderInputs;    /// Contains every vertex-shader description.
+		std::vector<UniformVarInput> m_uniformVars;       /// Contains every vertex-shader's uniform variables.
+		std::vector<ShaderAttribute> m_shaderAttributes;  /// Contains every vertex-shader-attribute description.
 		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored
 
 	};
