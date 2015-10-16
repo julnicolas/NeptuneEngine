@@ -2,9 +2,7 @@
 #include "Debug/NeptuneDebug.h"
 #include <cstring>
 
-#ifdef NEP_WINDOWS
-	#include <GL/glew.h>
-#endif
+#include "Graphics/IncludeOpenGL.h"
 
 using namespace Neptune;
 
