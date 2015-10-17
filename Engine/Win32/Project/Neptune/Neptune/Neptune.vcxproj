@@ -224,6 +224,7 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">true</ExcludedFromBuild>
@@ -242,8 +243,10 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DisplayDeviceInterface.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\IncludeOpenGL.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Math.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat2.h" />
