@@ -45,9 +45,11 @@ namespace Neptune
 		///
 		struct ShaderAttribute
 		{
-			u8    m_layout;         /// Variable's layout within the vertex shader.
-			Types m_type;           /// Type of the values.
-			u8    m_nbComponents;   /// Number of components of each value.
+			u8     m_layout;         /// Variable's layout within the vertex shader.
+			Types  m_type;           /// Type of the values.
+			u8     m_nbComponents;   /// Number of components of each value.
+			size_t m_size;           /// Data's size
+			void*  m_data;           /// Data to be copied into VRAM. It is copied in the init call.
 		};
 
 		///
@@ -121,6 +123,7 @@ namespace Neptune
 		u32  getId() const	{ return m_programId; }
 
 		void addShaderAttribute(const ShaderAttribute& desc); /// Adds a vertex-shader-input-description.
+		size_t                       getNbVertexAttributes() const  { return m_shaderAttributes.size();   }
 		ShaderAttributeIterator      shaderAttributeBegin()         { return m_shaderAttributes.begin();  }
 		ShaderAttributeIterator      shaderAttributeEnd()           { return m_shaderAttributes.end();    }
 		ConstShaderAttributeIterator shaderAttributeCBegin() const  { return m_shaderAttributes.cbegin(); }
