@@ -123,11 +123,11 @@ namespace Neptune
 		u32  getId() const	{ return m_programId; }
 
 		void addShaderAttribute(const ShaderAttribute& desc); /// Adds a vertex-shader-input-description.
-		size_t                       getNbVertexAttributes() const  { return m_shaderAttributes.size();   }
-		ShaderAttributeIterator      shaderAttributeBegin()         { return m_shaderAttributes.begin();  }
-		ShaderAttributeIterator      shaderAttributeEnd()           { return m_shaderAttributes.end();    }
-		ConstShaderAttributeIterator shaderAttributeCBegin() const  { return m_shaderAttributes.cbegin(); }
-		ConstShaderAttributeIterator shaderAttributeCEnd()   const  { return m_shaderAttributes.cend();   }
+		u8                           getNbVertexAttributes() const  { return (u8) m_shaderAttributes.size(); }
+		ShaderAttributeIterator      shaderAttributeBegin()         { return m_shaderAttributes.begin();     }
+		ShaderAttributeIterator      shaderAttributeEnd()           { return m_shaderAttributes.end();       }
+		ConstShaderAttributeIterator shaderAttributeCBegin() const  { return m_shaderAttributes.cbegin();    }
+		ConstShaderAttributeIterator shaderAttributeCEnd()   const  { return m_shaderAttributes.cend();      }
 
 		void addUniformVariable(const UniformVarInput& def);
 		UniformVarIterator      uniformVarBegin()          { return m_uniformVars.begin();    }
@@ -152,6 +152,8 @@ namespace Neptune
 		u32 m_programId;
 		std::vector<UniformVarInput> m_uniformVars;       /// Contains every vertex-shader's uniform variables.
 		std::vector<ShaderAttribute> m_shaderAttributes;  /// Contains every vertex-shader-attribute description.
+
+		// Bad design
 		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored
 
 	};
