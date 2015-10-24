@@ -15,11 +15,13 @@ WinApp::~WinApp()
 	delete m_inputEvent;
 }
 
-void WinApp::init()
+bool WinApp::init()
 {
 	// Init input-fetching system
 	NEP_ASSERT( SDL_Init(0) >= 0 );
 	SDL_InitSubSystem( SDL_INIT_EVENTS | SDL_INIT_GAMECONTROLLER );
+
+	return true;
 }
 
 void WinApp::terminate()

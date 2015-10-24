@@ -13,8 +13,8 @@ namespace Neptune
 		WinApp(const WinApp&)            = delete;
 		WinApp& operator=(const WinApp&) = delete;
 
-		virtual void init();
-		virtual void terminate();
+		bool init()      override;
+		void terminate() override;
 
 	protected:
 		virtual bool fetchAndCopyFirstInputEvent();
