@@ -12,12 +12,25 @@ App::App():
 	
 }
 
-void App::execute()
+bool App::init()
 {
-	executeControllers();
-	m_renderer.draw();
+	return true;
 }
 
+
+bool App::update()
+{
+	//executeControllers();
+	
+	// Draw objects
+	//{
+	//	m_renderer.draw();
+	//}
+
+	return true;
+}
+
+// Lousy code!!!!! Please fix me!
 InputSensitiveController::ControllerId App::registerController(InputSensitiveController* const ctrl)
 {
 	size_t pos = m_controllers.size();
@@ -35,7 +48,7 @@ void App::unregisterController(InputSensitiveController* const ctrl)
 	m_controllers.erase(it);
 }
 
-void App::executeControllers()
+/*void App::executeControllers()
 {
 	if ( fetchAndCopyFirstInputEvent() )
 	{
@@ -43,4 +56,4 @@ void App::executeControllers()
 		for ( std::list<InputSensitiveController*>::iterator it = m_controllers.begin(); it != it_end; ++it )
 			(*it)->execute(m_inputEvent);
 	}
-}
+}*/
