@@ -28,6 +28,8 @@ VAORenderer::~VAORenderer()
 
 bool VAORenderer::init()
 {
+	NEP_ASSERT( Renderer::init() );
+	
 	// First reading through the programs to get the one that uses the biggest number of parameters
 	size_t biggest_nb_pms = 0;
 	
@@ -47,7 +49,7 @@ bool VAORenderer::init()
 			glGenBuffers( nb_attribs, vbos_handle );
 			
 			// Fill the buffers and Add the resources id to the resource container
-			for ( u8 i = 0; i < nb_attribs; i++ )
+			for ( u8 i = 0; i < nb_attribs; i++ ) //! WE DON'T NEED A LOOP HERE RIGHT???????
 			{
 				glBindBuffer( GL_ARRAY_BUFFER, vbos_handle[i] );
 				glBufferData( GL_ARRAY_BUFFER, att->m_size, att->m_data, GL_STATIC_DRAW );
@@ -65,7 +67,7 @@ bool VAORenderer::init()
 
 void VAORenderer::terminate()
 {
-
+	Renderer::terminate();
 }
 
 static GLenum MapDrawingPrimitive(Renderer::DrawingPrimitive const p)
