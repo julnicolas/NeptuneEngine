@@ -10,7 +10,7 @@ using namespace Neptune;
 
 bool Renderer::init()
 {
-
+	return true;
 }
 
 bool Renderer::update()
@@ -24,6 +24,8 @@ bool Renderer::update()
 		bindShaderAttributes( *it );
 		draw();
 	}
+
+	return true;
 }
 
 void Renderer::terminate()
@@ -254,7 +256,7 @@ void Neptune::Renderer::setBackgroundColor(GLfloat r, GLfloat g, GLfloat b, GLfl
 	m_backgroundColor[2] = b; m_backgroundColor[3] = a;
 }
 
-void Neptune::Renderer::draw()
+/*void Neptune::Renderer::draw()
 {
 	// Screen cleaning
 	glClearBufferfv(GL_COLOR, 0, m_backgroundColor);
@@ -266,39 +268,39 @@ void Neptune::Renderer::draw()
 	sendCTMMatrix();
 
 	// Draw-call
-	/*glDrawElements(GL_TRIANGLES, m_nbverticesToRender, m_vertexIndicesType, 0); // Watch out! the third value corresponds to the vertex-index type
-	switch ( glGetError() )
-	{
-	case GL_NO_ERROR:
-		NEP_LOG("All good");
-		break;
-
-	case GL_INVALID_ENUM:
-		NEP_LOG("Invalid enum");
-		break;
-
-	case GL_INVALID_VALUE:
-		NEP_LOG("invalid value");
-	break;
-
-	case GL_INVALID_OPERATION:
-		NEP_LOG("invalid op");
-		break;
-
-	case GL_INVALID_FRAMEBUFFER_OPERATION:
-		NEP_LOG("invalid fb op");
-		break;
-
-	case GL_OUT_OF_MEMORY:
-		NEP_LOG("Out of mem");
-	break;
-
-	default:
-		NEP_LOG("WTF");
-		break;
-	}*/
+	//glDrawElements(GL_TRIANGLES, m_nbverticesToRender, m_vertexIndicesType, 0); // Watch out! the third value corresponds to the vertex-index type
+	//switch ( glGetError() )
+	//{
+	//case GL_NO_ERROR:
+	//	NEP_LOG("All good");
+	//	break;
+	//
+	//case GL_INVALID_ENUM:
+	//	NEP_LOG("Invalid enum");
+	//	break;
+	//
+	//case GL_INVALID_VALUE:
+	//	NEP_LOG("invalid value");
+	//break;
+	//
+	//case GL_INVALID_OPERATION:
+	//	NEP_LOG("invalid op");
+	//	break;
+	//
+	//case GL_INVALID_FRAMEBUFFER_OPERATION:
+	//	NEP_LOG("invalid fb op");
+	//	break;
+	//
+	//case GL_OUT_OF_MEMORY:
+	//	NEP_LOG("Out of mem");
+	//break;
+	//
+	//default:
+	//	NEP_LOG("WTF");
+	//	break;
+	//}
 	
 	
-	glDrawArrays(/*GL_PATCHES*/ GL_TRIANGLES, 0, m_nbverticesToRender ); // GL_TRIANGLES without any tess shader
+	glDrawArrays( GL_TRIANGLES, 0, m_nbverticesToRender ); // GL_TRIANGLES without any tess shader
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);	// Only draws the edges
-}
+}*/

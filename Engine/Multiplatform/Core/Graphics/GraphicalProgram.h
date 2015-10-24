@@ -48,7 +48,7 @@ namespace Neptune
 			u8     m_layout;         /// Variable's layout within the vertex shader.
 			Types  m_type;           /// Type of the values.
 			u8     m_nbComponents;   /// Number of components of each value.
-			size_t m_size;           /// Data's size
+			size_t m_size;           /// Data size
 			void*  m_data;           /// Data to be copied into VRAM. It is copied in the init call.
 		};
 
