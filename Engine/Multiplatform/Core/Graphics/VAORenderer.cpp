@@ -37,24 +37,28 @@ bool VAORenderer::init()
 	for ( ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it )
 		biggest_nb_pms = ( biggest_nb_pms < it->getNbVertexAttributes() ) ? it->getNbVertexAttributes() : biggest_nb_pms;
 
+	// Bind the VAO 
+	glBindVertexArray( m_vao );
+
 	// Allocate the VBOs to store the vertex attributes and fill them
 	GLuint* vbos_handle = new GLuint[ biggest_nb_pms ];
 
+	// Iterate over the programs to set their parameter data
 	for ( ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it )
 	{
+		// Allocate the program's VBOs
+		const u8 nb_attribs = it->getNbVertexAttributes();
+		glGenBuffers(nb_attribs,vbos_handle);
+
+		// Populate them and enable them to be used in the graphical pipeline
+		u8 attrib_index = 0;
 		GraphicalProgram::ConstShaderAttributeIterator att_end = it->shaderAttributeCEnd();
-		for ( GraphicalProgram::ConstShaderAttributeIterator att = it->shaderAttributeCBegin(); att != att_end; ++att )
+		for ( GraphicalProgram::ConstShaderAttributeIterator att = it->shaderAttributeCBegin(); att != att_end; ++att, attrib_index++ )
 		{
-			const u8 nb_attribs = it->getNbVertexAttributes();
-			glGenBuffers( nb_attribs, vbos_handle );
-			
-			// Fill the buffers and Add the resources id to the resource container
-			for ( u8 i = 0; i < nb_attribs; i++ ) //! WE DON'T NEED A LOOP HERE RIGHT???????
-			{
-				glBindBuffer( GL_ARRAY_BUFFER, vbos_handle[i] );
-				glBufferData( GL_ARRAY_BUFFER, att->m_size, att->m_data, GL_STATIC_DRAW );
-				m_vbos[ &(*it) ].push_back( vbos_handle[i] );
-			}
+			// Fill the buffers
+			glBindBuffer( GL_ARRAY_BUFFER, vbos_handle[ attrib_index ] );
+			glBufferData( GL_ARRAY_BUFFER, att->m_size, att->m_data, GL_STATIC_DRAW );
+			m_vbos[ &(*it) ].push_back( vbos_handle[ attrib_index ] );
 
 			// Enable the shader's input interfaces
 			glEnableVertexAttribArray( att->m_layout );
@@ -86,9 +90,6 @@ static GLenum MapDrawingPrimitive(Renderer::DrawingPrimitive const p)
 
 void VAORenderer::draw()
 {
-	// Screen cleaning
-	glClearBufferfv(GL_COLOR, 0, m_backgroundColor);
-	glClear( GL_DEPTH_BUFFER_BIT );	
 	glDrawArrays( MapDrawingPrimitive( m_drawingPrimitive ) , 0, m_nbverticesToRender );
 }
 
