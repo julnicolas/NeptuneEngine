@@ -18,7 +18,7 @@ VAORenderer::~VAORenderer()
 	for ( GraphicalProgramIterator it = m_programs.begin(); it != it_end; ++it ) // Browse every program
 	{
 		// Look through the vertex attributes
-		std::vector<u32>& vbo = m_vbos[ &(*it) ];
+		std::vector<u32>& vbo = m_vbos[ &(**it) ];
 		size_t vbo_size = vbo.size();
 
 		for ( size_t i = 0; i < vbo_size; i++ )
@@ -35,7 +35,7 @@ bool VAORenderer::init()
 	
 	ConstGraphicalProgramIterator it_end = m_programs.cend();
 	for ( ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it )
-		biggest_nb_pms = ( biggest_nb_pms < it->getNbVertexAttributes() ) ? it->getNbVertexAttributes() : biggest_nb_pms;
+		biggest_nb_pms = ( biggest_nb_pms < (*it)->getNbVertexAttributes() ) ? (*it)->getNbVertexAttributes() : biggest_nb_pms;
 
 	// Bind the VAO 
 	glBindVertexArray( m_vao );
@@ -47,18 +47,18 @@ bool VAORenderer::init()
 	for ( ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it )
 	{
 		// Allocate the program's VBOs
-		const u8 nb_attribs = it->getNbVertexAttributes();
+		const u8 nb_attribs = (*it)->getNbVertexAttributes();
 		glGenBuffers(nb_attribs,vbos_handle);
 
 		// Populate them and enable them to be used in the graphical pipeline
 		u8 attrib_index = 0;
-		GraphicalProgram::ConstShaderAttributeIterator att_end = it->shaderAttributeCEnd();
-		for ( GraphicalProgram::ConstShaderAttributeIterator att = it->shaderAttributeCBegin(); att != att_end; ++att, attrib_index++ )
+		GraphicalProgram::ConstShaderAttributeIterator att_end = (*it)->shaderAttributeCEnd();
+		for ( GraphicalProgram::ConstShaderAttributeIterator att = (*it)->shaderAttributeCBegin(); att != att_end; ++att, attrib_index++ )
 		{
 			// Fill the buffers
 			glBindBuffer( GL_ARRAY_BUFFER, vbos_handle[ attrib_index ] );
 			glBufferData( GL_ARRAY_BUFFER, att->m_size, att->m_data, GL_STATIC_DRAW );
-			m_vbos[ &(*it) ].push_back( vbos_handle[ attrib_index ] );
+			m_vbos[ &(**it) ].push_back( vbos_handle[ attrib_index ] );
 
 			// Enable the shader's input interfaces
 			glEnableVertexAttribArray( att->m_layout );

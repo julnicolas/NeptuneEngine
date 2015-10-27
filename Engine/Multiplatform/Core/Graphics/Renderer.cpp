@@ -16,12 +16,12 @@ bool Renderer::init()
 bool Renderer::update()
 {
 	// Browse the programs and make a draw-call
-	std::vector<GraphicalProgram>::const_iterator it_end = m_programs.cend();
-	for(std::vector<GraphicalProgram>::const_iterator it = m_programs.cbegin(); it != it_end; ++it)
+	ConstGraphicalProgramIterator it_end = m_programs.cend();
+	for(ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it)
 	{
-		glUseProgram( it->getId() );
+		glUseProgram( (*it)->getId() );
 		bindUniformVars( it );
-		bindShaderAttributes( *it );
+		bindShaderAttributes( **it );
 		draw();
 	}
 
@@ -45,14 +45,17 @@ Neptune::Renderer::Renderer():
 
 Neptune::Renderer::~Renderer()
 {
-
+	// Free all program-related memory
+	GraphicalProgramIterator it_end = m_programs.end();
+	for ( GraphicalProgramIterator it = m_programs.begin(); it != it_end; ++it )
+		delete *it;
 }
 
 GraphicalProgram& Renderer::createProgram()
 {
-	m_programs.emplace_back();
+	m_programs.push_back( new GraphicalProgram );
 
-	return m_programs.back();
+	return *m_programs.back();
 }
 
 static void SetSingleValuedUniform(s32 location, const GraphicalProgram::UniformVarInput& var)
@@ -236,10 +239,10 @@ static void SetUniform(s32 location, const GraphicalProgram::UniformVarInput& va
 void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 {
 	// Browse the uniform vars
-	GraphicalProgram::ConstUniformVarIterator uni_it_end = it->uniformVarCEnd();
-	for(GraphicalProgram::ConstUniformVarIterator uni_it = it->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it)
+	GraphicalProgram::ConstUniformVarIterator uni_it_end = (*it)->uniformVarCEnd();
+	for(GraphicalProgram::ConstUniformVarIterator uni_it = (*it)->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it)
 	{
-		s32 location = glGetUniformLocation(it->getId(),uni_it->getName());
+		s32 location = glGetUniformLocation( (*it)->getId(), uni_it->getName() );
 		NEP_ASSERT(location >= 0 && glGetError() != GL_INVALID_VALUE && glGetError() != GL_INVALID_OPERATION);
 
 		SetUniform(location,*uni_it);
