@@ -119,6 +119,7 @@ m_type(type),m_nbColumns(columns),m_nbRows(rows)
 	m_name = u_name;
 
 	void* u_data = new char[dataSize];
+	memcpy( u_data, data, dataSize );
 	m_data = u_data;
 }
 

@@ -62,6 +62,13 @@ namespace Neptune
 
 			///
 			/// COPY the input parameters to initialize the object.
+			/// \Param name The name of the uniform variable in the shader program.
+			/// \Param type The value's type.
+			/// \Param rows The number of rows that makes up the value. Vectors and matrices are represented in the row-major order.
+			/// \Param columns The number of columns that makes up the value. If nb rows > 1 and nb cols > 1 then the value is a matrix.
+			/// \Param dataSize The size of the value in bytes.
+			/// \Param A pointer to the value.
+			/// \Warning Data parameter: Adjacent data-blocks are expected. Indeed, the parameter's content will be copied into an array.
 			///
 			UniformVarInput(const char* name,Types type,u8 rows,u8 columns,u64 dataSize,const void* data);
 			

@@ -218,7 +218,7 @@ static void SetUniform(s32 location, const GraphicalProgram::UniformVarInput& va
 
 	if ( var.getNbRows() > 1 ) // It's either a vector or a matrix
 	{
-		if ( var.getNbColumns() > 1 ) // It's a vector
+		if ( var.getNbColumns() == 1 ) // It's a vector
 		{
 			SetVectorialUniform( location, var );
 		}

@@ -2,7 +2,7 @@
 
 namespace Neptune
 {
-	// Matrix with 3 rows and 3 columns
+	// Matrix with 4 rows and 4 columns
 	template <typename T> class Mat4;
 }
 
