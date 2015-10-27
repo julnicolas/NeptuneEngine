@@ -124,6 +124,8 @@ namespace Neptune
 
 		GraphicalProgram();
 		~GraphicalProgram();
+		GraphicalProgram(const GraphicalProgram&)            = delete;
+		GraphicalProgram& operator=(const GraphicalProgram&) = delete;
 
 		void add(u32 shader);
 		bool build();
