@@ -111,6 +111,12 @@ void DisplayDeviceInterface::DestroyGraphicalContext(GraphicalContextHandle hand
 	SDL_GL_DeleteContext( context );
 }
 
+void DisplayDeviceInterface::ClearBuffers(float backGroundColor[4])
+{
+	glClearBufferfv( GL_COLOR, 0, backGroundColor );
+	glClear( GL_DEPTH_BUFFER_BIT );
+}
+
 void DisplayDeviceInterface::SwapBuffer(WindowHandle handle)
 {
 	SDL_Window* window = static_cast<SDL_Window*>( handle );

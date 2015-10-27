@@ -15,7 +15,7 @@ bool Renderer::init()
 
 bool Renderer::update()
 {
-	// Browse the programs
+	// Browse the programs and make a draw-call
 	std::vector<GraphicalProgram>::const_iterator it_end = m_programs.cend();
 	for(std::vector<GraphicalProgram>::const_iterator it = m_programs.cbegin(); it != it_end; ++it)
 	{
@@ -40,7 +40,7 @@ void Renderer::terminate()
 Neptune::Renderer::Renderer():
 	 m_nbverticesToRender(0)
 {
-	setBackgroundColor( 0.0f, 0.0f, 0.0f, 1.0f );
+	
 }
 
 Neptune::Renderer::~Renderer()
@@ -50,10 +50,9 @@ Neptune::Renderer::~Renderer()
 
 GraphicalProgram& Renderer::createProgram()
 {
-	size_t i = m_programs.size();
 	m_programs.emplace_back();
 
-	return m_programs[i];
+	return m_programs.back();
 }
 
 static void SetSingleValuedUniform(s32 location, const GraphicalProgram::UniformVarInput& var)
@@ -246,14 +245,6 @@ void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 		SetUniform(location,*uni_it);
 		//glUniformMatrix4fv(location,1,GL_FALSE,&m_mvMatrix[0][0]);
 	}
-}
-
-// Old interface
-
-void Neptune::Renderer::setBackgroundColor(GLfloat r, GLfloat g, GLfloat b, GLfloat a)
-{
-	m_backgroundColor[0] = r; m_backgroundColor[1] = g;
-	m_backgroundColor[2] = b; m_backgroundColor[3] = a;
 }
 
 /*void Neptune::Renderer::draw()

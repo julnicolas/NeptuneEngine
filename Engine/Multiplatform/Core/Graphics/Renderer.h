@@ -31,10 +31,6 @@ namespace Neptune
 		bool update()    final override;
 		void terminate()       override;
 
-		// Old interface
-
-		void setBackgroundColor(float r, float g, float b, float a); // A value between 0.0f and 1.0f is expected for each parameter
-
 	protected:
 		// Types
 		typedef std::vector<GraphicalProgram>::const_iterator ConstGraphicalProgramIterator;
