@@ -100,6 +100,9 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -223,6 +226,9 @@
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\IncludeOpenGL.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
