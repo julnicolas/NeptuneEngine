@@ -102,6 +102,10 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	// Synchronize buffer swapping with the screen's refresh rate
 	SDL_GL_SetSwapInterval(1); // Use VSync
 
+	// Set up basic rendering settings
+	glEnable(GL_DEPTH_TEST); // Enables depth test
+	glDepthFunc(GL_LESS);    // Accepts fragment if it closer to the camera than the former one
+
 	return static_cast<GraphicalContextHandle*>( context );
 }
 
