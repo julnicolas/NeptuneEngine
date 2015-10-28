@@ -246,55 +246,5 @@ void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 		NEP_ASSERT(location >= 0 && glGetError() != GL_INVALID_VALUE && glGetError() != GL_INVALID_OPERATION);
 
 		SetUniform(location,*uni_it);
-		//glUniformMatrix4fv(location,1,GL_FALSE,&m_mvMatrix[0][0]);
 	}
 }
-
-/*void Neptune::Renderer::draw()
-{
-	// Screen cleaning
-	glClearBufferfv(GL_COLOR, 0, m_backgroundColor);
-	glClear( GL_DEPTH_BUFFER_BIT );
-
-	// Prepare vertex shader
-	//glBindVertexArray(m_vertexArrayObject);
-	glUseProgram(m_renderPgm);
-	sendCTMMatrix();
-
-	// Draw-call
-	//glDrawElements(GL_TRIANGLES, m_nbverticesToRender, m_vertexIndicesType, 0); // Watch out! the third value corresponds to the vertex-index type
-	//switch ( glGetError() )
-	//{
-	//case GL_NO_ERROR:
-	//	NEP_LOG("All good");
-	//	break;
-	//
-	//case GL_INVALID_ENUM:
-	//	NEP_LOG("Invalid enum");
-	//	break;
-	//
-	//case GL_INVALID_VALUE:
-	//	NEP_LOG("invalid value");
-	//break;
-	//
-	//case GL_INVALID_OPERATION:
-	//	NEP_LOG("invalid op");
-	//	break;
-	//
-	//case GL_INVALID_FRAMEBUFFER_OPERATION:
-	//	NEP_LOG("invalid fb op");
-	//	break;
-	//
-	//case GL_OUT_OF_MEMORY:
-	//	NEP_LOG("Out of mem");
-	//break;
-	//
-	//default:
-	//	NEP_LOG("WTF");
-	//	break;
-	//}
-	
-	
-	glDrawArrays( GL_TRIANGLES, 0, m_nbverticesToRender ); // GL_TRIANGLES without any tess shader
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);	// Only draws the edges
-}*/
