@@ -23,7 +23,7 @@ namespace Neptune
 		void  setScreenRatio(float ratio) { m_screenRatio = ratio; }
 
 		const glm::mat4& translate(const glm::vec3& t);
-		const glm::mat4& rotate(float angle, const glm::vec3& axis); // Should be refactored using quaternions
+		const glm::mat4& rotate(float angle_rad, const glm::vec3& axis); // Should be refactored using quaternions
 		void  zoom(float k);                          // Affects field of view
 
 	private:

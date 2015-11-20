@@ -32,12 +32,6 @@
     <Filter Include="Engine\Multiplatform\HighLevel\Application">
       <UniqueIdentifier>{291bc704-a2d6-4255-994a-308fb0c749e8}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Multiplatform\HighLevel\CameraController">
-      <UniqueIdentifier>{527c547e-2f2b-42c4-a28d-54cb6376bd3c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Engine\Multiplatform\HighLevel\ModelLoader">
-      <UniqueIdentifier>{2836c0f1-0fb4-431f-8cbc-6110bcebe0c8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Win32">
       <UniqueIdentifier>{eacc1d18-645b-4fd1-a39e-b7ff0bbd29fb}</UniqueIdentifier>
     </Filter>
@@ -68,6 +62,24 @@
     <Filter Include="Engine\Multiplatform\Core\StdInterface">
       <UniqueIdentifier>{397fb9ae-62b9-4da4-8ba1-49cf1418e838}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Camera">
+      <UniqueIdentifier>{f7be59a9-fc4b-4aac-a2f8-5bb6d3378f9b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Menu">
+      <UniqueIdentifier>{39c83982-f285-463f-8eb5-578e0bfa0be6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Model">
+      <UniqueIdentifier>{c385abb0-d5ea-4c2f-8f08-262c65d8f5f0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Camera\Controller">
+      <UniqueIdentifier>{9dfee89a-a489-40b6-817e-b886f071af9e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Model\Loader">
+      <UniqueIdentifier>{553f5d1f-71d6-4c47-99a4-e70cc1f579d3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Model\Polygon">
+      <UniqueIdentifier>{fb1a8a3a-e88d-47f2-8e11-0f213d813729}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -81,12 +93,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\CameraController</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\ModelLoader\PLYLoader.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\ModelLoader</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp">
       <Filter>Engine\Win32\Core\Graphics</Filter>
@@ -102,6 +108,12 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Model\Loader\PLYLoader.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Model\Loader</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -125,12 +137,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\App.h">
       <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\CameraController\FPSCameraController.h">
-      <Filter>Engine\Multiplatform\HighLevel\CameraController</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\ModelLoader\PLYLoader.h">
-      <Filter>Engine\Multiplatform\HighLevel\ModelLoader</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Plateform.h">
       <Filter>Engine\Win32\Core</Filter>
@@ -230,6 +236,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.h">
+      <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Model\Factory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Model\Loader\PLYLoader.h">
+      <Filter>Engine\Multiplatform\HighLevel\Model\Loader</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

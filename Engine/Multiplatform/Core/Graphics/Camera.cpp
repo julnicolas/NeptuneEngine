@@ -34,9 +34,9 @@ const glm::mat4& Camera::translate(const glm::vec3& t)
 	return m_camera;
 }
 
-const glm::mat4& Camera::rotate(float angle, const glm::vec3& axis)
+const glm::mat4& Camera::rotate(float angle_rad, const glm::vec3& axis)
 {
-	m_camera *= glm::rotate(m_camera, angle, axis);
+	m_camera *= glm::rotate(m_camera, angle_rad, axis);
 
 	return m_camera;
 }

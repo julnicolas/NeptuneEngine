@@ -1,4 +1,4 @@
-#include "CameraController/FPSCameraController.h"
+#include "Camera/Controller/FPSCameraController.h"
 #include "Debug/NeptuneDebug.h"
 #include "Graphics/Camera.h"
 #include <SDL2/SDL.h>
