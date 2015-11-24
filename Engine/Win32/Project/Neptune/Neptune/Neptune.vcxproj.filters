@@ -68,17 +68,14 @@
     <Filter Include="Engine\Multiplatform\HighLevel\Menu">
       <UniqueIdentifier>{39c83982-f285-463f-8eb5-578e0bfa0be6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Multiplatform\HighLevel\Model">
-      <UniqueIdentifier>{c385abb0-d5ea-4c2f-8f08-262c65d8f5f0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Multiplatform\HighLevel\Camera\Controller">
       <UniqueIdentifier>{9dfee89a-a489-40b6-817e-b886f071af9e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Multiplatform\HighLevel\Model\Loader">
-      <UniqueIdentifier>{553f5d1f-71d6-4c47-99a4-e70cc1f579d3}</UniqueIdentifier>
+    <Filter Include="Engine\Multiplatform\HighLevel\Graphics">
+      <UniqueIdentifier>{2ff97016-42fd-4ee7-8f1c-d60cb45f29bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Multiplatform\HighLevel\Model\Polygon">
-      <UniqueIdentifier>{fb1a8a3a-e88d-47f2-8e11-0f213d813729}</UniqueIdentifier>
+    <Filter Include="Engine\Multiplatform\HighLevel\Graphics\Polygons">
+      <UniqueIdentifier>{e7d0e61c-b4b3-4687-94d0-c1e85f36d4e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -112,8 +109,20 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Model\Loader\PLYLoader.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\Model\Loader</Filter>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAOView.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Polygons\CubeFactory.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Polygons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Polygons\TriangleFactory.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Polygons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GLEnumMappingFunctions.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -240,11 +249,26 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.h">
       <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Model\Factory.h">
-      <Filter>Engine\Multiplatform\HighLevel\Model</Filter>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Model\Loader\PLYLoader.h">
-      <Filter>Engine\Multiplatform\HighLevel\Model\Loader</Filter>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\View.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\VAOView.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ViewFactory.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Polygons\CubeFactory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Polygons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Polygons\TriangleFactory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Polygons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GLEnumMappingFunctions.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

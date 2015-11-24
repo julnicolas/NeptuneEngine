@@ -1,6 +1,7 @@
 #include "Graphics/VAORenderer.h"
 #include "Graphics/IncludeOpenGL.h"
 #include "Debug/NeptuneDebug.h"
+#include "Graphics/GLEnumMappingFunctions.h"
 
 using namespace Neptune;
 
@@ -74,45 +75,9 @@ void VAORenderer::terminate()
 	Renderer::terminate();
 }
 
-static GLenum MapDrawingPrimitive(Renderer::DrawingPrimitive const p)
-{
-	GLenum primitive = GL_INVALID_ENUM;
-
-	switch ( p )
-	{
-	case Renderer::TRIANGLES:
-		primitive = GL_TRIANGLES;
-		break;
-	}
-
-	return primitive;
-}
-
 void VAORenderer::draw()
 {
 	glDrawArrays( MapDrawingPrimitive( m_drawingPrimitive ) , 0, m_nbverticesToRender );
-}
-
-static GLenum MapType(const GraphicalProgram::Types type)
-{
-	GLenum gl_type = GL_INVALID_ENUM;
-	
-	switch ( type )
-	{
-	case GraphicalProgram::Types::U32:
-		gl_type = GL_UNSIGNED_INT;
-		break;
-
-	case GraphicalProgram::Types::S32:
-		gl_type = GL_INT;
-		break;
-
-	case GraphicalProgram::Types::FLOAT:
-		gl_type = GL_FLOAT;
-		break;
-	}
-
-	return gl_type;
 }
 
 void VAORenderer::bindShaderAttributes(const GraphicalProgram& pgm)

@@ -1,4 +1,4 @@
-#include "Model/Loader/PLYLoader.h"
+#include "Graphics/PLYLoader.h"
 #include "Debug/NeptuneDebug.h"
 #include "Math/Math.h"
 #include <fstream>

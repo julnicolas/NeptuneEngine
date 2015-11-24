@@ -13,7 +13,9 @@ namespace Neptune
 	public:
 		enum DrawingPrimitive : u8
 		{
-			TRIANGLES
+			TRIANGLES,
+			TRIANGLE_STRIP,
+			TRIANGLE_FAN
 		};
 
 		// New interface
@@ -25,7 +27,7 @@ namespace Neptune
 
 		GraphicalProgram& createProgram();
 		void setNbverticesToRender(u32 nbvertices)     { m_nbverticesToRender = nbvertices; }
-		void setDrawingPrimitve(DrawingPrimitive dp)   { m_drawingPrimitive   = dp;         }
+		void setDrawingPrimitive(DrawingPrimitive dp)  { m_drawingPrimitive   = dp;         }
 
 		bool init()            override;
 		bool update()    final override;

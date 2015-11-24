@@ -18,7 +18,7 @@ CLASS ADDITION
 
 - Any class must inherit at most from one and only one other class. 
 - A class can inherit from several standard interfaces.
-- Any other engine-class dependency should be achieved throug composition.
+- Any other engine-class dependency should be achieved through composition.
 
 
 PLATFORM CREATION

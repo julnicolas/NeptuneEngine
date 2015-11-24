@@ -1,6 +1,7 @@
 #include "Graphics/ElementRenderer.h"
 #include "Graphics/IncludeOpenGL.h"
 #include "Debug/NeptuneDebug.h"
+#include "Graphics/GLEnumMappingFunctions.h"
 
 using namespace Neptune;
 
@@ -80,42 +81,6 @@ void ElementRenderer::terminate()
 	Renderer::terminate();
 }
 
-static GLenum MapDrawingPrimitive(Renderer::DrawingPrimitive const p)
-{
-	GLenum primitive = GL_INVALID_ENUM;
-
-	switch(p)
-	{
-	case Renderer::TRIANGLES:
-		primitive = GL_TRIANGLES;
-		break;
-	}
-
-	return primitive;
-}
-
-static GLenum MapType(const GraphicalProgram::Types type)
-{
-	GLenum gl_type = GL_INVALID_ENUM;
-
-	switch(type)
-	{
-	case GraphicalProgram::Types::U32:
-		gl_type = GL_UNSIGNED_INT;
-		break;
-
-	case GraphicalProgram::Types::S32:
-		gl_type = GL_INT;
-		break;
-
-	case GraphicalProgram::Types::FLOAT:
-		gl_type = GL_FLOAT;
-		break;
-	}
-
-	return gl_type;
-}
-
 static GLenum MapType(const ElementRenderer::IndexType type)
 {
 	GLenum gl_type = GL_INVALID_ENUM;
@@ -133,6 +98,10 @@ static GLenum MapType(const ElementRenderer::IndexType type)
 	case ElementRenderer::IndexType::U32:
 		gl_type = GL_UNSIGNED_INT;
 		break;
+
+	default:
+		NEP_ASSERT(false);
+		break;
 	}
 
 	return gl_type;
@@ -140,7 +109,7 @@ static GLenum MapType(const ElementRenderer::IndexType type)
 
 void ElementRenderer::draw()
 {
-	glDrawElements( MapDrawingPrimitive(m_drawingPrimitive), m_nbverticesToRender, MapType(m_indexType), 0 );
+	glDrawElements( MapDrawingPrimitive(m_drawingPrimitive), m_nbverticesToRender, ::MapType(m_indexType), 0 );
 }
 
 void ElementRenderer::bindShaderAttributes(const GraphicalProgram& pgm)
