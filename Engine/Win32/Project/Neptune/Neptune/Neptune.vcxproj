@@ -229,6 +229,7 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAOView.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">true</ExcludedFromBuild>
@@ -259,6 +260,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\View.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ViewFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Math.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat2.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat2x3.h" />

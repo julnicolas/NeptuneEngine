@@ -77,6 +77,9 @@
     <Filter Include="Engine\Multiplatform\HighLevel\Graphics\Polygons">
       <UniqueIdentifier>{e7d0e61c-b4b3-4687-94d0-c1e85f36d4e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\Core\Math\Geometry">
+      <UniqueIdentifier>{36f7184a-380e-4afe-bc7c-8a0d3d87a34e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -123,6 +126,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GLEnumMappingFunctions.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.cpp">
+      <Filter>Engine\Multiplatform\Core\Math\Geometry</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +275,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GLEnumMappingFunctions.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.h">
+      <Filter>Engine\Multiplatform\Core\Math\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
