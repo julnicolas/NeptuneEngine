@@ -45,14 +45,15 @@ VAOView* TriangleFactory::create()
 void TriangleFactory::initData(float r, float g, float b)
 {
 	// Set vertex data
-	float t1[] =
-	{
-		0.0f,0.0f,0.0f,
-		0.5f,0.0f,0.0f,
-		0.0f,0.5f,0.0f
-	};
-	for(unsigned int i = 0; i < sizeof(t1)/sizeof(float); i++)
-		m_vertices.push_back(t1[i]);
+	m_vertices.push_back( 0.0f );
+	m_vertices.push_back( 0.0f );
+	m_vertices.push_back( 0.0f );
+	m_vertices.push_back( 0.5f );
+	m_vertices.push_back( 0.0f );
+	m_vertices.push_back( 0.0f );
+	m_vertices.push_back( 0.0f );
+	m_vertices.push_back( 0.5f );
+	m_vertices.push_back( 0.0f );
 
 	// Set color data
 	m_colors.push_back(r); m_colors.push_back(g); m_colors.push_back(b);
@@ -63,11 +64,11 @@ void TriangleFactory::initData(float r, float g, float b)
 
 	GraphicalProgram::ShaderAttribute t1_data =
 	{
-		0,                                // layout
-		GraphicalProgram::Types::FLOAT,  // Type
-		3,                              // nb components per value
-		sizeof(t1),                    // data size
-		&m_vertices[0]                // data
+		0,                                          // layout
+		GraphicalProgram::Types::FLOAT,            // Type
+		3,                                        // nb components per value
+		m_vertices.size()*sizeof(m_vertices[0]), // data size
+		&m_vertices[0]                          // data
 	};
 
 	GraphicalProgram::ShaderAttribute c1_data =
