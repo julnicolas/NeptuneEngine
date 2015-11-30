@@ -1,4 +1,4 @@
-#include "Graphics/Polygons/CubeFactory.h"
+#include "Graphics/Factories/CubeFactory.h"
 #include "Graphics/VAOView.h"
 #include "Graphics/Shader.h"
 #include "Debug/NeptuneDebug.h"

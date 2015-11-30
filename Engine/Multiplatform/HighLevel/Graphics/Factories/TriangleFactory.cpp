@@ -1,4 +1,4 @@
-#include "Graphics/Polygons/TriangleFactory.h"
+#include "Graphics/Factories/TriangleFactory.h"
 #include "Graphics/VAOView.h"
 #include "Graphics/Shader.h"
 #include "Debug/NeptuneDebug.h"

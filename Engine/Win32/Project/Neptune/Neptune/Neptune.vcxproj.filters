@@ -74,14 +74,14 @@
     <Filter Include="Engine\Multiplatform\HighLevel\Graphics">
       <UniqueIdentifier>{2ff97016-42fd-4ee7-8f1c-d60cb45f29bf}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Multiplatform\HighLevel\Graphics\Polygons">
-      <UniqueIdentifier>{e7d0e61c-b4b3-4687-94d0-c1e85f36d4e4}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Multiplatform\Core\Math\Geometry">
       <UniqueIdentifier>{36f7184a-380e-4afe-bc7c-8a0d3d87a34e}</UniqueIdentifier>
     </Filter>
     <Filter Include="Engine\Multiplatform\Core\System\Hashing">
       <UniqueIdentifier>{7e617b4c-48bc-4b69-a113-ec8c17c79f45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Graphics\Factories">
+      <UniqueIdentifier>{e7d0e61c-b4b3-4687-94d0-c1e85f36d4e4}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -121,12 +121,6 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAOView.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Polygons\CubeFactory.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Polygons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Polygons\TriangleFactory.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Polygons</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GLEnumMappingFunctions.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
@@ -135,6 +129,18 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\View.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementView.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\CubeFactory.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleFactory.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ModelFactory.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -273,12 +279,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ViewFactory.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Polygons\CubeFactory.h">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Polygons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Polygons\TriangleFactory.h">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Polygons</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GLEnumMappingFunctions.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
@@ -287,6 +287,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Hashing\FastHashFunctions.h">
       <Filter>Engine\Multiplatform\Core\System\Hashing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementView.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\CubeFactory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleFactory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ModelFactory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
