@@ -80,6 +80,9 @@
     <Filter Include="Engine\Multiplatform\Core\Math\Geometry">
       <UniqueIdentifier>{36f7184a-380e-4afe-bc7c-8a0d3d87a34e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\Core\System\Hashing">
+      <UniqueIdentifier>{7e617b4c-48bc-4b69-a113-ec8c17c79f45}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -278,6 +281,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.h">
       <Filter>Engine\Multiplatform\Core\Math\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Hashing\FastHashFunctions.h">
+      <Filter>Engine\Multiplatform\Core\System\Hashing</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

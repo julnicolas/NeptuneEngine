@@ -26,6 +26,7 @@ namespace Neptune
 		Renderer& operator=(const Renderer&) = delete;
 
 		GraphicalProgram& createProgram();
+		bool updateUniform(u8 pgm_index, const char* name, void* data);
 		void setNbverticesToRender(u32 nbvertices)     { m_nbverticesToRender = nbvertices; }
 		void setDrawingPrimitive(DrawingPrimitive dp)  { m_drawingPrimitive   = dp;         }
 

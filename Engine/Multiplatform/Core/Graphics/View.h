@@ -3,7 +3,7 @@
 #include "StdInterface/Updatable.h"
 #include "Graphics/GraphicalProgram.h"
 #include "Math/Geometry/Transform.h"
-#include <vector>
+#include <unordered_map>
 
 namespace Neptune
 {
@@ -18,12 +18,9 @@ namespace Neptune
 		View& operator=(const View&) = delete;
 
 		Transform& getTransform()   { return m_transform; } 
-
 		virtual Renderer& getRenderer() =0;
-		void addUniformVar(const GraphicalProgram::UniformVarInput& u) { m_uniformVars.push_back(u); }
 
-	private:
-		Transform                                      m_transform;
-		std::vector<GraphicalProgram::UniformVarInput> m_uniformVars;
+	protected:
+		Transform      m_transform;
 	};
 }

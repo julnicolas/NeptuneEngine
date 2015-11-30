@@ -58,6 +58,18 @@ GraphicalProgram& Renderer::createProgram()
 	return *m_programs.back();
 }
 
+bool Renderer::updateUniform(u8 pgm_index, const char* name, void* data)
+{
+	GraphicalProgram::UniformVarIterator it = m_programs[pgm_index]->getUniformVar(name);
+	if ( it != m_programs[pgm_index]->uniformVarEnd() )
+	{
+		it->second.setData( data );
+		return true;
+	}
+
+	return false;
+}
+
 static void SetSingleValuedUniform(s32 location, const GraphicalProgram::UniformVarInput& var)
 {
 	switch( var.getDataType() )
@@ -242,9 +254,9 @@ void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 	GraphicalProgram::ConstUniformVarIterator uni_it_end = (*it)->uniformVarCEnd();
 	for(GraphicalProgram::ConstUniformVarIterator uni_it = (*it)->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it)
 	{
-		s32 location = glGetUniformLocation( (*it)->getId(), uni_it->getName() );
+		s32 location = glGetUniformLocation( (*it)->getId(), uni_it->second.getName() );
 		NEP_ASSERT(location >= 0 && glGetError() != GL_INVALID_VALUE && glGetError() != GL_INVALID_OPERATION);
 
-		SetUniform(location,*uni_it);
+		SetUniform(location, uni_it->second);
 	}
 }

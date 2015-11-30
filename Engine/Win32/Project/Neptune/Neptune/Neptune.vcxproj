@@ -275,6 +275,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec3.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec4.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\StdInterface\Updatable.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Hashing\FastHashFunctions.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Type\Integers.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\App.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.h">

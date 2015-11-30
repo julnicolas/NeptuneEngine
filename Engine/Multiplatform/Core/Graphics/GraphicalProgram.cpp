@@ -1,6 +1,7 @@
 #include "GraphicalProgram.h"
 #include "Debug/NeptuneDebug.h"
-#include <GL/glew.h>
+#include "Graphics/IncludeOpenGL.h"
+#include "System/Hashing/FastHashFunctions.h"
 
 using namespace Neptune;
 
@@ -14,9 +15,9 @@ GraphicalProgram::~GraphicalProgram()
 {
 	// Destroy its uniform variables
 	{
-		std::vector<UniformVarInput>::iterator it_end = m_uniformVars.end();
-		for(std::vector<UniformVarInput>::iterator it = m_uniformVars.begin(); it != it_end; ++it)
-			it->destruct();
+		UniformVarIterator it_end = m_uniformVars.end();
+		for(UniformVarIterator it = m_uniformVars.begin(); it != it_end; ++it)
+			it->second.destruct();
 	}
 	
 	// Destroy its uniform blocks
@@ -104,7 +105,15 @@ void GraphicalProgram::addShaderAttribute(const ShaderAttribute& desc)
 
 void GraphicalProgram::addUniformVariable(const UniformVarInput& def)
 {
-	m_uniformVars.push_back( def );
+	// Foolish but it's a pain in the ass to code a new hash function for std::unordered_map
+	// it's late I want to go to bed
+	m_uniformVars.insert( { (const char*) Fnv1a32( (u8*) def.getName(), strlen(def.getName()) ), def} );
+}
+
+GraphicalProgram::UniformVarIterator GraphicalProgram::getUniformVar(const char* name)
+{
+	// Same applies here (the pain in da butt)
+	return m_uniformVars.find( (const char*) Fnv1a32( (u8*) name, strlen(name) ) );
 }
 
 GraphicalProgram::UniformVarInput::UniformVarInput(const char* name,Types type,u8 rows,u8 columns,u64 dataSize,const void* data):
@@ -121,6 +130,30 @@ m_type(type),m_nbColumns(columns),m_nbRows(rows)
 	void* u_data = new char[dataSize];
 	memcpy( u_data, data, dataSize );
 	m_data = u_data;
+}
+
+size_t GraphicalProgram::getTypeSize(Types t)
+{
+	switch (t)
+	{
+	case FLOAT:
+		return sizeof(float);
+
+	case U32:
+		return sizeof(u32);
+
+	case S32:
+		return sizeof(s32);
+
+	default:
+		NEP_ASSERT(false);
+		return ~0;
+	}
+}
+
+void GraphicalProgram::UniformVarInput::setData(void* data)
+{
+	memcpy( m_data, data, m_nbColumns*m_nbRows*GraphicalProgram::getTypeSize(m_type) );
 }
 
 void GraphicalProgram::UniformVarInput::destruct()

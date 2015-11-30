@@ -2,7 +2,7 @@
 
 #include "System/Type/Integers.h"
 #include <map>
-#include <vector>
+#include <unordered_map>
 
 namespace Neptune
 {
@@ -30,6 +30,7 @@ namespace Neptune
 			S32,
 			FLOAT
 		};
+		static size_t getTypeSize(Types);
 
 
 		//////////////////////////////////////////////////////////////////////////////
@@ -77,6 +78,7 @@ namespace Neptune
 			u8          getNbRows()    const { return m_nbRows;    }
 			u8          getNbColumns() const { return m_nbColumns; }
 			const void* getData()      const { return m_data;      }
+			void        setData(void* data);
 
 			~UniformVarInput()                                 = default; /// Destruction of dynamically allocated memory is managed by the enclosing class.
 			UniformVarInput(const UniformVarInput&)            = default;
@@ -109,10 +111,10 @@ namespace Neptune
 		/////////////////////////////////////////////////////////////////////////
 
 
-		typedef std::vector<UniformVarInput>::iterator       UniformVarIterator;
-		typedef std::vector<UniformVarInput>::const_iterator ConstUniformVarIterator;
-		typedef std::vector<ShaderAttribute>::iterator       ShaderAttributeIterator;
-		typedef std::vector<ShaderAttribute>::const_iterator ConstShaderAttributeIterator;
+		typedef std::unordered_map<const char*, UniformVarInput>::iterator       UniformVarIterator;
+		typedef std::unordered_map<const char*, UniformVarInput>::const_iterator ConstUniformVarIterator;
+		typedef std::vector<ShaderAttribute>::iterator                           ShaderAttributeIterator;
+		typedef std::vector<ShaderAttribute>::const_iterator                     ConstShaderAttributeIterator;
 
 
 		/////////////////////////////////////////////////////////////////////////
@@ -139,10 +141,11 @@ namespace Neptune
 		ConstShaderAttributeIterator shaderAttributeCEnd()   const  { return m_shaderAttributes.cend();      }
 
 		void addUniformVariable(const UniformVarInput& def);
-		UniformVarIterator      uniformVarBegin()          { return m_uniformVars.begin();    }
-		UniformVarIterator      uniformVarEnd()            { return m_uniformVars.end();      }
-		ConstUniformVarIterator uniformVarCBegin() const   { return m_uniformVars.cbegin();   }
-		ConstUniformVarIterator uniformVarCEnd()   const   { return m_uniformVars.cend();     }
+		UniformVarIterator      getUniformVar(const char* name);
+		UniformVarIterator      uniformVarBegin()               { return m_uniformVars.begin();    }
+		UniformVarIterator      uniformVarEnd()                 { return m_uniformVars.end();      }
+		ConstUniformVarIterator uniformVarCBegin() const        { return m_uniformVars.cbegin();   }
+		ConstUniformVarIterator uniformVarCEnd()   const        { return m_uniformVars.cend();     }
 
 		///
 		/// Creates an uniform block variable.
@@ -159,8 +162,8 @@ namespace Neptune
 
 	private:
 		u32 m_programId;
-		std::vector<UniformVarInput> m_uniformVars;       /// Contains every vertex-shader's uniform variables.
-		std::vector<ShaderAttribute> m_shaderAttributes;  /// Contains every vertex-shader-attribute description.
+		std::unordered_map<const char*, UniformVarInput> m_uniformVars;                           /// Contains every vertex-shader's uniform variables.
+		std::vector<ShaderAttribute>                     m_shaderAttributes;  /// Contains every vertex-shader-attribute description.
 
 		// Bad design
 		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored

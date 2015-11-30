@@ -19,6 +19,7 @@ bool VAOView::init()
 
 bool VAOView::update()
 {
+	bool v = m_renderer.updateUniform(0, "ModelView", (void*) m_transform.getDataPtr() );
 	return m_renderer.update();
 }
 
