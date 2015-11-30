@@ -19,9 +19,17 @@ VAOView* TriangleFactory::create()
 {
 	VAOView* v = new VAOView;
 	
-	Renderer& renderer = v->getRenderer();
+	// Add the MV matrix
+
+	GraphicalProgram::UniformVarInput mv("ModelView",
+		GraphicalProgram::FLOAT,
+		4,
+		4,
+		16*sizeof(float),
+		v->getTransform().getDataPtr());
 
 	// Create the triangle's renderer
+	Renderer& renderer = v->getRenderer();
 	renderer.setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLES);
 	renderer.setNbverticesToRender(3);
 
@@ -36,6 +44,7 @@ VAOView* TriangleFactory::create()
 		pgm.add(frag.getId());
 		pgm.addShaderAttribute(m_shaderAttributes[0]);
 		pgm.addShaderAttribute(m_shaderAttributes[1]);
+		pgm.addUniformVariable(mv);
 		pgm.build();
 	}
 
@@ -85,6 +94,6 @@ void TriangleFactory::initData(float r, float g, float b)
 	m_shaderAttributes.push_back(c1_data);
 
 	// Set shader names
-	m_vertexShaderName   = "Resources/Shaders/VertexBuffer.vert";
-	m_fragmentShaderName = "Resources/Shaders/VertexBuffer.frag";
+	m_vertexShaderName   = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
+	m_fragmentShaderName = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
 }
