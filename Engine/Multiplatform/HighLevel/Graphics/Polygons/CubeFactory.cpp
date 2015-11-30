@@ -102,7 +102,7 @@ void CubeFactory::initCubeData(float r, float g, float b)
 
 	float color[3]; color[0] = r; color[1] = g; color[2] = b;
 
-	for(unsigned int i = 0; i < NB_VERTICES_TO_RENDER/3; i++)
+	for(unsigned int i = 0; i < NB_VERTICES_TO_RENDER; i++)
 	{
 		m_colors.push_back(color[0]);
 		m_colors.push_back(color[1]);
