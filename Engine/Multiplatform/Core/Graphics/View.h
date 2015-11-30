@@ -12,15 +12,20 @@ namespace Neptune
 	class View : public Updatable
 	{
 	public:
-		View()                       = default;
+		View()                      = default;
 		virtual ~View()              {}
 		View(const View&)            = delete;
 		View& operator=(const View&) = delete;
 
-		Transform& getTransform()   { return m_transform; } 
-		virtual Renderer& getRenderer() =0;
+		bool init()             override;
+		bool update()           override;
+		void terminate()        override;
+
+		Transform& getTransform() { return m_transform; } 
+		Renderer& getRenderer()   { return *m_renderer; }
 
 	protected:
 		Transform      m_transform;
+		Renderer*      m_renderer;
 	};
 }

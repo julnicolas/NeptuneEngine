@@ -1,29 +1,14 @@
 #include "Graphics/VAOView.h"
+#include "Graphics/VAORenderer.h"
 
 using namespace Neptune;
 
 VAOView::VAOView()
 {
-
+	m_renderer = new VAORenderer;
 }
 
 VAOView::~VAOView()
 {
-
-}
-
-bool VAOView::init()
-{
-	return m_renderer.init();
-}
-
-bool VAOView::update()
-{
-	bool v = m_renderer.updateUniform(0, "ModelView", (void*) m_transform.getDataPtr() );
-	return m_renderer.update();
-}
-
-void VAOView::terminate()
-{
-	m_renderer.terminate();
+	delete m_renderer;
 }

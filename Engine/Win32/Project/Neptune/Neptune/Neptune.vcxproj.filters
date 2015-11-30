@@ -133,6 +133,9 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.cpp">
       <Filter>Engine\Multiplatform\Core\Math\Geometry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\View.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
