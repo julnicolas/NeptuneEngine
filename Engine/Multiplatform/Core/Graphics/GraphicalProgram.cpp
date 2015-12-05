@@ -139,6 +139,9 @@ size_t GraphicalProgram::getTypeSize(Types t)
 	case FLOAT:
 		return sizeof(float);
 
+	case U8:
+		return sizeof(u8);
+
 	case U32:
 		return sizeof(u32);
 

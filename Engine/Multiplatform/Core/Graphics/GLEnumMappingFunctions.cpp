@@ -33,6 +33,10 @@ GLenum Neptune::MapType(const GraphicalProgram::Types type)
 
 	switch(type)
 	{
+	case GraphicalProgram::Types::U8:
+		gl_type = GL_UNSIGNED_BYTE;
+		break;
+
 	case GraphicalProgram::Types::U32:
 		gl_type = GL_UNSIGNED_INT;
 		break;
