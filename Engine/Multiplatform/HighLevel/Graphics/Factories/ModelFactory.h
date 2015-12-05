@@ -17,8 +17,6 @@ namespace Neptune
 		ElementView* create() override; /// Allocates a new VAOView on the heap. Class users must handle the object's deallocation.
 
 	private:
-		static const u8 NB_VERTICES_TO_RENDER = 3;
-
 		void initCubeData(float r,float g,float b);
 	};
 
