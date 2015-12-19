@@ -1,5 +1,8 @@
 #include "Graphics/View.h"
 #include "Graphics/Renderer.h"
+#include "Graphics/Camera.h"
+
+#include <glm/gtc/matrix_transform.hpp> // must be removed
 
 using namespace Neptune;
 
@@ -10,8 +13,20 @@ bool View::init()
 
 bool View::update()
 {
-	bool v = m_renderer->updateUniform(0,"ModelView",(void*)m_transform.getDataPtr());
-	return m_renderer->update();
+	if ( m_camera != nullptr )
+	{
+		Mat4<float> mvp;
+		glm::tmat4x4<float>* mat = &mvp;
+		*mat = m_camera->getProjectionMatrix() * m_camera->getViewMatrix() * m_transform.getMatrix();
+		
+		m_renderer->updateUniform(0,"ModelView",(void*) mvp.getPtr());
+		return m_renderer->update();
+	}
+	else 
+	{
+		m_renderer->updateUniform(0,"ModelView",(void*)m_transform.getDataPtr());
+		return m_renderer->update();
+	}
 }
 
 void View::terminate()
