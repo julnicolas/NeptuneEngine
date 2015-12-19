@@ -2,8 +2,8 @@
 
 namespace Neptune
 {
-	// Matrix with 2 rows and 2 columns
-	template <typename T> class Vec3;
+	template <typename T> class Vec3_t;
+	typedef Vec3_t<float> Vec3;
 }
 
 // Platform-specific Implementation

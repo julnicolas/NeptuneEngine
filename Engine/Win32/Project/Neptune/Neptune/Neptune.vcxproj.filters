@@ -177,25 +177,16 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Type\Integers.h">
       <Filter>Engine\Multiplatform\Core\System\Type</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat2.h">
-      <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat2x3.h">
       <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat2x4.h">
       <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat3.h">
-      <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat3x2.h">
       <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat3x4.h">
-      <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat4.h">
       <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat4x2.h">
@@ -299,6 +290,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ModelFactory.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat4x4.h">
+      <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat3x3.h">
+      <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat2x2.h">
+      <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
