@@ -21,21 +21,21 @@ void Transform::rotate(float x,float y,float z)
 	{
 		float u          = glm::radians(x);
 		m_orientation[0] += u;
-		*mat = glm::rotate( m_transform, u, Vec3<float>(1.0f, 0.0f, 0.0f) );
+		*mat = glm::rotate( m_transform, u, Vec3(1.0f, 0.0f, 0.0f) );
 	}
 	
 	if ( y != 0.0f )
 	{
 		float v          = glm::radians(y);
 		m_orientation[1] += v;
-		*mat = glm::rotate( m_transform, v, Vec3<float>(0.0f, 1.0f, 0.0f) );
+		*mat = glm::rotate( m_transform, v, Vec3(0.0f, 1.0f, 0.0f) );
 	}
 	
 	if ( z != 0.0f )
 	{
 		float w          = glm::radians(z);
 		m_orientation[2] += w;
-		*mat = glm::rotate( m_transform, w, Vec3<float>(0.0f, 0.0f, 1.0f) );
+		*mat = glm::rotate( m_transform, w, Vec3(0.0f, 0.0f, 1.0f) );
 	}
 }
 
@@ -46,7 +46,7 @@ void Transform::translate(float x,float y,float z)
 	m_displacement[2] += z;
 
 	glm::tmat4x4<float>* mat = &m_transform;
-	*mat = glm::translate( m_transform, Vec3<float>(x, y, z) );
+	*mat = glm::translate( m_transform, Vec3(x, y, z) );
 }
 
 void Transform::scale(float x,float y,float z)
@@ -56,24 +56,24 @@ void Transform::scale(float x,float y,float z)
 	m_size[2] += z;
 
 	glm::tmat4x4<float>* mat = &m_transform;
-	*mat = glm::scale( m_transform, Vec3<float>(x, y, z) );
+	*mat = glm::scale( m_transform, Vec3(x, y, z) );
 }
 
-void Transform::getOrientation(Vec3<float>& orientation)
+void Transform::getOrientation(Vec3& orientation)
 {
 	orientation.x = glm::degrees( m_orientation[0] );
 	orientation.y = glm::degrees( m_orientation[1] );
 	orientation.z = glm::degrees( m_orientation[2] );
 }
 
-void Transform::getSize(Vec3<float>& size)
+void Transform::getSize(Vec3& size)
 {
 	size.x = m_size[0];
 	size.y = m_size[1];
 	size.z = m_size[2];
 }
 
-void Transform::getDisplacement(Vec3<float>& displacement)
+void Transform::getDisplacement(Vec3& displacement)
 {
 	displacement.x = m_displacement[0];
 	displacement.y = m_displacement[1];
