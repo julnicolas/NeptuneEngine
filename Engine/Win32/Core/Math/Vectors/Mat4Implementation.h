@@ -12,5 +12,7 @@ namespace Neptune
 		~Mat4<T>()                         = default;
 		Mat4<T>(const Mat4<T>&)            = default;
 		Mat4<T>& operator=(const Mat4<T>&) = default;
+
+		const T* getPtr() const { return glm::value_ptr(*this); }
 	};
 }
