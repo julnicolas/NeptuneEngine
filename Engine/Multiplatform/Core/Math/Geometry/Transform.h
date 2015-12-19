@@ -23,6 +23,7 @@ namespace Neptune
 		void               getDisplacement(Vec3<float>& displacement);
 		
 		const float*       getDataPtr() const;
+		const Mat4<float>& getMatrix()  const { return m_transform; }
 
 	private:
 		Mat4<float> m_transform;
