@@ -26,6 +26,7 @@ namespace Neptune
 		///
 		enum Types : u8
 		{
+			U8,
 			U32,
 			S32,
 			FLOAT
