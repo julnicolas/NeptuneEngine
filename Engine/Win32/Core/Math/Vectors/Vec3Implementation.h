@@ -1,6 +1,5 @@
 #pragma once
 
-#include "Math/Vectors/Vec3.h"
 #include <glm/vec3.hpp>
 
 namespace Neptune
