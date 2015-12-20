@@ -83,6 +83,9 @@
     <Filter Include="Engine\Multiplatform\HighLevel\Graphics\Factories">
       <UniqueIdentifier>{e7d0e61c-b4b3-4687-94d0-c1e85f36d4e4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Win32\Core\Math\Geometry">
+      <UniqueIdentifier>{170f2ff6-9578-40cd-a5f5-be89d6b9e146}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -299,6 +302,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat2x2.h">
       <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\MatrixTransform.h">
+      <Filter>Engine\Multiplatform\Core\Math\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Math\Vectors\MatrixTransformImplementation.h">
+      <Filter>Engine\Win32\Core\Math\Vectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Trigonometry.h">
+      <Filter>Engine\Multiplatform\Core\Math\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Math\Geometry\TrigonometryImplementation.h">
+      <Filter>Engine\Win32\Core\Math\Geometry</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
