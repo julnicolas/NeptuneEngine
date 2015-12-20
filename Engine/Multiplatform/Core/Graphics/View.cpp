@@ -2,8 +2,6 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/Camera.h"
 
-#include <glm/gtc/matrix_transform.hpp> // must be removed
-
 using namespace Neptune;
 
 bool View::init()

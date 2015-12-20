@@ -264,6 +264,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\View.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ViewFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Trigonometry.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Math.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat2x2.h" />
@@ -294,6 +295,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\CubeFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ModelFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleFactory.h" />
+    <ClInclude Include="..\..\..\Core\Math\Geometry\TrigonometryImplementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat2Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat2x3Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat2x4Implementation.h" />

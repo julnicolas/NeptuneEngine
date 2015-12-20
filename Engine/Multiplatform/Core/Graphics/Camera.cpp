@@ -1,11 +1,12 @@
 #include "Camera.h"
 #include "Math/Vectors/Vec3.h"
 #include "Math/Vectors/MatrixTransform.h"
+#include "Math/Geometry/Trigonometry.h"
 
 using namespace Neptune;
 
 Camera::Camera():
-	m_fieldOfView( glm::radians(90.0f) ),
+	m_fieldOfView( Radians(90.0f) ),
 	m_screenRatio(16.0f/9.0f),
 	m_nearPos(0.1f),
 	m_farPos(10.0f)
@@ -14,7 +15,7 @@ Camera::Camera():
 }
 
 Camera::Camera(const Vec3& eye, const Vec3& center, const Vec3& up):
-	m_fieldOfView( glm::radians(90.0f) ),
+	m_fieldOfView( Radians(90.0f) ),
 	m_screenRatio(16.0f/9.0f),
 	m_nearPos(0.1f),
 	m_farPos(10.0f)

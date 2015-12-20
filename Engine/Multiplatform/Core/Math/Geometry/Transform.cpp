@@ -1,6 +1,7 @@
 #include "Math/Geometry/Transform.h"
 #include "Math/Vectors/Vec3.h"
 #include "Math/Vectors/MatrixTransform.h"
+#include "Math/Geometry/Trigonometry.h"
 #include <string.h>
 
 using namespace Neptune;
@@ -16,21 +17,21 @@ void Transform::rotate(float x,float y,float z)
 {
 	if ( x != 0.0f )
 	{
-		float u          = glm::radians(x);
+		float u          = Radians(x);
 		m_orientation[0] += u;
 		m_transform = Rotate( m_transform, u, Vec3(1.0f, 0.0f, 0.0f) );
 	}
 	
 	if ( y != 0.0f )
 	{
-		float v          = glm::radians(y);
+		float v          = Radians(y);
 		m_orientation[1] += v;
 		m_transform = Rotate( m_transform, v, Vec3(0.0f, 1.0f, 0.0f) );
 	}
 	
 	if ( z != 0.0f )
 	{
-		float w          = glm::radians(z);
+		float w          = Radians(z);
 		m_orientation[2] += w;
 		m_transform = Rotate( m_transform, w, Vec3(0.0f, 0.0f, 1.0f) );
 	}
@@ -56,9 +57,9 @@ void Transform::scale(float x,float y,float z)
 
 void Transform::getOrientation(Vec3& orientation)
 {
-	orientation.x() = glm::degrees( m_orientation[0] );
-	orientation.y() = glm::degrees( m_orientation[1] );
-	orientation.z() = glm::degrees( m_orientation[2] );
+	orientation.x() = Degrees( m_orientation[0] );
+	orientation.y() = Degrees( m_orientation[1] );
+	orientation.z() = Degrees( m_orientation[2] );
 }
 
 void Transform::getSize(Vec3& size)
