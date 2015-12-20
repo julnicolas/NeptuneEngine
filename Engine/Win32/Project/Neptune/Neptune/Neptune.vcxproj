@@ -275,6 +275,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat4x4.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat4x2.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Mat4x3.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\MatrixTransform.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec2.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec3.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec4.h" />
@@ -302,6 +303,7 @@
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat4Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat4x2Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat4x3Implementation.h" />
+    <ClInclude Include="..\..\..\Core\Math\Vectors\MatrixTransformImplementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec2Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec3Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec4Implementation.h" />
