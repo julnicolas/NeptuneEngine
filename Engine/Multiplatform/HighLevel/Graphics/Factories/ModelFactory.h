@@ -8,8 +8,7 @@ namespace Neptune
 	class ModelFactory : public ViewFactory
 	{
 	public:
-		ModelFactory();
-		ModelFactory(float r,float g,float b);
+		ModelFactory(const char* fileName);
 		virtual ~ModelFactory()                      = default;
 		ModelFactory(const ModelFactory&)            = default;
 		ModelFactory& operator=(const ModelFactory&) = default;
@@ -17,7 +16,9 @@ namespace Neptune
 		ElementView* create() override; /// Allocates a new VAOView on the heap. Class users must handle the object's deallocation.
 
 	private:
-		void initCubeData(float r,float g,float b);
+		void initModelData(const char* fileName);
+
+		std::string m_fileName;
 	};
 
 }

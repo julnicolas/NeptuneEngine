@@ -6,14 +6,9 @@
 
 using namespace Neptune;
 
-ModelFactory::ModelFactory()
+ModelFactory::ModelFactory(const char* fileName)
 {
-	initCubeData(0.5f,0.5f,0.5f);
-}
-
-ModelFactory::ModelFactory(float r,float g,float b)
-{
-	initCubeData(r,g,b);
+	initModelData( fileName );
 }
 
 ElementView* ModelFactory::create()
@@ -23,7 +18,7 @@ ElementView* ModelFactory::create()
 	// Load model
 	PLYLoader* p_loader = new PLYLoader;
 	PLYLoader& loader = *p_loader;
-	loader.load("Resources/Models/xwing.ply");
+	loader.load(m_fileName.c_str());
 
 	// Set vertex shader's parameters
 	PLYLoader::PropertyData* prop = nullptr;
@@ -87,39 +82,10 @@ ElementView* ModelFactory::create()
 	return v;
 }
 
-void ModelFactory::initCubeData(float r,float g,float b)
+void ModelFactory::initModelData(const char* fileName)
 {
-	// Set vertex data
-	/*float t1[] = {-1.0f, 0.0f, 0.1f, 0.0f, 1.0f, 0.1f, 1.0f, 0.0f, 0.1f};
-
-	for(unsigned int i = 0; i < sizeof(t1)/sizeof(float); i++)
-		m_vertices.push_back(t1[i]);*/
-
-	// Create shader attributes
-
-	/*GraphicalProgram::ShaderAttribute t1_data =
-	{
-		0,                                // layout
-		GraphicalProgram::Types::FLOAT,  // Type
-		3,                              // nb components per value
-		sizeof(t1),                    // data size
-		&m_vertices[0]                // data
-	};
-
-	GraphicalProgram::ShaderAttribute c1_data =
-	{
-		1,                                      // layout
-		GraphicalProgram::Types::FLOAT,        // Type
-		3,                                    // nb components per value
-		m_colors.size()*sizeof(m_colors[0]), // data size
-		&m_colors[0]                        // data
-	};*/
-
-	// Add them to the factory
-	//m_shaderAttributes.push_back(t1_data);
-	//m_shaderAttributes.push_back(c1_data);
-
-	// Set shader names
+	// Set resources' name
+	m_fileName           = fileName;
 	m_vertexShaderName   = "Resources/Shaders/SelfPractice/DisplayWithDividedColors.vert";
 	m_fragmentShaderName = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
 }
