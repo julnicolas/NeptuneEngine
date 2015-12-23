@@ -1,27 +1,12 @@
 #ifndef NEPTUNE_DEBUG_H_
 #define NEPTUNE_DEBUG_H_
 
-#include <iostream>
-#include <assert.h>
-
-
-// Declarations
-
-void nepLog(const char* err);
-
-
-// Definitions
-
-inline void nepLog(const char* err)
-{
-	using namespace std;
-
-	cerr << err << endl;
-}
-
+#include <cstdio>
+#include <cassert>
 
 #ifdef NEP_DEBUG
-	#define NEP_LOG(err) nepLog(err)
+	// Variadic macros became standard since c++11
+	#define NEP_LOG(...) std::fprintf(stderr, __VA_ARGS__)
 	#define NEP_ASSERT	assert
 #else
 	#define NEP_LOG(err)
