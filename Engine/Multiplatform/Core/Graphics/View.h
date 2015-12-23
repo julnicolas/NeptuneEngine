@@ -24,6 +24,11 @@ namespace Neptune
 		Transform& getTransform() { return m_transform; } 
 		Renderer& getRenderer()   { return *m_renderer; }
 
+		// Implemented to fix a warning stating this class should be 16-bit aligned
+		// Further investigation would be appreciated though
+		void* operator new(std::size_t count);
+		void  operator delete(void* ptr);
+
 	protected:
 		Transform      m_transform;
 		Renderer*      m_renderer;
