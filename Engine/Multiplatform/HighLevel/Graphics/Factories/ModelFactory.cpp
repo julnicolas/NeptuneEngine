@@ -86,6 +86,6 @@ void ModelFactory::initModelData(const char* fileName)
 {
 	// Set resources' name
 	m_fileName           = fileName;
-	m_vertexShaderName   = "Resources/Shaders/SelfPractice/DisplayWithDividedColors.vert";
+	m_vertexShaderName   = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
 	m_fragmentShaderName = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
 }
