@@ -2,6 +2,7 @@
 
 #include "Graphics/ViewFactory.h"
 #include "Graphics/ElementView.h"
+#include "Graphics/PLYLoader.h"
 
 namespace Neptune
 {
@@ -18,6 +19,7 @@ namespace Neptune
 	private:
 		void initModelData(const char* fileName);
 
+		PLYLoader   m_loader; /// A specific format is used here because only one file format is currently supported
 		std::string m_fileName;
 	};
 

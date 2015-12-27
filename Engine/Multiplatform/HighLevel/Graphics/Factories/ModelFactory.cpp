@@ -15,15 +15,10 @@ ElementView* ModelFactory::create()
 {
 	ElementView* v = new ElementView;
 
-	// Load model
-	PLYLoader* p_loader = new PLYLoader;
-	PLYLoader& loader = *p_loader;
-	loader.load(m_fileName.c_str());
-
-	// Set vertex shader's parameters
+	// Set the vertex shader's parameters
 	PLYLoader::PropertyData* prop = nullptr;
 
-	prop = &loader.getPropertyBuffer(PLYLoader::PropertyType::POSITION);
+	prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::POSITION);
 	GraphicalProgram::ShaderAttribute position =
 	{
 		0,                                // layout
@@ -34,7 +29,7 @@ ElementView* ModelFactory::create()
 	};
 	m_shaderAttributes.push_back(position);
 
-	prop = &loader.getPropertyBuffer(PLYLoader::PropertyType::COLOR);
+	prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::COLOR);
 	GraphicalProgram::ShaderAttribute color =
 	{
 		1,                                      // layout
@@ -55,13 +50,13 @@ ElementView* ModelFactory::create()
 		v->getTransform().getDataPtr());
 
 	// Get the IBO
-	prop = &loader.getPropertyBuffer(PLYLoader::PropertyType::INDEX);
+	prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::INDEX);
 
 	// Create the renderer
 	ElementRenderer& renderer = static_cast<ElementRenderer&>( v->getRenderer() );
 
 	renderer.setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLES);
-	renderer.setNbverticesToRender(loader.getNbverticesToRender());
+	renderer.setNbverticesToRender(m_loader.getNbverticesToRender());
 	renderer.setIndexBufferData( prop->m_buffer, prop->m_bufferSize, ElementRenderer::IndexType::U32 );
 
 	// Create the shaders to display the model
@@ -88,4 +83,7 @@ void ModelFactory::initModelData(const char* fileName)
 	m_fileName           = fileName;
 	m_vertexShaderName   = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
 	m_fragmentShaderName = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
+
+	// Load the model
+	m_loader.load(m_fileName.c_str());
 }
