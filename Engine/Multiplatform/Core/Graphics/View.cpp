@@ -29,3 +29,14 @@ void View::terminate()
 {
 	m_renderer->terminate();
 }
+
+void* View::operator new(size_t count)
+{
+	void* ptr = _aligned_malloc(count,16);
+	return ptr;
+}
+
+void View::operator delete(void* ptr)
+{
+	_aligned_free(ptr);
+}

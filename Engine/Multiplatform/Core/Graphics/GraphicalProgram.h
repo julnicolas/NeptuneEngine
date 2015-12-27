@@ -163,7 +163,7 @@ namespace Neptune
 
 	private:
 		u32 m_programId;
-		std::unordered_map<const char*, UniformVarInput> m_uniformVars;                           /// Contains every vertex-shader's uniform variables.
+		std::unordered_map<const char*, UniformVarInput> m_uniformVars;       /// Contains every vertex shader's uniform variables.
 		std::vector<ShaderAttribute>                     m_shaderAttributes;  /// Contains every vertex-shader-attribute description.
 
 		// Bad design

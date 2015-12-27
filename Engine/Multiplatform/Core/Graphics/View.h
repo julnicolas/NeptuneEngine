@@ -27,6 +27,11 @@ namespace Neptune
 		void bindToCamera(Camera* c) { m_camera = c;       }
 		void unbindFromCamera()      { m_camera = nullptr; }
 
+		// Implemented to fix a warning stating this class should be 16-bit aligned
+		// Further investigation would be appreciated though
+		void* operator new(std::size_t count);
+		void  operator delete(void* ptr);
+
 	protected:
 		Transform      m_transform;
 		Camera*        m_camera;
