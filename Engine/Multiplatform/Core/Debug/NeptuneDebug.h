@@ -1,17 +1,18 @@
-#ifndef NEPTUNE_DEBUG_H_
-#define NEPTUNE_DEBUG_H_
+#pragma once
 
 #include <cstdio>
 #include <cassert>
 
-#ifdef NEP_DEBUG
-	// Variadic macros became standard since c++11
+#ifndef NEP_FINAL
+	// Variadic macros have become standard since c++11
 	#define NEP_LOG(...) std::fprintf(stderr, __VA_ARGS__)
-	#define NEP_ASSERT	assert
 #else
-	#define NEP_LOG(err)
-	#define NEP_ASSERT
+	// The statement between NEP_LOG's brackets won't be executed 
+	#define NEP_LOG(err) ((void) 0)
 #endif
 
-
+#ifdef NEP_DEBUG
+	#define NEP_ASSERT	assert
+#else
+	#define NEP_ASSERT
 #endif
