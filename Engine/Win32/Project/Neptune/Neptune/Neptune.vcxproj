@@ -223,7 +223,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementView.cpp" />
-    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GLEnumMappingFunctions.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalEnumMappingFunctions.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.cpp" />
@@ -254,7 +254,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DisplayDeviceInterface.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementView.h" />
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GLEnumMappingFunctions.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalEnumMappingFunctions.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\IncludeOpenGL.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.h" />

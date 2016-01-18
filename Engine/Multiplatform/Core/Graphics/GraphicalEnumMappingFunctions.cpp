@@ -1,4 +1,4 @@
-#include "Graphics/GLEnumMappingFunctions.h"
+#include "Graphics/GraphicalEnumMappingFunctions.h"
 #include "Debug/NeptuneDebug.h"
 
 GLenum Neptune::MapDrawingPrimitive(Renderer::DrawingPrimitive const p)

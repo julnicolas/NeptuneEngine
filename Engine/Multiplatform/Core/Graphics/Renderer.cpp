@@ -1,5 +1,5 @@
 #include "Renderer.h"
-#include "Graphics/GLEnumMappingFunctions.h"
+#include "Graphics/GraphicalEnumMappingFunctions.h"
 #include "Debug/NeptuneDebug.h"
 #include <cstring>
 

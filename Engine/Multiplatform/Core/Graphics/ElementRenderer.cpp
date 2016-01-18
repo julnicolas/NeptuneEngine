@@ -1,7 +1,7 @@
 #include "Graphics/ElementRenderer.h"
 #include "Graphics/IncludeOpenGL.h"
 #include "Debug/NeptuneDebug.h"
-#include "Graphics/GLEnumMappingFunctions.h"
+#include "Graphics/GraphicalEnumMappingFunctions.h"
 
 using namespace Neptune;
 
