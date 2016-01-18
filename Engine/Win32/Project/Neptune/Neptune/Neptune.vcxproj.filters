@@ -106,9 +106,6 @@
     <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp">
       <Filter>Engine\Win32\HighLevel\Application</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.cpp">
-      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
@@ -143,6 +140,9 @@
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalEnumMappingFunctions.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicsProgram.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
   </ItemGroup>
@@ -246,9 +246,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\StdInterface\Updatable.h">
       <Filter>Engine\Multiplatform\Core\StdInterface</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.h">
-      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
@@ -313,6 +310,9 @@
       <Filter>Engine\Win32\Core\Math\Geometry</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalEnumMappingFunctions.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicsProgram.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>

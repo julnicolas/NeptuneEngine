@@ -27,25 +27,25 @@ GLenum Neptune::MapDrawingPrimitive(Renderer::DrawingPrimitive const p)
 	return primitive;
 }
 
-GLenum Neptune::MapType(const GraphicalProgram::Types type)
+GLenum Neptune::MapType(const GraphicsProgram::Types type)
 {
 	GLenum gl_type = GL_INVALID_ENUM;
 
 	switch(type)
 	{
-	case GraphicalProgram::Types::U8:
+	case GraphicsProgram::Types::U8:
 		gl_type = GL_UNSIGNED_BYTE;
 		break;
 
-	case GraphicalProgram::Types::U32:
+	case GraphicsProgram::Types::U32:
 		gl_type = GL_UNSIGNED_INT;
 		break;
 
-	case GraphicalProgram::Types::S32:
+	case GraphicsProgram::Types::S32:
 		gl_type = GL_INT;
 		break;
 
-	case GraphicalProgram::Types::FLOAT:
+	case GraphicsProgram::Types::FLOAT:
 		gl_type = GL_FLOAT;
 		break;
 

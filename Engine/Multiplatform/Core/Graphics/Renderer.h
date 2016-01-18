@@ -2,7 +2,7 @@
 
 #include "StdInterface/Updatable.h"
 #include "System/Type/Integers.h"
-#include "Graphics/GraphicalProgram.h"
+#include "Graphics/GraphicsProgram.h"
 
 #include <vector>
 
@@ -25,7 +25,7 @@ namespace Neptune
 		Renderer(const Renderer&)            = delete;
 		Renderer& operator=(const Renderer&) = delete;
 
-		GraphicalProgram& createProgram();
+		GraphicsProgram& createProgram();
 		bool updateUniform(u8 pgm_index, const char* name, void* data);
 		void setNbverticesToRender(u32 nbvertices)     { m_nbverticesToRender = nbvertices; }
 		void setDrawingPrimitive(DrawingPrimitive dp)  { m_drawingPrimitive   = dp;         }
@@ -36,17 +36,17 @@ namespace Neptune
 
 	protected:
 		// Types
-		typedef std::vector<GraphicalProgram*>::const_iterator ConstGraphicalProgramIterator;
-		typedef std::vector<GraphicalProgram*>::iterator       GraphicalProgramIterator;
+		typedef std::vector<GraphicsProgram*>::const_iterator ConstGraphicalProgramIterator;
+		typedef std::vector<GraphicsProgram*>::iterator       GraphicalProgramIterator;
 
 		// Methods
 		virtual void draw() = 0;                                             /// Display graphics to the window
-		virtual void bindShaderAttributes(const GraphicalProgram& pgm);
+		virtual void bindShaderAttributes(const GraphicsProgram& pgm);
 
 		u32                                                           m_nbverticesToRender;  /// Number of vertices that will be passed to the vertex shader
 		DrawingPrimitive                                              m_drawingPrimitive;    /// Which OpenGL drawing primitive must be used for rendering (Triangles, TriangleFan...)
-		std::vector<GraphicalProgram*>                                m_programs;            /// Contains all the OpenGL programs that must be applied by a renderer
-		std::unordered_map<const GraphicalProgram*,std::vector<u32> > m_vbos;               /// Contains all vbos used by a graphical program
+		std::vector<GraphicsProgram*>                                m_programs;            /// Contains all the OpenGL programs that must be applied by a renderer
+		std::unordered_map<const GraphicsProgram*,std::vector<u32> > m_vbos;               /// Contains all vbos used by a graphical program
 
 	private:
 		void bindUniformVars(ConstGraphicalProgramIterator& it);

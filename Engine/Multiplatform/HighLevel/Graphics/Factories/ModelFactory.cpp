@@ -20,10 +20,10 @@ ElementView* ModelFactory::create()
 
 	prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::POSITION);
 	{
-		GraphicalProgram::ShaderAttribute position =
+		GraphicsProgram::ShaderAttribute position =
 		{
 			0,                                // layout
-			GraphicalProgram::Types::FLOAT,  // Type
+			GraphicsProgram::Types::FLOAT,  // Type
 			3,                              // nb components per value
 			false,                          // Should data be normalized?
 			prop->m_bufferSize,            // data size
@@ -34,10 +34,10 @@ ElementView* ModelFactory::create()
 
 	prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::COLOR);
 	{
-		GraphicalProgram::ShaderAttribute color;
+		GraphicsProgram::ShaderAttribute color;
 		
 		color.m_layout = 1;
-		color.m_type = GraphicalProgram::Types::U8;
+		color.m_type = GraphicsProgram::Types::U8;
 		color.m_nbComponents = 3;
 		color.m_normalized = (prop->m_valueType != PLYLoader::FLOAT && prop->m_valueType != PLYLoader::DOUBLE) ? true : false;
 		color.m_size = prop->m_bufferSize;
@@ -47,8 +47,8 @@ ElementView* ModelFactory::create()
 	}
 
 	// Add the MV matrix
-	GraphicalProgram::UniformVarInput mv("ModelView",
-		GraphicalProgram::FLOAT,
+	GraphicsProgram::UniformVarInput mv("ModelView",
+		GraphicsProgram::FLOAT,
 		4,
 		4,
 		16*sizeof(float),
@@ -70,7 +70,7 @@ ElementView* ModelFactory::create()
 
 	// Create the program
 	{
-		GraphicalProgram& pgm = renderer.createProgram();
+		GraphicsProgram& pgm = renderer.createProgram();
 		pgm.add(vert.getId());
 		pgm.add(frag.getId());
 		pgm.addShaderAttribute(m_shaderAttributes[0]);

@@ -225,7 +225,7 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementView.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalEnumMappingFunctions.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.cpp" />
-    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicsProgram.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp" />
@@ -255,7 +255,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementView.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalEnumMappingFunctions.h" />
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalProgram.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicsProgram.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\IncludeOpenGL.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.h" />

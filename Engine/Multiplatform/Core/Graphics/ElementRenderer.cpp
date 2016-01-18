@@ -59,8 +59,8 @@ bool ElementRenderer::init()
 
 		// Populate them and enable them to be used in the graphical pipeline
 		u8 attrib_index = 0;
-		GraphicalProgram::ConstShaderAttributeIterator att_end = (*it)->shaderAttributeCEnd();
-		for(GraphicalProgram::ConstShaderAttributeIterator att = (*it)->shaderAttributeCBegin(); att != att_end; ++att,attrib_index++)
+		GraphicsProgram::ConstShaderAttributeIterator att_end = (*it)->shaderAttributeCEnd();
+		for(GraphicsProgram::ConstShaderAttributeIterator att = (*it)->shaderAttributeCBegin(); att != att_end; ++att,attrib_index++)
 		{
 			// Fill the buffers
 			glBindBuffer(GL_ARRAY_BUFFER,vbos_handle[attrib_index]);
@@ -112,7 +112,7 @@ void ElementRenderer::draw()
 	glDrawElements( MapDrawingPrimitive(m_drawingPrimitive), m_nbverticesToRender, ::MapType(m_indexType), 0 );
 }
 
-void ElementRenderer::bindShaderAttributes(const GraphicalProgram& pgm)
+void ElementRenderer::bindShaderAttributes(const GraphicsProgram& pgm)
 {
 	// Bind the indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);

@@ -53,8 +53,8 @@ bool VAORenderer::init()
 
 		// Populate them and enable them to be used in the graphical pipeline
 		u8 attrib_index = 0;
-		GraphicalProgram::ConstShaderAttributeIterator att_end = (*it)->shaderAttributeCEnd();
-		for ( GraphicalProgram::ConstShaderAttributeIterator att = (*it)->shaderAttributeCBegin(); att != att_end; ++att, attrib_index++ )
+		GraphicsProgram::ConstShaderAttributeIterator att_end = (*it)->shaderAttributeCEnd();
+		for ( GraphicsProgram::ConstShaderAttributeIterator att = (*it)->shaderAttributeCBegin(); att != att_end; ++att, attrib_index++ )
 		{
 			// Fill the buffers
 			glBindBuffer( GL_ARRAY_BUFFER, vbos_handle[ attrib_index ] );
@@ -80,7 +80,7 @@ void VAORenderer::draw()
 	glDrawArrays( MapDrawingPrimitive( m_drawingPrimitive ) , 0, m_nbverticesToRender );
 }
 
-void VAORenderer::bindShaderAttributes(const GraphicalProgram& pgm)
+void VAORenderer::bindShaderAttributes(const GraphicsProgram& pgm)
 {
 	glBindVertexArray( m_vao );
 	Renderer::bindShaderAttributes( pgm );

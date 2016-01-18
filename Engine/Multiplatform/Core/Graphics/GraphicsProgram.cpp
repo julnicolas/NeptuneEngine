@@ -1,17 +1,17 @@
-#include "GraphicalProgram.h"
+#include "GraphicsProgram.h"
 #include "Debug/NeptuneDebug.h"
 #include "Graphics/IncludeOpenGL.h"
 #include "System/Hashing/FastHashFunctions.h"
 
 using namespace Neptune;
 
-GraphicalProgram::GraphicalProgram():
+GraphicsProgram::GraphicsProgram():
 	m_programId(0)
 {
 	m_programId = glCreateProgram();
 }
 
-GraphicalProgram::~GraphicalProgram()
+GraphicsProgram::~GraphicsProgram()
 {
 	// Destroy its uniform variables
 	{
@@ -31,19 +31,19 @@ GraphicalProgram::~GraphicalProgram()
 	glDeleteProgram( m_programId );
 }
 
-void GraphicalProgram::add(u32 shader)
+void GraphicsProgram::add(u32 shader)
 {
 	glAttachShader(m_programId, shader);
 }
 
-bool GraphicalProgram::build()
+bool GraphicsProgram::build()
 {
 	glLinkProgram(m_programId);
 
 	return true;
 }
 
-void GraphicalProgram::addUniformBlock(const char* blockName, const char** variablesName, const UniformBlockData* values, const u32 size)
+void GraphicsProgram::addUniformBlock(const char* blockName, const char** variablesName, const UniformBlockData* values, const u32 size)
 {
     // Get the index of the uniform block
     u32 block_index = glGetUniformBlockIndex(m_programId, blockName);
@@ -92,31 +92,31 @@ void GraphicalProgram::addUniformBlock(const char* blockName, const char** varia
 	m_uniformBlockBuffers[ubo_handle] = block_buffer;
 }
 
-void GraphicalProgram::rmUniformBlock(const u32 ubo_handle)
+void GraphicsProgram::rmUniformBlock(const u32 ubo_handle)
 {
 	delete[] m_uniformBlockBuffers[ubo_handle];
 	m_uniformBlockBuffers.erase(ubo_handle);
 }
 
-void GraphicalProgram::addShaderAttribute(const ShaderAttribute& desc)
+void GraphicsProgram::addShaderAttribute(const ShaderAttribute& desc)
 {
 	m_shaderAttributes.push_back( desc );
 }
 
-void GraphicalProgram::addUniformVariable(const UniformVarInput& def)
+void GraphicsProgram::addUniformVariable(const UniformVarInput& def)
 {
 	// Foolish but it's a pain in the ass to code a new hash function for std::unordered_map
 	// it's late I want to go to bed
 	m_uniformVars.insert( { (const char*) Fnv1a32( (u8*) def.getName(), strlen(def.getName()) ), def} );
 }
 
-GraphicalProgram::UniformVarIterator GraphicalProgram::getUniformVar(const char* name)
+GraphicsProgram::UniformVarIterator GraphicsProgram::getUniformVar(const char* name)
 {
 	// Same applies here (the pain in da butt)
 	return m_uniformVars.find( (const char*) Fnv1a32( (u8*) name, strlen(name) ) );
 }
 
-GraphicalProgram::UniformVarInput::UniformVarInput(const char* name,Types type,u8 rows,u8 columns,u64 dataSize,const void* data):
+GraphicsProgram::UniformVarInput::UniformVarInput(const char* name,Types type,u8 rows,u8 columns,u64 dataSize,const void* data):
 m_type(type),m_nbColumns(columns),m_nbRows(rows)
 {
 	NEP_ASSERT( m_nbRows > 0 && m_nbRows <= 4 );
@@ -132,7 +132,7 @@ m_type(type),m_nbColumns(columns),m_nbRows(rows)
 	m_data = u_data;
 }
 
-size_t GraphicalProgram::getTypeSize(Types t)
+size_t GraphicsProgram::getTypeSize(Types t)
 {
 	switch (t)
 	{
@@ -154,12 +154,12 @@ size_t GraphicalProgram::getTypeSize(Types t)
 	}
 }
 
-void GraphicalProgram::UniformVarInput::setData(void* data)
+void GraphicsProgram::UniformVarInput::setData(void* data)
 {
-	memcpy( m_data, data, m_nbColumns*m_nbRows*GraphicalProgram::getTypeSize(m_type) );
+	memcpy( m_data, data, m_nbColumns*m_nbRows*GraphicsProgram::getTypeSize(m_type) );
 }
 
-void GraphicalProgram::UniformVarInput::destruct()
+void GraphicsProgram::UniformVarInput::destruct()
 {
 	delete[] m_name;
 	delete[] m_data;

@@ -21,8 +21,8 @@ VAOView* TriangleFactory::create()
 	
 	// Add the MV matrix
 
-	GraphicalProgram::UniformVarInput mv("ModelView",
-		GraphicalProgram::FLOAT,
+	GraphicsProgram::UniformVarInput mv("ModelView",
+		GraphicsProgram::FLOAT,
 		4,
 		4,
 		16*sizeof(float),
@@ -39,7 +39,7 @@ VAOView* TriangleFactory::create()
 
 	// Create the program to display a triangle
 	{
-		GraphicalProgram& pgm = renderer.createProgram();
+		GraphicsProgram& pgm = renderer.createProgram();
 		pgm.add(vert.getId());
 		pgm.add(frag.getId());
 		pgm.addShaderAttribute(m_shaderAttributes[0]);
@@ -71,20 +71,20 @@ void TriangleFactory::initData(float r, float g, float b)
 
 	// Create the shader attributes
 
-	GraphicalProgram::ShaderAttribute t1_data =
+	GraphicsProgram::ShaderAttribute t1_data =
 	{
 		0,                                          // layout
-		GraphicalProgram::Types::FLOAT,            // Type
+		GraphicsProgram::Types::FLOAT,            // Type
 		3,                                        // nb components per value
 		false,                                    // Should data be normalized?
 		m_vertices.size()*sizeof(m_vertices[0]), // data size
 		&m_vertices[0]                          // data
 	};
 
-	GraphicalProgram::ShaderAttribute c1_data =
+	GraphicsProgram::ShaderAttribute c1_data =
 	{
 		1,                                      // layout
-		GraphicalProgram::Types::FLOAT,        // Type
+		GraphicsProgram::Types::FLOAT,        // Type
 		3,                                    // nb components per value
 		false,                                // Should data be normalized?
 		m_colors.size()*sizeof(m_colors[0]), // data size

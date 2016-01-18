@@ -27,7 +27,7 @@ namespace Neptune
 
 	protected:
 		void draw() override;                                                   /// Display graphics to the window
-		void bindShaderAttributes(const GraphicalProgram& pgm) override;
+		void bindShaderAttributes(const GraphicsProgram& pgm) override;
 
 	private:
 		u32                                                           m_indexBuffer;

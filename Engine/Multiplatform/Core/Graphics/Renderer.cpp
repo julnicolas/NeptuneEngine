@@ -52,16 +52,16 @@ Neptune::Renderer::~Renderer()
 		delete *it;
 }
 
-GraphicalProgram& Renderer::createProgram()
+GraphicsProgram& Renderer::createProgram()
 {
-	m_programs.push_back( new GraphicalProgram );
+	m_programs.push_back( new GraphicsProgram );
 
 	return *m_programs.back();
 }
 
 bool Renderer::updateUniform(u8 pgm_index, const char* name, void* data)
 {
-	GraphicalProgram::UniformVarIterator it = m_programs[pgm_index]->getUniformVar(name);
+	GraphicsProgram::UniformVarIterator it = m_programs[pgm_index]->getUniformVar(name);
 	if ( it != m_programs[pgm_index]->uniformVarEnd() )
 	{
 		it->second.setData( data );
@@ -71,19 +71,19 @@ bool Renderer::updateUniform(u8 pgm_index, const char* name, void* data)
 	return false;
 }
 
-static void SetSingleValuedUniform(s32 location, const GraphicalProgram::UniformVarInput& var)
+static void SetSingleValuedUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
 {
 	switch( var.getDataType() )
 	{
-	case GraphicalProgram::Types::FLOAT:
+	case GraphicsProgram::Types::FLOAT:
 		glUniform1f( location, *(float*) var.getData() );
 		break;
 
-	case GraphicalProgram::Types::U32:
+	case GraphicsProgram::Types::U32:
 		glUniform1ui( location, *(u32*) var.getData() );
 		break;
 
-	case GraphicalProgram::Types::S32:
+	case GraphicsProgram::Types::S32:
 		glUniform1i( location, *(s32*) var.getData() );
 		break;
 
@@ -93,13 +93,13 @@ static void SetSingleValuedUniform(s32 location, const GraphicalProgram::Uniform
 	}
 }
 
-static void SetVectorialUniform(s32 location, const GraphicalProgram::UniformVarInput& var)
+static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
 {
 	switch( var.getDataType() )
 	{
 
 	////////////////////////////////////////////////
-	case GraphicalProgram::Types::FLOAT:
+	case GraphicsProgram::Types::FLOAT:
 		
 		switch ( var.getNbRows() )
 		{
@@ -125,7 +125,7 @@ static void SetVectorialUniform(s32 location, const GraphicalProgram::UniformVar
 
 
 	///////////////////////////////////////////////////
-	case GraphicalProgram::Types::U32:
+	case GraphicsProgram::Types::U32:
 
 		switch(var.getNbRows())
 		{
@@ -151,7 +151,7 @@ static void SetVectorialUniform(s32 location, const GraphicalProgram::UniformVar
 
 		
 	////////////////////////////////////////////////////
-	case GraphicalProgram::Types::S32:
+	case GraphicsProgram::Types::S32:
 
 		switch(var.getNbRows())
 		{
@@ -182,9 +182,9 @@ static void SetVectorialUniform(s32 location, const GraphicalProgram::UniformVar
 	}
 }
 
-static void SetMatrixUniform(s32 location, const GraphicalProgram::UniformVarInput& var)
+static void SetMatrixUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
 {
-	NEP_ASSERT( var.getDataType() == GraphicalProgram::Types::FLOAT );
+	NEP_ASSERT( var.getDataType() == GraphicsProgram::Types::FLOAT );
 
 	if ( var.getNbRows() == var.getNbColumns() ) // Square matrix
 	{
@@ -228,7 +228,7 @@ static void SetMatrixUniform(s32 location, const GraphicalProgram::UniformVarInp
 	}
 }
 
-static void SetUniform(s32 location, const GraphicalProgram::UniformVarInput& var)
+static void SetUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
 {
 	// First check if the data is a single value, a vector or a matrix
 
@@ -249,12 +249,12 @@ static void SetUniform(s32 location, const GraphicalProgram::UniformVarInput& va
 	}
 }
 
-void Renderer::bindShaderAttributes(const GraphicalProgram& pgm)
+void Renderer::bindShaderAttributes(const GraphicsProgram& pgm)
 {
 	// Bind every pgm's vertex attribute to its vbo
 	u32 i = 0;
-	GraphicalProgram::ConstShaderAttributeIterator att_end = pgm.shaderAttributeCEnd();
-	for(GraphicalProgram::ConstShaderAttributeIterator att = pgm.shaderAttributeCBegin(); att != att_end; ++att,i++)
+	GraphicsProgram::ConstShaderAttributeIterator att_end = pgm.shaderAttributeCEnd();
+	for(GraphicsProgram::ConstShaderAttributeIterator att = pgm.shaderAttributeCBegin(); att != att_end; ++att,i++)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER,m_vbos[&pgm][i]);
 		glVertexAttribPointer(att->m_layout,att->m_nbComponents,MapType(att->m_type),att->m_normalized,0,NULL);
@@ -264,8 +264,8 @@ void Renderer::bindShaderAttributes(const GraphicalProgram& pgm)
 void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 {
 	// Browse the uniform vars
-	GraphicalProgram::ConstUniformVarIterator uni_it_end = (*it)->uniformVarCEnd();
-	for(GraphicalProgram::ConstUniformVarIterator uni_it = (*it)->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it)
+	GraphicsProgram::ConstUniformVarIterator uni_it_end = (*it)->uniformVarCEnd();
+	for(GraphicsProgram::ConstUniformVarIterator uni_it = (*it)->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it)
 	{
 		s32 location = glGetUniformLocation( (*it)->getId(), uni_it->second.getName() );
 		NEP_ASSERT(location >= 0 && glGetError() != GL_INVALID_VALUE && glGetError() != GL_INVALID_OPERATION);

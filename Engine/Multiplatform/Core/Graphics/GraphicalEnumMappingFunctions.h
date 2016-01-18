@@ -6,5 +6,5 @@
 namespace Neptune
 {
 	GLenum MapDrawingPrimitive(Neptune::Renderer::DrawingPrimitive const p);
-	GLenum MapType(const Neptune::GraphicalProgram::Types type);
+	GLenum MapType(const Neptune::GraphicsProgram::Types type);
 }

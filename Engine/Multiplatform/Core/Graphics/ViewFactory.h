@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/GraphicalProgram.h"
+#include "Graphics/GraphicsProgram.h"
 #include "Graphics/Renderer.h"
 #include <vector>
 #include <string>
@@ -25,7 +25,7 @@ namespace Neptune
 		std::vector<float>                             m_colors;
 		std::string                                    m_vertexShaderName;
 		std::string                                    m_fragmentShaderName;
-		std::vector<GraphicalProgram::ShaderAttribute> m_shaderAttributes;
-		std::vector<GraphicalProgram::UniformVarInput> m_uniformVars;
+		std::vector<GraphicsProgram::ShaderAttribute> m_shaderAttributes;
+		std::vector<GraphicsProgram::UniformVarInput> m_uniformVars;
 	};
 }

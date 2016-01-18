@@ -10,7 +10,7 @@ namespace Neptune
 	/// Represents a full OpenGL program (with all its shaders).
 	///
 
-	class GraphicalProgram
+	class GraphicsProgram
 	{
 	public:
 
@@ -61,7 +61,7 @@ namespace Neptune
 		class UniformVarInput
 		{
 		public:
-			friend class GraphicalProgram;
+			friend class GraphicsProgram;
 
 			///
 			/// COPY the input parameters to initialize the object.
@@ -126,10 +126,10 @@ namespace Neptune
 		////////////////////////////////////////////////////////////////////////
 
 
-		GraphicalProgram();
-		~GraphicalProgram();
-		GraphicalProgram(const GraphicalProgram&)            = delete;
-		GraphicalProgram& operator=(const GraphicalProgram&) = delete;
+		GraphicsProgram();
+		~GraphicsProgram();
+		GraphicsProgram(const GraphicsProgram&)            = delete;
+		GraphicsProgram& operator=(const GraphicsProgram&) = delete;
 
 		void add(u32 shader);
 		bool build();
