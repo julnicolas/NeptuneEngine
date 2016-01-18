@@ -56,3 +56,39 @@ GLenum Neptune::MapType(const GraphicsProgram::Types type)
 
 	return gl_type;
 }
+
+Neptune::GraphicsProgram::Types Neptune::MapType(const PLYLoader::ValueType type)
+{
+	GraphicsProgram::Types ret_type = GraphicsProgram::U8;
+
+	switch(type)
+	{
+	case PLYLoader::UCHAR:
+		ret_type = GraphicsProgram::U8;
+		break;
+
+	case PLYLoader::USHORT:
+		NEP_ASSERT(false); // Not supported yet
+		//ret_type = GraphicsProgram::U16;
+		break;
+
+	case PLYLoader::UINT:
+		ret_type = GraphicsProgram::U32;
+		break;
+
+	case PLYLoader::FLOAT:
+		ret_type = GraphicsProgram::FLOAT;
+		break;
+
+	case PLYLoader::DOUBLE:
+		NEP_ASSERT(false); // Not supported yet
+		//ret_type = GraphicsProgram::DOUBLE;
+		break;
+
+	default:
+		NEP_ASSERT(false);
+		break;
+	}
+
+	return ret_type;
+}

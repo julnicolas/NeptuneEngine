@@ -1,6 +1,7 @@
 #include "Graphics/Factories/TriangleFactory.h"
 #include "Graphics/VAOView.h"
 #include "Graphics/Shader.h"
+#include "Graphics/GraphicalEnumMappingFunctions.h"
 #include "Debug/NeptuneDebug.h"
 
 using namespace Neptune;

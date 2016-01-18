@@ -2,6 +2,7 @@
 #include "Graphics/ElementRenderer.h"
 #include "Graphics/Shader.h"
 #include "Graphics/PLYLoader.h"
+#include "Graphics/GraphicalEnumMappingFunctions.h"
 #include "Debug/NeptuneDebug.h"
 
 using namespace Neptune;
@@ -23,7 +24,7 @@ ElementView* ModelFactory::create()
 		GraphicsProgram::ShaderAttribute position =
 		{
 			0,                                // layout
-			GraphicsProgram::Types::FLOAT,  // Type
+			MapType(prop->m_valueType),  // Type
 			3,                              // nb components per value
 			false,                          // Should data be normalized?
 			prop->m_bufferSize,            // data size
@@ -37,7 +38,7 @@ ElementView* ModelFactory::create()
 		GraphicsProgram::ShaderAttribute color;
 		
 		color.m_layout = 1;
-		color.m_type = GraphicsProgram::Types::U8;
+		color.m_type = MapType( prop->m_valueType );
 		color.m_nbComponents = 3;
 		color.m_normalized = (prop->m_valueType != PLYLoader::FLOAT && prop->m_valueType != PLYLoader::DOUBLE) ? true : false;
 		color.m_size = prop->m_bufferSize;
