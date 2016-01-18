@@ -35,6 +35,12 @@ static size_t GetTypeSizeFromHeaderLine(const char* type, PLYLoader::ValueType& 
 		return sizeof(unsigned short);
 	}
 
+	if ( !strcmp(type, "double") )
+	{
+		valType = PLYLoader::ValueType::DOUBLE;
+		return sizeof(double);
+	}
+
 	return UNKNOWN_TYPE;
 }
 
@@ -54,6 +60,9 @@ static GLushort GetGLTypeFromPLYLoaderValueType(PLYLoader::ValueType type)
 
 	case PLYLoader::UINT:
 		return GL_UNSIGNED_INT;
+
+	case PLYLoader::DOUBLE:
+		return GL_DOUBLE;
 
 	default:
 		return WRONG_GL_TYPE;
@@ -247,6 +256,10 @@ static void convertStringToNumeral(const char* string_val, PLYLoader::ValueType 
 
 	case PLYLoader::ValueType::FLOAT:
 		*(float*)o_value = static_cast<float>( atof(string_val) );
+		break;
+
+	case PLYLoader::ValueType::DOUBLE:
+		*(double*)o_value = atof(string_val);
 		break;
 
 	default:
