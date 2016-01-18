@@ -21,7 +21,6 @@ namespace Neptune
 		void bindShaderAttributes(const GraphicalProgram& pgm) override;
 
 	private:
-		u32                                                            m_vao;
-		std::unordered_map<const GraphicalProgram*, std::vector<u32> > m_vbos; /// Contains all vbos used by a graphical program
+		u32  m_vao;
 	};
 }

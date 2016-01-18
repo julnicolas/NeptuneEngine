@@ -116,13 +116,7 @@ void ElementRenderer::bindShaderAttributes(const GraphicalProgram& pgm)
 {
 	// Bind the indices
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
-	
-	// Bind every pgm's vertex attribute to its vbo
-	u32 i = 0;
-	GraphicalProgram::ConstShaderAttributeIterator att_end = pgm.shaderAttributeCEnd();
-	for(GraphicalProgram::ConstShaderAttributeIterator att = pgm.shaderAttributeCBegin(); att != att_end; ++att,i++)
-	{
-		glBindBuffer(GL_ARRAY_BUFFER,m_vbos[&pgm][i]);
-		glVertexAttribPointer(att->m_layout,att->m_nbComponents,MapType(att->m_type),GL_FALSE,0,NULL);
-	}
+
+	// Bind the attributes
+	Renderer::bindShaderAttributes( pgm );
 }

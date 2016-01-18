@@ -116,6 +116,7 @@ void CubeFactory::initCubeData(float r, float g, float b)
 		0,                                // layout
 		GraphicalProgram::Types::FLOAT,  // Type
 		3,                              // nb components per value
+		false,                          // Should data be normalized?
 		sizeof(t1),                    // data size
 		&m_vertices[0]                // data
 	};
@@ -125,6 +126,7 @@ void CubeFactory::initCubeData(float r, float g, float b)
 		1,                                      // layout
 		GraphicalProgram::Types::FLOAT,        // Type
 		3,                                    // nb components per value
+		false,                                // Should data be normalized?
 		m_colors.size()*sizeof(m_colors[0]), // data size
 		&m_colors[0]                        // data
 	};

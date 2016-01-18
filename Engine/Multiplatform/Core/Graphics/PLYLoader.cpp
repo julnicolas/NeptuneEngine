@@ -275,19 +275,19 @@ static void readPropertyValues(void* data, const PLYLoader::Property& prop, char
 	switch ( prop.m_propType )
 	{
 	case PLYLoader::PropertyType::POSITION:
-		convertNValues(ascii_values, data, prop.m_valType, prop.m_typeSize, 3, lineIterator);
+		convertNValues(ascii_values, data, prop.m_valueType, prop.m_typeSize, 3, lineIterator);
 		break;
 
 	case PLYLoader::PropertyType::COLOR:
-		convertNValues(ascii_values, data, prop.m_valType, prop.m_typeSize, 3, lineIterator);
+		convertNValues(ascii_values, data, prop.m_valueType, prop.m_typeSize, 3, lineIterator);
 		break;
 
 	case PLYLoader::PropertyType::COLOR_ALPHA:
-		convertNValues(ascii_values, data, prop.m_valType, prop.m_typeSize, 4, lineIterator);
+		convertNValues(ascii_values, data, prop.m_valueType, prop.m_typeSize, 4, lineIterator);
 		break;
 
 	case PLYLoader::PropertyType::NORMAL:
-		convertNValues(ascii_values, data, prop.m_valType, prop.m_typeSize, 3, lineIterator);
+		convertNValues(ascii_values, data, prop.m_valueType, prop.m_typeSize, 3, lineIterator);
 		break;
 
 	case PLYLoader::PropertyType::INDEX:
@@ -295,7 +295,7 @@ static void readPropertyValues(void* data, const PLYLoader::Property& prop, char
 		unsigned char nb_val = 0;
 		convertStringToNumeral(ascii_values, PLYLoader::ValueType::UCHAR, &nb_val);
 		ascii_values = strtok(NULL, SEPARATION_CHAR); // Get the first value
-		convertNValues(ascii_values, data, prop.m_valType, prop.m_typeSize, nb_val, lineIterator);
+		convertNValues(ascii_values, data, prop.m_valueType, prop.m_typeSize, nb_val, lineIterator);
 	}
 		break;
 
@@ -351,18 +351,19 @@ void PLYLoader::allocateBuffers()
 			size_t buffer_size = 0;
 			buffer_size     = ( it_property->m_propType != COLOR_ALPHA ) ? 3*it_property->m_typeSize : 4*it_property->m_typeSize; // Horrendous! Each and every property should be able to retrieve its size!
 			buffer_size     *= it_element->getDataLinesNb();
-			NEP_ASSERT( allocateBuffer( it_property->m_propType, buffer_size ) );
+			NEP_ASSERT( allocateBuffer( it_property->m_propType, it_property->m_valueType, buffer_size ) );
 		}
 	}
 }
 
-bool PLYLoader::allocateBuffer(PropertyType prop_type, size_t size)
+bool PLYLoader::allocateBuffer(PropertyType propType, ValueType valueType, size_t size)
 {
 	PropertyData data;
+	data.m_valueType  = valueType;
 	data.m_bufferSize = size;
 	data.m_buffer     = malloc(size);
 
-	m_propertyBuffers[prop_type] = data;
+	m_propertyBuffers[propType] = data;
 
 	return data.m_buffer != NULL;
 }

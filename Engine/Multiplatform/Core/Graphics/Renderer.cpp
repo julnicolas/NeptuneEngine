@@ -1,4 +1,5 @@
 #include "Renderer.h"
+#include "Graphics/GLEnumMappingFunctions.h"
 #include "Debug/NeptuneDebug.h"
 #include <cstring>
 
@@ -245,6 +246,18 @@ static void SetUniform(s32 location, const GraphicalProgram::UniformVarInput& va
 	else // It's a single value
 	{
 		SetSingleValuedUniform( location, var );
+	}
+}
+
+void Renderer::bindShaderAttributes(const GraphicalProgram& pgm)
+{
+	// Bind every pgm's vertex attribute to its vbo
+	u32 i = 0;
+	GraphicalProgram::ConstShaderAttributeIterator att_end = pgm.shaderAttributeCEnd();
+	for(GraphicalProgram::ConstShaderAttributeIterator att = pgm.shaderAttributeCBegin(); att != att_end; ++att,i++)
+	{
+		glBindBuffer(GL_ARRAY_BUFFER,m_vbos[&pgm][i]);
+		glVertexAttribPointer(att->m_layout,att->m_nbComponents,MapType(att->m_type),att->m_normalized,0,NULL);
 	}
 }
 

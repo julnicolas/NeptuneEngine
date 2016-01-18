@@ -28,17 +28,18 @@ namespace Neptune
 			UCHAR,
 			USHORT,
 			UINT,
-			FLOAT
+			FLOAT,
+			DOUBLE
 		};
 
 		struct Property
 		{
-			ValueType    m_valType;
+			ValueType    m_valueType;
 			PropertyType m_propType;
 			size_t       m_typeSize;
 
 			Property(PropertyType type, ValueType valType, size_t size) :
-				m_typeSize(size), m_valType(valType), m_propType(type) {}
+				m_typeSize(size), m_valueType(valType), m_propType(type) {}
 		};
 
 		class Element
@@ -59,8 +60,9 @@ namespace Neptune
 
 		struct PropertyData
 		{
-			size_t m_bufferSize;
-			void*  m_buffer;
+			ValueType m_valueType;
+			size_t    m_bufferSize;
+			void*     m_buffer;
 		};
 
 		PLYLoader();
@@ -82,7 +84,7 @@ namespace Neptune
 
 		// Buffer management
 		void allocateBuffers(); // Use m_propertyListReadOrder
-		bool allocateBuffer(PropertyType prop, size_t size);
+		bool allocateBuffer(PropertyType prop, ValueType valType, size_t size);
 		void fillBuffer(PropertyType prop, void* data, size_t size);
 
 		// Attributes

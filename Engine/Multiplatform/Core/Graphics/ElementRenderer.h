@@ -32,6 +32,5 @@ namespace Neptune
 	private:
 		u32                                                           m_indexBuffer;
 		IndexType                                                     m_indexType;
-		std::unordered_map<const GraphicalProgram*,std::vector<u32> > m_vbos; /// Contains all vbos used by a graphical program
 	};
 }

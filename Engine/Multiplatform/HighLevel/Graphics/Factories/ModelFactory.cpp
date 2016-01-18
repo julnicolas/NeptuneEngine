@@ -19,29 +19,34 @@ ElementView* ModelFactory::create()
 	PLYLoader::PropertyData* prop = nullptr;
 
 	prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::POSITION);
-	GraphicalProgram::ShaderAttribute position =
 	{
-		0,                                // layout
-		GraphicalProgram::Types::FLOAT,  // Type
-		3,                              // nb components per value
-		prop->m_bufferSize,            // data size
-		prop->m_buffer                // data
-	};
-	m_shaderAttributes.push_back(position);
+		GraphicalProgram::ShaderAttribute position =
+		{
+			0,                                // layout
+			GraphicalProgram::Types::FLOAT,  // Type
+			3,                              // nb components per value
+			false,                          // Should data be normalized?
+			prop->m_bufferSize,            // data size
+			prop->m_buffer                // data
+		};
+		m_shaderAttributes.push_back(position);
+	}
 
 	prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::COLOR);
-	GraphicalProgram::ShaderAttribute color =
 	{
-		1,                                      // layout
-		GraphicalProgram::Types::U8,          // Type
-		3,                                    // nb components per value
-		prop->m_bufferSize,					 // data size
-		prop->m_buffer                      // data
-	};
-	m_shaderAttributes.push_back(color);
+		GraphicalProgram::ShaderAttribute color;
+		
+		color.m_layout = 1;
+		color.m_type = GraphicalProgram::Types::U8;
+		color.m_nbComponents = 3;
+		color.m_normalized = (prop->m_valueType != PLYLoader::FLOAT && prop->m_valueType != PLYLoader::DOUBLE) ? true : false;
+		color.m_size = prop->m_bufferSize;
+		color.m_data = prop->m_buffer;
+		
+		m_shaderAttributes.push_back(color);
+	}
 
 	// Add the MV matrix
-
 	GraphicalProgram::UniformVarInput mv("ModelView",
 		GraphicalProgram::FLOAT,
 		4,
@@ -63,7 +68,7 @@ ElementView* ModelFactory::create()
 	Shader vert(m_vertexShaderName.c_str(),GL_VERTEX_SHADER);
 	Shader frag(m_fragmentShaderName.c_str(),GL_FRAGMENT_SHADER);
 
-	// Create the program to display a triangle
+	// Create the program
 	{
 		GraphicalProgram& pgm = renderer.createProgram();
 		pgm.add(vert.getId());
