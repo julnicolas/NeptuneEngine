@@ -7,6 +7,8 @@ namespace Neptune
 	template <typename T> class Vec3_t;
 	typedef Vec3_t<float> Vec3;
 
+	/// The world space is left-handed
+	
 	class Transform
 	{
 	public:
@@ -15,7 +17,7 @@ namespace Neptune
 		Transform(const Transform&)            = default;
 		Transform& operator=(const Transform&) = default;
 
-		void rotate(float x, float y, float z);
+		void rotate(float x, float y, float z); /// Rotates in a clockwise orientation
 		void translate(float x, float y, float z);
 		void scale(float x, float y, float z);
 

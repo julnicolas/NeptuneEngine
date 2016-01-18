@@ -25,7 +25,8 @@ namespace Neptune
 		const glm::tvec3<T>*   a = &axis.getBase();
 		Mat4x4<T> r;
 
-		(glm::tmat4x4<T>&) r.getBase() = glm::rotate( *m, angle, *a );
+		// Rotation of -angle to turn in a clockwise orientation
+		(glm::tmat4x4<T>&) r.getBase() = glm::rotate( *m, -angle, *a );
 
 		return r;
 	}
