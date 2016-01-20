@@ -19,6 +19,9 @@ namespace Neptune
 
 	template <typename T>
 	Mat4x4<T> Perspective(T fieldOfView, T screenRatio, T near, T far);
+
+	template <typename T>
+	Mat4x4<T> Transpose(const Mat4x4<T>& matrix);
 }
 
 #include "Math/Vectors/MatrixTransformImplementation.h"

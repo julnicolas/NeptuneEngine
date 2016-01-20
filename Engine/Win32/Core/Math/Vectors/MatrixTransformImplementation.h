@@ -64,4 +64,13 @@ namespace Neptune
 
 		return r;
 	}
+
+	template <typename T>
+	Mat4x4<T> Transpose(const Mat4x4<T>& matrix)
+	{
+		Mat4x4<T> r;
+		(glm::tmat4x4<T>&) r.getBase() = glm::transpose( matrix.getBase() );
+
+		return r;
+	}
 }
