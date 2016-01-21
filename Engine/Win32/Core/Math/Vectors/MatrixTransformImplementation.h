@@ -3,6 +3,7 @@
 #include "Math/Vectors/Mat4x4.h"
 #include "Math/Vectors/Vec3.h"
 #include <glm/gtc/matrix_transform.hpp>
+#include <glm/geometric.hpp>
 
 namespace Neptune
 {
@@ -48,17 +49,28 @@ namespace Neptune
 	template <typename T>
 	Mat4x4<T> LookAt(const Vec3_t<T>& eye,const Vec3_t<T>& center,const Vec3_t<T>& up)
 	{
-		const glm::tvec3<T>*   e = &eye.getBase();
-		const glm::tvec3<T>*   c = &center.getBase();
-		const glm::tvec3<T>*   u = &up.getBase();
+		const glm::tvec3<T>&   e      = const_cast<glm::tvec3<T>&>( static_cast<const glm::tvec3<T>&>( eye.getBase()    ));
+		const glm::tvec3<T>&   c      = const_cast<glm::tvec3<T>&>( static_cast<const glm::tvec3<T>&>( center.getBase() ));
+		const glm::tvec3<T>&   u_base = const_cast<glm::tvec3<T>&>( static_cast<const glm::tvec3<T>&>( up.getBase()     ));
+
+		glm::tvec3<T> const f(glm::normalize(c - e));
+		glm::tvec3<T> const s(-glm::normalize(glm::cross(f,u_base)));
+		glm::tvec3<T> const u(-glm::cross(s,f));
+
 		Mat4x4<T> r;
-
-		glm::tmat4x4<T>& base = const_cast<glm::tmat4x4<T>&>( static_cast<const glm::tmat4x4<T>&>( r.getBase() ));
-		base = glm::lookAt( *e, *c, *u );
-
-		// Cancel the frame orientation change made by glm::lookAt
-		base[2]    *= -1;
-		base[3][2] *= -1;
+		glm::tmat4x4<T>& Result = const_cast<glm::tmat4x4<T>&>( static_cast<const glm::tmat4x4<T>&>( r.getBase() ));
+		Result[0][0] = s.x;
+		Result[1][0] = s.y;
+		Result[2][0] = s.z;
+		Result[0][1] = u.x;
+		Result[1][1] = u.y;
+		Result[2][1] = u.z;
+		Result[0][2] = f.x;
+		Result[1][2] = f.y;
+		Result[2][2] = f.z;
+		Result[3][0] = glm::dot(s,e);
+		Result[3][1] = glm::dot(u,e);
+		Result[3][2] =-glm::dot(f,e);
 
 		return r;
 	}
