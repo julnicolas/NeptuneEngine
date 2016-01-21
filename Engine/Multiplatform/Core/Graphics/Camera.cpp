@@ -2,25 +2,30 @@
 #include "Math/Vectors/Vec3.h"
 #include "Math/Vectors/MatrixTransform.h"
 #include "Math/Geometry/Trigonometry.h"
+#include "Math/Math.h"
 
 using namespace Neptune;
 
+const float M_INIT_NEAR = 0.1f;
+const float M_INIT_FAR  = 100.0f;
+const float M_INIT_FOV  = Radians(45.0f);
+
 Camera::Camera():
-	m_fieldOfView( Radians(90.0f) ),
+	m_fieldOfView( M_INIT_FOV ),
 	m_screenRatio(16.0f/9.0f),
-	m_nearPos(0.1f),
-	m_farPos(10.0f)
+	m_nearPos(M_INIT_NEAR),
+	m_farPos(M_INIT_FAR)
 {
 	setProjection();
 }
 
 Camera::Camera(const Vec3& eye, const Vec3& center, const Vec3& up):
-	m_fieldOfView( Radians(90.0f) ),
+	m_fieldOfView( M_INIT_FOV ),
 	m_screenRatio(16.0f/9.0f),
-	m_nearPos(0.1f),
-	m_farPos(10.0f)
+	m_nearPos(M_INIT_NEAR),
+	m_farPos(M_INIT_FAR)
 {
-	m_camera = LookAt(eye, center, up);
+	m_origin = LookAt(eye, center, up);
 	setProjection();
 }
 
@@ -41,23 +46,40 @@ void Camera::setScreenRatio(float ratio)
 	setProjection();
 }
 
-const Mat4& Camera::translate(const Vec3& t)
+const Mat4& Camera::lookAt(const Vec3& eye, const Vec3& center, const Vec3& up)
 {
-	m_camera *= Translate(m_camera, t);
+	m_origin      = LookAt(eye, center, up);
 
-	return m_camera;
+	// Reset position and orientation matrices
+	m_orientation = Mat4();
+	m_position    = Mat4();
+
+	return m_origin;
 }
 
-const Mat4& Camera::rotate(float angle_rad, const Vec3& axis)
+const Mat4& Camera::translate(float x, float y, float z)
 {
-	m_camera *= Rotate(m_camera, angle_rad, axis);
+	Vec3 t(-x, -y, -z);
+	m_position = Translate(m_position, t);
 
-	return m_camera;
+	return m_position;
+}
+
+const Mat4& Camera::rotate(float angle_deg, const Vec3& axis)
+{
+	m_orientation = Rotate(m_orientation, Radians(angle_deg), axis);
+
+	return m_orientation;
 }
 
 void Camera::zoom(float k)
 {
-	//m_fieldOfView
+	if ( k > 0.0f && k <= 100.0f)
+		m_fieldOfView = M_INIT_FOV * Max((100.0f-k)/100.0f, 0.01f);
+	else
+		m_fieldOfView = (k < 0.0f) ? M_INIT_FOV : m_fieldOfView;
+
+	setProjection();
 }
 
 void Camera::setProjection()

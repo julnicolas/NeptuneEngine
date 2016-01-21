@@ -16,29 +16,33 @@ namespace Neptune
 		Camera(const Camera&)            = default;
 		Camera& operator=(const Camera&) = default;
 
-		float getFieldOfView()            const { return m_fieldOfView; }
-		float getScreenRatio()            const { return m_screenRatio; }
-		float getNearPlan()               const { return m_nearPos;     }
-		float getFarPlan()                const { return m_farPos;      }
-		const Mat4& getViewMatrix()       const { return m_camera;      }
-		const Mat4& getProjectionMatrix() const { return m_projection;  }
+		float getFieldOfView()            const { return m_fieldOfView;                                      }
+		float getScreenRatio()            const { return m_screenRatio;                                      }
+		float getNearPlan()               const { return m_nearPos;                                          }
+		float getFarPlan()                const { return m_farPos;                                           }
+		const Mat4& getProjectionMatrix() const { return m_projection;                                       }
+		const Mat4& getViewMatrix()             { m_view = m_orientation*m_position*m_origin; return m_view; }
 
 		void  setViewFrustum(float fieldOfView, float screenRatio, float nearPos, float farPos); // FOV in radians, near and far in world coord
 		void  setScreenRatio(float ratio);
 
-		const Mat4& translate(const Vec3& t);
-		const Mat4& rotate(float angle_rad, const Vec3& axis); // Should be refactored using quaternions
-		void  zoom(float k);                                         // Affects field of view
+		const Mat4& lookAt(const Vec3& eye, const Vec3& center, const Vec3& up);
+		const Mat4& translate(float x, float y, float z);
+		const Mat4& rotate(float angle_deg, const Vec3& axis); // Should be refactored using quaternions
+		void  zoom(float k);                                  // Affects the field of view
 
 	private:
 		void setProjection();
 
-		Mat4  m_camera;
+		Mat4  m_origin;
+		Mat4  m_orientation;
+		Mat4  m_position;
+		Mat4  m_view;
 		Mat4  m_projection;
 		float m_fieldOfView;
 		float m_screenRatio;
 		float m_nearPos;    
-		float m_farPos;     
+		float m_farPos;
 	};
 
 
