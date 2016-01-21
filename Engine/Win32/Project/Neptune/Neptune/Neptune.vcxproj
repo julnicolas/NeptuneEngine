@@ -246,7 +246,9 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ModelFactory.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleFactory.cpp" />
     <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp" />
+    <ClCompile Include="..\..\..\Core\Input\EventSystemInterface.cpp" />
     <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp" />
+    <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
@@ -264,6 +266,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\VAOView.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\View.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ViewFactory.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\EventSystemInterface.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Trigonometry.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.h" />
@@ -293,6 +296,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\TempFPSCameraController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\CubeFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ModelFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleFactory.h" />

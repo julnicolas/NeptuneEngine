@@ -86,6 +86,15 @@
     <Filter Include="Engine\Win32\Core\Math\Geometry">
       <UniqueIdentifier>{170f2ff6-9578-40cd-a5f5-be89d6b9e146}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Win32\Core\Input">
+      <UniqueIdentifier>{3c655a22-90cc-498b-929e-af75e9a774fc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Win32\HighLevel\Camera">
+      <UniqueIdentifier>{35fd64e2-8243-46bc-87f7-38eb889b997d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Win32\HighLevel\Camera\Controller">
+      <UniqueIdentifier>{c2c1542b-e50f-456c-98b6-e706802adcd4}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -145,6 +154,12 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicsProgram.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\Core\Input\EventSystemInterface.cpp">
+      <Filter>Engine\Win32\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp">
+      <Filter>Engine\Win32\HighLevel\Camera\Controller</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -158,9 +173,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h">
-      <Filter>Engine\Multiplatform\Core\Input</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Math.h">
       <Filter>Engine\Multiplatform\Core\Math</Filter>
@@ -314,6 +326,15 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicsProgram.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\TempFPSCameraController.h">
+      <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\EventSystemInterface.h">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
