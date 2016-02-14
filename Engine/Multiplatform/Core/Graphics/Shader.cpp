@@ -17,7 +17,7 @@ Neptune::Shader::Shader(const GLchar* file_name, GLuint shader_type):
 	}
 
 	file.seekg(0, file.end);
-	int length = file.tellg();
+	auto length = file.tellg();
 	file.seekg(0, file.beg);
 
 	GLchar* code = new GLchar[length];
