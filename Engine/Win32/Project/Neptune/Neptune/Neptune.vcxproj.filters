@@ -160,6 +160,12 @@
     <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp">
       <Filter>Engine\Win32\HighLevel\Camera\Controller</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\LightSource.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Color.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -335,6 +341,12 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h">
       <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\LightSource.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Color.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
