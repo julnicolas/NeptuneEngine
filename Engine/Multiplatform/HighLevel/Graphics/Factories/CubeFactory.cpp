@@ -7,12 +7,12 @@ using namespace Neptune;
 
 CubeFactory::CubeFactory()
 {
-	initCubeData(0.5f, 0.5f, 0.5f);
+	initCubeData( {0.5f, 0.5f, 0.5f, 1.0f} );
 }
 
-CubeFactory::CubeFactory(float r, float g, float b)
+CubeFactory::CubeFactory(const Color& color)
 {
-	initCubeData(r, g, b);
+	initCubeData( color );
 }
 
 VAOView* CubeFactory::create()
@@ -53,7 +53,7 @@ VAOView* CubeFactory::create()
 	return v;
 }
 
-void CubeFactory::initCubeData(float r, float g, float b)
+void CubeFactory::initCubeData(const Color& _color)
 {
 	// Set vertex data
 	float t1[] =
@@ -99,14 +99,9 @@ void CubeFactory::initCubeData(float r, float g, float b)
 		m_vertices.push_back(t1[i]);
 
 	// Set color data
-
-	float color[3]; color[0] = r; color[1] = g; color[2] = b;
-
 	for(unsigned int i = 0; i < NB_VERTICES_TO_RENDER; i++)
 	{
-		m_colors.push_back(color[0]);
-		m_colors.push_back(color[1]);
-		m_colors.push_back(color[2]);
+		m_colors.push_back( _color );
 	}
 
 	// Create the shader attributes
@@ -125,7 +120,7 @@ void CubeFactory::initCubeData(float r, float g, float b)
 	{
 		1,                                      // layout
 		GraphicsProgram::Types::FLOAT,        // Type
-		3,                                    // nb components per value
+		4,                                    // nb components per value
 		false,                                // Should data be normalized?
 		m_colors.size()*sizeof(m_colors[0]), // data size
 		&m_colors[0]                        // data

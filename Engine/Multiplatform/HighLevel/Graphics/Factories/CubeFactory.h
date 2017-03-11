@@ -9,7 +9,7 @@ namespace Neptune
 	{
 	public:
 		CubeFactory();
-		CubeFactory(float r, float g, float b);
+		CubeFactory(const Color& color);
 		virtual ~CubeFactory()                     = default;
 		CubeFactory(const CubeFactory&)            = default;
 		CubeFactory& operator=(const CubeFactory&) = default;
@@ -19,6 +19,6 @@ namespace Neptune
 	private:
 		static const u8 NB_VERTICES_TO_RENDER = 36;
 
-		void initCubeData(float r, float g, float b);
+		void initCubeData(const Color& color);
 	};
 }

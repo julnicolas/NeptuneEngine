@@ -8,12 +8,12 @@ using namespace Neptune;
 
 TriangleFactory::TriangleFactory()
 {
-	initData(0.5f, 0.5f, 0.5f);
+	initData( {0.5f, 0.5f, 0.5f, 1.0f} );
 }
 
-TriangleFactory::TriangleFactory(float r, float g, float b)
+TriangleFactory::TriangleFactory(const Color& color)
 {
-	initData(r, g, b);
+	initData( color );
 }
 
 VAOView* TriangleFactory::create()
@@ -52,7 +52,7 @@ VAOView* TriangleFactory::create()
 	return v;
 }
 
-void TriangleFactory::initData(float r, float g, float b)
+void TriangleFactory::initData(const Color& _color)
 {
 	// Set vertex data
 	m_vertices.push_back( 0.0f );
@@ -66,9 +66,9 @@ void TriangleFactory::initData(float r, float g, float b)
 	m_vertices.push_back( 0.0f );
 
 	// Set color data
-	m_colors.push_back(r); m_colors.push_back(g); m_colors.push_back(b);
-	m_colors.push_back(r); m_colors.push_back(g); m_colors.push_back(b);
-	m_colors.push_back(r); m_colors.push_back(g); m_colors.push_back(b);
+	m_colors.push_back(_color);
+	m_colors.push_back(_color);
+	m_colors.push_back(_color);
 
 	// Create the shader attributes
 
@@ -86,7 +86,7 @@ void TriangleFactory::initData(float r, float g, float b)
 	{
 		1,                                      // layout
 		GraphicsProgram::Types::FLOAT,        // Type
-		3,                                    // nb components per value
+		4,                                    // nb components per value
 		false,                                // Should data be normalized?
 		m_colors.size()*sizeof(m_colors[0]), // data size
 		&m_colors[0]                        // data

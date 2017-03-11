@@ -2,6 +2,7 @@
 
 #include "Graphics/GraphicsProgram.h"
 #include "Graphics/Renderer.h"
+#include "Graphics/Color.h"
 #include <vector>
 #include <string>
 
@@ -22,7 +23,7 @@ namespace Neptune
 
 	protected:
 		std::vector<float>                             m_vertices;
-		std::vector<float>                             m_colors;
+		std::vector<Color>                             m_colors;
 		std::string                                    m_vertexShaderName;
 		std::string                                    m_fragmentShaderName;
 		std::vector<GraphicsProgram::ShaderAttribute> m_shaderAttributes;
