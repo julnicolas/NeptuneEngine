@@ -223,12 +223,14 @@
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Color.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\DirectionalLightSource.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementView.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalEnumMappingFunctions.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicsProgram.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\LightSource.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\PositionalLightSource.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.cpp" />
@@ -256,6 +258,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Color.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DirectionalLightSource.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DisplayDeviceInterface.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementView.h" />
@@ -264,6 +267,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\IncludeOpenGL.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\LightSource.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\PositionalLightSource.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.h" />

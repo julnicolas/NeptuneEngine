@@ -166,6 +166,12 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Color.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\PositionalLightSource.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\DirectionalLightSource.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -346,6 +352,12 @@
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Color.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\PositionalLightSource.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DirectionalLightSource.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
