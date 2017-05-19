@@ -256,6 +256,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\AmbientLight.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Color.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DirectionalLightSource.h" />

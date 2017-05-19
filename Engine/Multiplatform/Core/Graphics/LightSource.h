@@ -5,11 +5,16 @@
 
 namespace Neptune
 {
+	/// Light sources' base class.
+	/// \brief This class could be seen as an ambient light source. However, this is just supposed to be the common
+	/// \brief behavior of any lights in the engine. People should specialize the abstract light sources to implement
+	/// \brief custom/well known behaviors.
+
 	class LightSource
 	{
 	public:
 		LightSource();
-		virtual ~LightSource()                                 = default;
+		virtual ~LightSource()                                 = 0;
 
 		LightSource(const LightSource&)	                       = default;
 		virtual LightSource& operator=(const LightSource& obj) = default;

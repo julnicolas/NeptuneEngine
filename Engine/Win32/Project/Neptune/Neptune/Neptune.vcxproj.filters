@@ -360,5 +360,8 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DirectionalLightSource.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\AmbientLight.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

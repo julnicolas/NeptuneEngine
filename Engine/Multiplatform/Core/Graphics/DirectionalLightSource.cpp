@@ -10,6 +10,8 @@ DirectionalLightSource::DirectionalLightSource(Vec3& _direction,float _x /*= 0.0
 	m_dirZ = _direction.z();
 }
 
+DirectionalLightSource::~DirectionalLightSource(){}
+
 Vec3 DirectionalLightSource::getDirection() const
 {
 	return Vec3(m_dirX, m_dirY, m_dirZ);

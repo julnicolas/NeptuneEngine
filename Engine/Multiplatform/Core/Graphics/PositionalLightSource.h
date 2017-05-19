@@ -5,6 +5,8 @@
 
 namespace Neptune
 {
+	/// Base class for positional light sources such as point lights.
+
 	// To do: fix vector interface so that a const ref can be passed
 
 	class PositionalLightSource : public LightSource
@@ -12,7 +14,7 @@ namespace Neptune
 	public:
 		PositionalLightSource(float _x = 0.0f, float _y = 0.0f, float _z = 0.0f);
 			
-		virtual ~PositionalLightSource()                                            = default;
+		virtual ~PositionalLightSource()                                            = 0;
 		PositionalLightSource(const PositionalLightSource&)                         = default;
 		virtual PositionalLightSource& operator=(const PositionalLightSource&)      = default;
 

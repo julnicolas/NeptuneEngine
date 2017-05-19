@@ -10,3 +10,8 @@ LightSource::LightSource():
 {
 
 }
+
+LightSource::~LightSource()
+{
+
+}

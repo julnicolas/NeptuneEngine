@@ -11,6 +11,8 @@ PositionalLightSource::PositionalLightSource(float _x /*= 0.0f*/,float _y /*= 0.
 
 }
 
+PositionalLightSource::~PositionalLightSource(){}
+
 Vec3 PositionalLightSource::getPos() const 
 { 
 	return Vec3(m_posX, m_posY, m_posZ); 
