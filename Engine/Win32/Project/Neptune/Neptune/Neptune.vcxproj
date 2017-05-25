@@ -271,6 +271,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\PositionalLightSource.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Renderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\UniformVarNames.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\VAOView.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\View.h" />

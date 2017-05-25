@@ -1,6 +1,7 @@
 #include "Graphics/Factories/CubeFactory.h"
 #include "Graphics/VAOView.h"
 #include "Graphics/Shader.h"
+#include "Graphics/UniformVarNames.h"
 #include "Debug/NeptuneDebug.h"
 
 using namespace Neptune;
@@ -20,16 +21,27 @@ VAOView* CubeFactory::create()
 	VAOView* v = new VAOView;
 	
 	// Add the MV matrix
-
-	GraphicsProgram::UniformVarInput mv("ModelView",
+	GraphicsProgram::UniformVarInput mv(NEP_UNIVNAME_MV_MATRIX,
 		GraphicsProgram::FLOAT,
 		4,
 		4,
 		16*sizeof(float),
 		v->getTransform().getDataPtr() );
 
-	// Create the renderer
+	// Add the Ambient light source
+	// First it is set to 0 since a 
+	// view must be bound to a light 
+	// source if it's within its reach
+	GraphicsProgram::UniformVarInput ambientLight( NEP_UNIVNAME_AMBIENT_LIGHT,
+		GraphicsProgram::FLOAT,
+		3, // RGB value
+		1, // Is a vec3 so only one column
+		3*sizeof(float),
+		nullptr	
+	);
 
+
+	// Create the renderer
 	Renderer& renderer = v->getRenderer();
 
 	renderer.setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLES);
@@ -47,6 +59,7 @@ VAOView* CubeFactory::create()
 		pgm.addShaderAttribute(m_shaderAttributes[0]);
 		pgm.addShaderAttribute(m_shaderAttributes[1]);
 		pgm.addUniformVariable( mv );
+		pgm.addUniformVariable( ambientLight );
 		pgm.build();
 	}
 
@@ -131,6 +144,6 @@ void CubeFactory::initCubeData(const Color& _color)
 	m_shaderAttributes.push_back(c1_data);
 
 	// Set shader names
-	m_vertexShaderName   = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
+	m_vertexShaderName   = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/AmbientLight.vert";
 	m_fragmentShaderName = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
 }

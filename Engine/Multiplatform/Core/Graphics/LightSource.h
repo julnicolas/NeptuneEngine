@@ -25,11 +25,10 @@ namespace Neptune
 		void setColor(const Color& color)                         { m_color = color;											}
 		void setColor(float r, float g, float b, float a = 1.0f)  { m_color.r = r; m_color.g = g; m_color.b = b; m_color.a = a; }
 
-		float getBaseIntensity() const                            { return m_baseIntensity;                                     }
-		void setBaseIntensity(float i)                            { m_baseIntensity = i;                                        }
+		float getBaseIntensity() const                            { return m_color.a;                                           }
+		void setBaseIntensity(float i)                            { m_color.a = i;                                              }
 
 	protected:
-		float m_baseIntensity;		/// Value between [0,1] denoting the light's 'strength' (strong or weak)
-		Color m_color;				/// Light's color
+		Color m_color;				/// Light's color. The last component is the light's intensity.
 	};
 }

@@ -2,13 +2,15 @@
 
 using namespace Neptune;
 
-#define DEFAULT_LIGHT_COLOR {1.0f, 1.0f, 1.0f, 1.0f}
-
-LightSource::LightSource():
-	m_baseIntensity(1.0f), 
-	m_color(DEFAULT_LIGHT_COLOR)
+LightSource::LightSource()
 {
+	// Default color to white
+	m_color.r = 1.0f;
+	m_color.g = 1.0f;
+	m_color.b = 1.0f;
 
+	// With max intensity
+	m_color.a = 1.0f;
 }
 
 LightSource::~LightSource()

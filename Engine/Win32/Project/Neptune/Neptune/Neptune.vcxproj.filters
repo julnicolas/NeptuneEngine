@@ -363,5 +363,8 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\AmbientLight.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\UniformVarNames.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
