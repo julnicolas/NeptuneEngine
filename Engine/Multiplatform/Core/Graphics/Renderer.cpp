@@ -59,7 +59,7 @@ GraphicsProgram& Renderer::createProgram()
 	return *m_programs.back();
 }
 
-bool Renderer::updateUniform(u8 pgm_index, const char* name, void* data)
+bool Renderer::updateUniform(u8 pgm_index, const char* name, const void* data)
 {
 	GraphicsProgram::UniformVarIterator it = m_programs[pgm_index]->getUniformVar(name);
 	if ( it != m_programs[pgm_index]->uniformVarEnd() )

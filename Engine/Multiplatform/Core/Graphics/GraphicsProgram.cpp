@@ -154,7 +154,7 @@ size_t GraphicsProgram::getTypeSize(Types t)
 	}
 }
 
-void GraphicsProgram::UniformVarInput::setData(void* data)
+void GraphicsProgram::UniformVarInput::setData(const void* data)
 {
 	memcpy( m_data, data, m_nbColumns*m_nbRows*GraphicsProgram::getTypeSize(m_type) );
 }

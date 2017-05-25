@@ -80,7 +80,7 @@ namespace Neptune
 			u8          getNbRows()    const { return m_nbRows;    }
 			u8          getNbColumns() const { return m_nbColumns; }
 			const void* getData()      const { return m_data;      }
-			void        setData(void* data);
+			void setData(const void* data);
 
 			~UniformVarInput()                                 = default; /// Destruction of dynamically allocated memory is managed by the enclosing class.
 			UniformVarInput(const UniformVarInput&)            = default;
