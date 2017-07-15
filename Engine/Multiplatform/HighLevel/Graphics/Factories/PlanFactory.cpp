@@ -1,4 +1,4 @@
-#include "Graphics/Factories/TriangleFactory.h"
+#include "Graphics/Factories/PlanFactory.h"
 #include "Graphics/VAOView.h"
 #include "Graphics/Shader.h"
 #include "Graphics/Texture.h"
@@ -8,37 +8,37 @@
 
 using namespace Neptune;
 
-TriangleFactory::TriangleFactory()
+PlanFactory::PlanFactory()
 {
-	initData({0.5f,0.5f,0.5f,1.0f});
+	initData({0.5f,0.5f,0.5f, 1.0f});
 }
 
-TriangleFactory::TriangleFactory(const Color& color)
+PlanFactory::PlanFactory(const Color& color)
 {
-	initData( color );
+	initData(color);
 }
 
-TriangleFactory::TriangleFactory(Texture* texture)
+PlanFactory::PlanFactory(Texture* texture)
 {
-	if ( texture != nullptr )
+	if(texture != nullptr)
 	{
-		initData( texture );
+		initData(texture);
 	}
 	else // Error: Wrong texture
 	{
-		NEP_LOG("Error: TriangleFactory::TrinagleFactory(const char*): Wrong parameter");
-		initData( texture );
+		NEP_LOG("Error: PlanFactory::PlanFactory(Texture*): Wrong parameter");
+		initData(texture);
 	}
 }
 
-VAOView* TriangleFactory::create()
+VAOView* PlanFactory::create()
 {
 	VAOView* v = new VAOView;
 
 	// Add the texture if one has been provided
-	if ( m_texture != nullptr )
-		v->bindTexture( m_texture );
-	
+	if(m_texture != nullptr)
+		v->bindTexture(m_texture);
+
 	// Add the MV matrix
 
 	GraphicsProgram::UniformVarInput mv(NEP_UNIVNAME_MV_MATRIX,
@@ -50,8 +50,8 @@ VAOView* TriangleFactory::create()
 
 	// Create the triangle's renderer
 	Renderer& renderer = v->getRenderer();
-	renderer.setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLES);
-	renderer.setNbverticesToRender(3);
+	renderer.setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLE_STRIP);
+	renderer.setNbverticesToRender(4);
 
 	// Create the shaders to display the triangle
 	Shader vert(m_vertexShaderName.c_str(),GL_VERTEX_SHADER);
@@ -71,20 +71,24 @@ VAOView* TriangleFactory::create()
 	return v;
 }
 
-void TriangleFactory::initData(const Color& _color)
+void PlanFactory::initData(const Color& _color)
 {
 	// Set vertex data
-	m_vertices.push_back( 0.0f );
-	m_vertices.push_back( 0.0f );
-	m_vertices.push_back( 0.0f );
-	m_vertices.push_back( 0.5f );
-	m_vertices.push_back( 0.0f );
-	m_vertices.push_back( 0.0f );
-	m_vertices.push_back( 0.0f );
-	m_vertices.push_back( 0.5f );
-	m_vertices.push_back( 0.0f );
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.0f);
 
 	// Set color data
+	m_colors.push_back(_color);
 	m_colors.push_back(_color);
 	m_colors.push_back(_color);
 	m_colors.push_back(_color);
@@ -120,7 +124,7 @@ void TriangleFactory::initData(const Color& _color)
 	m_fragmentShaderName = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
 }
 
-void TriangleFactory::initData(Texture* texture)
+void PlanFactory::initData(Texture* texture)
 {
 	// Set vertex data
 	m_vertices.push_back(0.0f);
@@ -132,11 +136,15 @@ void TriangleFactory::initData(Texture* texture)
 	m_vertices.push_back(0.0f);
 	m_vertices.push_back(0.5f);
 	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.0f);
 
 	//Set texture coordinates
-	m_texCoords.push_back( 0.0f ); m_texCoords.push_back( 1.0f );
-	m_texCoords.push_back( 1.0f ); m_texCoords.push_back( 1.0f );
-	m_texCoords.push_back( 0.0f ); m_texCoords.push_back( 0.0f );
+	m_texCoords.push_back(0.0f); m_texCoords.push_back(1.0f);
+	m_texCoords.push_back(1.0f); m_texCoords.push_back(1.0f);
+	m_texCoords.push_back(0.0f); m_texCoords.push_back(0.0f);
+	m_texCoords.push_back(1.0f); m_texCoords.push_back(0.0f);
 
 	// Create shader attributes
 	GraphicsProgram::ShaderAttribute pos_data =
@@ -169,6 +177,6 @@ void TriangleFactory::initData(Texture* texture)
 
 	// Init texture if necessary
 	m_texture = texture;
-	if ( !m_texture->isInitialized() )
+	if(!m_texture->isInitialized())
 		m_texture->init();
 }

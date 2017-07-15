@@ -10,6 +10,7 @@ namespace Neptune
 	public:
 		CubeFactory();
 		CubeFactory(const Color& color);
+		CubeFactory(Texture* texture);
 		virtual ~CubeFactory()                     = default;
 		CubeFactory(const CubeFactory&)            = default;
 		CubeFactory& operator=(const CubeFactory&) = default;
@@ -20,5 +21,6 @@ namespace Neptune
 		static const u8 NB_VERTICES_TO_RENDER = 36;
 
 		void initCubeData(const Color& color);
+		void initCubeData(Texture* texture);
 	};
 }

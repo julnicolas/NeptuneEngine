@@ -4,18 +4,17 @@
 #include "Graphics/VAOView.h"
 #include "Graphics/Color.h"
 
-
 namespace Neptune
 {
-	class TriangleFactory : public ViewFactory
+	class PlanFactory: public ViewFactory
 	{
 	public:
-		TriangleFactory();
-		TriangleFactory(const Color& color);
-		TriangleFactory(Texture* texture);
-		virtual ~TriangleFactory()                         = default;
-		TriangleFactory(const TriangleFactory&)            = default;
-		TriangleFactory& operator=(const TriangleFactory&) = default;
+		PlanFactory();
+		PlanFactory(const Color& color);
+		PlanFactory(Texture* texture);
+		virtual ~PlanFactory()                     = default;
+		PlanFactory(const PlanFactory&)            = default;
+		PlanFactory& operator=(const PlanFactory&) = default;
 
 		VAOView* create() override; /// Allocates a new VAOView on the heap. Class users must handle the object's deallocation.
 
