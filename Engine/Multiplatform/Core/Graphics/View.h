@@ -7,14 +7,12 @@ namespace Neptune
 {
 	class Renderer;
 	class Camera;
-	class AmbientLight;
 	class Texture;
 
 	class View : public Updatable
 	{
 	public:
 		View(): m_camera(nullptr),
-				m_ambientLight(nullptr),
 			    m_renderer(nullptr),
 				m_texture(nullptr)   {}
 		virtual ~View()              {}
@@ -31,9 +29,6 @@ namespace Neptune
 		void bindToCamera(Camera* c) { m_camera = c;       }
 		void unbindFromCamera()      { m_camera = nullptr; }
 
-		void bindToAmbientLight(AmbientLight* _a) { m_ambientLight = _a; }
-		void unbindFromAmbientLight()             { m_ambientLight = nullptr; }
-
 		void bindTexture(Texture* t) { m_texture = t;       }
 		void unbindTexture()         { m_texture = nullptr; }
 
@@ -46,7 +41,6 @@ namespace Neptune
 		Transform      m_transform;
 		Camera*        m_camera;
 		Renderer*      m_renderer;
-		AmbientLight*  m_ambientLight;
 		Texture*       m_texture;
 	};
 }

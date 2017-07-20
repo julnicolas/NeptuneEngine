@@ -38,19 +38,6 @@ VAOView* CubeFactory::create()
 		16*sizeof(float),
 		v->getTransform().getDataPtr() );
 
-	// Add the Ambient light source
-	// First it is set to 0 since a 
-	// view must be bound to a light 
-	// source if it's within its reach
-	GraphicsProgram::UniformVarInput ambientLight(NEP_UNIVNAME_AMBIENT_LIGHT,
-		GraphicsProgram::FLOAT,
-		3, // RGB value
-		1, // Is a vec3 so only one column
-		3*sizeof(float),
-		nullptr
-	);
-
-
 	// Create the renderer
 	Renderer& renderer = v->getRenderer();
 
@@ -69,7 +56,6 @@ VAOView* CubeFactory::create()
 		pgm.addShaderAttribute(m_shaderAttributes[0]);
 		pgm.addShaderAttribute(m_shaderAttributes[1]);
 		pgm.addUniformVariable( mv );
-		pgm.addUniformVariable(ambientLight);
 		pgm.build();
 	}
 

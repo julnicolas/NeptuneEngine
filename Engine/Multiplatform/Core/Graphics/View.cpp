@@ -2,7 +2,6 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/Camera.h"
 #include "Graphics/UniformVarNames.h"
-#include "Graphics/AmbientLight.h"
 #include "Graphics/Texture.h"
 
 #include "Debug/NeptuneDebug.h"
@@ -35,14 +34,6 @@ bool View::update()
 	{
 		m_renderer->updateUniform(0,NEP_UNIVNAME_MV_MATRIX,(void*)m_transform.getDataPtr());
 	}
-
-	// UpdateAmbientLight()
-	if(m_ambientLight != nullptr)
-	{
-		const void* color = static_cast<const void*>(&(m_ambientLight->getColor()));
-		m_renderer->updateUniform(0,NEP_UNIVNAME_AMBIENT_LIGHT,color); // Dirty because the light's intensity is ignored
-	}
-
 
 	status = status && m_renderer->update();
 	return status;
