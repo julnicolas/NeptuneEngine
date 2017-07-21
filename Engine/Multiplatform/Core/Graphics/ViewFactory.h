@@ -15,7 +15,8 @@ namespace Neptune
 	class ViewFactory
 	{
 	public:
-		ViewFactory(): m_texture(nullptr) {}
+		ViewFactory(): 
+			m_vertexShaderName(""), m_fragmentShaderName(""), m_texture(nullptr) {}
 		ViewFactory(const char* vertShaderName, const char* fragShaderName):
 			m_vertexShaderName(vertShaderName), m_fragmentShaderName(fragShaderName), m_texture(nullptr) {}
 

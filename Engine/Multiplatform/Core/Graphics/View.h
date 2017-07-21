@@ -24,7 +24,7 @@ namespace Neptune
 		void terminate() override;
 
 		Transform& getTransform()    { return m_transform; } 
-		Renderer&  getRenderer()     { return *m_renderer; }
+		Renderer&  getRenderer()     { return *m_renderer; } // You can use the renderer to add another graphics program
 
 		void bindToCamera(Camera* c) { m_camera = c;       }
 		void unbindFromCamera()      { m_camera = nullptr; }
