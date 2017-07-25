@@ -178,6 +178,9 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanFactory.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\NewTriangleFactory.cpp">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -376,6 +379,12 @@
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanFactory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\NewTriangleFactory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewSpawner.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClInclude>
   </ItemGroup>
