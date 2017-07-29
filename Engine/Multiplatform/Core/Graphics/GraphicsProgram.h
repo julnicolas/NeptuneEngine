@@ -131,7 +131,7 @@ namespace Neptune
 		GraphicsProgram(const GraphicsProgram&)            = delete;
 		GraphicsProgram& operator=(const GraphicsProgram&) = delete;
 
-		void add(u32 shader);
+		void add(u32 shader); // TODO: take a const Shader& instead of a u32
 		bool build();
 		u32  getId() const	{ return m_programId; }
 
