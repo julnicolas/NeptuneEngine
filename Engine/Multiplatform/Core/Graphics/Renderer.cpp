@@ -57,17 +57,11 @@ Neptune::Renderer::~Renderer()
 		for(size_t i = 0; i < vbo_size; i++)
 			glDeleteBuffers(1,&vbo[i]);
 	}
-	
-	// Free all program-related memory
-	for ( GraphicalProgramIterator it = m_programs.begin(); it != it_end; ++it )
-		delete *it;
 }
 
-GraphicsProgram& Renderer::createProgram()
+void Renderer::addProgram(GraphicsProgram* _pgm)
 {
-	m_programs.push_back( new GraphicsProgram );
-
-	return *m_programs.back();
+	m_programs.push_back(_pgm);
 }
 
 bool Renderer::updateUniform(u8 pgm_index, const char* name, const void* data)
