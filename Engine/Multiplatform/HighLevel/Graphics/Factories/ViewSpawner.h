@@ -71,19 +71,23 @@ namespace Neptune
 
 
 	protected:
-		struct Program // Maybe not necessary
+		struct Program
 		{
-			GraphicsProgram									m_program;
-			std::vector<GraphicsProgram::ShaderAttribute>	m_shaderAttributes;
-			std::vector<GraphicsProgram::UniformVarInput>	m_uniformVars;
+			GraphicsProgram		m_program;
+			std::vector<u16>	m_shaderAttributeIDs;	// Attribute's position in m_shaderAttributes
+			std::vector<u16>	m_uniformVarIDs;		// Uniform variable's position in m_uniformVariables
 			// Do I add a std::vector<void*> for all the shader attributes data? 
 		};
 
-		std::vector<float>					m_vertices;
-		std::vector<Color>					m_colors;
-		std::vector<float>					m_texCoords;
-		std::vector<float>					m_normals;
-		std::unordered_map<char*, Program>	m_programs; // Need to manually set the hash function
-		Texture*                            m_texture; // Texture to be used in the default shaders. Probably will be refactored later
+		std::vector<float>								m_vertices;
+		std::vector<Color>								m_colors;
+		std::vector<float>								m_texCoords;
+		std::vector<float>								m_normals;
+		Texture*										m_texture; // Texture to be used in the default shaders. Probably will be refactored later
+		
+	private:
+		std::unordered_map<const char*, Program>		m_programs;			// Need to manually set the hash function
+		std::vector<GraphicsProgram::ShaderAttribute>	m_shaderAttributes; // Stores all the shader attributes for all the programs
+		std::vector<GraphicsProgram::UniformVarInput>	m_uniformVariables; // Stores all the uniform variables for all the programs
 	};
 }
