@@ -46,7 +46,7 @@ namespace Neptune
 		u32                                                           m_nbverticesToRender;  /// Number of vertices that will be passed to the vertex shader
 		DrawingPrimitive                                              m_drawingPrimitive;    /// Which OpenGL drawing primitive must be used for rendering (Triangles, TriangleFan...)
 		std::vector<GraphicsProgram*>                                 m_programs;            /// Contains all the OpenGL programs that must be applied by a renderer
-		std::unordered_map<const GraphicsProgram*,std::vector<u32> >  m_vbos;                /// Contains all vbos used by a graphical program
+		std::unordered_map<const GraphicsProgram*,std::vector<u32> >  m_vbos;                /// Contains all vbos used by a graphics program
 
 	private:
 		void bindUniformVars(ConstGraphicalProgramIterator& it);
