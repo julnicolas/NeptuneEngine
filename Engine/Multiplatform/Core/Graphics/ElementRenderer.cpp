@@ -14,19 +14,7 @@ ElementRenderer::ElementRenderer()
 ElementRenderer::~ElementRenderer()
 {
 	// Free the index buffer
-	glDeleteBuffers( 1, &m_indexBuffer ); // Class specific
-
-	// Free the vbos
-	GraphicalProgramIterator it_end = m_programs.end();
-	for(GraphicalProgramIterator it = m_programs.begin(); it != it_end; ++it) // Browse every program
-	{
-		// Look through the vertex attributes
-		std::vector<u32>& vbo = m_vbos[&(**it)];
-		size_t vbo_size = vbo.size();
-
-		for(size_t i = 0; i < vbo_size; i++)
-			glDeleteBuffers(1,&vbo[i]);
-	}
+	glDeleteBuffers( 1, &m_indexBuffer );
 }
 
 void ElementRenderer::setIndexBufferData(const void* data, u32 dataSize, ElementRenderer::IndexType dataType)

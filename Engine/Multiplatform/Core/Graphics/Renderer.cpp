@@ -46,8 +46,19 @@ Neptune::Renderer::Renderer():
 
 Neptune::Renderer::~Renderer()
 {
-	// Free all program-related memory
+	// Free the vbos (allocated VRAM)
 	GraphicalProgramIterator it_end = m_programs.end();
+	for(GraphicalProgramIterator it = m_programs.begin(); it != it_end; ++it) // Browse every program
+	{
+		// Look through the vertex attributes
+		std::vector<u32>& vbo = m_vbos[&(**it)];
+		size_t vbo_size = vbo.size();
+
+		for(size_t i = 0; i < vbo_size; i++)
+			glDeleteBuffers(1,&vbo[i]);
+	}
+	
+	// Free all program-related memory
 	for ( GraphicalProgramIterator it = m_programs.begin(); it != it_end; ++it )
 		delete *it;
 }
