@@ -6,8 +6,17 @@
 
 using namespace Neptune;
 
+//////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//
+// GL LAYOUT PROBLEM FOR THE GRAPHICS PROGRAM ROUTINES
+//
+//////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
 ViewSpawner::ViewSpawner(const char* _pgmName, GraphicsProgram* _pgm)
 {
+	createVertexData();
 	addGraphicsProgram(_pgmName, _pgm);
 }
 

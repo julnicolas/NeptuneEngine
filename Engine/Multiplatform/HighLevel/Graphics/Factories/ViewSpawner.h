@@ -59,6 +59,7 @@ namespace Neptune
 		virtual bool  CreateNormalData()				=0;													/// Creates the normals at every vertex of the view
 		virtual bool  Create2DTextureMapData()			=0;													/// Creates the data to be able to map a 2D texture on the whole view
 
+
 		//
 		// G R A P H I C S - P R O G R A M   R E L A T E D   M E T H O D S 
 		//
@@ -73,12 +74,28 @@ namespace Neptune
 
 
 	protected:
+		//
+		// S T R U C T U R E S
+		//
+
 		struct Program
 		{
 			GraphicsProgram*			m_program;
 			std::vector<const void*>	m_shaderAttributeIDs;	/// Attribute's position in m_shaderAttributes
 			std::vector<const void*>	m_uniformVarIDs;		/// Uniform variable's position in m_uniformVariables
 		};
+
+
+		//
+		// P U R E   V I R T U A L   M E T H O D S 
+		//
+
+		virtual void createVertexData() =0;
+
+
+		//
+		// A T T R I B U T E S
+		//
 
 		std::vector<float>								m_vertices;
 		std::vector<Color>								m_colors;
