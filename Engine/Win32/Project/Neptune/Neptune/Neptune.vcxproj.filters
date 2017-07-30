@@ -178,10 +178,12 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanFactory.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\NewTriangleFactory.cpp">
-      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewSpawner.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewSpawner.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleSpawner.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -382,10 +384,10 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanFactory.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\NewTriangleFactory.h">
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewSpawner.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewSpawner.h">
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleSpawner.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClInclude>
   </ItemGroup>
