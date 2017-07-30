@@ -74,7 +74,13 @@ namespace Neptune
 			/// \Warning Data parameter: Adjacent data-blocks are expected. Indeed, the parameter's content will be copied into an array.
 			///
 			UniformVarInput(const char* name,Types type,u8 rows,u8 columns,u64 dataSize,const void* data);
-			
+
+			///
+			/// \warning This constructor is here for the sole purpose of this class being usable by std containers.
+			/// Use the other constructor instead.
+			///
+			UniformVarInput() = default;
+
 			const char* getName()      const { return m_name;      }
 			Types       getDataType()  const { return m_type;      }
 			u8          getNbRows()    const { return m_nbRows;    }

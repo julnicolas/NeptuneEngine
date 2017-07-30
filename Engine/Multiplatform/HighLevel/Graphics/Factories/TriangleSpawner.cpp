@@ -22,6 +22,8 @@ bool TriangleSpawner::CreateColorData(const Color& _color)
 	m_colors.push_back(_color);
 	m_colors.push_back(_color);
 	m_colors.push_back(_color);
+
+	return true;
 }		 
 		 
 bool TriangleSpawner::CreateNormalData()
@@ -29,6 +31,8 @@ bool TriangleSpawner::CreateNormalData()
 	m_normals.push_back(0.0f); m_normals.push_back(0.0f); m_normals.push_back(-1.0f); // First vertex
 	m_normals.push_back(0.0f); m_normals.push_back(0.0f); m_normals.push_back(-1.0f); // Second vertex
 	m_normals.push_back(0.0f); m_normals.push_back(0.0f); m_normals.push_back(-1.0f); // Third vertex
+
+	return true;
 }		 
 		 
 bool TriangleSpawner::Create2DTextureMapData()
@@ -36,6 +40,8 @@ bool TriangleSpawner::Create2DTextureMapData()
 	m_2DTexCoords.push_back(0.0f); m_2DTexCoords.push_back(1.0f); // First vertex
 	m_2DTexCoords.push_back(1.0f); m_2DTexCoords.push_back(1.0f); // Second vertex
 	m_2DTexCoords.push_back(0.0f); m_2DTexCoords.push_back(0.0f); // Third vertex
+
+	return true;
 }
 
 void TriangleSpawner::createVertexData()
