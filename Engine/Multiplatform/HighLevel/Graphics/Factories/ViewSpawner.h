@@ -59,7 +59,6 @@ namespace Neptune
 		virtual bool  CreateNormalData()				=0;													/// Creates the normals at every vertex of the view
 		virtual bool  Create2DTextureMapData()			=0;													/// Creates the data to be able to map a 2D texture on the whole view
 
-
 		//
 		// G R A P H I C S - P R O G R A M   R E L A T E D   M E T H O D S 
 		//
@@ -76,20 +75,20 @@ namespace Neptune
 	protected:
 		struct Program
 		{
-			GraphicsProgram*	m_program;
-			std::vector<u16>	m_shaderAttributeIDs;	/// Attribute's position in m_shaderAttributes
-			std::vector<u16>	m_uniformVarIDs;		/// Uniform variable's position in m_uniformVariables
+			GraphicsProgram*			m_program;
+			std::vector<const void*>	m_shaderAttributeIDs;	/// Attribute's position in m_shaderAttributes
+			std::vector<const void*>	m_uniformVarIDs;		/// Uniform variable's position in m_uniformVariables
 		};
 
 		std::vector<float>								m_vertices;
 		std::vector<Color>								m_colors;
-		std::vector<float>								m_texCoords;
+		std::vector<float>								m_2DTexCoords;
 		std::vector<float>								m_normals;
 		Texture*										m_texture;											/// Texture to be used in the default shaders. Probably will be refactored later
 		
 	private:
-		std::unordered_map<const char*, Program>		m_programs;											/// Need to manually set the hash function
-		std::vector<GraphicsProgram::ShaderAttribute>	m_shaderAttributes;									/// Stores all the shader attributes for all the programs
-		std::vector<GraphicsProgram::UniformVarInput>	m_uniformVariables;									/// Stores all the uniform variables for all the programs
+		std::unordered_map<const char*, Program>							m_programs;						/// Need to manually set the hash function
+		std::unordered_map<const void*,GraphicsProgram::ShaderAttribute>	m_shaderAttributes;				/// Stores all the shader attributes for all the programs. The void* is the address of the buffer containing the data (m_data field).
+		std::unordered_map<const void*,GraphicsProgram::UniformVarInput>	m_uniformVariables;				/// Stores all the uniform variables for all the programs. The void* is the address of the buffer containing the data (m_data field).
 	};
 }
