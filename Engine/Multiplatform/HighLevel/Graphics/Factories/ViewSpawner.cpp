@@ -1,6 +1,5 @@
 #include "Graphics/Factories/ViewSpawner.h"
 #include "Graphics/View.h"
-#include "Graphics/Texture.h"
 #include "System/Hashing/FastHashFunctions.h" // Must find out how to set unorderd_map hash function manually
 #include "Debug/NeptuneDebug.h"
 
@@ -18,6 +17,36 @@ ViewSpawner::ViewSpawner(const char* _pgmName, GraphicsProgram* _pgm)
 {
 	createVertexData();
 	addGraphicsProgram(_pgmName, _pgm);
+}
+
+View* ViewSpawner::create()
+{
+	View* v            = CreateViewAndSetUpRenderParameters();
+	Renderer& renderer = v->getRenderer();
+
+	// Add the graphics programs and corresponding attributes to the renderer
+	for(auto& it : m_programs)
+	{
+		// Pass the parameters to the program
+		GraphicsProgram* pgm = it.second.m_program;
+
+		for(const auto& shader_attribute_ID : it.second.m_shaderAttributeIDs)
+		{
+			NEP_ASSERT(m_shaderAttributes.find(shader_attribute_ID) != m_shaderAttributes.end());
+			pgm->addShaderAttribute(m_shaderAttributes[shader_attribute_ID]);
+		}
+
+		for(const auto& uniform_var_ID : it.second.m_uniformVarIDs)
+		{
+			NEP_ASSERT(m_uniformVariables.find(uniform_var_ID) != m_uniformVariables.end());
+			pgm->addUniformVariable(m_uniformVariables[uniform_var_ID]);
+		}
+
+		// Add the program to the renderer
+		renderer.addProgram(pgm);
+	}
+
+	return v;
 }
 
 void ViewSpawner::addGraphicsProgram(const char* _name, GraphicsProgram* _pgm)
