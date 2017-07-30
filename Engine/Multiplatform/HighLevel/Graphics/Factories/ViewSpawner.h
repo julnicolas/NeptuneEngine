@@ -45,9 +45,9 @@ namespace Neptune
 		// D E F A U L T   G E N E R A T E D   M E T H O D S
 		//
 
-		virtual ~ViewSpawner()						= default;
-		ViewSpawner(const ViewSpawner&)				= delete;
-		ViewSpawner& operator=(const ViewSpawner&)	= delete;
+		virtual ~ViewSpawner()								= default;
+		virtual ViewSpawner& operator=(const ViewSpawner&)	= delete;
+		ViewSpawner(const ViewSpawner&)						= delete;
 
 
 		//
