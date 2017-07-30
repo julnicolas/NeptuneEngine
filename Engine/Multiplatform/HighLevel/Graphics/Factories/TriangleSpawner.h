@@ -31,13 +31,13 @@ namespace Neptune
 		// S P E C I A L I Z E D   M E T H O D S 
 		//
 
-		VAOView*	create()							override;			/// Allocates a new VAOView on the heap. Class users must handle the object's deallocation.
-		bool		CreateColorData(const Color& _c)	override;			/// Creates per-vertex color data, if the data were already created, the color will be changed (for all the view instantiated by the factory). The input color for this method is not referenced.
-		bool		CreateNormalData()					override;			/// Creates the normals at every vertex of the view
-		bool		Create2DTextureMapData()			override;			/// Creates the data to be able to map a 2D texture on the whole view
+		bool		CreateColorData(const Color& _c)		override;		/// Creates per-vertex color data, if the data were already created, the color will be changed (for all the view instantiated by the factory). The input color for this method is not referenced.
+		bool		CreateNormalData()						override;		/// Creates the normals at every vertex of the view
+		bool		Create2DTextureMapData()				override;		/// Creates the data to be able to map a 2D texture on the whole view
 	
 	protected:
-		void		createVertexData()					override;
+		void		createVertexData()						override;
+		View*		CreateViewAndSetUpRenderParameters()	override;
 
 	private:
 		void initData(const Color& color);

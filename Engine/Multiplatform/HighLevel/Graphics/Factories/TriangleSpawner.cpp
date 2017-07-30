@@ -1,13 +1,20 @@
 #include "Graphics/Factories/TriangleSpawner.h"
 #include "Graphics/VAOView.h"
-#include "Graphics/Color.h"
+#include "Debug/NeptuneDebug.h"
 
 using namespace Neptune;
 
 
-VAOView* TriangleSpawner::create()
+View* TriangleSpawner::CreateViewAndSetUpRenderParameters()
 {		 
-		 
+	VAOView* v = new VAOView;
+
+	// Setup the triangle's renderer
+	Renderer& renderer = v->getRenderer();
+	renderer.setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLES);
+	renderer.setNbverticesToRender(3);
+
+	return v;
 }		 
 		 
 bool TriangleSpawner::CreateColorData(const Color& _color)
