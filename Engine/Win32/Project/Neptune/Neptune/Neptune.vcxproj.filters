@@ -181,6 +181,7 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\NewTriangleFactory.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">

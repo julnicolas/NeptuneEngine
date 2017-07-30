@@ -252,6 +252,7 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\NewTriangleFactory.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanFactory.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleFactory.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewSpawner.cpp" />
     <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp" />
     <ClCompile Include="..\..\..\Core\Input\EventSystemInterface.cpp" />
     <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp" />
