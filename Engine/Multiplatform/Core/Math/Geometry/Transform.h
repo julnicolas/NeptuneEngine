@@ -23,7 +23,7 @@ namespace Neptune
 
 		void getOrientation(Vec3& orientation);
 		void getSize(Vec3& size);
-		void getDisplacement(Vec3& displacement);
+		void getPosition(Vec3& displacement);
 		
 		const float* getDataPtr() const;
 		const Mat4&  getMatrix()  const { return m_transform; }
@@ -31,7 +31,7 @@ namespace Neptune
 	private:
 		Mat4  m_transform;
 		float m_orientation[3];
-		float m_displacement[3];
+		float m_position[3];
 		float m_size[3];
 	};
 

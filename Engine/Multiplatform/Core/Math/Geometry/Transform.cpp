@@ -9,7 +9,7 @@ using namespace Neptune;
 Transform::Transform()
 {
 	memset( m_orientation,  0, sizeof(m_orientation)  );
-	memset( m_displacement, 0, sizeof(m_displacement) );
+	memset( m_position, 0, sizeof(m_position) );
 	memset( m_size,         0, sizeof(m_size)         );
 }
 
@@ -39,9 +39,9 @@ void Transform::rotate(float x,float y,float z)
 
 void Transform::translate(float x,float y,float z)
 {
-	m_displacement[0] += x;
-	m_displacement[1] += y;
-	m_displacement[2] += z;
+	m_position[0] += x;
+	m_position[1] += y;
+	m_position[2] += z;
 
 	m_transform = Translate( m_transform, Vec3(x, y, z) );
 }
@@ -69,11 +69,11 @@ void Transform::getSize(Vec3& size)
 	size.z() = m_size[2];
 }
 
-void Transform::getDisplacement(Vec3& displacement)
+void Transform::getPosition(Vec3& displacement)
 {
-	displacement.x() = m_displacement[0];
-	displacement.y() = m_displacement[1];
-	displacement.z() = m_displacement[2];
+	displacement.x() = m_position[0];
+	displacement.y() = m_position[1];
+	displacement.z() = m_position[2];
 }
 
 const float* Transform::getDataPtr() const
