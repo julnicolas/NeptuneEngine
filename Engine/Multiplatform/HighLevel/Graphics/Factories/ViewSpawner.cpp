@@ -15,13 +15,12 @@ using namespace Neptune;
 
 ViewSpawner::ViewSpawner(const char* _pgmName, GraphicsProgram* _pgm)
 {
-	createVertexData();
 	addGraphicsProgram(_pgmName, _pgm);
 }
 
 View* ViewSpawner::create()
 {
-	View* v            = CreateViewAndSetUpRenderParameters();
+	View* v            = createViewAndSetUpRenderParameters();
 	Renderer& renderer = v->getRenderer();
 
 	// Add the graphics programs and corresponding attributes to the renderer

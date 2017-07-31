@@ -54,6 +54,7 @@ namespace Neptune
 		// P U R E   V I R T U A L   M E T H O D S 
 		//
 
+		virtual void  createVertexData()				=0;
 		virtual bool  CreateColorData(const Color& _c)	=0;													/// Creates per-vertex color data, if the data were already created, the color will be changed (for all the view instantiated by the factory). The input color for this method is not referenced.
 		virtual bool  CreateNormalData()				=0;													/// Creates the normals at every vertex of the view
 		virtual bool  Create2DTextureMapData()			=0;													/// Creates the data to be able to map a 2D texture on the whole view
@@ -64,7 +65,6 @@ namespace Neptune
 		//
 
 		View* create();																						/// Allocates the view on the heap
-
 
 		//
 		// G R A P H I C S - P R O G R A M   R E L A T E D   M E T H O D S 
@@ -96,12 +96,10 @@ namespace Neptune
 		// P U R E   V I R T U A L   M E T H O D S 
 		//
 
-		virtual void createVertexData()						=0;
-
 		/// \brief In this method you must dynamically allocate a View object
 		/// (called v). Then call v->getRenderer().setDrawingPrimitive(_prim)  
 		/// and v->getRenderer().setNbverticesToRender(nb).
-		virtual View* CreateViewAndSetUpRenderParameters()	=0;
+		virtual View* createViewAndSetUpRenderParameters()	=0;
 
 
 		//

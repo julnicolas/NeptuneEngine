@@ -5,7 +5,7 @@
 using namespace Neptune;
 
 
-View* TriangleSpawner::CreateViewAndSetUpRenderParameters()
+View* TriangleSpawner::createViewAndSetUpRenderParameters()
 {		 
 	VAOView* v = new VAOView;
 
