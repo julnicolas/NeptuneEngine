@@ -98,6 +98,27 @@ void ViewSpawner::addUniformVariable(const char* _pgmName, const GraphicsProgram
 	it->second.m_uniformVarIDs.push_back(uniform_ID);
 }
 
+bool ViewSpawner::mapVertexData(const char* _pgmName, u8 _layout)
+{
+	// Check the data have been created
+	if(m_vertices.empty()) // Assert?
+		return false;
+
+	// Create the shader attribute
+	GraphicsProgram::ShaderAttribute att;
+	att.m_layout		= _layout;
+	att.m_type			= GraphicsProgram::FLOAT;
+	att.m_nbComponents	= 3;
+	att.m_normalized	= false;
+	att.m_size			= m_vertices.size()*sizeof(m_vertices[0]);
+	att.m_data			= m_vertices.data();
+
+	// Add the attribute to the program
+	addShaderAttribute(_pgmName,att);
+
+	return true;
+}
+
 bool ViewSpawner::mapColorData(const char* _pgmName, u8 _layout)
 {
 	// Check the data have been created
