@@ -41,6 +41,9 @@ View* ViewSpawner::create()
 			pgm->addUniformVariable(m_uniformVariables[uniform_var_ID]);
 		}
 
+		// Rebuild the program including all its parameters
+		pgm->build();
+
 		// Add the program to the renderer
 		renderer.addProgram(pgm);
 	}
