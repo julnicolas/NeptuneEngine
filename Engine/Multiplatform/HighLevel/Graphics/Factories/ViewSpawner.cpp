@@ -98,7 +98,7 @@ void ViewSpawner::addUniformVariable(const char* _pgmName, const GraphicsProgram
 	it->second.m_uniformVarIDs.push_back(uniform_ID);
 }
 
-bool ViewSpawner::MapColorData(const char* _pgmName, u8 _layout)
+bool ViewSpawner::mapColorData(const char* _pgmName, u8 _layout)
 {
 	// Check the data have been created
 	if ( m_colors.empty() ) // Assert?
@@ -119,7 +119,7 @@ bool ViewSpawner::MapColorData(const char* _pgmName, u8 _layout)
 	return true;
 }
 
-bool ViewSpawner::MapNormalData(const char* _pgmName, u8 _layout)
+bool ViewSpawner::mapNormalData(const char* _pgmName, u8 _layout)
 {
 	if(m_normals.empty())
 		return false;
@@ -139,7 +139,7 @@ bool ViewSpawner::MapNormalData(const char* _pgmName, u8 _layout)
 	return true;
 }
 
-bool ViewSpawner::Map2DTextureMapData(const char* _pgmName, u8 _layout)
+bool ViewSpawner::map2DTextureMapData(const char* _pgmName, u8 _layout)
 {
 	if(m_2DTexCoords.empty())
 		return false;

@@ -55,9 +55,9 @@ namespace Neptune
 		//
 
 		virtual void  createVertexData()				=0;
-		virtual bool  CreateColorData(const Color& _c)	=0;													/// Creates per-vertex color data, if the data were already created, the color will be changed (for all the view instantiated by the factory). The input color for this method is not referenced.
-		virtual bool  CreateNormalData()				=0;													/// Creates the normals at every vertex of the view
-		virtual bool  Create2DTextureMapData()			=0;													/// Creates the data to be able to map a 2D texture on the whole view
+		virtual bool  createColorData(const Color& _c)	=0;													/// Creates per-vertex color data, if the data were already created, the color will be changed (for all the view instantiated by the factory). The input color for this method is not referenced.
+		virtual bool  createNormalData()				=0;													/// Creates the normals at every vertex of the view
+		virtual bool  create2DTextureMapData()			=0;													/// Creates the data to be able to map a 2D texture on the whole view
 
 
 		//
@@ -74,9 +74,9 @@ namespace Neptune
 		void addShaderAttribute(const char* _pgmName, const GraphicsProgram::ShaderAttribute& _shaderAtt);	/// Add the shader attribute  _shaderAtt as an input for the program _pgmName. 
 		void addUniformVariable(const char* _pgmName, const GraphicsProgram::UniformVarInput& _uniform);	/// Add the shader attribute  _shaderAtt as an input for the program _pgmName.
 
-		bool MapColorData       (  const char* _pgmName, u8 _layout);										/// Add the spawner's color data as an input for the program _pgmName at GLSL layout position _layout
-		bool MapNormalData      (  const char* _pgmName, u8 _layout);										/// Add the spawner's normal data as an input for the program _pgmName at GLSL layout position _layout
-		bool Map2DTextureMapData(  const char* _pgmName, u8 _layout);										/// Add the spawner's 2d texture map coordinates as an input for the program _pgmName at GLSL layout position _layout
+		bool mapColorData       (  const char* _pgmName, u8 _layout);										/// Add the spawner's color data as an input for the program _pgmName at GLSL layout position _layout
+		bool mapNormalData      (  const char* _pgmName, u8 _layout);										/// Add the spawner's normal data as an input for the program _pgmName at GLSL layout position _layout
+		bool map2DTextureMapData(  const char* _pgmName, u8 _layout);										/// Add the spawner's 2d texture map coordinates as an input for the program _pgmName at GLSL layout position _layout
 
 
 	protected:

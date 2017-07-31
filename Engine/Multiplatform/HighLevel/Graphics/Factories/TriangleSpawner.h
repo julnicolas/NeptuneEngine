@@ -32,9 +32,9 @@ namespace Neptune
 		//
 
 		void		createVertexData()						override;
-		bool		CreateColorData(const Color& _c)		override;		/// Creates per-vertex color data, if the data were already created, the color will be changed (for all the view instantiated by the factory). The input color for this method is not referenced.
-		bool		CreateNormalData()						override;		/// Creates the normals at every vertex of the view
-		bool		Create2DTextureMapData()				override;		/// Creates the data to be able to map a 2D texture on the whole view
+		bool		createColorData(const Color& _c)		override;		/// Creates per-vertex color data, if the data were already created, the color will be changed (for all the view instantiated by the factory). The input color for this method is not referenced.
+		bool		createNormalData()						override;		/// Creates the normals at every vertex of the view
+		bool		create2DTextureMapData()				override;		/// Creates the data to be able to map a 2D texture on the whole view
 	
 	protected:
 		View*		createViewAndSetUpRenderParameters()	override;
