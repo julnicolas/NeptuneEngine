@@ -1,5 +1,6 @@
 #include "Graphics/Factories/ViewSpawner.h"
 #include "Graphics/View.h"
+#include "Physics/Mechanics/Position.h"
 #include "System/Hashing/FastHashFunctions.h" // Must find out how to set unorderd_map hash function manually
 #include "Debug/NeptuneDebug.h"
 
@@ -13,8 +14,22 @@ using namespace Neptune;
 
 
 
+static void InitWorldMatrix(float (&_m)[4][4])
+{
+	memset(_m, 0, sizeof(_m));
+	
+	// Making it an identity matrix
+	_m[0][0] = 1.0f;
+	_m[1][1] = 1.0f;
+	_m[2][2] = 1.0f;
+	_m[3][3] = 1.0f;
+}
+
 ViewSpawner::ViewSpawner(const char* _pgmName, GraphicsProgram* _pgm)
 {
+	// A position is 3 float-long data and m_worldMatrix is a float[4][4]
+	NEP_STATIC_ASSERT(sizeof(Position) == 3*sizeof(m_worldMatrix[0][0]), "Error: type mismatch (m_worldMatrix's data and Position's members)");
+	InitWorldMatrix(m_worldMatrix);
 	addGraphicsProgram(_pgmName, _pgm);
 }
 
@@ -178,4 +193,28 @@ bool ViewSpawner::map2DTextureMapData(const char* _pgmName, u8 _layout)
 	addShaderAttribute(_pgmName,att);
 
 	return true;
+}
+
+void ViewSpawner::setWorldPosition(const Position& _pos)
+{
+	// Filling the matrix's fields to represent a translation
+	// Note: OpenGL's matrices are all transposed with respect to 
+	// the common mathematical convention
+	m_worldMatrix[3][0] = _pos.m_x;
+	m_worldMatrix[3][1] = _pos.m_y;
+	m_worldMatrix[3][2] = _pos.m_z;
+	// NEP_STATIC_ASSERT(sizeof(m_worldMatrix[3] >= sizeof(_pos)), "Error: memcpy overflow")
+	// memcpy(m_worldMatrix[3], _pos, sizeof(_pos));
+}
+
+void ViewSpawner::useWorldMatrix(const char* _pgmName, const char* _uniformName)
+{
+	GraphicsProgram::UniformVarInput world_matrix(_uniformName,
+		GraphicsProgram::FLOAT,
+		4,
+		4,
+		sizeof(m_worldMatrix),
+		&m_worldMatrix);
+
+	addUniformVariable(_pgmName, world_matrix);
 }
