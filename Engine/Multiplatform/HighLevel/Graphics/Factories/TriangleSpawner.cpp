@@ -10,9 +10,8 @@ View* TriangleSpawner::createViewAndSetUpRenderParameters()
 	VAOView* v = new VAOView;
 
 	// Setup the triangle's renderer
-	Renderer& renderer = v->getRenderer();
-	renderer.setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLES);
-	renderer.setNbverticesToRender(3);
+	v->setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLES);
+	v->setNbVerticesToRender(3);
 
 	return v;
 }		 

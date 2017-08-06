@@ -35,10 +35,9 @@ ViewSpawner::ViewSpawner(const char* _pgmName, GraphicsProgram* _pgm)
 
 View* ViewSpawner::create()
 {
-	View* v            = createViewAndSetUpRenderParameters();
-	Renderer& renderer = v->getRenderer();
+	View* view = createViewAndSetUpRenderParameters();
 
-	// Add the graphics programs and corresponding attributes to the renderer
+	// Add the graphics programs and corresponding attributes to the view
 	for(auto& it : m_programs)
 	{
 		// Pass the parameters to the program
@@ -59,11 +58,11 @@ View* ViewSpawner::create()
 		// Rebuild the program including all its parameters
 		pgm->build();
 
-		// Add the program to the renderer
-		renderer.addProgram(pgm);
+		// Add the program to the view
+		view->addGraphicsProgram(it.first, pgm);
 	}
 
-	return v;
+	return view;
 }
 
 void ViewSpawner::addGraphicsProgram(const char* _name, GraphicsProgram* _pgm)
