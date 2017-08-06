@@ -95,6 +95,12 @@
     <Filter Include="Engine\Win32\HighLevel\Camera\Controller">
       <UniqueIdentifier>{c2c1542b-e50f-456c-98b6-e706802adcd4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\Core\Physics">
+      <UniqueIdentifier>{662f18cb-bd98-4d8a-b5b8-18937e4fd76d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Multiplatform\Core\Physics\Mechanics">
+      <UniqueIdentifier>{6d0cfb1d-f3be-48b5-a22e-b8056a10d5a6}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -183,6 +189,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleSpawner.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Physics\Mechanics\Position.cpp">
+      <Filter>Engine\Multiplatform\Core\Physics\Mechanics</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -389,6 +398,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleSpawner.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Physics\Mechanics\Position.h">
+      <Filter>Engine\Multiplatform\Core\Physics\Mechanics</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

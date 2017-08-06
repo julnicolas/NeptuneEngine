@@ -238,6 +238,7 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAOView.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\View.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Physics\Mechanics\Position.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">true</ExcludedFromBuild>
@@ -327,6 +328,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec2.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec3.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Vectors\Vec4.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Physics\Mechanics\Position.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\StdInterface\Updatable.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Hashing\FastHashFunctions.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Type\Integers.h" />
