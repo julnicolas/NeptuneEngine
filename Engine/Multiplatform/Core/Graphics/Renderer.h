@@ -11,6 +11,8 @@ namespace Neptune
 	class Renderer : public Updatable
 	{
 	public:
+		typedef size_t ProgramID;
+
 		enum DrawingPrimitive : u8
 		{
 			TRIANGLES,
@@ -25,14 +27,19 @@ namespace Neptune
 		Renderer(const Renderer&)            = delete;
 		Renderer& operator=(const Renderer&) = delete;
 
-		void addProgram           (GraphicsProgram* _pgm);																			/// \warning It is YOUR responsibility for the program to remain in memory for the whole operation of the renderer
-		bool updateUniform        (u8 pgm_index, const char* name, const void* data);
-		void setNbverticesToRender(u32 nbvertices)										{ m_nbverticesToRender = nbvertices; }
-		void setDrawingPrimitive  (DrawingPrimitive dp)									{ m_drawingPrimitive   = dp;         }
+		///
+		/// \brief   Adds a graphics program to the renderer's program table. Once added (given that the program has been set up properly), it is ready for use. 
+		/// \return  The program's ID within the renderer's program table.
+		/// \warning It is YOUR responsibility for the program to remain in memory for the whole operation of the renderer
+		///
+		ProgramID	addProgram           (GraphicsProgram* _pgm);
+		bool		updateUniform        (u8 pgm_index, const char* name, const void* data);
+		void		setNbverticesToRender(u32 nbvertices)										{ m_nbverticesToRender = nbvertices; }
+		void		setDrawingPrimitive  (DrawingPrimitive dp)									{ m_drawingPrimitive   = dp;         }
 
-		bool init()            override;
-		bool update()    final override;
-		void terminate()       override;
+		bool		init()            override;
+		bool		update()    final override;
+		void		terminate()       override;
 
 	protected:
 		// Types

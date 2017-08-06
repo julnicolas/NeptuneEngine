@@ -59,9 +59,12 @@ Neptune::Renderer::~Renderer()
 	}
 }
 
-void Renderer::addProgram(GraphicsProgram* _pgm)
+Renderer::ProgramID Renderer::addProgram(GraphicsProgram* _pgm)
 {
+	ProgramID id = m_programs.size();
 	m_programs.push_back(_pgm);
+
+	return id;
 }
 
 bool Renderer::updateUniform(u8 pgm_index, const char* name, const void* data)
