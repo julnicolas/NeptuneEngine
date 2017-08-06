@@ -11,6 +11,8 @@
 	#define NEP_LOG(err) ((void) 0)
 #endif
 
+#define NEP_STATIC_ASSERT(expression, message) static_assert(expression, message)
+
 #ifdef NEP_DEBUG
 	#define NEP_ASSERT	assert
 #else
