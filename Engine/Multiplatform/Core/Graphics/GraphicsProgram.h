@@ -119,10 +119,11 @@ namespace Neptune
 		/////////////////////////////////////////////////////////////////////////
 
 
-		typedef std::unordered_map<const char*, UniformVarInput>::iterator       UniformVarIterator;
-		typedef std::unordered_map<const char*, UniformVarInput>::const_iterator ConstUniformVarIterator;
-		typedef std::vector<ShaderAttribute>::iterator                           ShaderAttributeIterator;
-		typedef std::vector<ShaderAttribute>::const_iterator                     ConstShaderAttributeIterator;
+		typedef std::unordered_map<const char*, UniformVarInput>::iterator			UniformVarIterator;
+		typedef std::unordered_map<const char*, UniformVarInput>::const_iterator	ConstUniformVarIterator;
+		typedef std::vector<ShaderAttribute>::iterator								ShaderAttributeIterator;
+		typedef std::vector<ShaderAttribute>::const_iterator						ConstShaderAttributeIterator;
+		typedef u32																	ProgramName;
 
 
 		/////////////////////////////////////////////////////////////////////////
@@ -132,16 +133,21 @@ namespace Neptune
 		////////////////////////////////////////////////////////////////////////
 
 
-		GraphicsProgram();
+		GraphicsProgram();												/// \note A unique default name is generated for the program
+		GraphicsProgram(const char* _programName);						/// \note Sets a user-defined name for the program
 		~GraphicsProgram();
-		GraphicsProgram(const GraphicsProgram&)            = delete;
-		GraphicsProgram& operator=(const GraphicsProgram&) = delete;
+		GraphicsProgram(const GraphicsProgram&)				= delete;
+		GraphicsProgram(GraphicsProgram&&)					= delete;
+		GraphicsProgram&  operator=(const GraphicsProgram&)	= delete;
+		GraphicsProgram&  operator=(GraphicsProgram&&)		= delete;
+
+		ProgramName getName() const									{ return m_programName;					}	/// Returns the user-defined name. Useful for high level classes.
 
 		void add(u32 shader); // TODO: take a const Shader& instead of a u32
 		bool build();
-		u32  getId() const	{ return m_programId; }
+		u32  getResourceID() const	{ return m_programId; }														/// Returns the resource ID given by the graphics library. Useful for low-level rendering-related classes.
 
-		void addShaderAttribute(const ShaderAttribute& desc); /// Adds a vertex-shader-input-description.
+		void addShaderAttribute(const ShaderAttribute& desc);													/// Adds a vertex-shader-input-description.
 		u8                           getNbVertexAttributes() const  { return (u8) m_shaderAttributes.size(); }
 		ShaderAttributeIterator      shaderAttributeBegin()         { return m_shaderAttributes.begin();     }
 		ShaderAttributeIterator      shaderAttributeEnd()           { return m_shaderAttributes.end();       }
@@ -169,12 +175,22 @@ namespace Neptune
 		void rmUniformBlock(const u32 ubo_handle); /// Delete an uniform block from VRAM.
 
 	private:
-		u32 m_programId;
-		std::unordered_map<const char*, UniformVarInput> m_uniformVars;       /// Contains every vertex shader's uniform variables.
-		std::vector<ShaderAttribute>                     m_shaderAttributes;  /// Contains every vertex-shader-attribute description.
+		u32													m_programId;			/// Resource ID given by the graphics library
+		u32													m_programName;			/// User-defined program name
+		std::unordered_map<const char*, UniformVarInput>	m_uniformVars;			/// Contains every vertex shader's uniform variables.
+		std::vector<ShaderAttribute>						m_shaderAttributes;		/// Contains every vertex-shader-attribute description.
 
 		// Bad design
 		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored
+
+#ifdef NEP_DEBUG
+		///
+		/// Non-hashed program name for debug purpose only.
+		/// \Attention For debug use only.
+		///
+		char* m_stringProgramName;
+
+#endif
 
 	};
 }

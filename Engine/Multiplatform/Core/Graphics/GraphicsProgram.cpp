@@ -2,13 +2,79 @@
 #include "Debug/NeptuneDebug.h"
 #include "Graphics/IncludeOpenGL.h"
 #include "System/Hashing/FastHashFunctions.h"
+#include <string>
 
 using namespace Neptune;
+
+//////////////////////////////////////////////////////////////////////////////////////
+//
+//								S T A T I C S
+//
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+static u32 s_default_pgm_name_count = 0;
+static void GenerateUniqueDefaultPgmName(GraphicsProgram::ProgramName* _pgmName, char** _stringName)
+{
+	// Generate a unique program name 
+	NEP_ASSERT(s_default_pgm_name_count < (u32) ~0); // too many programs...
+	s_default_pgm_name_count++;
+	const char NAME_ROOT[] = "DEFAULT_PROGRAM_NAME_";
+
+	std::string default_name = NAME_ROOT;
+	default_name            += std::to_string(s_default_pgm_name_count);
+
+	// Call hash function
+	size_t length = default_name.length();
+	*_pgmName     = Fnv1a32(reinterpret_cast<const u8*>(default_name.c_str()), length);
+
+	// Create the debug name if necessary
+#ifdef NEP_DEBUG
+	NEP_ASSERT(_stringName != nullptr);
+	*_stringName = new char[length+1];
+	strcpy_s(*_stringName, length, default_name.c_str());
+#endif
+}
+
+static void CommonCreate(u32& _pgmID)
+{
+	_pgmID = glCreateProgram();
+}
+
+
+/////////////////////////////////////////////////////////////////////////////////////////
+//
+//					C L A S S   I M P L E M E N T A T I O N
+//
+////////////////////////////////////////////////////////////////////////////////////////
+
 
 GraphicsProgram::GraphicsProgram():
 	m_programId(0)
 {
-	m_programId = glCreateProgram();
+	CommonCreate(m_programId);
+
+#ifdef NEP_DEBUG
+		GenerateUniqueDefaultPgmName(&m_programName, &m_stringProgramName);
+#else
+		GenerateUniqueDefaultPgmName(&m_programName, nullptr);
+#endif
+}
+
+GraphicsProgram::GraphicsProgram(const char* _programName):
+	m_programId(0)
+{
+	NEP_ASSERT(_programName != nullptr);
+
+	CommonCreate(m_programId);
+
+	// Set the program name
+	size_t length   = strlen(_programName);
+	m_programName   = Fnv1a32(reinterpret_cast<const u8*>(_programName), length);
+#ifdef NEP_DEBUG
+	m_stringProgramName = new char[length+1];
+	strcpy_s(m_stringProgramName, length, _programName);
+#endif
 }
 
 GraphicsProgram::~GraphicsProgram()
@@ -29,6 +95,10 @@ GraphicsProgram::~GraphicsProgram()
 
 	// Delete the program from VRAM
 	glDeleteProgram( m_programId );
+
+#ifdef NEP_DEBUG
+	delete[] m_stringProgramName;
+#endif
 }
 
 void GraphicsProgram::add(u32 shader)

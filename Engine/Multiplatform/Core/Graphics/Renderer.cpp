@@ -20,7 +20,7 @@ bool Renderer::update()
 	ConstGraphicalProgramIterator it_end = m_programs.cend();
 	for(ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it)
 	{
-		glUseProgram( (*it)->getId() );
+		glUseProgram( (*it)->getResourceID() );
 		bindUniformVars( it );
 		bindShaderAttributes( **it );
 		draw();
@@ -275,7 +275,7 @@ void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 	GraphicsProgram::ConstUniformVarIterator uni_it_end = (*it)->uniformVarCEnd();
 	for(GraphicsProgram::ConstUniformVarIterator uni_it = (*it)->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it)
 	{
-		s32 location = glGetUniformLocation( (*it)->getId(), uni_it->second.getName() );
+		s32 location = glGetUniformLocation( (*it)->getResourceID(), uni_it->second.getName() );
 		NEP_ASSERT(glGetError() != GL_INVALID_VALUE && glGetError() != GL_INVALID_OPERATION);
 		NEP_ASSERT(location >= 0); // Uniform variable not found or not used in the shader (removed by the GLSL compiler)
 
