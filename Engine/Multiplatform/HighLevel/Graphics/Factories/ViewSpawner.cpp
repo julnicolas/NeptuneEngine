@@ -1,7 +1,6 @@
 #include "Graphics/Factories/ViewSpawner.h"
 #include "Graphics/View.h"
 #include "Physics/Mechanics/Position.h"
-#include "System/Hashing/FastHashFunctions.h" // Must find out how to set unorderd_map hash function manually
 #include "Debug/NeptuneDebug.h"
 
 using namespace Neptune;
@@ -25,12 +24,12 @@ static void InitWorldMatrix(float (&_m)[4][4])
 	_m[3][3] = 1.0f;
 }
 
-ViewSpawner::ViewSpawner(const char* _pgmName, GraphicsProgram* _pgm)
+ViewSpawner::ViewSpawner(GraphicsProgram* _pgm)
 {
 	// A position is 3 float-long data and m_worldMatrix is a float[4][4]
 	NEP_STATIC_ASSERT(sizeof(Position) == 3*sizeof(m_worldMatrix[0][0]), "Error: type mismatch (m_worldMatrix's data and Position's members)");
 	InitWorldMatrix(m_worldMatrix);
-	addGraphicsProgram(_pgmName, _pgm);
+	addGraphicsProgram(_pgm);
 }
 
 View* ViewSpawner::create()
@@ -59,32 +58,28 @@ View* ViewSpawner::create()
 		pgm->build();
 
 		// Add the program to the view
-		view->addGraphicsProgram(it.first, pgm);
+		view->addGraphicsProgram(pgm);
 	}
 
 	return view;
 }
 
-void ViewSpawner::addGraphicsProgram(const char* _name, GraphicsProgram* _pgm)
+void ViewSpawner::addGraphicsProgram(GraphicsProgram* _pgm)
 {
-	NEP_ASSERT(_name != nullptr);
+	NEP_ASSERT(_pgm != nullptr);
 	
 	// Create a Program struct
 	Program program;
 	program.m_program = _pgm;
 
 	// Add it to the program list if not present, otherwise do nothing
-	size_t length = strlen(_name);
-	m_programs.insert({ (const char*) Fnv1a32( (u8*) _name, length ), program});
+	m_programs.insert({ _pgm->getName(), program});
 }
 
-void ViewSpawner::addShaderAttribute(const char* _pgmName, const GraphicsProgram::ShaderAttribute& _shaderAtt)
+void ViewSpawner::addShaderAttribute(GraphicsProgram::ProgramName _pgmName, const GraphicsProgram::ShaderAttribute& _shaderAtt)
 {
-	NEP_ASSERT(_pgmName != nullptr);
-	
 	// Get the program
-	const char* key = (const char*) Fnv1a32( (u8*) _pgmName, strlen(_pgmName) );
-	auto it = m_programs.find(key);
+	auto it = m_programs.find(_pgmName);
 	NEP_ASSERT( it != m_programs.end() );
 
 	// Add the attribute if not already present
@@ -95,13 +90,10 @@ void ViewSpawner::addShaderAttribute(const char* _pgmName, const GraphicsProgram
 	it->second.m_shaderAttributeIDs.push_back(attribute_ID);
 }
 
-void ViewSpawner::addUniformVariable(const char* _pgmName, const GraphicsProgram::UniformVarInput& _uniform)
+void ViewSpawner::addUniformVariable(GraphicsProgram::ProgramName _pgmName, const GraphicsProgram::UniformVarInput& _uniform)
 {
-	NEP_ASSERT(_pgmName != nullptr);
-
 	// Get the program
-	const char* key = (const char*)Fnv1a32((u8*)_pgmName,strlen(_pgmName));
-	auto it = m_programs.find(key);
+	auto it = m_programs.find(_pgmName);
 	NEP_ASSERT(it != m_programs.end());
 
 	// Add the attribute if not already present
@@ -112,7 +104,7 @@ void ViewSpawner::addUniformVariable(const char* _pgmName, const GraphicsProgram
 	it->second.m_uniformVarIDs.push_back(uniform_ID);
 }
 
-bool ViewSpawner::mapVertexData(const char* _pgmName, u8 _layout)
+bool ViewSpawner::mapVertexData(GraphicsProgram::ProgramName _pgmName, u8 _layout)
 {
 	// Check the data have been created
 	if(m_vertices.empty()) // Assert?
@@ -133,7 +125,7 @@ bool ViewSpawner::mapVertexData(const char* _pgmName, u8 _layout)
 	return true;
 }
 
-bool ViewSpawner::mapColorData(const char* _pgmName, u8 _layout)
+bool ViewSpawner::mapColorData(GraphicsProgram::ProgramName _pgmName, u8 _layout)
 {
 	// Check the data have been created
 	if ( m_colors.empty() ) // Assert?
@@ -154,7 +146,7 @@ bool ViewSpawner::mapColorData(const char* _pgmName, u8 _layout)
 	return true;
 }
 
-bool ViewSpawner::mapNormalData(const char* _pgmName, u8 _layout)
+bool ViewSpawner::mapNormalData(GraphicsProgram::ProgramName _pgmName, u8 _layout)
 {
 	if(m_normals.empty())
 		return false;
@@ -174,7 +166,7 @@ bool ViewSpawner::mapNormalData(const char* _pgmName, u8 _layout)
 	return true;
 }
 
-bool ViewSpawner::map2DTextureMapData(const char* _pgmName, u8 _layout)
+bool ViewSpawner::map2DTextureMapData(GraphicsProgram::ProgramName _pgmName, u8 _layout)
 {
 	if(m_2DTexCoords.empty())
 		return false;
@@ -206,7 +198,7 @@ void ViewSpawner::setWorldPosition(const Position& _pos)
 	// memcpy(m_worldMatrix[3], _pos, sizeof(_pos));
 }
 
-void ViewSpawner::useWorldMatrix(const char* _pgmName, const char* _uniformName)
+void ViewSpawner::useWorldMatrix(GraphicsProgram::ProgramName _pgmName, const char* _uniformName)
 {
 	GraphicsProgram::UniformVarInput world_matrix(_uniformName,
 		GraphicsProgram::FLOAT,

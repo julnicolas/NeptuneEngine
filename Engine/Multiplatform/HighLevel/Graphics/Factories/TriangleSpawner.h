@@ -14,8 +14,8 @@ namespace Neptune
 		// C O N S T R U C T O R S
 		//
 
-		TriangleSpawner(const char* _pgmName, GraphicsProgram* _pgm):
-			ViewSpawner(_pgmName, _pgm){}
+		TriangleSpawner(GraphicsProgram* _pgm):
+			ViewSpawner(_pgm){}
 
 
 		//

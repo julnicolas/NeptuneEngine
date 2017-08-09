@@ -5,7 +5,6 @@
 #include "Graphics/Texture.h"
 
 #include "Debug/NeptuneDebug.h"
-#include "System/Hashing/FastHashFunctions.h" //! the hash function must be used by the unordered_map directly
 
 using namespace Neptune;
 
@@ -40,10 +39,9 @@ bool View::update()
 	return status;
 }
 
-bool View::updateUniform(const char* _pgmName, const char* _uniformName, void* _value)
+bool View::updateUniform(GraphicsProgram::ProgramName _pgmName, const char* _uniformName, void* _value)
 {
-	const char* key = (const char*) Fnv1a32((u8*) _pgmName, strlen(_pgmName)); // hash should be done automatically by the container
-	auto        it  = m_programMap.find(key);
+	auto        it  = m_programMap.find(_pgmName);
 	
 	NEP_ASSERT(it != m_programMap.end()); //  Error: Program doesn't exist
 
@@ -64,12 +62,12 @@ bool View::updateUniform(const char* _uniformName, void* _value)
 	return status;
 }
 
-void View::addGraphicsProgram(const char* _pgmName, GraphicsProgram* _pgm)
+void View::addGraphicsProgram(GraphicsProgram* _pgm)
 {
-	NEP_ASSERT(m_programMap.find(_pgmName) == m_programMap.end()); // Error: two programs have the same name
+	NEP_ASSERT(m_programMap.find(_pgm->getName()) == m_programMap.end()); // Error: two programs have the same name
 	
-	Renderer::ProgramID id       = m_renderer->addProgram( _pgm );
-	m_programMap[(const char*) Fnv1a32((u8*) _pgmName, strlen(_pgmName))] = id; // call to hash must be removed. The map should do it itself
+	Renderer::ProgramID id        = m_renderer->addProgram( _pgm );
+	m_programMap[_pgm->getName()] = id;
 }
 
 void View::terminate()
