@@ -32,7 +32,7 @@ static void GenerateUniqueDefaultPgmName(GraphicsProgram::ProgramName* _pgmName,
 #ifdef NEP_DEBUG
 	NEP_ASSERT(_stringName != nullptr);
 	*_stringName = new char[length+1];
-	strcpy_s(*_stringName, length, default_name.c_str());
+	strcpy_s(*_stringName, length+1, default_name.c_str());
 #endif
 }
 
@@ -73,7 +73,7 @@ GraphicsProgram::GraphicsProgram(const char* _programName):
 	m_programName   = Fnv1a32(reinterpret_cast<const u8*>(_programName), length);
 #ifdef NEP_DEBUG
 	m_stringProgramName = new char[length+1];
-	strcpy_s(m_stringProgramName, length, _programName);
+	strcpy_s(m_stringProgramName, length+1, _programName);
 #endif
 }
 
