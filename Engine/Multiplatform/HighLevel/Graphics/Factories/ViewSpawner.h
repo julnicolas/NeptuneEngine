@@ -85,18 +85,7 @@ namespace Neptune
 
 
 	protected:
-		//
-		// S T R U C T U R E S
-		//
-
-		struct Program
-		{
-			GraphicsProgram*			m_program;
-			std::vector<const void*>	m_shaderAttributeIDs;	/// Attribute's position in m_shaderAttributes
-			std::vector<const void*>	m_uniformVarIDs;		/// Uniform variable's position in m_uniformVariables
-		};
-
-
+		
 		//
 		// P U R E   V I R T U A L   M E T H O D S 
 		//
@@ -119,8 +108,35 @@ namespace Neptune
 		Texture*										m_texture;											/// Texture to be used in the default shaders. Probably will be refactored later 
 
 	private:
-		std::unordered_map<GraphicsProgram::ProgramName, Program>			m_programs;						/// Contains all the programs to be used to render the views
-		std::unordered_map<const void*,GraphicsProgram::ShaderAttribute>	m_shaderAttributes;				/// Stores all the shader attributes for all the programs. The void* is the address of the buffer containing the data (m_data field).
-		std::unordered_map<const void*,GraphicsProgram::UniformVarInput>	m_uniformVariables;				/// Stores all the uniform variables for all the programs. The void* is the address of the buffer containing the data (m_data field).
+
+		//
+		// S T R U C T U R E S
+		//
+
+		struct Program
+		{
+			///
+			/// \struct Used to locate a shader attribute in the shader-attribute table 
+			/// and adapt its content to fit the program's needs.
+			///
+			struct CustomShaderAttributeData
+			{
+				const void*	m_id;		/// Attribute's position in m_shaderAttributes
+				u8			m_layout;	/// Its layout in its shader. Saved here so that one same shader input is shared for every program.  
+			};
+
+			GraphicsProgram*								m_program;
+			std::vector<const CustomShaderAttributeData>	m_shaderAttributesCustomData;	/// Attributes' custom data (NOTE: contains attributes' position in the shader-attribute table)
+			std::vector<const void*>						m_uniformVarIDs;				/// Uniform variable's position in m_uniformVariables
+		};
+
+
+		//
+		// A T T R I B U T E S
+		//
+
+		std::unordered_map<GraphicsProgram::ProgramName, Program>				m_programs;				/// Contains all the programs to be used to render the views
+		std::unordered_map<const void*, GraphicsProgram::ShaderAttribute>		m_shaderAttributes;		/// Stores all the shader attributes for all the programs (aka the shader-attribute table). The void* is the address of the buffer containing the data (m_data field).
+		std::unordered_map<const void*, GraphicsProgram::UniformVarInput>		m_uniformVariables;		/// Stores all the uniform variables for all the programs. The void* is the address of the buffer containing the data (m_data field).
 	};
 }

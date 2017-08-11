@@ -42,10 +42,18 @@ View* ViewSpawner::create()
 		// Pass the parameters to the program
 		GraphicsProgram* pgm = it.second.m_program;
 
-		for(const auto& shader_attribute_ID : it.second.m_shaderAttributeIDs)
+		for(const auto& custom_data : it.second.m_shaderAttributesCustomData)
 		{
-			NEP_ASSERT(m_shaderAttributes.find(shader_attribute_ID) != m_shaderAttributes.end());
-			pgm->addShaderAttribute(m_shaderAttributes[shader_attribute_ID]);
+			NEP_ASSERT(m_shaderAttributes.find(custom_data.m_id) != m_shaderAttributes.end());
+
+			// Get the attribute from the attribute table
+			GraphicsProgram::ShaderAttribute& att	= m_shaderAttributes[custom_data.m_id];
+			
+			// Set the layout for the current program
+			att.m_layout							= custom_data.m_layout;
+			
+			// Add the attribute to the program
+			pgm->addShaderAttribute( att );
 		}
 
 		for(const auto& uniform_var_ID : it.second.m_uniformVarIDs)
@@ -86,8 +94,12 @@ void ViewSpawner::addShaderAttribute(GraphicsProgram::ProgramName _pgmName, cons
 	const void* attribute_ID = _shaderAtt.m_data;
 	m_shaderAttributes.insert({attribute_ID,_shaderAtt});
 
-	// Add its ID to the corresponding program
-	it->second.m_shaderAttributeIDs.push_back(attribute_ID);
+	// Set its custom data for the corresponding program
+	Program::CustomShaderAttributeData custom_data;
+	custom_data.m_id		= attribute_ID;
+	custom_data.m_layout	= _shaderAtt.m_layout;
+
+	it->second.m_shaderAttributesCustomData.push_back(custom_data);
 }
 
 void ViewSpawner::addUniformVariable(GraphicsProgram::ProgramName _pgmName, const GraphicsProgram::UniformVarInput& _uniform)
