@@ -1,6 +1,7 @@
 #pragma once
 
 #include "System/Type/Integers.h"
+#include "Maintenance/CompilerHints.h"
 #include <map>
 #include <unordered_map>
 
@@ -86,7 +87,9 @@ namespace Neptune
 			u8          getNbRows()    const { return m_nbRows;    }
 			u8          getNbColumns() const { return m_nbColumns; }
 			const void* getData()      const { return m_data;      }
-			void setData(const void* data);
+			
+			NEP_DEPRECATED("unsafe, data size should be controlled")
+				void setData(const void* _data);
 
 			~UniformVarInput()                                 = default; /// Destruction of dynamically allocated memory is managed by the enclosing class.
 			UniformVarInput(const UniformVarInput&)            = default;

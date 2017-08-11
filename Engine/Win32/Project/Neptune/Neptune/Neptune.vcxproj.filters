@@ -101,6 +101,9 @@
     <Filter Include="Engine\Multiplatform\Core\Physics\Mechanics">
       <UniqueIdentifier>{6d0cfb1d-f3be-48b5-a22e-b8056a10d5a6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\Core\Maintenance">
+      <UniqueIdentifier>{ebf194ed-32e7-48a9-b21f-6a801aee9bab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -401,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Physics\Mechanics\Position.h">
       <Filter>Engine\Multiplatform\Core\Physics\Mechanics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Maintenance\CompilerHints.h">
+      <Filter>Engine\Multiplatform\Core\Maintenance</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

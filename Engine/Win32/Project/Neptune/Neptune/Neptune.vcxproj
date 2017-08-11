@@ -101,7 +101,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>NEP_WINDOWS;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -119,7 +119,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>NEP_WINDOWS;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -139,7 +139,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NEP_WINDOWS;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -161,7 +161,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NEP_WINDOWS;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
@@ -184,7 +184,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NEP_WINDOWS;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -206,7 +206,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NEP_WINDOWS;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -312,6 +312,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ViewFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\EventSystemInterface.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Maintenance\CompilerHints.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Trigonometry.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Math.h" />
