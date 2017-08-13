@@ -391,7 +391,7 @@
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec2Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec3Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec4Implementation.h" />
-    <ClInclude Include="..\..\..\Core\Plateform.h" />
+    <ClInclude Include="..\..\..\Core\InputEvent.h" />
     <ClInclude Include="..\..\..\HighLevel\Application\WinApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

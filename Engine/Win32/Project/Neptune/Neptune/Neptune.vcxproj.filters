@@ -216,9 +216,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\App.h">
       <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\Plateform.h">
-      <Filter>Engine\Win32\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\HighLevel\Application\WinApp.h">
       <Filter>Engine\Win32\HighLevel\Application</Filter>
     </ClInclude>
@@ -407,6 +404,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Maintenance\CompilerHints.h">
       <Filter>Engine\Multiplatform\Core\Maintenance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\InputEvent.h">
+      <Filter>Engine\Win32\Core</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
