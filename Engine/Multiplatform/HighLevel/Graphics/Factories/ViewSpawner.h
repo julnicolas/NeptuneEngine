@@ -79,6 +79,7 @@ namespace Neptune
 		/// \brief Add the uniform to share for all programs in _pgmNameList. The variable is therefore COPIED only once in memory.
 		/// \note  Make sure that the uniform variable's name is the same across all the shaders used by the programs in _pgmNameList.
 		///        If it is not the case, an assert is guaranteed to be raised by the Renderer class in Debug config.
+		/// \warning not well tested yet
 		///
 		void addUniformVariable(GraphicsProgram::ProgramName* _pgmNameList, u32 _nbPgm, const GraphicsProgram::UniformVarInput& _uniform); 
 		
