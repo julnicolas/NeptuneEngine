@@ -2,6 +2,7 @@
 #include "Graphics/View.h"
 #include "Physics/Mechanics/Position.h"
 #include "Debug/NeptuneDebug.h"
+#include "System/Hashing/FastHashFunctions.h"
 
 using namespace Neptune;
 
@@ -102,6 +103,19 @@ void ViewSpawner::addShaderAttribute(GraphicsProgram::ProgramName _pgmName, cons
 	it->second.m_shaderAttributesCustomData.push_back(custom_data);
 }
 
+static u64 ComputeUniformVariableId(GraphicsProgram::ProgramName _pgmName, const char* _uniformName)
+{
+	u32 name_hash = Fnv1a32((u8*) _uniformName, strlen(_uniformName));
+	u32 pgm_name  = static_cast<u32>( _pgmName );
+
+	u64 uniformID = 0;			// 0x00000000 00000000
+	uniformID     = pgm_name;	// 0x00000000 pgm_name
+	uniformID     <<= 32;		// 0xpgm_name 00000000
+	uniformID     |= name_hash; // 0xpgm_name name_hash
+
+	return uniformID;
+}
+
 void ViewSpawner::addUniformVariable(GraphicsProgram::ProgramName _pgmName, const GraphicsProgram::UniformVarInput& _uniform)
 {
 	// Get the program
@@ -109,11 +123,41 @@ void ViewSpawner::addUniformVariable(GraphicsProgram::ProgramName _pgmName, cons
 	NEP_ASSERT(it != m_programs.end());
 
 	// Add the attribute if not already present
-	const void* uniform_ID = _uniform.getData();
+	UniformVariableID uniform_ID {ComputeUniformVariableId(_pgmName, _uniform.getName())}; // Don't allow narrowing conversions
 	m_uniformVariables.insert({uniform_ID,_uniform});
 
 	// Add its ID to the corresponding program
 	it->second.m_uniformVarIDs.push_back(uniform_ID);
+}
+
+void ViewSpawner::addUniformVariable(GraphicsProgram::ProgramName* _pgmNameList, u32 _nbPgm, const GraphicsProgram::UniformVarInput& _uniform)
+{
+	NEP_ASSERT( _pgmNameList != nullptr );
+	NEP_ASSERT( _nbPgm > 0 );
+
+	// Add the first element (this one will be shared by the other programs)
+	
+		// Get the program
+		auto it_first = m_programs.find(_pgmNameList[0]);
+		NEP_ASSERT(it_first != m_programs.end());
+
+		// Add the attribute if not already present
+		UniformVariableID uniform_ID{ComputeUniformVariableId(_pgmNameList[0],_uniform.getName())}; // Don't allow narrowing conversion
+		m_uniformVariables.insert({uniform_ID,_uniform});
+
+		// Add its ID to the corresponding program
+		it_first->second.m_uniformVarIDs.push_back(uniform_ID);
+	
+	// Add the variable for every program
+	for ( u32 i = 1; i < _nbPgm; i++ )
+	{
+		// Get the program
+		auto it = m_programs.find(_pgmNameList[i]);
+		NEP_ASSERT(it != m_programs.end());
+
+		// Add its ID to the corresponding program
+		it->second.m_uniformVarIDs.push_back(uniform_ID);
+	}
 }
 
 bool ViewSpawner::mapVertexData(GraphicsProgram::ProgramName _pgmName, u8 _layout)

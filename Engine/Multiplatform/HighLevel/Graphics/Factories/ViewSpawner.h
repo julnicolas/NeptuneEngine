@@ -71,17 +71,24 @@ namespace Neptune
 		// G R A P H I C S - P R O G R A M   R E L A T E D   M E T H O D S 
 		//
 
-		void addGraphicsProgram(GraphicsProgram* _pgm);																		/// Add another graphics program, this will add another draw call for the current view
-		void addShaderAttribute(GraphicsProgram::ProgramName _pgmName, const GraphicsProgram::ShaderAttribute& _shaderAtt);	/// Add the shader attribute  _shaderAtt as an input for the program _pgmName. 
-		void addUniformVariable(GraphicsProgram::ProgramName _pgmName, const GraphicsProgram::UniformVarInput& _uniform);	/// Add the uniform variable _uniform as an input for the program _pgmName. The data is copied
+		void addGraphicsProgram(GraphicsProgram* _pgm);																						/// Add another graphics program, this will add another draw call for the current view
+		void addShaderAttribute(GraphicsProgram::ProgramName  _pgmName, const GraphicsProgram::ShaderAttribute& _shaderAtt);				/// Add the shader attribute  _shaderAtt as an input for the program _pgmName. 
+		void addUniformVariable(GraphicsProgram::ProgramName  _pgmName, const GraphicsProgram::UniformVarInput& _uniform);					/// Add the uniform variable _uniform as an input for the program _pgmName. The data is copied.
+		
+		///
+		/// \brief Add the uniform to share for all programs in _pgmNameList. The variable is therefore COPIED only once in memory.
+		/// \note  Make sure that the uniform variable's name is the same across all the shaders used by the programs in _pgmNameList.
+		///        If it is not the case, an assert is guaranteed to be raised by the Renderer class in Debug config.
+		///
+		void addUniformVariable(GraphicsProgram::ProgramName* _pgmNameList, u32 _nbPgm, const GraphicsProgram::UniformVarInput& _uniform); 
+		
+		bool mapVertexData		(  GraphicsProgram::ProgramName _pgmName, u8 _layout);														/// Add the spawner's vertex data as an input for the program _pgmName at GLSL layout position _layout
+		bool mapColorData       (  GraphicsProgram::ProgramName _pgmName, u8 _layout);														/// Add the spawner's color data as an input for the program _pgmName at GLSL layout position _layout
+		bool mapNormalData      (  GraphicsProgram::ProgramName _pgmName, u8 _layout);														/// Add the spawner's normal data as an input for the program _pgmName at GLSL layout position _layout
+		bool map2DTextureMapData(  GraphicsProgram::ProgramName _pgmName, u8 _layout);														/// Add the spawner's 2d texture map coordinates as an input for the program _pgmName at GLSL layout position _layout
 
-		bool mapVertexData		(  GraphicsProgram::ProgramName _pgmName, u8 _layout);										/// Add the spawner's vertex data as an input for the program _pgmName at GLSL layout position _layout
-		bool mapColorData       (  GraphicsProgram::ProgramName _pgmName, u8 _layout);										/// Add the spawner's color data as an input for the program _pgmName at GLSL layout position _layout
-		bool mapNormalData      (  GraphicsProgram::ProgramName _pgmName, u8 _layout);										/// Add the spawner's normal data as an input for the program _pgmName at GLSL layout position _layout
-		bool map2DTextureMapData(  GraphicsProgram::ProgramName _pgmName, u8 _layout);										/// Add the spawner's 2d texture map coordinates as an input for the program _pgmName at GLSL layout position _layout
-
-		void setWorldPosition(const Position& _pos);																		/// Changes the spawn position for every View to position _pos. The position is expressed in world coordinates.
-		void useWorldMatrix  (GraphicsProgram::ProgramName _pgmName,	const char* _uniformName);												/// Use a world matrix for the program _pgmName, set with the values from setWorldPosition. It is passed as an uniform variable with the name _uniformName.
+		void setWorldPosition(const Position& _pos);																						/// Changes the spawn position for every View to position _pos. The position is expressed in world coordinates.
+		void useWorldMatrix  (GraphicsProgram::ProgramName _pgmName,	const char* _uniformName);											/// Use a world matrix for the program _pgmName, set with the values from setWorldPosition. It is passed as an uniform variable with the name _uniformName.
 
 
 	protected:
@@ -109,6 +116,8 @@ namespace Neptune
 
 	private:
 
+		typedef u64 UniformVariableID; // Combination of two 32-bit hashes: 0x pgm_name uniform_name (little endian example)
+
 		//
 		// S T R U C T U R E S
 		//
@@ -127,7 +136,7 @@ namespace Neptune
 
 			GraphicsProgram*								m_program;
 			std::vector<const CustomShaderAttributeData>	m_shaderAttributesCustomData;	/// Attributes' custom data (NOTE: contains attributes' position in the shader-attribute table)
-			std::vector<const void*>						m_uniformVarIDs;				/// Uniform variable's position in m_uniformVariables
+			std::vector<UniformVariableID>					m_uniformVarIDs;				/// Uniform variable's position in m_uniformVariables
 		};
 
 
@@ -137,6 +146,6 @@ namespace Neptune
 
 		std::unordered_map<GraphicsProgram::ProgramName, Program>				m_programs;				/// Contains all the programs to be used to render the views
 		std::unordered_map<const void*, GraphicsProgram::ShaderAttribute>		m_shaderAttributes;		/// Stores all the shader attributes for all the programs (aka the shader-attribute table). The void* is the address of the buffer containing the data (m_data field).
-		std::unordered_map<const void*, GraphicsProgram::UniformVarInput>		m_uniformVariables;		/// Stores all the uniform variables for all the programs. The void* is the address of the buffer containing the data (m_data field).
+		std::unordered_map<UniformVariableID, GraphicsProgram::UniformVarInput>	m_uniformVariables;		/// Stores all the uniform variables for all the programs. The void* is the address of the buffer containing the data (m_data field).
 	};
 }
