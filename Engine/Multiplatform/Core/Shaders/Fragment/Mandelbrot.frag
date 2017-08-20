@@ -5,8 +5,6 @@ layout (location = 0) out vec4 f_color;
 
 uniform float _Time;
 
-//float _Time = 66.0f;
-
 vec2 squareCpx(vec2 a)
 {
 	return vec2(a.x*a.x - a.y*a.y, 2*a.x*a.y);
