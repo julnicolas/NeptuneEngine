@@ -196,6 +196,7 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Physics\Mechanics\Position.cpp">
       <Filter>Engine\Multiplatform\Core\Physics\Mechanics</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanSpawner.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -407,6 +408,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Core\InputEvent.h">
       <Filter>Engine\Win32\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanSpawner.h">
+      <Filter>Engine</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
