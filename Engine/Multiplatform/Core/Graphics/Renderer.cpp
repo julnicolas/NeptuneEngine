@@ -70,6 +70,9 @@ Renderer::ProgramID Renderer::addProgram(GraphicsProgram* _pgm)
 bool Renderer::updateUniform(u8 pgm_index, const char* name, const void* data)
 {
 	GraphicsProgram::UniformVarIterator it = m_programs[pgm_index]->getUniformVar(name);
+	
+	NEP_ASSERT( it != m_programs[pgm_index]->uniformVarEnd() ); // Error, uniform couldn't be found
+	
 	if ( it != m_programs[pgm_index]->uniformVarEnd() )
 	{
 		it->second.setData( data );
