@@ -221,6 +221,7 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Color.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\DirectionalLightSource.cpp" />
@@ -290,6 +291,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\AmbientLight.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Color.h" />

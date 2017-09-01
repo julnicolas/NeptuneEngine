@@ -104,6 +104,9 @@
     <Filter Include="Engine\Multiplatform\Core\Maintenance">
       <UniqueIdentifier>{ebf194ed-32e7-48a9-b21f-6a801aee9bab}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\Core\File">
+      <UniqueIdentifier>{c894faf6-3ea7-4109-89bd-f67cd110b2b9}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -198,6 +201,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanSpawner.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.cpp">
+      <Filter>Engine\Multiplatform\Core\File</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -413,6 +419,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanSpawner.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.h">
+      <Filter>Engine\Multiplatform\Core\File</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
