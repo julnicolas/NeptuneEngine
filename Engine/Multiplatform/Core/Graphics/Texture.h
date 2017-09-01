@@ -3,6 +3,11 @@
 #include "StdInterface/Updatable.h"
 #include "System/Type/Integers.h"
 
+
+// SUpported texture formats : ktx
+// Supported image formats: "png", "jpg", "jpeg", "tga", "bmp", "psd", "gif", "hdr", "pic"
+
+
 namespace Neptune
 {
 	class Texture final: public Updatable

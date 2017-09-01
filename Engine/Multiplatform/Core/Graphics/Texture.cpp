@@ -2,6 +2,10 @@
 #include "STB/stb_image.h"
 #include "Debug/NeptuneDebug.h"
 #include "Graphics/IncludeOpenGL.h"
+#include "File/PathHelpers.h"
+
+#include <string>
+#include <algorithm>
 
 using namespace Neptune;
 
@@ -67,6 +71,20 @@ static u16 MapTextureType(Texture::Type _type)
 	return type;
 }
 
+static u8* LoadKTX(const char* _path)
+{
+
+}
+
+static std::string GetExtension(const char* _path)
+{
+	std::string extension = PathHelpers::GetFileExtension(std::string(_path));
+	std::transform(extension.begin(), extension.end(), extension.begin(), ::tolower); 
+
+	NEP_ASSERT(extension != ""); // Error! File name doesn't have an extension
+
+	return extension;
+}
 
 ////////////////////////////////////////////////////////////////
 //
@@ -172,14 +190,25 @@ void Texture::SetPlaceHolderTexture(u8*& data)
 
 bool Texture::init()
 {
+	// GET FILE EXTENSION
+	NEP_ASSERT( m_path != nullptr && m_path[0] != '\0' ); // Error! Texture path is invalid
+	std::string extension = GetExtension(m_path);
+
+	// LOAD TEXTURE DATA
+	u8* data = nullptr;
+	if ( extension == ".ktx" )		// If it's a texture format
+		data = LoadKTX(m_path);
+	else							// If it's an image format
+		data = stbi_load( m_path, (s32*) &m_width, (s32*) &m_height, (s32*) &m_componentsPerPixel, 3);
+	
+	// MOVE DATA TO VRAM
 	// Reading image's content
-	u8* data = stbi_load( m_path, (s32*) &m_width, (s32*) &m_height, (s32*) &m_componentsPerPixel, 3);
 	if (data != nullptr)
 	{
 		CreateTexture( data, 3);
 		return true;
 	}
-	else
+	else // We tolerate textures not being loaded, for instance if the art hasn't had time to make them 
 	{
 		SetPlaceHolderTexture(data);
 		CreateTexture(data, 3);
