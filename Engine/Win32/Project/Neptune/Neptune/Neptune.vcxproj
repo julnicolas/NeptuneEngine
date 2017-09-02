@@ -101,7 +101,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -109,8 +109,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86\Debug;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -119,7 +119,7 @@
       </PrecompiledHeader>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
-      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -127,8 +127,8 @@
       <GenerateDebugInformation>true</GenerateDebugInformation>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64\Debug;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -139,7 +139,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;NEP_RELEASE;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;NEP_RELEASE;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -149,8 +149,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -161,7 +161,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;NEP_RELEASE;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;NEP_RELEASE;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
     </ClCompile>
@@ -172,8 +172,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
@@ -184,7 +184,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -194,8 +194,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
@@ -206,7 +206,7 @@
       <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
-      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
@@ -216,8 +216,8 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
     <Lib>
-      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
