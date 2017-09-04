@@ -4,7 +4,7 @@
 #include "System/Type/Integers.h"
 
 
-// SUpported texture formats : ktx
+// Supported texture formats : ktx
 // Supported image formats: "png", "jpg", "jpeg", "tga", "bmp", "psd", "gif", "hdr", "pic"
 
 
@@ -19,12 +19,42 @@ namespace Neptune
 			TEXTURE_2D,
 			TEXTURE_3D,
 			CUBE_MAP,
-			BUFFER,				/// Texture of really large size
-			MULTI_SAMPLE_2D,	/// Used for anti-aliasing filters
+			BUFFER,				/// Texture of really large size. NOT SUPPORTED YET.
 			TEXTURE_ARRAY_1D,
 			TEXTURE_ARRAY_2D,
-			TEXTURE_ARRAY_2D_MULTISAMPLE,
 			CUBE_MAP_ARRAY,
+			NOT_SUPPORTED
+		};
+
+		enum class InternalFormat : u8
+		{
+			RED,
+			RG,
+			RGB,
+			RGBA
+		};
+
+		struct MetaData
+		{
+			union HeightOr1DArrayItemCount
+			{
+				u32 m_height;
+				u32 m_1DItemCount;
+			};
+
+			union DepthOr2DArrayItemCount
+			{
+				u32 m_depth;
+				u32 m_2DItemCount;
+			};
+
+			u32				m_width;
+			u32				m_height;					/// Also number of elements for a 1D array
+			u32				m_depth;					/// Also number of elements for a 2D array
+			u32				m_size;						/// Size of the texture data
+			u8				m_mipmapLevel;
+			Type			m_type;
+			InternalFormat	m_internalFormat;
 		};
 
 		/// 
@@ -54,26 +84,20 @@ namespace Neptune
 
 		void setPath(const char* _path);
 		void setData(void* _data, u32 _size);
-		void setType(Type _type)				{	m_type = _type;					}
+		void setType(Type _type)				{	m_metaData.m_type = _type;				}
 
-		u32         getWidth()          const	{	return m_width;					}
-		u32         getHeight()         const	{	return m_height;				}
-		u32			getDepth()			const	{	return m_depth;					}
-		u32         getNbCompPerPixel() const	{	return m_componentsPerPixel;	}
-		const char* getName()           const	{	return m_path;					}
-		bool        isInitialized()     const	{	return m_textureID != 0;		}
+		u32         getWidth()          const	{	return m_metaData.m_width;				}
+		u32         getHeight()         const	{	return m_metaData.m_height;				}
+		u32			getDepth()			const	{	return m_metaData.m_depth;				}
+		const char* getName()           const	{	return m_path;							}
+		bool        isInitialized()     const	{	return m_textureID != 0;				}
 
 	private:
 		void CreateTexture(u8* data, s32 reqComp);
 		void SetPlaceHolderTexture(u8*& data);
 
 		u32				m_textureID;
-		u32				m_width;
-		u32				m_height;
-		u32				m_depth;																	/// Used for 3D textures
-		u32				m_componentsPerPixel;
-		Type			m_type;
-		u32				m_size;																		/// Size of the texture data
+		MetaData		m_metaData;
 		void*			m_data;																		/// Used when setting texture data at runtime rather than from a file
 		char*			m_path;
 	};
