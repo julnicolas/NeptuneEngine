@@ -498,7 +498,7 @@ static void GLTexSubImage(const Texture::MetaData& _metaData, const void** _data
 
 // Returns a texture target
 const u32 LOAD_KTX_ERROR = ~0;
-static u32 LoadKTX(const char* _path, u32* _textureID, Texture::MetaData* _metaData)
+static u32 LoadAndCreateKTXTexture(const char* _path, u32* _textureID, Texture::MetaData* _metaData)
 {
 	NEP_ASSERT(_textureID != nullptr && _metaData != nullptr); // Error
 	
@@ -590,10 +590,9 @@ void Texture::setData(void* _data, u32 _size)
 	m_metaData.m_size = _size;
 }
 
-void Texture::CreateTexture(u8* _data, s32 reqComp)
+void Texture::CreateTexture(u8* _data)
 {
 	NEP_ASSERT(m_metaData.m_type != Type::BUFFER); // Error: type not supported yet 
-	//NEP_ASSERT(m_metaData.m_internalFormat == reqComp);
 
 	// Generate a name for the texture
 	glGenTextures(1,&m_textureID);
@@ -612,27 +611,6 @@ void Texture::CreateTexture(u8* _data, s32 reqComp)
 	_data = nullptr;
 }
 
-// Placeholder textures are magenta
-void Texture::SetPlaceHolderTexture(u8*& data)
-{
-	// Sanity check
-	const Texture::InternalFormat INTERNAL_FORMAT = Texture::InternalFormat::RGB;
-	const u8 INTERNAL_FORMAT_SIZE = 3; // Update this size if you change INTERNAL_FORMAT
-	m_metaData.m_internalFormat = INTERNAL_FORMAT;
-
-	NEP_STATIC_ASSERT(INTERNAL_FORMAT == Texture::InternalFormat::RGB, "Error: You must update INTERNAL_FORMAT_SIZE");
-
-	m_metaData.m_width  = 1;
-	m_metaData.m_height = 1;
-
-	size_t size = m_metaData.m_width*m_metaData.m_height*INTERNAL_FORMAT_SIZE;
-	data = new u8[size];
-
-	data[0] = 255;
-	data[1] = 0;
-	data[2] = 255;
-}
-
 bool Texture::init()
 {
 	// GET FILE EXTENSION
@@ -643,23 +621,31 @@ bool Texture::init()
 	u8* data = nullptr;
 	u32 texture_target = 0;
 	if ( extension == ".ktx" )		// If it's a texture format
-		texture_target = LoadKTX(m_path, &m_textureID, &m_metaData);
+	{
+		texture_target = LoadAndCreateKTXTexture(m_path, &m_textureID, &m_metaData);
+
+		NEP_ASSERT(texture_target != LOAD_KTX_ERROR); // Error, texture couldn't be loaded.
+		return texture_target != LOAD_KTX_ERROR;
+	}
 	else							// If it's an image format
-		data = stbi_load( m_path, (s32*) &m_metaData.m_width, (s32*) &m_metaData.m_height, (s32*) &m_metaData.m_internalFormat, 3);
+	{
+		data = stbi_load( m_path, (s32*) &m_metaData.m_width, (s32*) &m_metaData.m_height, nullptr, 4); // 4 for four bytes (RGBA)
+
+		m_metaData.m_internalFormat = Texture::InternalFormat::RGBA;
+		m_metaData.m_type           = Texture::Type::TEXTURE_2D; 
+		m_metaData.m_mipmapLevel    = 0;
+		m_metaData.m_size           = m_metaData.m_width* m_metaData.m_height * 4;
+	}
 	
 	// MOVE DATA TO VRAM
-	// Reading image's content
-	if (data != nullptr && texture_target != LOAD_KTX_ERROR)
+	if (data == nullptr)
 	{
-		CreateTexture( data, 3);
-		return true;
-	}
-	else // We tolerate textures not being loaded, for instance if the art hasn't had time to make them 
-	{
-		SetPlaceHolderTexture(data);
-		CreateTexture(data, 3);
+		NEP_ASSERT(false); // File probably doesn't exist or format is not supported
 		return false;
 	}
+	
+	CreateTexture( data );
+	return true;
 }
 
 bool Texture::update()

@@ -93,8 +93,7 @@ namespace Neptune
 		bool        isInitialized()     const	{	return m_textureID != 0;				}
 
 	private:
-		void CreateTexture(u8* data, s32 reqComp);
-		void SetPlaceHolderTexture(u8*& data);
+		void CreateTexture(u8* data);
 
 		u32				m_textureID;
 		MetaData		m_metaData;
