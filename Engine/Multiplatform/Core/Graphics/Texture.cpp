@@ -615,11 +615,16 @@ void Texture::CreateTexture(u8* _data, s32 reqComp)
 // Placeholder textures are magenta
 void Texture::SetPlaceHolderTexture(u8*& data)
 {
+	// Sanity check
+	const Texture::InternalFormat INTERNAL_FORMAT = Texture::InternalFormat::RGB;
+	const u8 INTERNAL_FORMAT_SIZE = 3; // Update this size if you change INTERNAL_FORMAT
+	m_metaData.m_internalFormat = INTERNAL_FORMAT;
+
+	NEP_STATIC_ASSERT(INTERNAL_FORMAT == Texture::InternalFormat::RGB, "Error: You must update INTERNAL_FORMAT_SIZE");
+
 	m_metaData.m_width  = 1;
 	m_metaData.m_height = 1;
-	m_metaData.m_internalFormat = Texture::InternalFormat::RGB;
 
-	const u8 INTERNAL_FORMAT_SIZE = 3;
 	size_t size = m_metaData.m_width*m_metaData.m_height*INTERNAL_FORMAT_SIZE;
 	data = new u8[size];
 
