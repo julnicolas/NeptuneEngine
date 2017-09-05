@@ -299,6 +299,8 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DisplayDeviceInterface.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementView.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GLTextureCallsMapping.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GLTextureCallsMappingInlineImplementation.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicalEnumMappingFunctions.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicsProgram.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\IncludeOpenGL.h" />

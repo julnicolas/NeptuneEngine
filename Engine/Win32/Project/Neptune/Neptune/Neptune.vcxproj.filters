@@ -423,5 +423,11 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.h">
       <Filter>Engine\Multiplatform\Core\File</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GLTextureCallsMapping.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GLTextureCallsMappingInlineImplementation.h">
+      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
