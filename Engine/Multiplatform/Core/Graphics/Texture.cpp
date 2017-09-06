@@ -121,13 +121,11 @@ void Texture::CreateTexture(u8* _data)
 
 	// Generate a name for the texture
 	glGenTextures(1,&m_textureID);
-	auto error = glGetError();
-	NEP_ASSERT(error == GL_NO_ERROR);
+	NEP_GRAPHICS_ASSERT();
 
 	// Now bind to the graphics context
 	glBindTexture( GL_TEXTURE_2D /*GLTextureCallsMapping::MapTextureType(m_metaData.m_type)*/, m_textureID);
-	error = glGetError();
-	NEP_ASSERT(error == GL_NO_ERROR);
+	NEP_GRAPHICS_ASSERT();
 
 	// Specify texture's storage amount
 	//GLTextureCallsMapping::GLTexStorage(m_metaData);
@@ -138,8 +136,7 @@ void Texture::CreateTexture(u8* _data)
 		m_metaData.m_width,       
 		m_metaData.m_height); 
 
-	error = glGetError();
-	NEP_ASSERT(error == GL_NO_ERROR);
+	NEP_GRAPHICS_ASSERT();
 
 	// Copy image data to texture (the texture is assumed to be already bound)
 	//GLTextureCallsMapping::GLTexSubImage(m_metaData, (const void**) (&_data));
@@ -153,8 +150,7 @@ void Texture::CreateTexture(u8* _data)
 		GL_UNSIGNED_BYTE,
 		_data); 
 	
-	error = glGetError();
-	NEP_ASSERT(error == GL_NO_ERROR);
+	NEP_GRAPHICS_ASSERT();
 
 	// Free image data
 	stbi_image_free(_data);

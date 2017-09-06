@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics/GLTextureCallsMapping.h"
+#include "Debug/NeptuneDebug.h"
 
 inline Neptune::u32 Neptune::GLTextureCallsMapping::MapTextureType(Neptune::Texture::Type _type)
 {
@@ -125,37 +126,49 @@ inline void Neptune::GLTextureCallsMapping::GLTexStorageCubeMap(const Neptune::T
 		_metaData.m_mipmapLevel,              
 		MapInternalFormat(_metaData.m_internalFormat),
 		_metaData.m_width,       
-		_metaData.m_height); 
+		_metaData.m_height);
+
+	NEP_GRAPHICS_ASSERT();
 
 	glTexStorage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
 		_metaData.m_mipmapLevel,              
 		MapInternalFormat(_metaData.m_internalFormat),
 		_metaData.m_width,       
-		_metaData.m_height); 
+		_metaData.m_height);
+
+	NEP_GRAPHICS_ASSERT();
 
 	glTexStorage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
 		_metaData.m_mipmapLevel,              
 		MapInternalFormat(_metaData.m_internalFormat),
 		_metaData.m_width,       
-		_metaData.m_height); 
+		_metaData.m_height);
+
+	NEP_GRAPHICS_ASSERT();
 
 	glTexStorage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
 		_metaData.m_mipmapLevel,              
 		MapInternalFormat(_metaData.m_internalFormat),
 		_metaData.m_width,       
-		_metaData.m_height); 
+		_metaData.m_height);
+
+	NEP_GRAPHICS_ASSERT();
 
 	glTexStorage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
 		_metaData.m_mipmapLevel,              
 		MapInternalFormat(_metaData.m_internalFormat),
 		_metaData.m_width,       
-		_metaData.m_height); 
+		_metaData.m_height);
+
+	NEP_GRAPHICS_ASSERT();
 
 	glTexStorage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
 		_metaData.m_mipmapLevel,              
 		MapInternalFormat(_metaData.m_internalFormat),
 		_metaData.m_width,       
-		_metaData.m_height); 
+		_metaData.m_height);
+
+	NEP_GRAPHICS_ASSERT();
 }
 
 inline void Neptune::GLTextureCallsMapping::GLTexStorageCubeMapArray(const Neptune::Texture::MetaData& _metaData)
@@ -172,12 +185,7 @@ inline void Neptune::GLTextureCallsMapping::GLTexStorageCubeMapArray(const Neptu
 		_metaData.m_height,
 		_metaData.m_depth);  
 
-	glTexStorage3D(GL_TEXTURE_2D_ARRAY,
-		_metaData.m_mipmapLevel,              
-		MapInternalFormat(_metaData.m_internalFormat),
-		_metaData.m_width,       
-		_metaData.m_height,
-		_metaData.m_depth);  
+	NEP_GRAPHICS_ASSERT();
 
 	glTexStorage3D(GL_TEXTURE_2D_ARRAY,
 		_metaData.m_mipmapLevel,              
@@ -186,12 +194,7 @@ inline void Neptune::GLTextureCallsMapping::GLTexStorageCubeMapArray(const Neptu
 		_metaData.m_height,
 		_metaData.m_depth);  
 
-	glTexStorage3D(GL_TEXTURE_2D_ARRAY,
-		_metaData.m_mipmapLevel,              
-		MapInternalFormat(_metaData.m_internalFormat),
-		_metaData.m_width,       
-		_metaData.m_height,
-		_metaData.m_depth);  
+	NEP_GRAPHICS_ASSERT();
 
 	glTexStorage3D(GL_TEXTURE_2D_ARRAY,
 		_metaData.m_mipmapLevel,              
@@ -200,12 +203,34 @@ inline void Neptune::GLTextureCallsMapping::GLTexStorageCubeMapArray(const Neptu
 		_metaData.m_height,
 		_metaData.m_depth);  
 
+	NEP_GRAPHICS_ASSERT();
+
 	glTexStorage3D(GL_TEXTURE_2D_ARRAY,
 		_metaData.m_mipmapLevel,              
 		MapInternalFormat(_metaData.m_internalFormat),
 		_metaData.m_width,       
 		_metaData.m_height,
 		_metaData.m_depth);  
+
+	NEP_GRAPHICS_ASSERT();
+
+	glTexStorage3D(GL_TEXTURE_2D_ARRAY,
+		_metaData.m_mipmapLevel,              
+		MapInternalFormat(_metaData.m_internalFormat),
+		_metaData.m_width,       
+		_metaData.m_height,
+		_metaData.m_depth);  
+
+	NEP_GRAPHICS_ASSERT();
+
+	glTexStorage3D(GL_TEXTURE_2D_ARRAY,
+		_metaData.m_mipmapLevel,              
+		MapInternalFormat(_metaData.m_internalFormat),
+		_metaData.m_width,       
+		_metaData.m_height,
+		_metaData.m_depth);
+
+	NEP_GRAPHICS_ASSERT();
 }
 
 inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::Texture::MetaData& _metaData, const void* _data)
@@ -219,6 +244,8 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::
 		GL_UNSIGNED_BYTE,
 		_data);
 
+	NEP_GRAPHICS_ASSERT();
+
 	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
 		0,0,							// x,y offset
@@ -227,6 +254,8 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::
 		MapInternalFormat(_metaData.m_internalFormat),
 		GL_UNSIGNED_BYTE,
 		_data);  
+
+	NEP_GRAPHICS_ASSERT();
 
 	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
@@ -237,6 +266,8 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::
 		GL_UNSIGNED_BYTE,
 		_data);  
 
+	NEP_GRAPHICS_ASSERT();
+
 	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
 		0,0,							// x,y offset
@@ -245,6 +276,8 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::
 		MapInternalFormat(_metaData.m_internalFormat),
 		GL_UNSIGNED_BYTE,
 		_data);  
+
+	NEP_GRAPHICS_ASSERT();
 
 	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
@@ -255,6 +288,8 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::
 		GL_UNSIGNED_BYTE,
 		_data);  
 
+	NEP_GRAPHICS_ASSERT();
+
 	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
 		0,0,							// x,y offset
@@ -263,6 +298,8 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::
 		MapInternalFormat(_metaData.m_internalFormat),
 		GL_UNSIGNED_BYTE,
 		_data);  
+
+	NEP_GRAPHICS_ASSERT();
 }
 
 inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMapArray(const Neptune::Texture::MetaData& _metaData, const void** _data)
@@ -280,7 +317,9 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMapArray(const Nept
 		GL_UNSIGNED_BYTE,
 		_data[i]);
 
-	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
+		NEP_GRAPHICS_ASSERT();
+
+		glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_X,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
 		0,0,							// x,y offset
 		_metaData.m_width,
@@ -289,7 +328,9 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMapArray(const Nept
 		GL_UNSIGNED_BYTE,
 		_data[i]);  
 
-	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
+		NEP_GRAPHICS_ASSERT();
+
+		glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Y,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
 		0,0,							// x,y offset
 		_metaData.m_width,
@@ -298,7 +339,9 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMapArray(const Nept
 		GL_UNSIGNED_BYTE,
 		_data[i]);  
 
-	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
+		NEP_GRAPHICS_ASSERT();
+
+		glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Y,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
 		0,0,							// x,y offset
 		_metaData.m_width,
@@ -307,7 +350,9 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMapArray(const Nept
 		GL_UNSIGNED_BYTE,
 		_data[i]);  
 
-	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
+		NEP_GRAPHICS_ASSERT();
+
+		glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_Z,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
 		0,0,							// x,y offset
 		_metaData.m_width,
@@ -316,7 +361,9 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMapArray(const Nept
 		GL_UNSIGNED_BYTE,
 		_data[i]);  
 
-	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
+		NEP_GRAPHICS_ASSERT();
+
+		glTexSubImage2D(GL_TEXTURE_CUBE_MAP_NEGATIVE_Z,
 		_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
 		0,0,							// x,y offset
 		_metaData.m_width,
@@ -324,6 +371,8 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMapArray(const Nept
 		MapInternalFormat(_metaData.m_internalFormat),
 		GL_UNSIGNED_BYTE,
 		_data[i]);
+
+		NEP_GRAPHICS_ASSERT();
 	}
 }
 
@@ -389,6 +438,8 @@ inline void Neptune::GLTextureCallsMapping::GLTexStorage(const Neptune::Texture:
 		GLTexStorageCubeMapArray(_metaData);
 		break;
 	}
+
+	NEP_GRAPHICS_ASSERT();
 }
 
 inline void Neptune::GLTextureCallsMapping::GLTexSubImage(const Neptune::Texture::MetaData& _metaData, const void** _data)
@@ -471,4 +522,6 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImage(const Neptune::Texture
 		GLTexSubImageCubeMapArray(_metaData, _data);
 		break;
 	}
+
+	NEP_GRAPHICS_ASSERT();
 }
