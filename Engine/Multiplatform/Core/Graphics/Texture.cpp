@@ -128,29 +128,11 @@ void Texture::CreateTexture(u8* _data)
 	NEP_GRAPHICS_ASSERT();
 
 	// Specify texture's storage amount
-	//GLTextureCallsMapping::GLTexStorage(m_metaData);
-
-	glTexStorage2D(GL_TEXTURE_2D,
-		1,//m_metaData.m_mipmapLevel,              
-		GL_RGBA32F,//MapInternalFormat(m_metaData.m_internalFormat),
-		m_metaData.m_width,       
-		m_metaData.m_height); 
-
-	NEP_GRAPHICS_ASSERT();
+	GLTextureCallsMapping::GLTexStorage(m_metaData);
 
 	// Copy image data to texture (the texture is assumed to be already bound)
-	//GLTextureCallsMapping::GLTexSubImage(m_metaData, (const void**) (&_data));
-
-	glTexSubImage2D(GL_TEXTURE_2D,
-		0,//m_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
-		0,0,							// x,y offset
-		m_metaData.m_width,
-		m_metaData.m_height,
-		GL_RGBA,//GLTextureCallsMapping::MapInternalFormat(m_metaData.m_internalFormat),
-		GL_UNSIGNED_BYTE,
-		_data); 
-	
-	NEP_GRAPHICS_ASSERT();
+	for (u8 i = 0; i < m_metaData.m_mipmapLevels; i++)
+		GLTextureCallsMapping::GLTexSubImage(m_metaData, i, (const void**) (&_data));
 
 	// Free image data
 	stbi_image_free(_data);
@@ -179,9 +161,9 @@ bool Texture::init()
 		
 		data = stbi_load( m_path, (s32*) &m_metaData.m_width, (s32*) &m_metaData.m_height, nullptr, RGBA_BYTE_COUNT);
 
-		m_metaData.m_internalFormat = Texture::InternalFormat::RGB;
+		m_metaData.m_internalFormat = Texture::InternalFormat::RGBA;
 		m_metaData.m_type           = Texture::Type::TEXTURE_2D; 
-		m_metaData.m_mipmapLevel    = 1;
+		m_metaData.m_mipmapLevels   = 1;
 		m_metaData.m_size           = m_metaData.m_width* m_metaData.m_height * RGBA_BYTE_COUNT;
 	}
 	

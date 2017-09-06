@@ -52,7 +52,7 @@ namespace Neptune
 			u32				m_height;					/// Also number of elements for a 1D array
 			u32				m_depth;					/// Also number of elements for a 2D array
 			u32				m_size;						/// Size of the texture data
-			u8				m_mipmapLevel;
+			u8				m_mipmapLevels;				/// Number of mipmap levels (>0)
 			Type			m_type;
 			InternalFormat	m_internalFormat;
 		};
