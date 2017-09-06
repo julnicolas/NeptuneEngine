@@ -2,6 +2,7 @@
 
 #include <cstdio>
 #include <cassert>
+#include "Graphics/IncludeOpenGL.h"
 
 
 /////////////////////////////////////////////////////////////////////////////
@@ -72,8 +73,11 @@ namespace Neptune
 	inline void Neptune::Debug::Private::GL_ASSERT()
 	{
 		auto error = glGetError();
-		NEP_LOG("ERROR: GLenum for error == %x", error);
-		NEP_ASSERT(error == GL_NO_ERROR);
+		if (error)
+		{
+			NEP_LOG("ERROR: GLenum for error == %x", error);
+			NEP_ASSERT(error == GL_NO_ERROR);
+		}
 	}
 #endif
 
