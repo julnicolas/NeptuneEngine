@@ -25,6 +25,7 @@
 //
 /////////////////////////////////////////////////////////////////////////////
 
+
 #define NEP_STATIC_ASSERT(expression, message) static_assert(expression, message)
 
 #ifdef NEP_DEBUG
@@ -38,7 +39,7 @@ namespace Neptune
 	{
 		namespace Private
 		{
-			inline void LogAssert(bool _cond) { if (!_cond) NEP_LOG("Exception thrown: file: %s, line: %d", __FILE__, __LINE__); }
+			inline void LogAssert(bool _cond) { if (!_cond) NEP_LOG("Assertion failed: file: %s, line: %d", __FILE__, __LINE__); }
 		}
 	}
 }
@@ -48,4 +49,34 @@ namespace Neptune
 #ifdef NEP_FINAL
 	// The statement between the brackets won't be executed 
 	#define NEP_ASSERT(_cond) ((void) 0)
+#endif
+
+
+// Graphics assert - use to check whether a call to the graphics API generated an error
+
+namespace Neptune
+{
+	namespace Debug
+	{
+		namespace Private
+		{
+			void GL_ASSERT();
+		}
+	}
+}
+
+/// Use to check after a graphics API call
+#define NEP_GRAPHICS_ASSERT Neptune::Debug::Private::GL_ASSERT
+
+#if defined(NEP_DEBUG) || defined(NEP_RELEASE)
+	inline void Neptune::Debug::Private::GL_ASSERT()
+	{
+		auto error = glGetError();
+		NEP_LOG("ERROR: GLenum for error == %x", error);
+		NEP_ASSERT(error == GL_NO_ERROR);
+	}
+#endif
+
+#ifdef NEP_FINAL
+	inline void Neptune::Debug::Private::GL_ASSERT(){}
 #endif
