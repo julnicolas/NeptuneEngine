@@ -131,8 +131,9 @@ void Texture::CreateTexture(u8* _data)
 	GLTextureCallsMapping::GLTexStorage(m_metaData);
 
 	// Copy image data to texture (the texture is assumed to be already bound)
+	const u8* data = _data;
 	for (u8 i = 0; i < m_metaData.m_mipmapLevels; i++)
-		GLTextureCallsMapping::GLTexSubImage(m_metaData, i, (const void**) (&_data));
+		GLTextureCallsMapping::GLTexSubImage(m_metaData, i,  &data);
 
 	// Free image data
 	stbi_image_free(_data);

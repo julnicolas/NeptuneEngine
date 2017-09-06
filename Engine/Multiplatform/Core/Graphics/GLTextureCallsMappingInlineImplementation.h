@@ -257,7 +257,7 @@ inline void Neptune::GLTextureCallsMapping::GLTexStorageCubeMapArray(const Neptu
 	NEP_GRAPHICS_ASSERT();
 }
 
-inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::Texture::MetaData& _metaData, u8 _mipmapLevel, const void* _data)
+inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::Texture::MetaData& _metaData, u8 _mipmapLevel, const u8* _data)
 {
 	glTexSubImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X,
 		_mipmapLevel,		// index of the current image in the mipmap list
@@ -326,7 +326,7 @@ inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMap(const Neptune::
 	NEP_GRAPHICS_ASSERT();
 }
 
-inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMapArray(const Neptune::Texture::MetaData& _metaData, u8 _mipmapLevel, const void** _data)
+inline void Neptune::GLTextureCallsMapping::GLTexSubImageCubeMapArray(const Neptune::Texture::MetaData& _metaData, u8 _mipmapLevel, const u8** _data)
 {
 	NEP_ASSERT(false); // gl enum is probably not correct
 	
@@ -468,7 +468,7 @@ inline void Neptune::GLTextureCallsMapping::GLTexStorage(const Neptune::Texture:
 	NEP_GRAPHICS_ASSERT();
 }
 
-inline void Neptune::GLTextureCallsMapping::GLTexSubImage(const Neptune::Texture::MetaData& _metaData, u8 _mipmapLevel, const void** _data)
+inline void Neptune::GLTextureCallsMapping::GLTexSubImage(const Neptune::Texture::MetaData& _metaData, u8 _mipmapLevel, const u8** _data)
 {
 	switch (_metaData.m_type)
 	{
