@@ -12,7 +12,6 @@
 #include <algorithm>
 
 using namespace Neptune;
-using namespace Neptune::GLTextureCallsMapping;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////
@@ -49,7 +48,7 @@ static u32 LoadAndCreateKTXTexture(const char* _path, u32* _textureID, Texture::
 	_metaData->m_depth  = dimension.depth;
 
 	// Get texture type
-	_metaData->m_type   = MapTextureType(gl_target);
+	_metaData->m_type   = GLTextureCallsMapping::MapTextureType(gl_target);
 
 	return gl_target;
 }
@@ -122,15 +121,40 @@ void Texture::CreateTexture(u8* _data)
 
 	// Generate a name for the texture
 	glGenTextures(1,&m_textureID);
+	auto error = glGetError();
+	NEP_ASSERT(error == GL_NO_ERROR);
 
 	// Now bind to the graphics context
-	glBindTexture( MapTextureType(m_metaData.m_type), m_textureID);
+	glBindTexture( GL_TEXTURE_2D /*GLTextureCallsMapping::MapTextureType(m_metaData.m_type)*/, m_textureID);
+	error = glGetError();
+	NEP_ASSERT(error == GL_NO_ERROR);
 
 	// Specify texture's storage amount
-	GLTexStorage(m_metaData);
+	//GLTextureCallsMapping::GLTexStorage(m_metaData);
+
+	glTexStorage2D(GL_TEXTURE_2D,
+		1,//m_metaData.m_mipmapLevel,              
+		GL_RGBA32F,//MapInternalFormat(m_metaData.m_internalFormat),
+		m_metaData.m_width,       
+		m_metaData.m_height); 
+
+	error = glGetError();
+	NEP_ASSERT(error == GL_NO_ERROR);
 
 	// Copy image data to texture (the texture is assumed to be already bound)
-	GLTexSubImage(m_metaData, (const void**) (&_data));
+	//GLTextureCallsMapping::GLTexSubImage(m_metaData, (const void**) (&_data));
+
+	glTexSubImage2D(GL_TEXTURE_2D,
+		0,//m_metaData.m_mipmapLevel,		// Level of detail (mipmap relevant)
+		0,0,							// x,y offset
+		m_metaData.m_width,
+		m_metaData.m_height,
+		GL_RGBA,//GLTextureCallsMapping::MapInternalFormat(m_metaData.m_internalFormat),
+		GL_UNSIGNED_BYTE,
+		_data); 
+	
+	error = glGetError();
+	NEP_ASSERT(error == GL_NO_ERROR);
 
 	// Free image data
 	stbi_image_free(_data);
@@ -159,10 +183,10 @@ bool Texture::init()
 		
 		data = stbi_load( m_path, (s32*) &m_metaData.m_width, (s32*) &m_metaData.m_height, nullptr, RGBA_BYTE_COUNT);
 
-		m_metaData.m_internalFormat = Texture::InternalFormat::RGBA;
+		m_metaData.m_internalFormat = Texture::InternalFormat::RGB;
 		m_metaData.m_type           = Texture::Type::TEXTURE_2D; 
-		m_metaData.m_mipmapLevel    = 0;
-		m_metaData.m_size           = m_metaData.m_width* m_metaData.m_height * 4;
+		m_metaData.m_mipmapLevel    = 1;
+		m_metaData.m_size           = m_metaData.m_width* m_metaData.m_height * RGBA_BYTE_COUNT;
 	}
 	
 	// Error?
@@ -180,7 +204,7 @@ bool Texture::init()
 bool Texture::update()
 {
 	// Now bind to the graphics context
-	glBindTexture( MapTextureType(m_metaData.m_type), m_textureID);
+	glBindTexture( GLTextureCallsMapping::MapTextureType(m_metaData.m_type), m_textureID);
 
 	return m_textureID != 0;
 }

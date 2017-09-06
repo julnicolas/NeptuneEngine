@@ -70,7 +70,7 @@ namespace Neptune
 		/// \brief Loads a Texture from a buffer. The texture discard the buffer after init() is called.
 		/// \brief The content is then stored in VRAM.
 		///
-		Texture(void* _data, u32 _size, Type _type = Type::TEXTURE_2D);
+		Texture(void* _data, u32 _size, Type _type = Type::TEXTURE_2D); // Not fully implemented yet
 
 		~Texture();
 		Texture(const Texture& t)				= delete;
