@@ -93,7 +93,7 @@ namespace Neptune
 		bool        isInitialized()     const	{	return m_textureID != 0;				}
 
 	private:
-		void CreateTexture(u8* data);
+		void CreateTexture(const u8** data); /// Expects a C-array of data. The size is stored in Texture::MetaData
 
 		u32				m_textureID;
 		MetaData		m_metaData;

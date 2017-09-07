@@ -115,8 +115,9 @@ void Texture::setData(void* _data, u32 _size)
 	m_metaData.m_size = _size;
 }
 
-void Texture::CreateTexture(u8* _data)
+void Texture::CreateTexture(const u8** _data)
 {
+	NEP_ASSERT(_data != nullptr && *_data != nullptr);
 	NEP_ASSERT(m_metaData.m_type != Type::BUFFER); // Error: type not supported yet 
 
 	// Generate a name for the texture
@@ -124,20 +125,15 @@ void Texture::CreateTexture(u8* _data)
 	NEP_GRAPHICS_ASSERT();
 
 	// Now bind to the graphics context
-	glBindTexture( GL_TEXTURE_2D /*GLTextureCallsMapping::MapTextureType(m_metaData.m_type)*/, m_textureID);
+	glBindTexture( GLTextureCallsMapping::MapTextureType(m_metaData.m_type), m_textureID);
 	NEP_GRAPHICS_ASSERT();
 
 	// Specify texture's storage amount
 	GLTextureCallsMapping::GLTexStorage(m_metaData);
 
 	// Copy image data to texture (the texture is assumed to be already bound)
-	const u8* data = _data;
 	for (u8 i = 0; i < m_metaData.m_mipmapLevels; i++)
-		GLTextureCallsMapping::GLTexSubImage(m_metaData, i,  &data);
-
-	// Free image data
-	stbi_image_free(_data);
-	_data = nullptr;
+		GLTextureCallsMapping::GLTexSubImage(m_metaData, i,  _data);
 }
 
 bool Texture::init()
@@ -176,7 +172,12 @@ bool Texture::init()
 	}
 	
 	// MOVE DATA TO VRAM
-	CreateTexture( data );
+	const u8* d = data; // statement to avoid compiler warning
+	CreateTexture( &d );
+
+	// Free image data
+	stbi_image_free(data);
+	
 	return true;
 }
 
