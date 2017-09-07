@@ -66,6 +66,75 @@ static std::string GetExtension(const char* _path)
 
 ////////////////////////////////////////////////////////////////
 //
+//						U T I L I T I E S
+//
+////////////////////////////////////////////////////////////////
+
+
+// Expects a C-array of data. The size is stored in Texture::MetaData
+static void CreateTexture(u32& _textureID, const Texture::MetaData& _metaData, const u8** _data)
+{
+	NEP_ASSERT(_data != nullptr && *_data != nullptr);
+	NEP_ASSERT(_metaData.m_type != Texture::Type::BUFFER); // Error: type not supported yet 
+
+	// Generate a name for the texture
+	glGenTextures(1,&_textureID);
+	NEP_GRAPHICS_ASSERT();
+
+	// Now bind to the graphics context
+	glBindTexture( GLTextureCallsMapping::MapTextureType(_metaData.m_type), _textureID);
+	NEP_GRAPHICS_ASSERT();
+
+	// Specify texture's storage amount
+	GLTextureCallsMapping::GLTexStorage(_metaData);
+
+	// Copy image data to texture (the texture is assumed to be already bound)
+	for (u8 i = 0; i < _metaData.m_mipmapLevels; i++)
+		GLTextureCallsMapping::GLTexSubImage(_metaData, i,  _data);
+}
+
+
+
+////////////////////////////////////////////////////////////////
+//
+//					L O A D   I M A G E S
+//
+////////////////////////////////////////////////////////////////
+
+
+static bool NEP_LoadImage(const char* _path, u32& _textureID, Texture::MetaData& _metaData)
+{
+	const s32 RGBA_BYTE_COUNT = 4;
+	
+	u8* data = stbi_load( _path, (s32*) (&_metaData.m_width), (s32*) (&_metaData.m_height), nullptr, RGBA_BYTE_COUNT);
+
+	_metaData.m_internalFormat = Texture::InternalFormat::RGBA;
+	_metaData.m_type           = Texture::Type::TEXTURE_2D; 
+	_metaData.m_mipmapLevels   = 1;
+	_metaData.m_size           = _metaData.m_width * _metaData.m_height * RGBA_BYTE_COUNT;
+	
+	// Error?
+	if (data == nullptr)
+	{
+		NEP_ASSERT(false); // File probably doesn't exist or format is not supported
+		return false;
+	}
+	
+	// MOVE DATA TO VRAM
+	{
+		const u8* d = data; // statement to avoid compiler warning
+		CreateTexture( _textureID, _metaData, &d );
+	}
+
+	// Free image data
+	stbi_image_free(data);
+
+	return true;
+}
+
+
+////////////////////////////////////////////////////////////////
+//
 //			C L A S S   I M P L E M E N T A T I O N
 //
 ////////////////////////////////////////////////////////////////
@@ -115,27 +184,6 @@ void Texture::setData(void* _data, u32 _size)
 	m_metaData.m_size = _size;
 }
 
-void Texture::CreateTexture(const u8** _data)
-{
-	NEP_ASSERT(_data != nullptr && *_data != nullptr);
-	NEP_ASSERT(m_metaData.m_type != Type::BUFFER); // Error: type not supported yet 
-
-	// Generate a name for the texture
-	glGenTextures(1,&m_textureID);
-	NEP_GRAPHICS_ASSERT();
-
-	// Now bind to the graphics context
-	glBindTexture( GLTextureCallsMapping::MapTextureType(m_metaData.m_type), m_textureID);
-	NEP_GRAPHICS_ASSERT();
-
-	// Specify texture's storage amount
-	GLTextureCallsMapping::GLTexStorage(m_metaData);
-
-	// Copy image data to texture (the texture is assumed to be already bound)
-	for (u8 i = 0; i < m_metaData.m_mipmapLevels; i++)
-		GLTextureCallsMapping::GLTexSubImage(m_metaData, i,  _data);
-}
-
 bool Texture::init()
 {
 	// GET FILE EXTENSION
@@ -143,7 +191,6 @@ bool Texture::init()
 	std::string extension = GetExtension(m_path);
 
 	// LOAD TEXTURE DATA
-	u8* data = nullptr;
 	u32 texture_target = 0;
 	if ( extension == ".ktx" )		// If it's a texture format
 	{
@@ -154,33 +201,8 @@ bool Texture::init()
 	}
 	else							// If it's an image format
 	{
-		const s32 RGBA_BYTE_COUNT = 4;
-		
-		data = stbi_load( m_path, (s32*) &m_metaData.m_width, (s32*) &m_metaData.m_height, nullptr, RGBA_BYTE_COUNT);
-
-		m_metaData.m_internalFormat = Texture::InternalFormat::RGBA;
-		m_metaData.m_type           = Texture::Type::TEXTURE_2D; 
-		m_metaData.m_mipmapLevels   = 1;
-		m_metaData.m_size           = m_metaData.m_width* m_metaData.m_height * RGBA_BYTE_COUNT;
+		return NEP_LoadImage(m_path, m_textureID, m_metaData);
 	}
-	
-	// Error?
-	if (data == nullptr)
-	{
-		NEP_ASSERT(false); // File probably doesn't exist or format is not supported
-		return false;
-	}
-	
-	// MOVE DATA TO VRAM
-	{
-		const u8* d = data; // statement to avoid compiler warning
-		CreateTexture( &d );
-	}
-
-	// Free image data
-	stbi_image_free(data);
-	
-	return true;
 }
 
 bool Texture::update()
