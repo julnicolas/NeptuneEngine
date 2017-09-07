@@ -172,8 +172,10 @@ bool Texture::init()
 	}
 	
 	// MOVE DATA TO VRAM
-	const u8* d = data; // statement to avoid compiler warning
-	CreateTexture( &d );
+	{
+		const u8* d = data; // statement to avoid compiler warning
+		CreateTexture( &d );
+	}
 
 	// Free image data
 	stbi_image_free(data);
