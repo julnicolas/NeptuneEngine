@@ -33,10 +33,8 @@ ViewSpawner::ViewSpawner(GraphicsProgram* _pgm)
 	addGraphicsProgram(_pgm);
 }
 
-View* ViewSpawner::create()
+void ViewSpawner::movePgmParameters()
 {
-	View* view = createViewAndSetUpRenderParameters();
-
 	// Add the graphics programs and corresponding attributes to the view
 	for(auto& it : m_programs)
 	{
@@ -66,7 +64,24 @@ View* ViewSpawner::create()
 		// Rebuild the program including all its parameters
 		pgm->build();
 
-		// Add the program to the view
+		// Flush program's parameters
+		it.second.m_shaderAttributesCustomData.clear();
+		it.second.m_uniformVarIDs.clear();
+	}
+}
+
+View* ViewSpawner::create()
+{
+	// Setup the programs
+	movePgmParameters();
+
+	// Create the view
+	View* view = createViewAndSetUpRenderParameters();
+
+	// Add the program to the view
+	for(auto& it : m_programs)
+	{
+		GraphicsProgram* pgm = it.second.m_program;
 		view->addGraphicsProgram(pgm);
 	}
 

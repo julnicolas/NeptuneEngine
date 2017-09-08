@@ -119,6 +119,12 @@ namespace Neptune
 
 		typedef u64 UniformVariableID; // Combination of two 32-bit hashes: 0x pgm_name uniform_name (little endian example)
 
+		/// \brief Set all graphics programs' parameters (shader attributes, uniform variables...)
+		/// then flushes them from programs' shader attribute tables and other parameter tables.
+		/// This because the parameters have already been bound to the program.
+		/// \note Parameter data are not directly given to programs to allow parameter sharing between them.
+		void movePgmParameters();
+
 		//
 		// S T R U C T U R E S
 		//
