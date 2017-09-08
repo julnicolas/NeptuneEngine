@@ -191,10 +191,9 @@ bool Texture::init()
 	std::string extension = GetExtension(m_path);
 
 	// LOAD TEXTURE DATA
-	u32 texture_target = 0;
 	if ( extension == ".ktx" )		// If it's a texture format
 	{
-		texture_target = LoadAndCreateKTXTexture(m_path, &m_textureID, &m_metaData);
+		u32 texture_target = LoadAndCreateKTXTexture(m_path, &m_textureID, &m_metaData);
 
 		NEP_ASSERT(texture_target != LOAD_KTX_ERROR); // Error, texture couldn't be loaded.
 		return texture_target != LOAD_KTX_ERROR;
