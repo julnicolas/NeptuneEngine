@@ -33,43 +33,6 @@ ViewSpawner::ViewSpawner(GraphicsProgram* _pgm)
 	addGraphicsProgram(_pgm);
 }
 
-void ViewSpawner::movePgmParameters()
-{
-	// Add the graphics programs and corresponding attributes to the view
-	for(auto& it : m_programs)
-	{
-		// Pass the parameters to the program
-		GraphicsProgram* pgm = it.second.m_program;
-
-		for(const auto& custom_data : it.second.m_shaderAttributesCustomData)
-		{
-			NEP_ASSERT(m_shaderAttributes.find(custom_data.m_id) != m_shaderAttributes.end());
-
-			// Get the attribute from the attribute table
-			GraphicsProgram::ShaderAttribute& att	= m_shaderAttributes[custom_data.m_id];
-			
-			// Set the layout for the current program
-			att.m_layout							= custom_data.m_layout;
-			
-			// Add the attribute to the program
-			pgm->addShaderAttribute( att );
-		}
-
-		for(const auto& uniform_var_ID : it.second.m_uniformVarIDs)
-		{
-			NEP_ASSERT(m_uniformVariables.find(uniform_var_ID) != m_uniformVariables.end());
-			pgm->addUniformVariable(m_uniformVariables[uniform_var_ID]);
-		}
-
-		// Rebuild the program including all its parameters
-		pgm->build();
-
-		// Flush program's parameters
-		it.second.m_shaderAttributesCustomData.clear();
-		it.second.m_uniformVarIDs.clear();
-	}
-}
-
 View* ViewSpawner::create()
 {
 	// Setup the programs
@@ -279,4 +242,41 @@ void ViewSpawner::useWorldMatrix(GraphicsProgram::ProgramName _pgmName, const ch
 		&m_worldMatrix);
 
 	addUniformVariable(_pgmName, world_matrix);
+}
+
+void ViewSpawner::movePgmParameters()
+{
+	// Add the graphics programs and corresponding attributes to the view
+	for(auto& it : m_programs)
+	{
+		// Pass the parameters to the program
+		GraphicsProgram* pgm = it.second.m_program;
+
+		for(const auto& custom_data : it.second.m_shaderAttributesCustomData)
+		{
+			NEP_ASSERT(m_shaderAttributes.find(custom_data.m_id) != m_shaderAttributes.end());
+
+			// Get the attribute from the attribute table
+			GraphicsProgram::ShaderAttribute& att	= m_shaderAttributes[custom_data.m_id];
+			
+			// Set the layout for the current program
+			att.m_layout							= custom_data.m_layout;
+			
+			// Add the attribute to the program
+			pgm->addShaderAttribute( att );
+		}
+
+		for(const auto& uniform_var_ID : it.second.m_uniformVarIDs)
+		{
+			NEP_ASSERT(m_uniformVariables.find(uniform_var_ID) != m_uniformVariables.end());
+			pgm->addUniformVariable(m_uniformVariables[uniform_var_ID]);
+		}
+
+		// Rebuild the program including all its parameters
+		pgm->build();
+
+		// Flush program's parameters
+		it.second.m_shaderAttributesCustomData.clear();
+		it.second.m_uniformVarIDs.clear();
+	}
 }
