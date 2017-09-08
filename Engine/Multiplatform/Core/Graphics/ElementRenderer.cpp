@@ -98,6 +98,7 @@ static GLenum MapType(const ElementRenderer::IndexType type)
 void ElementRenderer::draw()
 {
 	glDrawElements( MapDrawingPrimitive(m_drawingPrimitive), m_nbverticesToRender, ::MapType(m_indexType), 0 );
+	NEP_GRAPHICS_ASSERT();
 }
 
 void ElementRenderer::bindShaderAttributes(const GraphicsProgram& pgm)

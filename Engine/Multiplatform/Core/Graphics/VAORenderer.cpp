@@ -28,6 +28,7 @@ bool VAORenderer::init()
 
 	// Bind the VAO 
 	glBindVertexArray( m_vao );
+	NEP_GRAPHICS_ASSERT();
 
 	// Allocate the VBOs to store the vertex attributes and fill them
 	GLuint* vbos_handle = new GLuint[ biggest_nb_pms ];
@@ -46,11 +47,15 @@ bool VAORenderer::init()
 		{
 			// Fill the buffers
 			glBindBuffer( GL_ARRAY_BUFFER, vbos_handle[ attrib_index ] );
+			NEP_GRAPHICS_ASSERT();
+
 			glBufferData( GL_ARRAY_BUFFER, att->m_size, att->m_data, GL_STATIC_DRAW );
+			NEP_GRAPHICS_ASSERT();
 			m_vbos[ &(**it) ].push_back( vbos_handle[ attrib_index ] );
 
 			// Enable the shader's input interfaces
 			glEnableVertexAttribArray( att->m_layout );
+			NEP_GRAPHICS_ASSERT();
 		}
 	}
 	delete[] vbos_handle;
@@ -66,6 +71,7 @@ void VAORenderer::terminate()
 void VAORenderer::draw()
 {
 	glDrawArrays( MapDrawingPrimitive( m_drawingPrimitive ) , 0, m_nbverticesToRender );
+	NEP_GRAPHICS_ASSERT();
 }
 
 void VAORenderer::bindShaderAttributes(const GraphicsProgram& pgm)

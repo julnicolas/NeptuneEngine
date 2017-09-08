@@ -21,6 +21,8 @@ bool Renderer::update()
 	for(ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it)
 	{
 		glUseProgram( (*it)->getResourceID() );
+		NEP_GRAPHICS_ASSERT();
+
 		bindUniformVars( it );
 		bindShaderAttributes( **it );
 		draw();
@@ -55,7 +57,10 @@ Neptune::Renderer::~Renderer()
 		size_t vbo_size = vbo.size();
 
 		for(size_t i = 0; i < vbo_size; i++)
+		{
 			glDeleteBuffers(1,&vbo[i]);
+			NEP_GRAPHICS_ASSERT();
+		}
 	}
 }
 
@@ -102,6 +107,8 @@ static void SetSingleValuedUniform(s32 location, const GraphicsProgram::UniformV
 		NEP_ASSERT( false );
 		break;
 	}
+
+	NEP_GRAPHICS_ASSERT();
 }
 
 static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
@@ -191,6 +198,8 @@ static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarI
 		NEP_ASSERT( false );
 		break;
 	}
+
+	NEP_GRAPHICS_ASSERT();
 }
 
 static void SetMatrixUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
@@ -237,6 +246,8 @@ static void SetMatrixUniform(s32 location, const GraphicsProgram::UniformVarInpu
 			break;
 		}
 	}
+
+	NEP_GRAPHICS_ASSERT();
 }
 
 static void SetUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
@@ -269,6 +280,8 @@ void Renderer::bindShaderAttributes(const GraphicsProgram& pgm)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER,m_vbos[&pgm][i]);
 		glVertexAttribPointer(att->m_layout,att->m_nbComponents,MapType(att->m_type),att->m_normalized,0,NULL);
+
+		NEP_GRAPHICS_ASSERT();
 	}
 }
 
@@ -280,8 +293,7 @@ void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 	{
 		s32 location = glGetUniformLocation( (*it)->getResourceID(), uni_it->second.getName() );
 		
-		auto error = glGetError();
-		NEP_ASSERT(error != GL_INVALID_VALUE && error != GL_INVALID_OPERATION);
+		NEP_GRAPHICS_ASSERT();
 		NEP_ASSERT(location >= 0); // Uniform variable not found or not used in the shader (removed by the GLSL compiler)
 
 		SetUniform(location, uni_it->second);
