@@ -24,5 +24,5 @@ std::string PathHelpers::GetFileExtension(const std::string& _path)
 {
 	const auto pos = _path.find('.');
 
-	return (pos != _path.npos) ? _path.substr(pos+1) : "";
+	return (pos != _path.npos) ? _path.substr(pos) : "";
 }
