@@ -5,6 +5,7 @@
 #include "Graphics/Renderer.h"
 
 #include <unordered_map>
+#include <vector>
 
 namespace Neptune
 {
@@ -15,9 +16,9 @@ namespace Neptune
 	{
 	public:
 		View(): m_camera(nullptr),
-			    m_renderer(nullptr),
-				m_texture(nullptr)   {}
-		virtual ~View()              {}
+			    m_renderer(nullptr)
+				{}
+		virtual ~View()				 {}
 		View(const View&)            =		delete;
 		View& operator=(const View&) =		delete;
 
@@ -27,18 +28,19 @@ namespace Neptune
 
 		Transform&	getTransform()			{ return m_transform; }
 
-		bool		updateUniform(GraphicsProgram::ProgramName _pgmName, const char* _uniformName, void* _value);	/// Updates _uniformName with _value in program _pgmName. Returns true, if the uniform was found, false otherwise.
-		bool		updateUniform(const char* _uniformName, void* _value);											/// Updates _uniformName for every program with value _value. Returns true if it has been updated at least once. False means the variable doesn't exist for any program.
-		void		addGraphicsProgram(GraphicsProgram* _pgm);														/// \warning _pgm must be available (not deallocated) for the entire lifetime of the view object. _pgm is referenced not copied.
+		bool		updateUniform(GraphicsProgram::ProgramName _pgmName, const char* _uniformName, void* _value);				/// Updates _uniformName with _value in program _pgmName. Returns true, if the uniform was found, false otherwise.
+		bool		updateUniform(const char* _uniformName, void* _value);														/// Updates _uniformName for every program with value _value. Returns true if it has been updated at least once. False means the variable doesn't exist for any program.
+		void		addGraphicsProgram(GraphicsProgram* _pgm);																	/// \warning _pgm must be available (not deallocated) for the entire lifetime of the view object. _pgm is referenced not copied.
 
-		void		bindToCamera(Camera* c) { m_camera = c;       }
-		void		unbindFromCamera()      { m_camera = nullptr; }
+		void		bindToCamera(Camera* c)									{ m_camera = c;								}
+		void		unbindFromCamera()										{ m_camera = nullptr;						}
 
-		void		bindTexture(Texture* t) { m_texture = t;       }
-		void		unbindTexture()         { m_texture = nullptr; }
+		void		bindTexture(Texture* _t)								{ m_textures.push_back(_t);					}
+		void		unbindTexture(Texture* _t);																					/// Complexity: O(n)
+		void		unbindAllTextures()										{ m_textures.clear();						}
 
-		void		setDrawingPrimitive(Renderer::DrawingPrimitive _prim)	{ m_renderer->setDrawingPrimitive(_prim); }
-		void		setNbVerticesToRender(u32 _nb)							{ m_renderer->setNbverticesToRender(_nb); }
+		void		setDrawingPrimitive(Renderer::DrawingPrimitive _prim)	{ m_renderer->setDrawingPrimitive(_prim);	}
+		void		setNbVerticesToRender(u32 _nb)							{ m_renderer->setNbverticesToRender(_nb);	}
 
 		// Implemented to fix a warning stating this class should be 16-bit aligned
 		// Further investigation would be appreciated though
@@ -51,6 +53,6 @@ namespace Neptune
 		Renderer*												m_renderer;
 		std::unordered_map<GraphicsProgram::ProgramName, 
 			Renderer::ProgramID>								m_programMap;
-		Texture*												m_texture;
+		std::vector<Texture*>									m_textures;
 	};
 }

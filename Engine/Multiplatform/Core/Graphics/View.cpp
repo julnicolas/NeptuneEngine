@@ -6,6 +6,8 @@
 
 #include "Debug/NeptuneDebug.h"
 
+#include <algorithm>
+
 using namespace Neptune;
 
 bool View::init()
@@ -16,10 +18,10 @@ bool View::init()
 bool View::update()
 {
 	bool status = true;
-	
-	if(m_texture != nullptr)
+
+	for (auto& texture : m_textures)
 	{
-		status = status && m_texture->update();
+		status = status && texture->update();
 	}
 
 	if ( m_camera != nullptr )
@@ -72,6 +74,16 @@ void View::addGraphicsProgram(GraphicsProgram* _pgm)
 void View::terminate()
 {
 	m_renderer->terminate();
+}
+
+void View::unbindTexture(Texture* _t)
+{
+	NEP_ASSERT( _t != nullptr ); // Error: invalid texture
+
+	auto it = std::find(m_textures.begin(), m_textures.end(), _t);
+
+	NEP_ASSERT( it != m_textures.end() ); // Error: texture not found
+	m_textures.erase(it);
 }
 
 void* View::operator new(size_t count)
