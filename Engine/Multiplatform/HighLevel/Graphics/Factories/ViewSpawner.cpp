@@ -81,6 +81,19 @@ void ViewSpawner::addShaderAttribute(GraphicsProgram::ProgramName _pgmName, cons
 	it->second.m_shaderAttributesCustomData.push_back(custom_data);
 }
 
+void ViewSpawner::addTexture(GraphicsProgram::ProgramName _pgmName, const Texture* _texture)
+{
+	// Get the program
+	auto it = m_programs.find(_pgmName);
+	NEP_ASSERT( it != m_programs.end() );
+
+	// Add the texture in the store if not already present
+	m_textures.insert(_texture);
+
+	// Add its ID to the corresponding program
+	it->second.m_textureIDs.push_back(_texture);
+}
+
 static u64 ComputeUniformVariableId(GraphicsProgram::ProgramName _pgmName, const char* _uniformName)
 {
 	u32 name_hash = Fnv1a32((u8*) _uniformName, strlen(_uniformName));
