@@ -19,7 +19,6 @@ bool View::update()
 	
 	if(m_texture != nullptr)
 	{
-		NEP_ASSERT(m_texture->isInitialized());
 		status = status && m_texture->update();
 	}
 

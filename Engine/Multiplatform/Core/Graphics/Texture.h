@@ -83,17 +83,19 @@ namespace Neptune
 		void terminate() final override;
 
 		void setPath(const char* _path);
+		void setIndex(u32 _index);																	/// Set texture index for use in shaders
 		void setData(void* _data, u32 _size);
-		void setType(Type _type)				{	m_metaData.m_type = _type;				}
+		void setType(Type _type)					{	m_metaData.m_type = _type;				}
 
-		u32         getWidth()          const	{	return m_metaData.m_width;				}
-		u32         getHeight()         const	{	return m_metaData.m_height;				}
-		u32			getDepth()			const	{	return m_metaData.m_depth;				}
-		const char* getName()           const	{	return m_path;							}
-		bool        isInitialized()     const	{	return m_textureID != 0;				}
+		u32         getWidth()				const	{	return m_metaData.m_width;				}
+		u32         getHeight()				const	{	return m_metaData.m_height;				}
+		u32			getDepth()				const	{	return m_metaData.m_depth;				}
+		const char* getName()				const	{	return m_path;							}
+		u32			getMaxTextureCount()	const;													/// Returns the number of textures supported
 
 	private:
-		u32				m_textureID;
+		u32				m_ID;
+		u32				m_index;																	/// Texture index in shaders
 		MetaData		m_metaData;
 		void*			m_data;																		/// Used when setting texture data at runtime rather than from a file
 		char*			m_path;
