@@ -1,6 +1,6 @@
 #version 430 core
 
-uniform sampler2D Texture;
+layout (binding = 0) uniform sampler2D Texture;
 
 in vec2 v_text;
 
