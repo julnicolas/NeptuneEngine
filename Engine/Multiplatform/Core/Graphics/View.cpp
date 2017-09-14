@@ -2,7 +2,6 @@
 #include "Graphics/Renderer.h"
 #include "Graphics/Camera.h"
 #include "Graphics/UniformVarNames.h"
-#include "Graphics/Texture.h"
 
 #include "Debug/NeptuneDebug.h"
 
@@ -18,11 +17,6 @@ bool View::init()
 bool View::update()
 {
 	bool status = true;
-
-	for (auto& texture : m_textures)
-	{
-		status = status && texture->update();
-	}
 
 	if ( m_camera != nullptr )
 	{
@@ -74,16 +68,6 @@ void View::addGraphicsProgram(GraphicsProgram* _pgm)
 void View::terminate()
 {
 	m_renderer->terminate();
-}
-
-void View::unbindTexture(Texture* _t)
-{
-	NEP_ASSERT( _t != nullptr ); // Error: invalid texture
-
-	auto it = std::find(m_textures.begin(), m_textures.end(), _t);
-
-	NEP_ASSERT( it != m_textures.end() ); // Error: texture not found
-	m_textures.erase(it);
 }
 
 void* View::operator new(size_t count)

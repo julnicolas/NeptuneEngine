@@ -35,10 +35,6 @@ namespace Neptune
 		void		bindToCamera(Camera* c)									{ m_camera = c;								}
 		void		unbindFromCamera()										{ m_camera = nullptr;						}
 
-		void		bindTexture(Texture* _t)								{ m_textures.push_back(_t);					}
-		void		unbindTexture(Texture* _t);																					/// Complexity: O(n)
-		void		unbindAllTextures()										{ m_textures.clear();						}
-
 		void		setDrawingPrimitive(Renderer::DrawingPrimitive _prim)	{ m_renderer->setDrawingPrimitive(_prim);	}
 		void		setNbVerticesToRender(u32 _nb)							{ m_renderer->setNbverticesToRender(_nb);	}
 
@@ -53,6 +49,5 @@ namespace Neptune
 		Renderer*												m_renderer;
 		std::unordered_map<GraphicsProgram::ProgramName, 
 			Renderer::ProgramID>								m_programMap;
-		std::vector<Texture*>									m_textures;
 	};
 }

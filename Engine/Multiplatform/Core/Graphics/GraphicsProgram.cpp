@@ -173,6 +173,12 @@ void GraphicsProgram::addShaderAttribute(const ShaderAttribute& desc)
 	m_shaderAttributes.push_back( desc );
 }
 
+void GraphicsProgram::addTexture(Texture* _texture)
+{
+	NEP_ASSERT(_texture != nullptr); // Error: _texture pointer is invalid
+	m_textures.push_back(_texture);
+}
+
 void GraphicsProgram::addUniformVariable(const UniformVarInput& def)
 {
 	// Foolish but it's a pain in the ass to code a new hash function for std::unordered_map

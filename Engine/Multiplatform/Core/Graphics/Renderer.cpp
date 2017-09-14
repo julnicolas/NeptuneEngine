@@ -1,5 +1,6 @@
 #include "Renderer.h"
 #include "Graphics/GraphicalEnumMappingFunctions.h"
+#include "Graphics/Texture.h"
 #include "Debug/NeptuneDebug.h"
 #include <cstring>
 
@@ -25,6 +26,7 @@ bool Renderer::update()
 
 		bindUniformVars( it );
 		bindShaderAttributes( **it );
+		bindTextures( **it );
 		draw();
 	}
 
@@ -282,6 +284,16 @@ void Renderer::bindShaderAttributes(const GraphicsProgram& pgm)
 		glVertexAttribPointer(att->m_layout,att->m_nbComponents,MapType(att->m_type),att->m_normalized,0,NULL);
 
 		NEP_GRAPHICS_ASSERT();
+	}
+}
+
+void Renderer::bindTextures(const GraphicsProgram& _pgm)
+{
+	u32 i = 0;
+	GraphicsProgram::ConstTextureIterator tex_end = _pgm.textureCEnd();
+	for(GraphicsProgram::ConstTextureIterator tex = _pgm.textureCBegin(); tex != tex_end; ++tex,i++)
+	{
+		(*tex)->update();
 	}
 }
 

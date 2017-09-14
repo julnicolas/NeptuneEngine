@@ -7,6 +7,8 @@
 
 namespace Neptune
 {
+	class Texture;
+
 	///
 	/// Represents a full OpenGL program (with all its shaders).
 	///
@@ -126,6 +128,8 @@ namespace Neptune
 		typedef std::unordered_map<const char*, UniformVarInput>::const_iterator	ConstUniformVarIterator;
 		typedef std::vector<ShaderAttribute>::iterator								ShaderAttributeIterator;
 		typedef std::vector<ShaderAttribute>::const_iterator						ConstShaderAttributeIterator;
+		typedef std::vector<Texture*>::iterator										TextureIterator;
+		typedef std::vector<Texture*>::const_iterator								ConstTextureIterator;
 		typedef u32																	ProgramName;
 
 
@@ -164,6 +168,12 @@ namespace Neptune
 		ConstUniformVarIterator uniformVarCBegin() const        { return m_uniformVars.cbegin();   }
 		ConstUniformVarIterator uniformVarCEnd()   const        { return m_uniformVars.cend();     }
 
+		void addTexture(Texture* _tex);
+		TextureIterator      textureBegin()					{ return m_textures.begin();    }
+		TextureIterator      textureEnd()					{ return m_textures.end();      }
+		ConstTextureIterator textureCBegin() const			{ return m_textures.cbegin();   }
+		ConstTextureIterator textureCEnd()   const			{ return m_textures.cend();     }
+
 		///
 		/// Creates an uniform block variable.
 		/// The content of values is directly copied into VRAM. Therefore, the values can be volatile data.
@@ -182,6 +192,7 @@ namespace Neptune
 		u32													m_programName;			/// User-defined program name
 		std::unordered_map<const char*, UniformVarInput>	m_uniformVars;			/// Contains every vertex shader's uniform variables.
 		std::vector<ShaderAttribute>						m_shaderAttributes;		/// Contains every vertex-shader-attribute description.
+		std::vector<Texture*>								m_textures;				/// Program's texture set
 
 		// Bad design
 		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored

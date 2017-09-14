@@ -57,5 +57,6 @@ namespace Neptune
 
 	private:
 		void bindUniformVars(ConstGraphicalProgramIterator& it);
+		void bindTextures(const GraphicsProgram& _pgm);
 	};
 }
