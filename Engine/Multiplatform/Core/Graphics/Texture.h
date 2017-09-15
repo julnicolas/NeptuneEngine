@@ -92,9 +92,10 @@ namespace Neptune
 		u32			getDepth()				const	{	return m_metaData.m_depth;				}
 		const char* getName()				const	{	return m_path;							}
 		u32			getMaxTextureCount()	const;													/// Returns the number of textures supported
+		u32			getIndex()				const	{	return m_index;							}	/// Get texture's shader index
 
 	private:
-		u32				m_ID;
+		u32				m_name;
 		u32				m_index;																	/// Texture index in shaders
 		MetaData		m_metaData;
 		void*			m_data;																		/// Used when setting texture data at runtime rather than from a file

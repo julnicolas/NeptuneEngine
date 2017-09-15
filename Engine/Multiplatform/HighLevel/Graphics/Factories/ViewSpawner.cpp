@@ -1,5 +1,6 @@
 #include "Graphics/Factories/ViewSpawner.h"
 #include "Graphics/View.h"
+#include "Graphics/Texture.h"
 #include "Physics/Mechanics/Position.h"
 #include "Debug/NeptuneDebug.h"
 #include "System/Hashing/FastHashFunctions.h"
@@ -81,7 +82,7 @@ void ViewSpawner::addShaderAttribute(GraphicsProgram::ProgramName _pgmName, cons
 	it->second.m_shaderAttributesCustomData.push_back(custom_data);
 }
 
-void ViewSpawner::addTexture(GraphicsProgram::ProgramName _pgmName, const Texture* _texture)
+void ViewSpawner::setTexture(GraphicsProgram::ProgramName _pgmName, Texture* _texture)
 {
 	// Get the program
 	auto it = m_programs.find(_pgmName);
@@ -91,7 +92,7 @@ void ViewSpawner::addTexture(GraphicsProgram::ProgramName _pgmName, const Textur
 	m_textures.insert(_texture);
 
 	// Add its ID to the corresponding program
-	it->second.m_textureIDs.push_back(_texture);
+	it->second.m_textureIDs[_texture->getIndex()] = _texture;
 }
 
 static u64 ComputeUniformVariableId(GraphicsProgram::ProgramName _pgmName, const char* _uniformName)
@@ -265,6 +266,7 @@ void ViewSpawner::movePgmParameters()
 		// Pass the parameters to the program
 		GraphicsProgram* pgm = it.second.m_program;
 
+		// Shader attributes
 		for(const auto& custom_data : it.second.m_shaderAttributesCustomData)
 		{
 			NEP_ASSERT(m_shaderAttributes.find(custom_data.m_id) != m_shaderAttributes.end());
@@ -279,10 +281,18 @@ void ViewSpawner::movePgmParameters()
 			pgm->addShaderAttribute( att );
 		}
 
+		// Uniform variables
 		for(const auto& uniform_var_ID : it.second.m_uniformVarIDs)
 		{
 			NEP_ASSERT(m_uniformVariables.find(uniform_var_ID) != m_uniformVariables.end());
 			pgm->addUniformVariable(m_uniformVariables[uniform_var_ID]);
+		}
+
+		// Textures
+		for (auto& it_texture : it.second.m_textureIDs)
+		{
+			NEP_ASSERT(m_textures.find(it_texture.second) != m_textures.end());
+			pgm->setTexture(it_texture.second);
 		}
 
 		// Rebuild the program including all its parameters

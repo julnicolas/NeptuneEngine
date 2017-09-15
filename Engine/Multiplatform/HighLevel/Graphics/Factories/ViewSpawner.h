@@ -48,8 +48,10 @@ namespace Neptune
 		//
 
 		virtual ~ViewSpawner()								= default;
-		virtual ViewSpawner& operator=(const ViewSpawner&)	= delete;
 		ViewSpawner(const ViewSpawner&)						= delete;
+		ViewSpawner(ViewSpawner&&)							= delete;
+		virtual ViewSpawner& operator=(const ViewSpawner&)	= delete;
+		virtual ViewSpawner& operator=(ViewSpawner&&)		= delete;
 
 
 		//
@@ -74,8 +76,15 @@ namespace Neptune
 
 		void addGraphicsProgram(GraphicsProgram* _pgm);																						/// Add another graphics program, this will add another draw call for the current view
 		void addShaderAttribute(GraphicsProgram::ProgramName  _pgmName, const GraphicsProgram::ShaderAttribute& _shaderAtt);				/// Add the shader attribute  _shaderAtt as an input for the program _pgmName. 
-		void addTexture(GraphicsProgram::ProgramName _pgmName, const Texture* _texture);													/// Add the texture  _texture as a texture input for the program _pgmName.
 		void addUniformVariable(GraphicsProgram::ProgramName  _pgmName, const GraphicsProgram::UniformVarInput& _uniform);					/// Add the uniform variable _uniform as an input for the program _pgmName. The data is copied.
+		
+		/// \brief Adds the texture  _texture as a texture input for the program _pgmName. 
+		/// If two textures in the same program have the same index, _texture replaces it.
+		/// \warning In case two textures are swapped (i.e. same index in same program), the swap
+		/// will affect ALL instances created by the spawner (even before the actual swap). 
+		/// Remember ViewSpawners act like proxies between views and their data (they set 
+		/// everything up to render a view).
+		void setTexture(GraphicsProgram::ProgramName _pgmName, Texture* _texture);
 		
 		///
 		/// \brief Add the uniform to share for all programs in _pgmNameList. The variable is therefore COPIED only once in memory.
@@ -145,7 +154,7 @@ namespace Neptune
 			GraphicsProgram*								m_program;
 			std::vector<const CustomShaderAttributeData>	m_shaderAttributesCustomData;	/// Attributes' custom data (NOTE: contains attributes' position in the shader-attribute table)
 			std::vector<UniformVariableID>					m_uniformVarIDs;				/// Uniform variables' position in m_uniformVariables
-			std::vector<const Texture*>						m_textureIDs;					/// Textures' position in m_textures
+			std::unordered_map<u32, Texture*>				m_textureIDs;					/// Textures' position in m_textures. The key is the texture's ID to enable texture swap.
 		};
 
 
@@ -156,6 +165,6 @@ namespace Neptune
 		std::unordered_map<GraphicsProgram::ProgramName, Program>				m_programs;				/// Contains all the programs to be used to render the views
 		std::unordered_map<const void*, GraphicsProgram::ShaderAttribute>		m_shaderAttributes;		/// Stores all shader attributes for all programs (aka the shader-attribute table). The void* is the address of the buffer containing the data (m_data field).
 		std::unordered_map<UniformVariableID, GraphicsProgram::UniformVarInput>	m_uniformVariables;		/// Stores all uniform variables for all programs. The void* is the address of the buffer containing the data (m_data field).
-		std::unordered_set<const Texture*>										m_textures;				/// Stores all textures for all programs. The void* is the texture's address.
+		std::unordered_set<Texture*>											m_textures;				/// Stores all textures for all programs.
 	};
 }

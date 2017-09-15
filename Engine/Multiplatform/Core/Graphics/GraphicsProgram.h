@@ -128,8 +128,8 @@ namespace Neptune
 		typedef std::unordered_map<const char*, UniformVarInput>::const_iterator	ConstUniformVarIterator;
 		typedef std::vector<ShaderAttribute>::iterator								ShaderAttributeIterator;
 		typedef std::vector<ShaderAttribute>::const_iterator						ConstShaderAttributeIterator;
-		typedef std::vector<Texture*>::iterator										TextureIterator;
-		typedef std::vector<Texture*>::const_iterator								ConstTextureIterator;
+		typedef std::unordered_map<u32, Texture*>::iterator							TextureIterator;
+		typedef std::unordered_map<u32, Texture*>::const_iterator					ConstTextureIterator;
 		typedef u32																	ProgramName;
 
 
@@ -163,16 +163,20 @@ namespace Neptune
 
 		void addUniformVariable(const UniformVarInput& def);
 		UniformVarIterator      getUniformVar(const char* name);
-		UniformVarIterator      uniformVarBegin()               { return m_uniformVars.begin();    }
-		UniformVarIterator      uniformVarEnd()                 { return m_uniformVars.end();      }
-		ConstUniformVarIterator uniformVarCBegin() const        { return m_uniformVars.cbegin();   }
-		ConstUniformVarIterator uniformVarCEnd()   const        { return m_uniformVars.cend();     }
+		UniformVarIterator      uniformVarBegin()					{ return m_uniformVars.begin();			}
+		UniformVarIterator      uniformVarEnd()						{ return m_uniformVars.end();			}
+		ConstUniformVarIterator uniformVarCBegin() const			{ return m_uniformVars.cbegin();		}
+		ConstUniformVarIterator uniformVarCEnd()   const			{ return m_uniformVars.cend();			}
 
-		void addTexture(Texture* _tex);
-		TextureIterator      textureBegin()					{ return m_textures.begin();    }
-		TextureIterator      textureEnd()					{ return m_textures.end();      }
-		ConstTextureIterator textureCBegin() const			{ return m_textures.cbegin();   }
-		ConstTextureIterator textureCEnd()   const			{ return m_textures.cend();     }
+		/// \brief Adds a texture to the program. 
+		/// If _tex has the index then it will replace the one currently stored by the program.
+		/// \warning Pay attention if you share the program (like in ViewSpawner), because all objects using
+		/// this program will see their texture swapped by _tex. This may not be the effect you would like.
+		void setTexture(Texture* _tex);																				 
+		TextureIterator      textureBegin()							{ return m_textures.begin();			}
+		TextureIterator      textureEnd()							{ return m_textures.end();				}
+		ConstTextureIterator textureCBegin() const					{ return m_textures.cbegin();			}
+		ConstTextureIterator textureCEnd()   const					{ return m_textures.cend();				}
 
 		///
 		/// Creates an uniform block variable.
@@ -192,7 +196,7 @@ namespace Neptune
 		u32													m_programName;			/// User-defined program name
 		std::unordered_map<const char*, UniformVarInput>	m_uniformVars;			/// Contains every vertex shader's uniform variables.
 		std::vector<ShaderAttribute>						m_shaderAttributes;		/// Contains every vertex-shader-attribute description.
-		std::vector<Texture*>								m_textures;				/// Program's texture set
+		std::unordered_map<u32,Texture*>				m_textures;					/// Program's texture set. The key is the texture's ID.
 
 		// Bad design
 		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored

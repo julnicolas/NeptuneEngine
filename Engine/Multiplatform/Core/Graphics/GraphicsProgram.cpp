@@ -1,6 +1,7 @@
 #include "GraphicsProgram.h"
 #include "Debug/NeptuneDebug.h"
 #include "Graphics/IncludeOpenGL.h"
+#include "Graphics/Texture.h"
 #include "System/Hashing/FastHashFunctions.h"
 #include <string>
 
@@ -173,10 +174,10 @@ void GraphicsProgram::addShaderAttribute(const ShaderAttribute& desc)
 	m_shaderAttributes.push_back( desc );
 }
 
-void GraphicsProgram::addTexture(Texture* _texture)
+void GraphicsProgram::setTexture(Texture* _texture)
 {
 	NEP_ASSERT(_texture != nullptr); // Error: _texture pointer is invalid
-	m_textures.push_back(_texture);
+	m_textures[_texture->getIndex()] = _texture;
 }
 
 void GraphicsProgram::addUniformVariable(const UniformVarInput& def)

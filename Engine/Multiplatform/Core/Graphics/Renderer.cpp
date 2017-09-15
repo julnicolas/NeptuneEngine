@@ -277,8 +277,8 @@ void Renderer::bindShaderAttributes(const GraphicsProgram& pgm)
 {
 	// Bind every pgm's vertex attribute to its vbo
 	u32 i = 0;
-	GraphicsProgram::ConstShaderAttributeIterator att_end = pgm.shaderAttributeCEnd();
-	for(GraphicsProgram::ConstShaderAttributeIterator att = pgm.shaderAttributeCBegin(); att != att_end; ++att,i++)
+	auto att_end = pgm.shaderAttributeCEnd();
+	for(auto att = pgm.shaderAttributeCBegin(); att != att_end; ++att,i++)
 	{
 		glBindBuffer(GL_ARRAY_BUFFER,m_vbos[&pgm][i]);
 		glVertexAttribPointer(att->m_layout,att->m_nbComponents,MapType(att->m_type),att->m_normalized,0,NULL);
@@ -287,21 +287,20 @@ void Renderer::bindShaderAttributes(const GraphicsProgram& pgm)
 	}
 }
 
-void Renderer::bindTextures(const GraphicsProgram& _pgm)
+void Renderer::bindTextures(GraphicsProgram& _pgm)
 {
-	u32 i = 0;
-	GraphicsProgram::ConstTextureIterator tex_end = _pgm.textureCEnd();
-	for(GraphicsProgram::ConstTextureIterator tex = _pgm.textureCBegin(); tex != tex_end; ++tex,i++)
+	auto tex_end = _pgm.textureEnd();
+	for(auto tex = _pgm.textureBegin(); tex != tex_end; ++tex)
 	{
-		(*tex)->update();
+		tex->second->update();
 	}
 }
 
 void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 {
 	// Browse the uniform vars
-	GraphicsProgram::ConstUniformVarIterator uni_it_end = (*it)->uniformVarCEnd();
-	for(GraphicsProgram::ConstUniformVarIterator uni_it = (*it)->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it)
+	auto uni_it_end = (*it)->uniformVarCEnd();
+	for(auto uni_it = (*it)->uniformVarCBegin(); uni_it != uni_it_end; ++uni_it)
 	{
 		s32 location = glGetUniformLocation( (*it)->getResourceID(), uni_it->second.getName() );
 		

@@ -145,7 +145,7 @@ static bool NEP_LoadImage(const char* _path, u32& _textureID, Texture::MetaData&
 ////////////////////////////////////////////////////////////////
 
 Texture::Texture():
-	m_ID(0),
+	m_name(0),
 	m_index(0),
 	m_metaData({0}),
 	m_path(nullptr),
@@ -206,36 +206,36 @@ bool Texture::init()
 	// LOAD TEXTURE DATA
 	if ( extension == ".ktx" )		// If it's a texture format
 	{
-		u32 texture_target = LoadAndCreateKTXTexture(m_path, &m_ID, &m_metaData);
+		u32 texture_target = LoadAndCreateKTXTexture(m_path, &m_name, &m_metaData);
 
 		NEP_ASSERT(texture_target != LOAD_KTX_ERROR); // Error, texture couldn't be loaded.
 		return texture_target != LOAD_KTX_ERROR;
 	}
 	else							// If it's an image format
 	{
-		return NEP_LoadImage(m_path, m_ID, m_metaData);
+		return NEP_LoadImage(m_path, m_name, m_metaData);
 	}
 }
 
 bool Texture::update()
 {
 	// Check the texture has been initialised
-	NEP_ASSERT(IsTextureInitialised(m_ID));
+	NEP_ASSERT(IsTextureInitialised(m_name));
 	
 	// Now activate the right texture index to be able to bind the texture
 	glActiveTexture(GL_TEXTURE0 + m_index);
 	
 	// Now bind to the graphics context
-	glBindTexture( GLTextureCallsMapping::MapTextureType(m_metaData.m_type), m_ID);
+	glBindTexture( GLTextureCallsMapping::MapTextureType(m_metaData.m_type), m_name);
 	NEP_GRAPHICS_ASSERT();
 
-	return m_ID != 0;
+	return m_name != 0;
 }
 
 void Texture::terminate()
 {
-	glDeleteTextures(1, &m_ID);
-	m_ID = 0;
+	glDeleteTextures(1, &m_name);
+	m_name = 0;
 }
 
 u32 Texture::getMaxTextureCount() const
