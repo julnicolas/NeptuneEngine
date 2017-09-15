@@ -88,11 +88,8 @@ void ViewSpawner::setTexture(GraphicsProgram::ProgramName _pgmName, Texture* _te
 	auto it = m_programs.find(_pgmName);
 	NEP_ASSERT( it != m_programs.end() );
 
-	// Add the texture in the store if not already present
-	m_textures.insert(_texture);
-
 	// Add its ID to the corresponding program
-	it->second.m_textureIDs[_texture->getIndex()] = _texture;
+	it->second.m_textures[_texture->getIndex()] = _texture;
 }
 
 static u64 ComputeUniformVariableId(GraphicsProgram::ProgramName _pgmName, const char* _uniformName)
@@ -289,9 +286,8 @@ void ViewSpawner::movePgmParameters()
 		}
 
 		// Textures
-		for (auto& it_texture : it.second.m_textureIDs)
+		for (auto& it_texture : it.second.m_textures)
 		{
-			NEP_ASSERT(m_textures.find(it_texture.second) != m_textures.end());
 			pgm->setTexture(it_texture.second);
 		}
 
