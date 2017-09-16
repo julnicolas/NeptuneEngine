@@ -148,8 +148,7 @@ Texture::Texture():
 	m_name(0),
 	m_index(0),
 	m_metaData({0}),
-	m_path(nullptr),
-	m_data(nullptr)
+	m_path(nullptr)
 {
 	m_metaData.m_type = Type::TEXTURE_2D;
 }
@@ -159,14 +158,6 @@ Texture::Texture(const char* _path, Type _type /*= TextureType::TEXTURE_2D*/):
 {
 	setPath(_path);
 	m_metaData.m_type = _type;
-}
-
-Texture::Texture(void* _data, u32 _size, Type _type /*= TextureType::TEXTURE_2D*/):
-	Texture()
-{
-	m_metaData.m_size = _size;
-	m_metaData.m_type = _type;
-	m_data = _data;
 }
 
 Texture::~Texture()
@@ -195,7 +186,6 @@ void Texture::setData(void* _data, u32 _size)
 {
 	NEP_ASSERT( _data != nullptr && _size > 0 ); // Wrong data
 
-	m_data = _data;
 	m_metaData.m_size = _size;
 }
 

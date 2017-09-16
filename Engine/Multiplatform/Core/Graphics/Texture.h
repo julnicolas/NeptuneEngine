@@ -49,10 +49,10 @@ namespace Neptune
 			};
 
 			u32				m_width;
-			u32				m_height;					/// Also number of elements for a 1D array
-			u32				m_depth;					/// Also number of elements for a 2D array
-			u32				m_size;						/// Size of the texture data
-			u8				m_mipmapLevels;				/// Number of mipmap levels (>0)
+			u32				m_height;																/// Also number of elements for a 1D array
+			u32				m_depth;																/// Also number of elements for a 2D array
+			u32				m_size;																	/// Size of the texture data
+			u8				m_mipmapLevels;															/// Number of mipmap levels (>0)
 			Type			m_type;
 			InternalFormat	m_internalFormat;
 		};
@@ -65,18 +65,12 @@ namespace Neptune
 
 		/// Loads a texture from a file
 		Texture(const char* _path, Type _type = Type::TEXTURE_2D);
-		
-		/// 
-		/// \brief Loads a Texture from a buffer. The texture discard the buffer after init() is called.
-		/// \brief The content is then stored in VRAM.
-		///
-		Texture(void* _data, u32 _size, Type _type = Type::TEXTURE_2D); // Not fully implemented yet
 
 		~Texture();
-		Texture(const Texture& t)				= delete;
-		Texture(Texture&&)						= delete;
-		Texture& operator=(const Texture& t)	= delete;
-		Texture& operator=(Texture&&)			= delete;
+		Texture(const Texture& t)				= delete;											/// Copy or move is not enabled because copying the data on the GPU side boils down to creating a new texture.
+		Texture(Texture&&)						= delete;											/// Copy or move is not enabled because copying the data on the GPU side boils down to creating a new texture.
+		Texture& operator=(const Texture& t)	= delete;											/// Copy or move is not enabled because copying the data on the GPU side boils down to creating a new texture.
+		Texture& operator=(Texture&&)			= delete;											/// Copy or move is not enabled because copying the data on the GPU side boils down to creating a new texture.
 
 		bool init()      final override;
 		bool update()    final override;
@@ -98,7 +92,6 @@ namespace Neptune
 		u32				m_name;
 		u32				m_index;																	/// Texture index in shaders
 		MetaData		m_metaData;
-		void*			m_data;																		/// Used when setting texture data at runtime rather than from a file
 		char*			m_path;
 	};
 }
