@@ -84,6 +84,8 @@ void ViewSpawner::addShaderAttribute(GraphicsProgram::ProgramName _pgmName, cons
 
 void ViewSpawner::setTexture(GraphicsProgram::ProgramName _pgmName, Texture* _texture)
 {
+	NEP_ASSERT(_texture != nullptr); // Error invalid texture
+	
 	// Get the program
 	auto it = m_programs.find(_pgmName);
 	NEP_ASSERT( it != m_programs.end() );
