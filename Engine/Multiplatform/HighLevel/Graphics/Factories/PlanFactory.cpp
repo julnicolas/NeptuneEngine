@@ -8,155 +8,71 @@
 
 using namespace Neptune;
 
-PlanFactory::PlanFactory()
+PlanFactory::PlanFactory(const Color& _color):
+	PlanFactory()
 {
-	initData({0.5f,0.5f,0.5f, 1.0f});
-}
-
-PlanFactory::PlanFactory(const Color& color)
-{
-	initData(color);
-}
-
-PlanFactory::PlanFactory(Texture* texture)
-{
-	if(texture != nullptr)
-	{
-		initData(texture);
-	}
-	else // Error: Wrong texture
-	{
-		NEP_LOG("Error: PlanFactory::PlanFactory(Texture*): Wrong parameter");
-		initData(texture);
-	}
-}
-
-VAOView* PlanFactory::create()
-{
-	VAOView* v = new VAOView;
-
-	// Add the texture if one has been provided
-	if(m_texture != nullptr)
-		v->bindTexture(m_texture);
-
-	// Add the MV matrix
-
-	GraphicsProgram::UniformVarInput mv(NEP_UNIVNAME_MV_MATRIX,
-		GraphicsProgram::FLOAT,
-		4,
-		4,
-		16*sizeof(float),
-		v->getTransform().getDataPtr());
-
-	// Create the triangle's renderer
-	Renderer& renderer = v->getRenderer();
-	renderer.setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLE_STRIP);
-	renderer.setNbverticesToRender(4);
-
-	// Create the shaders to display the triangle
-	Shader vert(m_vertexShaderName.c_str(),GL_VERTEX_SHADER);
-	Shader frag(m_fragmentShaderName.c_str(),GL_FRAGMENT_SHADER);
-
-	// Create the program to display a triangle
-	{
-		GraphicsProgram& pgm = renderer.createProgram();
-		pgm.add(vert.getId());
-		pgm.add(frag.getId());
-		pgm.addShaderAttribute(m_shaderAttributes[0]);
-		pgm.addShaderAttribute(m_shaderAttributes[1]);
-		pgm.addUniformVariable(mv);
-		pgm.build();
-	}
-
-	return v;
-}
-
-void PlanFactory::initData(const Color& _color)
-{
-	// Set vertex data
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.0f);
-
-	// Set color data
+	// Add vertex shader
+	const char VERTEX_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
+	Shader vert(VERTEX_SHADER_NAME, GL_VERTEX_SHADER);
+	m_program.add(vert.getId());
+	
+	// Add fragment shader
+	const char FRAGMENT_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
+	Shader frag(FRAGMENT_SHADER_NAME, GL_FRAGMENT_SHADER);
+	m_program.add(frag.getId());
+	
+	// Set color
 	m_colors.push_back(_color);
 	m_colors.push_back(_color);
 	m_colors.push_back(_color);
 	m_colors.push_back(_color);
 
-	// Create the shader attributes
-
-	GraphicsProgram::ShaderAttribute t1_data =
+	// Create shader attribute
+	GraphicsProgram::ShaderAttribute color_data =
 	{
-		0,                                          // layout
-		GraphicsProgram::Types::FLOAT,            // Type
-		3,                                        // nb components per value
-		false,                                    // Should data be normalized?
-		m_vertices.size()*sizeof(m_vertices[0]), // data size
-		&m_vertices[0]                          // data
-	};
-
-	GraphicsProgram::ShaderAttribute c1_data =
-	{
-		1,                                      // layout
-		GraphicsProgram::Types::FLOAT,        // Type
-		4,                                    // nb components per value
+		1,                                       // layout
+		GraphicsProgram::Types::FLOAT,          // Type
+		4,                                     // nb components per value
 		false,                                // Should data be normalized?
 		m_colors.size()*sizeof(m_colors[0]), // data size
 		&m_colors[0]                        // data
 	};
 
-	// Add them to the factory
-	m_shaderAttributes.push_back(t1_data);
-	m_shaderAttributes.push_back(c1_data);
+	m_shaderAttributes.push_back(color_data);
 
-	// Set shader names
-	m_vertexShaderName   = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
-	m_fragmentShaderName = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
+	// Add color to the program
+	m_program.addShaderAttribute(m_shaderAttributes[1]);
 }
 
-void PlanFactory::initData(Texture* texture)
+PlanFactory::PlanFactory(const char* _texturePath):
+	PlanFactory()
 {
-	// Set vertex data
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.0f);
+	NEP_ASSERT(_texturePath != nullptr); // Invalid path
+	
+	// Add vertex shader
+	const char VERTEX_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/BasicDisplay.vert";
+	Shader vert(VERTEX_SHADER_NAME, GL_VERTEX_SHADER);
+	m_program.add(vert.getId());
+	
+	// Add fragment shader
+	const char FRAGMENT_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/ApplyTexture.frag";
+	Shader frag(FRAGMENT_SHADER_NAME, GL_FRAGMENT_SHADER);
+	m_program.add(frag.getId());
 
-	//Set texture coordinates
+	// Set up texture
+	m_texture.setPath(_texturePath);
+	m_texture.init();
+
+	// Add the texture to the program
+	m_program.setTexture(&m_texture);
+
+	// Create texture map data
 	m_texCoords.push_back(0.0f); m_texCoords.push_back(1.0f);
 	m_texCoords.push_back(1.0f); m_texCoords.push_back(1.0f);
 	m_texCoords.push_back(0.0f); m_texCoords.push_back(0.0f);
 	m_texCoords.push_back(1.0f); m_texCoords.push_back(0.0f);
 
-	// Create shader attributes
-	GraphicsProgram::ShaderAttribute pos_data =
-	{
-		0,                                            // layout
-		GraphicsProgram::Types::FLOAT,               // Type
-		3,                                          // nb components per value
-		false,                                     // Should data be normalized?
-		m_vertices.size()*sizeof(m_vertices[0]),  // data size
-		&m_vertices[0]                           // data
-	};
-
+	// Create shader attribute
 	GraphicsProgram::ShaderAttribute tex_data =
 	{
 		1,                                              // layout
@@ -167,16 +83,67 @@ void PlanFactory::initData(Texture* texture)
 		&m_texCoords[0]                            // data
 	};
 
-	// Add them to the factory
-	m_shaderAttributes.push_back(pos_data);
 	m_shaderAttributes.push_back(tex_data);
 
-	// Set shader names
-	m_vertexShaderName   = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/BasicDisplay.vert";
-	m_fragmentShaderName = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/ApplyTexture.frag";
+	// Add the attribute to the program
+	m_program.addShaderAttribute(m_shaderAttributes[1]);
+}
 
-	// Init texture if necessary
-	m_texture = texture;
-	if(!m_texture->isInitialized())
-		m_texture->init();
+VAOView* PlanFactory::create()
+{
+	VAOView* v = new VAOView;
+
+	// Add the MV matrix
+	GraphicsProgram::UniformVarInput mv(NEP_UNIVNAME_MV_MATRIX,
+		GraphicsProgram::FLOAT,
+		4,
+		4,
+		16*sizeof(float),
+		v->getTransform().getDataPtr());
+
+	m_program.addUniformVariable(mv);
+
+	// Build the program
+	m_program.build();
+
+	// Set up the triangle's renderer
+	v->setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLE_STRIP);
+	v->setNbVerticesToRender(4);
+	v->addGraphicsProgram(&m_program);
+
+	return v;
+}
+
+// Private constructor
+PlanFactory::PlanFactory()
+{
+	// Set vertex data
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.0f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.5f);
+	m_vertices.push_back(0.0f);
+
+	// Shader attributes
+	GraphicsProgram::ShaderAttribute pos_data =
+	{
+		0,                                            // layout
+		GraphicsProgram::Types::FLOAT,               // Type
+		3,                                          // nb components per value
+		false,                                     // Should data be normalized?
+		m_vertices.size()*sizeof(m_vertices[0]),  // data size
+		&m_vertices[0]                           // data
+	};
+
+	m_shaderAttributes.push_back(pos_data);
+
+	// Add position to the program
+	m_program.addShaderAttribute(m_shaderAttributes[0]);
 }

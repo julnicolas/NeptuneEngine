@@ -1,25 +1,29 @@
 #pragma once
 
 #include "Graphics/ViewFactory.h"
+#include "Graphics/Texture.h"
 #include "Graphics/VAOView.h"
-#include "Graphics/Color.h"
 
 namespace Neptune
 {
-	class PlanFactory: public ViewFactory
+	class VAOView;
+
+	class PlanFactory final: public ViewFactory
 	{
 	public:
-		PlanFactory();
 		PlanFactory(const Color& color);
-		PlanFactory(Texture* texture);
-		virtual ~PlanFactory()                     = default;
-		PlanFactory(const PlanFactory&)            = default;
-		PlanFactory& operator=(const PlanFactory&) = default;
+		PlanFactory(const char* _texturePath);	
 
-		VAOView* create() override; /// Allocates a new VAOView on the heap. Class users must handle the object's deallocation.
+		virtual ~PlanFactory()                     = default;
+		PlanFactory(const PlanFactory&)            = delete;
+		PlanFactory& operator=(const PlanFactory&) = delete;
+
+		VAOView* create() final override;	/// Allocates a new VAOView on the heap. Class users must handle the object's deallocation.
 
 	private:
-		void initData(const Color& color);
-		void initData(Texture* texture);
+		PlanFactory();
+
+		Texture				m_texture;
+		std::vector<float>	m_texCoords;
 	};
 }
