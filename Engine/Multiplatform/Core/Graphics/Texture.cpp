@@ -178,8 +178,10 @@ void Texture::setPath(const char* _path)
 {
 	NEP_ASSERT(_path != nullptr); // Path is invalid
 
-	m_path = new char[ strlen(_path) ];
-	strcpy(m_path, _path);
+	const size_t length = strlen(_path) + 1;
+	m_path              = new char[length];
+	
+	strcpy_s(m_path, length, _path);
 }
 
 void Texture::setIndex(u32 _index)

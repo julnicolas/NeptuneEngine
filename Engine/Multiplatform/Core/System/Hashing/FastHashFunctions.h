@@ -19,13 +19,13 @@ namespace Neptune
 		return hash;
 	}
 
-	inline u32 Fnv1a32(const u8* data, u32 size)
+	inline u32 Fnv1a32(const u8* data, u64 size)
 	{
 		const u32 FNV_OFFSET_BASIS = 0x811C9DC5;
 		const u32 FNV_PRIME        = 0x01000193;
 		u32 hash                   = FNV_OFFSET_BASIS;
 
-		for(u32 i = 0; i < size; i++)
+		for(u64 i = 0; i < size; i++)
 		{
 			hash ^= data[i];
 			hash *= FNV_PRIME;

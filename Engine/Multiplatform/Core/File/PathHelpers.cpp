@@ -17,7 +17,7 @@ u32 PathHelpers::GetFileExtension(const char* _path)
 
 	const char* pos = std::find(_path, _path + strlen(_path)-1, '.');
 
-	return (*pos == '.') ? pos - _path + 1 : ERROR;
+	return (*pos == '.') ? static_cast<u32>(pos - _path) + 1 : ERROR;
 }
 
 std::string PathHelpers::GetFileExtension(const std::string& _path)

@@ -200,8 +200,9 @@ m_type(type),m_nbColumns(columns),m_nbRows(rows)
 	NEP_ASSERT( m_nbColumns > 0 && m_nbColumns <= 4 );
 	NEP_ASSERT( name != nullptr && data != nullptr );
 	
-	char* u_name = new char[strlen(name) + 1];
-	strcpy(u_name,name);
+	size_t name_length = strlen(name)+1;
+	char* u_name = new char[name_length];
+	strcpy_s(u_name, name_length, name);
 	m_name = u_name;
 
 	void* u_data = new char[dataSize];
