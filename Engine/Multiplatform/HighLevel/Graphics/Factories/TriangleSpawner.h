@@ -7,7 +7,7 @@ namespace Neptune
 	class  VAOView;
 	struct Color;
 
-	class TriangleSpawner: public ViewSpawner
+	class TriangleSpawner final: public ViewSpawner
 	{
 	public:
 		//
