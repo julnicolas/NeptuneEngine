@@ -163,6 +163,7 @@ Texture::Texture(const char* _path, Type _type /*= TextureType::TEXTURE_2D*/):
 Texture::~Texture()
 {
 	delete[] m_path;
+	glDeleteTextures(1, &m_name);
 }
 
 void Texture::setPath(const char* _path)
