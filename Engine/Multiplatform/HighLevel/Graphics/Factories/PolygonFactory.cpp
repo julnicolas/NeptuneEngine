@@ -49,6 +49,32 @@ PolygonFactory::PolygonFactory(const char* _texturePath)
 
 View* PolygonFactory::create()
 {
+	initPolygonData();
+
+	// Create the view
+	View* v = createViewAndSetUpRenderParameters();
+
+	// Add the MV matrix
+	GraphicsProgram::UniformVarInput mv(NEP_UNIVNAME_MV_MATRIX,
+		GraphicsProgram::FLOAT,
+		4,
+		4,
+		16*sizeof(float),
+		v->getTransform().getDataPtr());
+
+	m_program.addUniformVariable(mv);
+
+	// Build the program
+	m_program.build();
+
+	// Add the program to the view
+	v->addGraphicsProgram(&m_program);
+
+	return v;
+}
+
+void PolygonFactory::initPolygonData()
+{
 	// Add vertex data if needed
 	if (m_vertices.empty()) // True if createVertexData() hasn't been called
 	{
@@ -71,7 +97,7 @@ View* PolygonFactory::create()
 		m_program.addShaderAttribute(m_shaderAttributes[0]);
 
 		// Check if textures are used
-		if (m_texture.getWidth() != 0 || m_texture.getHeight() != 0) // If it's still empty it means we don't use textures. Therefore we use colors.
+		if (m_texture.getWidth() != 0 || m_texture.getHeight() != 0) // True if textures are used
 		{
 			createTextureCoordinates();
 
@@ -119,25 +145,4 @@ View* PolygonFactory::create()
 			m_program.addShaderAttribute(m_shaderAttributes[1]);
 		}
 	}
-
-	// Create the view
-	View* v = createViewAndSetUpRenderParameters();
-
-	// Add the MV matrix
-	GraphicsProgram::UniformVarInput mv(NEP_UNIVNAME_MV_MATRIX,
-		GraphicsProgram::FLOAT,
-		4,
-		4,
-		16*sizeof(float),
-		v->getTransform().getDataPtr());
-
-	m_program.addUniformVariable(mv);
-
-	// Build the program
-	m_program.build();
-
-	// Add the program to the view
-	v->addGraphicsProgram(&m_program);
-
-	return v;
 }

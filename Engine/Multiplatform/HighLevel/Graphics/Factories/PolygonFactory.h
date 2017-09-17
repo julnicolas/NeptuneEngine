@@ -30,7 +30,7 @@ namespace Neptune
 		std::vector<float>	m_texCoords;
 
 	private:
-		PolygonFactory();
+		void initPolygonData();
 	};
 }
 
