@@ -1,8 +1,6 @@
 #include "Graphics/Factories/PlanFactory.h"
 #include "Graphics/VAOView.h"
 
-#include "Graphics/GraphicalEnumMappingFunctions.h"
-
 using namespace Neptune;
 
 void PlanFactory::createVertexData()
@@ -34,7 +32,7 @@ View* PlanFactory::createViewAndSetUpRenderParameters()
 	// Create View
 	VAOView* v = new VAOView;
 
-	// Set up the triangle's renderer
+	// Set up the renderer
 	v->setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLE_STRIP);
 	v->setNbVerticesToRender(4);
 

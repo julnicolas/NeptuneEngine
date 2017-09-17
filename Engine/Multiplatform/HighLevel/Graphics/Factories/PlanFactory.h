@@ -1,13 +1,9 @@
 #pragma once
 
 #include "Graphics/Factories/PolygonFactory.h"
-#include "Graphics/Texture.h"
-#include "Graphics/VAOView.h"
 
 namespace Neptune
 {
-	class VAOView;
-
 	class PlanFactory final: public PolygonFactory
 	{
 	public:
