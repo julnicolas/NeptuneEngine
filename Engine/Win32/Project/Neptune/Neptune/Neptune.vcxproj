@@ -274,6 +274,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanSpawner.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PolygonFactory.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleFactory.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
@@ -373,6 +374,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanSpawner.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PolygonFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleFactory.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>

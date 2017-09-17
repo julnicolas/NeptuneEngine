@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/ViewFactory.h"
+#include "Graphics/Factories/PolygonFactory.h"
 #include "Graphics/Texture.h"
 #include "Graphics/VAOView.h"
 
@@ -8,22 +8,19 @@ namespace Neptune
 {
 	class VAOView;
 
-	class PlanFactory final: public ViewFactory
+	class PlanFactory final: public PolygonFactory
 	{
 	public:
-		PlanFactory(const Color& color);
-		PlanFactory(const char* _texturePath);	
+		PlanFactory(const Color& _color): PolygonFactory(_color)			{}
+		PlanFactory(const char* _texturePath): PolygonFactory(_texturePath)	{}
 
-		virtual ~PlanFactory()                     = default;
-		PlanFactory(const PlanFactory&)            = delete;
-		PlanFactory& operator=(const PlanFactory&) = delete;
+		virtual ~PlanFactory()								= default;
+		PlanFactory(const PlanFactory&)						= delete;
+		virtual PlanFactory& operator=(const PlanFactory&)	= delete;
 
-		VAOView* create() final override;	/// Allocates a new VAOView on the heap. Class users must handle the object's deallocation.
-
-	private:
-		PlanFactory();
-
-		Texture				m_texture;
-		std::vector<float>	m_texCoords;
+	protected:
+		View* createViewAndSetUpRenderParameters()	final override;
+		void createVertexData()						final override;
+		void createTextureCoordinates()				final override;
 	};
 }
