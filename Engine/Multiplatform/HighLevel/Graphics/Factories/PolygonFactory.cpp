@@ -121,8 +121,8 @@ void PolygonFactory::initPolygonData()
 		{
 			// Set color
 			{
-				size_t nb_colors_to_set = m_vertices.size() - 1; // As many color values as their are vertices and we set one in the constructor
-				Color& color = m_colors.back();
+				size_t nb_colors_to_set = m_vertices.size()/3 - 1; // As many color values as their are vertices and we set one in the constructor
+				Color color = m_colors.back();
 
 				for (size_t i = 0; i < nb_colors_to_set; i++)
 					m_colors.push_back(color);			
