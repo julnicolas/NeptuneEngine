@@ -84,7 +84,7 @@ namespace Neptune
 		u32         getWidth()				const	{	return m_metaData.m_width;				}
 		u32         getHeight()				const	{	return m_metaData.m_height;				}
 		u32			getDepth()				const	{	return m_metaData.m_depth;				}
-		const char* getName()				const	{	return m_path;							}
+		const char* getPath()				const	{	return m_path;							}
 		u32			getMaxTextureCount()	const;													/// Returns the number of textures supported
 		u32			getIndex()				const	{	return m_index;							}	/// Get texture's shader index
 
