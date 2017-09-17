@@ -17,7 +17,7 @@ namespace Neptune
 		Transform(const Transform&)            = default;
 		Transform& operator=(const Transform&) = default;
 
-		void rotate(float x, float y, float z); /// Rotates in a clockwise orientation
+		void rotate(float x, float y, float z); /// Rotates in a clockwise orientation. Angles in degrees.
 		void translate(float x, float y, float z);
 		void scale(float x, float y, float z);
 
