@@ -5,26 +5,22 @@ using namespace Neptune;
 
 void PlanFactory::createVertexData()
 {
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.0f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.5f);
-	m_vertices.push_back(0.0f);
+	m_vertices = {
+		0.0f, 0.0f, 0.0f,
+		0.5f, 0.0f, 0.0f,
+		0.0f, 0.5f, 0.0f,
+		0.5f, 0.5f, 0.0f
+	};
 }
 
 void PlanFactory::createTextureCoordinates()
 {
-	m_texCoords.push_back(0.0f); m_texCoords.push_back(1.0f);
-	m_texCoords.push_back(1.0f); m_texCoords.push_back(1.0f);
-	m_texCoords.push_back(0.0f); m_texCoords.push_back(0.0f);
-	m_texCoords.push_back(1.0f); m_texCoords.push_back(0.0f);
+	m_texCoords = {
+		0.0f,1.0f,
+		1.0f,1.0f,
+		0.0f,0.0f,
+		1.0f,0.0f
+	};
 }
 
 View* PlanFactory::createViewAndSetUpRenderParameters()
