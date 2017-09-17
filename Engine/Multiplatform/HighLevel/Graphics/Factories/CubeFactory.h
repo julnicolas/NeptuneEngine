@@ -1,26 +1,22 @@
 #pragma once
 
-#include "Graphics/ViewFactory.h"
-#include "Graphics/VAOView.h"
+#include "Graphics/Factories/PolygonFactory.h"
 
 namespace Neptune
 {
-	class CubeFactory : public ViewFactory
+	class CubeFactory final: public PolygonFactory
 	{
 	public:
-		CubeFactory();
-		CubeFactory(const Color& color);
-		CubeFactory(Texture* texture);
-		virtual ~CubeFactory()                     = default;
-		CubeFactory(const CubeFactory&)            = default;
-		CubeFactory& operator=(const CubeFactory&) = default;
+		CubeFactory(const Color& _color): PolygonFactory(_color)			{}
+		CubeFactory(const char* _texturePath): PolygonFactory(_texturePath)	{}
 
-		VAOView* create() override; /// Allocates a new VAOView on the heap. Class users must handle the object's deallocation.
+		virtual ~CubeFactory()								= default;
+		CubeFactory(const CubeFactory&)						= delete;
+		virtual CubeFactory& operator=(const CubeFactory&)	= delete;
 
-	private:
-		static const u8 NB_VERTICES_TO_RENDER = 36;
-
-		void initCubeData(const Color& color);
-		void initCubeData(Texture* texture);
+	protected:
+		View* createViewAndSetUpRenderParameters()	final override;
+		void createVertexData()						final override;
+		void createTextureCoordinates()				final override;
 	};
 }
