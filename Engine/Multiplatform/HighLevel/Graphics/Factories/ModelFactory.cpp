@@ -3,20 +3,36 @@
 #include "Graphics/Shader.h"
 #include "Graphics/PLYLoader.h"
 #include "Graphics/GraphicalEnumMappingFunctions.h"
+#include "Graphics/UniformVarNames.h"
+
 #include "Debug/NeptuneDebug.h"
+
 
 using namespace Neptune;
 
 ModelFactory::ModelFactory(const char* fileName)
 {
-	initModelData( fileName );
-}
+	NEP_ASSERT(fileName != nullptr);
+	
+	// Add vertex shader
+	const char VERTEX_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
+	Shader vert(VERTEX_SHADER_NAME, GL_VERTEX_SHADER);
+	m_program.add(vert.getId());
+	
+	// Add fragment shader
+	const char FRAGMENT_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
+	Shader frag(FRAGMENT_SHADER_NAME, GL_FRAGMENT_SHADER);
+	m_program.add(frag.getId());
+	
+#ifdef NEP_DEBUG
+	// Set resources' name
+	m_dbg_fileName = fileName;
+#endif
 
-ElementView* ModelFactory::create()
-{
-	ElementView* v = new ElementView;
+	// Load model
+	m_loader.load(fileName);
 
-	// Set the vertex shader's parameters
+	// Set vertex shader's parameters
 	PLYLoader::PropertyData* prop = nullptr;
 
 	prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::POSITION);
@@ -24,7 +40,7 @@ ElementView* ModelFactory::create()
 		GraphicsProgram::ShaderAttribute position =
 		{
 			0,                                // layout
-			MapType(prop->m_valueType),  // Type
+			MapType(prop->m_valueType),		// Type
 			3,                              // nb components per value
 			false,                          // Should data be normalized?
 			prop->m_bufferSize,            // data size
@@ -47,49 +63,37 @@ ElementView* ModelFactory::create()
 		m_shaderAttributes.push_back(color);
 	}
 
-	// Add the MV matrix
-	GraphicsProgram::UniformVarInput mv("ModelView",
+	// Create program
+	m_program.addShaderAttribute(m_shaderAttributes[0]);
+	m_program.addShaderAttribute(m_shaderAttributes[1]);
+	m_program.build();
+}
+
+ElementView* ModelFactory::create()
+{
+	// Create view
+	ElementView* v = new ElementView;
+
+	// Add MV matrix
+	GraphicsProgram::UniformVarInput mv(NEP_UNIVNAME_MV_MATRIX,
 		GraphicsProgram::FLOAT,
 		4,
 		4,
 		16*sizeof(float),
 		v->getTransform().getDataPtr());
 
-	// Get the IBO
-	prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::INDEX);
+	m_program.addUniformVariable(mv);
 
-	// Create the renderer
-	ElementRenderer& renderer = static_cast<ElementRenderer&>( v->getRenderer() );
+	// Get IBO
+	PLYLoader::PropertyData* prop = &m_loader.getPropertyBuffer(PLYLoader::PropertyType::INDEX);
 
-	renderer.setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLES);
-	renderer.setNbverticesToRender(m_loader.getNbverticesToRender());
-	renderer.setIndexBufferData( prop->m_buffer, prop->m_bufferSize, ElementRenderer::IndexType::U32 );
+	// Set up the view
+	v->setDrawingPrimitive(Renderer::DrawingPrimitive::TRIANGLES);
+	v->setNbVerticesToRender(m_loader.getNbverticesToRender());
+	v->setIndexBufferData( prop->m_buffer, prop->m_bufferSize, ElementRenderer::IndexType::U32 );
 
-	// Create the shaders to display the model
-	Shader vert(m_vertexShaderName.c_str(),GL_VERTEX_SHADER);
-	Shader frag(m_fragmentShaderName.c_str(),GL_FRAGMENT_SHADER);
-
-	// Create the program
-	{
-		GraphicsProgram& pgm = renderer.createProgram();
-		pgm.add(vert.getId());
-		pgm.add(frag.getId());
-		pgm.addShaderAttribute(m_shaderAttributes[0]);
-		pgm.addShaderAttribute(m_shaderAttributes[1]);
-		pgm.addUniformVariable(mv);
-		pgm.build();
-	}
+	// Add the program to the view
+	v->addGraphicsProgram(&m_program);
 
 	return v;
-}
-
-void ModelFactory::initModelData(const char* fileName)
-{
-	// Set resources' name
-	m_fileName           = fileName;
-	m_vertexShaderName   = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
-	m_fragmentShaderName = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
-
-	// Load the model
-	m_loader.load(m_fileName.c_str());
 }
