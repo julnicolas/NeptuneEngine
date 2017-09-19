@@ -12,4 +12,6 @@
 #define NEP_UNIVNAME_PROJ_MATRIX   "Projection"
 
 // Lights
-#define NEP_UNIVNAME_AMBIENT_LIGHT "AmbientLight"
+#define NEP_UNIVNAME_AMBIENT_LIGHT				"AmbientLight"
+#define NEP_UNIVNAME_DIFFUSE_LIGHT_DIRECTION	"DiffuseLightDirection"
+#define NEP_UNIVNAME_DIFFUSE_LIGHT_COLOR		"DiffuseLightColor"
