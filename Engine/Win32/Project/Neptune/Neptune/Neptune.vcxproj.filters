@@ -107,6 +107,9 @@
     <Filter Include="Engine\Multiplatform\Core\File">
       <UniqueIdentifier>{c894faf6-3ea7-4109-89bd-f67cd110b2b9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Graphics\Spawners">
+      <UniqueIdentifier>{ccb90319-a1c6-400e-a886-ffc2495ad3fc}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -190,23 +193,23 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanFactory.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewSpawner.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleSpawner.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Physics\Mechanics\Position.cpp">
       <Filter>Engine\Multiplatform\Core\Physics\Mechanics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanSpawner.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.cpp">
       <Filter>Engine\Multiplatform\Core\File</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PolygonFactory.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\PlanSpawner.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\TriangleSpawner.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -324,9 +327,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\VAOView.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ViewFactory.h">
-      <Filter>Engine\Multiplatform\Core\Graphics</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Geometry\Transform.h">
       <Filter>Engine\Multiplatform\Core\Math\Geometry</Filter>
     </ClInclude>
@@ -405,12 +405,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanFactory.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewSpawner.h">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\TriangleSpawner.h">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Physics\Mechanics\Position.h">
       <Filter>Engine\Multiplatform\Core\Physics\Mechanics</Filter>
     </ClInclude>
@@ -419,9 +413,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Core\InputEvent.h">
       <Filter>Engine\Win32\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PlanSpawner.h">
-      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.h">
       <Filter>Engine\Multiplatform\Core\File</Filter>
@@ -434,6 +425,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\PolygonFactory.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewFactory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Factories</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\PlanSpawner.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\TriangleSpawner.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

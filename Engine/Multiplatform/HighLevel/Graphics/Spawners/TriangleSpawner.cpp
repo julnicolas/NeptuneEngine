@@ -1,4 +1,4 @@
-#include "Graphics/Factories/TriangleSpawner.h"
+#include "Graphics/Spawners/TriangleSpawner.h"
 #include "Graphics/VAOView.h"
 #include "Debug/NeptuneDebug.h"
 

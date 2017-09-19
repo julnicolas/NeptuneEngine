@@ -5,7 +5,6 @@ using namespace Neptune;
 
 void TriangleFactory::createVertexData()
 {
-	// Vertex data obtained from http://www.opengl-tutorial.org/fr/beginners-tutorials/tutorial-4-a-colored-cube/
 	m_vertices = {
 		0.0f, 0.0f, 0.0f,
 		0.0f, 0.5f, 0.0f,
@@ -15,7 +14,6 @@ void TriangleFactory::createVertexData()
 
 void TriangleFactory::createTextureCoordinates()
 {
-	// Mapping data obtained from http://www.opengl-tutorial.org/fr/beginners-tutorials/tutorial-5-a-textured-cube/
 	m_texCoords = {
 		0.0f, 1.0f,
 		1.0f, 1.0f,

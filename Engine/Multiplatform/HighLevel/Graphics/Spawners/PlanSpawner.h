@@ -1,20 +1,20 @@
 #pragma once
 
-#include "Graphics/Factories/ViewSpawner.h"
+#include "Graphics/Spawners/ViewSpawner.h"
 
 namespace Neptune
 {
 	class  VAOView;
 	struct Color;
 
-	class TriangleSpawner final: public ViewSpawner
+	class PlanSpawner final: public ViewSpawner
 	{
 	public:
 		//
 		// C O N S T R U C T O R S
 		//
 
-		TriangleSpawner(GraphicsProgram* _pgm):
+		PlanSpawner(GraphicsProgram* _pgm):
 			ViewSpawner(_pgm){}
 
 
@@ -22,9 +22,9 @@ namespace Neptune
 		// D E F A U L T   G E N E R A T E D   M E T H O D S
 		//
 
-		virtual ~TriangleSpawner()											= default;
-		TriangleSpawner(const TriangleSpawner&)								= delete;
-		virtual TriangleSpawner& operator=(const TriangleSpawner&)			= delete;
+		virtual ~PlanSpawner()										= default;
+		PlanSpawner(const PlanSpawner&)								= delete;
+		virtual PlanSpawner& operator=(const PlanSpawner&)			= delete;
 
 
 		//
@@ -40,4 +40,3 @@ namespace Neptune
 		View*		createViewAndSetUpRenderParameters()	override;
 	};
 }
-

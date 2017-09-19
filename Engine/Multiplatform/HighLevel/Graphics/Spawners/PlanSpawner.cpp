@@ -1,4 +1,4 @@
-#include "Graphics/Factories/PlanSpawner.h"
+#include "Graphics/Spawners/PlanSpawner.h"
 #include "Graphics/VAOView.h"
 #include "Debug/NeptuneDebug.h"
 

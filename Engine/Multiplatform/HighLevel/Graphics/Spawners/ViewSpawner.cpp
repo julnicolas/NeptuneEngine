@@ -1,4 +1,4 @@
-#include "Graphics/Factories/ViewSpawner.h"
+#include "Graphics/Spawners/ViewSpawner.h"
 #include "Graphics/View.h"
 #include "Graphics/Texture.h"
 #include "Physics/Mechanics/Position.h"
@@ -6,14 +6,6 @@
 #include "System/Hashing/FastHashFunctions.h"
 
 using namespace Neptune;
-
-//////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-//
-// GL LAYOUT PROBLEM FOR THE GRAPHICS PROGRAM ROUTINES
-//
-//////!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
-
 
 static void InitWorldMatrix(float (&_m)[4][4])
 {

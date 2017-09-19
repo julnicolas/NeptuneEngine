@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/ViewFactory.h"
+#include "Graphics/Factories/ViewFactory.h"
 #include "Graphics/Texture.h"
 
 namespace Neptune

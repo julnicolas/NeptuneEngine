@@ -10,7 +10,7 @@ namespace Neptune
 	class View;
 	class Texture;
 
-	/// \class This class allows the users to instantiate a view in a really few lines of code.
+	/// \class This class allows users to instantiate a view in a really few lines of code.
 	/// \example 
 	/// PlanFactory factory("Resources/Textures/Grass.png");
 	/// View* v1 = factory.create();

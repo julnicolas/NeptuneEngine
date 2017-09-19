@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Graphics/ViewFactory.h"
+#include "Graphics/Factories/ViewFactory.h"
 #include "Graphics/ElementView.h"
 #include "Graphics/PLYLoader.h" // Includes indirectly std::string
 
