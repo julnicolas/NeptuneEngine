@@ -18,5 +18,6 @@ namespace Neptune
 		View* createViewAndSetUpRenderParameters()	final override;
 		void createVertexData()						final override;
 		void createTextureCoordinates()				final override;
+		void createNormalData()						final override;
 	};
 }

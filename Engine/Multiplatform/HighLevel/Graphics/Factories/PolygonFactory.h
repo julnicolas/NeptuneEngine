@@ -25,9 +25,11 @@ namespace Neptune
 
 		virtual void createVertexData()			= 0;
 		virtual void createTextureCoordinates()	= 0;
+		virtual void createNormalData()         = 0;
 
 		Texture				m_texture;
 		std::vector<float>	m_texCoords;
+		std::vector<float>	m_normals;
 
 	private:
 		void initPolygonData();
