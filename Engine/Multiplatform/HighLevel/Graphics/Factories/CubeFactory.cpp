@@ -7,42 +7,42 @@ void CubeFactory::createVertexData()
 {
 	// Vertex data obtained from http://www.opengl-tutorial.org/fr/beginners-tutorials/tutorial-4-a-colored-cube/
 	m_vertices = {
-	- 0.5f,- 0.5f,-0.5f, 
-    - 0.5f,- 0.5f, 0.5f,
-    - 0.5f,  0.5f, 0.5f, 
-      0.5f,  0.5f,-0.5f, 
-    - 0.5f,- 0.5f,-0.5f,
-    - 0.5f,  0.5f,-0.5f, 
-      0.5f,- 0.5f, 0.5f,
-    - 0.5f,- 0.5f,-0.5f,
-      0.5f,- 0.5f,-0.5f,
-      0.5f,  0.5f,-0.5f,
-      0.5f,- 0.5f,-0.5f,
-    - 0.5f,- 0.5f,-0.5f,
-    - 0.5f,- 0.5f,-0.5f,
-    - 0.5f,  0.5f, 0.5f,
-    - 0.5f,  0.5f,-0.5f,
-      0.5f,- 0.5f, 0.5f,
-    - 0.5f,- 0.5f, 0.5f,
-    - 0.5f,- 0.5f,-0.5f,
-    - 0.5f,  0.5f, 0.5f,
-    - 0.5f,- 0.5f, 0.5f,
-      0.5f,- 0.5f, 0.5f,
-      0.5f,  0.5f, 0.5f,
-      0.5f,- 0.5f,-0.5f,
-      0.5f,  0.5f,-0.5f,
-      0.5f,- 0.5f,-0.5f,
-      0.5f,  0.5f, 0.5f,
-      0.5f,- 0.5f, 0.5f,
-      0.5f,  0.5f, 0.5f,
-      0.5f,  0.5f,-0.5f,
-    - 0.5f,  0.5f,-0.5f,
-      0.5f,  0.5f, 0.5f,
-    - 0.5f,  0.5f,-0.5f,
-    - 0.5f,  0.5f, 0.5f,
-      0.5f,  0.5f, 0.5f,
-    - 0.5f,  0.5f, 0.5f,
-      0.5f,- 0.5f, 0.5f
+	- 0.5f,- 0.5f,-0.5f, // left
+    - 0.5f,- 0.5f, 0.5f, // left
+    - 0.5f,  0.5f, 0.5f, // left
+      0.5f,  0.5f,-0.5f, // front
+    - 0.5f,- 0.5f,-0.5f, // front
+    - 0.5f,  0.5f,-0.5f, // front
+      0.5f,- 0.5f, 0.5f, // bottom
+    - 0.5f,- 0.5f,-0.5f, // bottom
+      0.5f,- 0.5f,-0.5f, // bottom
+      0.5f,  0.5f,-0.5f, // front
+      0.5f,- 0.5f,-0.5f, // front
+    - 0.5f,- 0.5f,-0.5f, // front
+    - 0.5f,- 0.5f,-0.5f, // left
+    - 0.5f,  0.5f, 0.5f, // left
+    - 0.5f,  0.5f,-0.5f, // left
+      0.5f,- 0.5f, 0.5f, // bottom
+    - 0.5f,- 0.5f, 0.5f, // bottom
+    - 0.5f,- 0.5f,-0.5f, // bottom
+    - 0.5f,  0.5f, 0.5f, // back
+    - 0.5f,- 0.5f, 0.5f, // back
+      0.5f,- 0.5f, 0.5f, // back
+      0.5f,  0.5f, 0.5f, // right
+      0.5f,- 0.5f,-0.5f, // right
+      0.5f,  0.5f,-0.5f, // right
+      0.5f,- 0.5f,-0.5f, // right
+      0.5f,  0.5f, 0.5f, // right
+      0.5f,- 0.5f, 0.5f, // right
+      0.5f,  0.5f, 0.5f, // top
+      0.5f,  0.5f,-0.5f, // top
+    - 0.5f,  0.5f,-0.5f, // top
+      0.5f,  0.5f, 0.5f, // top
+    - 0.5f,  0.5f,-0.5f, // top
+    - 0.5f,  0.5f, 0.5f, // top
+      0.5f,  0.5f, 0.5f, // back
+    - 0.5f,  0.5f, 0.5f, // back
+      0.5f,- 0.5f, 0.5f	 // back
 	};
 }
 
@@ -86,6 +86,48 @@ void CubeFactory::createTextureCoordinates()
     0.667969f, 1.0f-0.671889f,
     1.000004f, 1.0f-0.671847f,
     0.667979f, 1.0f-0.335851f
+	};
+}
+
+void CubeFactory::createNormalData()
+{
+	m_normals = {
+	- 1.0f,  0.0f, 0.0f, // left
+    - 1.0f,  0.0f, 0.0f, // left
+    - 1.0f,  0.0f, 0.0f, // left
+      0.0f,  0.0f,-1.0f, // front
+      0.0f,  0.0f,-1.0f, // front
+      0.0f,  0.0f,-1.0f, // front
+	  0.0f,- 1.0f, 0.0f, // bottom
+	  0.0f,- 1.0f, 0.0f, // bottom
+	  0.0f,- 1.0f, 0.0f, // bottom
+      0.0f,  0.0f,-1.0f, // front
+      0.0f,  0.0f,-1.0f, // front
+      0.0f,  0.0f,-1.0f, // front
+    - 1.0f,  0.0f, 0.0f, // left
+    - 1.0f,  0.0f, 0.0f, // left
+    - 1.0f,  0.0f, 0.0f, // left
+	  0.0f,- 1.0f, 0.0f, // bottom
+	  0.0f,- 1.0f, 0.0f, // bottom
+	  0.0f,- 1.0f, 0.0f, // bottom
+	  0.0f,  0.0f, 1.0f, // back 
+	  0.0f,  0.0f, 1.0f, // back
+	  0.0f,  0.0f, 1.0f, // back
+      1.0f,  0.0f, 0.0f, // right
+      1.0f,  0.0f, 0.0f, // right
+      1.0f,  0.0f, 0.0f, // right
+      1.0f,  0.0f, 0.0f, // right 
+      1.0f,  0.0f, 0.0f, // right
+      1.0f,  0.0f, 0.0f, // right
+      0.0f,  1.0f, 0.0f, // top
+      0.0f,  1.0f, 0.0f, // top
+      0.0f,  1.0f, 0.0f, // top
+      0.0f,  1.0f, 0.0f, // top
+      0.0f,  1.0f, 0.0f, // top
+      0.0f,  1.0f, 0.0f, // top
+      0.0f,  0.0f, 1.0f, // back
+      0.0f,  0.0f, 1.0f, // back
+      0.0f,  0.0f, 1.0f  // back
 	};
 }
 
