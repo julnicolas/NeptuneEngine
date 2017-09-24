@@ -89,48 +89,6 @@ void CubeFactory::createTextureCoordinates()
 	};
 }
 
-void CubeFactory::createNormalData()
-{
-	m_normals = {
-	- 1.0f,  0.0f, 0.0f, // left
-    - 1.0f,  0.0f, 0.0f, // left
-    - 1.0f,  0.0f, 0.0f, // left
-      0.0f,  0.0f,-1.0f, // front
-      0.0f,  0.0f,-1.0f, // front
-      0.0f,  0.0f,-1.0f, // front
-	  0.0f,- 1.0f, 0.0f, // bottom
-	  0.0f,- 1.0f, 0.0f, // bottom
-	  0.0f,- 1.0f, 0.0f, // bottom
-      0.0f,  0.0f,-1.0f, // front
-      0.0f,  0.0f,-1.0f, // front
-      0.0f,  0.0f,-1.0f, // front
-    - 1.0f,  0.0f, 0.0f, // left
-    - 1.0f,  0.0f, 0.0f, // left
-    - 1.0f,  0.0f, 0.0f, // left
-	  0.0f,- 1.0f, 0.0f, // bottom
-	  0.0f,- 1.0f, 0.0f, // bottom
-	  0.0f,- 1.0f, 0.0f, // bottom
-	  0.0f,  0.0f, 1.0f, // back 
-	  0.0f,  0.0f, 1.0f, // back
-	  0.0f,  0.0f, 1.0f, // back
-      1.0f,  0.0f, 0.0f, // right
-      1.0f,  0.0f, 0.0f, // right
-      1.0f,  0.0f, 0.0f, // right
-      1.0f,  0.0f, 0.0f, // right 
-      1.0f,  0.0f, 0.0f, // right
-      1.0f,  0.0f, 0.0f, // right
-      0.0f,  1.0f, 0.0f, // top
-      0.0f,  1.0f, 0.0f, // top
-      0.0f,  1.0f, 0.0f, // top
-      0.0f,  1.0f, 0.0f, // top
-      0.0f,  1.0f, 0.0f, // top
-      0.0f,  1.0f, 0.0f, // top
-      0.0f,  0.0f, 1.0f, // back
-      0.0f,  0.0f, 1.0f, // back
-      0.0f,  0.0f, 1.0f  // back
-	};
-}
-
 View* CubeFactory::createViewAndSetUpRenderParameters()
 {
 	// Create View

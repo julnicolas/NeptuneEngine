@@ -24,10 +24,7 @@ namespace Neptune
 	class ViewFactory
 	{
 	public:
-		ViewFactory(){
-			memset(m_diffuseLightDirection, 0, sizeof(m_diffuseLightDirection));
-			memset(m_diffuseLightColor, 0, sizeof(m_diffuseLightColor));
-		}
+		ViewFactory(){}
 
 		virtual ~ViewFactory()                                                = default;
 		ViewFactory(const ViewFactory&)                                       = default;
@@ -37,11 +34,9 @@ namespace Neptune
 
 	protected:
 		GraphicsProgram									m_program;
-		std::vector<GraphicsProgram::ShaderAttribute>	m_shaderAttributes;
-		std::vector<GraphicsProgram::UniformVarInput>	m_uniformVars;
 		std::vector<float>								m_vertices;
 		std::vector<Color>								m_colors;
-		float											m_diffuseLightDirection[3];
-		float											m_diffuseLightColor[3];
+		std::vector<GraphicsProgram::ShaderAttribute>	m_shaderAttributes;
+		std::vector<GraphicsProgram::UniformVarInput>	m_uniformVars;
 	};
 }

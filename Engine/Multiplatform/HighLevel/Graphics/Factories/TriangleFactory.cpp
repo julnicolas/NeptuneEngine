@@ -21,15 +21,6 @@ void TriangleFactory::createTextureCoordinates()
 	};
 }
 
-void TriangleFactory::createNormalData()
-{
-	m_normals = {
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f,
-		0.0f, 0.0f, -1.0f
-	};
-}
-
 View* TriangleFactory::createViewAndSetUpRenderParameters()
 {
 	// Create View

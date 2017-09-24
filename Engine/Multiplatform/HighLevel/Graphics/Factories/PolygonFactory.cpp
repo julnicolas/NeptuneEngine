@@ -8,10 +8,12 @@
 
 using namespace Neptune;
 
-
 PolygonFactory::PolygonFactory(const Color& _color)
 {
-	// The vertex shader is set in create() once it is known whether lighting is supported by the instantiated object or not.
+	// Add vertex shader
+	const char VERTEX_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
+	Shader vert(VERTEX_SHADER_NAME, GL_VERTEX_SHADER);
+	m_program.add(vert.getId());
 	
 	// Add fragment shader
 	const char FRAGMENT_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/PassThrough.frag";
@@ -27,7 +29,10 @@ PolygonFactory::PolygonFactory(const char* _texturePath)
 {
 	NEP_ASSERT(_texturePath != nullptr); // Invalid path
 	
-	// The vertex shader is set in create() once it is known whether lighting is supported by the instantiated object or not.
+	// Add vertex shader
+	const char VERTEX_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/BasicDisplay.vert";
+	Shader vert(VERTEX_SHADER_NAME, GL_VERTEX_SHADER);
+	m_program.add(vert.getId());
 	
 	// Add fragment shader
 	const char FRAGMENT_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Fragment/ApplyTexture.frag";
@@ -68,44 +73,11 @@ View* PolygonFactory::create()
 	return v;
 }
 
-typedef float float_3_t[3];
-
-static void CreateLightSource(GraphicsProgram& _program, float_3_t _diffuseLightDirection, float_3_t _diffuseLightColor)
-{
-	// Light direction
-	_diffuseLightDirection[0] = 0.0f; _diffuseLightDirection[1] = 0.0f; _diffuseLightDirection[2] = 1.0f; // left handed, world frame
-
-	GraphicsProgram::UniformVarInput diffuse_light_direction(NEP_UNIVNAME_DIFFUSE_LIGHT_DIRECTION,
-		GraphicsProgram::FLOAT,
-		3,
-		1,
-		3*sizeof(float),//_diffuseLightDirection),
-		_diffuseLightDirection);
-
-	_program.addUniformVariable(diffuse_light_direction);
-
-	// Light's color
-	_diffuseLightColor[0] = 1.0f; _diffuseLightColor[1] = 1.0f; _diffuseLightColor[2] = 1.0f; // white light
-	
-	GraphicsProgram::UniformVarInput diffuse_light_color_input(NEP_UNIVNAME_DIFFUSE_LIGHT_COLOR,
-		GraphicsProgram::FLOAT,
-		3,
-		1,
-		3*sizeof(float),//_diffuseLightColor),
-		_diffuseLightColor);
-
-	_program.addUniformVariable(diffuse_light_color_input);
-}
-
 void PolygonFactory::initPolygonData()
 {
 	// Add vertex data if needed
 	if (m_vertices.empty()) // True if createVertexData() hasn't been called
 	{
-		//
-		//		C R E A T E   V E R T I C E S
-		//
-
 		createVertexData();
 		
 		// Add shader attribute
@@ -124,11 +96,7 @@ void PolygonFactory::initPolygonData()
 		// Add position to the program
 		m_program.addShaderAttribute(m_shaderAttributes[0]);
 
-		
-		//
-		//		U S E   C O L O R S   O R   T E X T U R E S
-		//
-
+		// Check if textures are used
 		if (m_texture.getWidth() != 0 || m_texture.getHeight() != 0) // True if textures are used
 		{
 			createTextureCoordinates();
@@ -175,47 +143,6 @@ void PolygonFactory::initPolygonData()
 
 			// Add color to the program
 			m_program.addShaderAttribute(m_shaderAttributes[1]);
-		}
-
-		//
-		//		C R E A T E   S I M P L E   L I G H T   S O U R C E
-		//
-
-		const char LIGHT_SOURCE_VERTEX_SHADER_NAME[] = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/DiffuseLight.vert";
-		const char FALLBACK_VERTEX_SHADER_NAME[]     = "../../../Neptune/Engine/Multiplatform/Core/Shaders/Vertex/Display.vert";
-		
-		createNormalData();
-		
-		if ( !m_normals.empty() )
-		{
-			// Simple light sources can be used, the appropriate vertex shader can be set
-			Shader vert(LIGHT_SOURCE_VERTEX_SHADER_NAME, GL_VERTEX_SHADER);
-			m_program.add(vert.getId());
-
-			// Create light sources
-			CreateLightSource(m_program, m_diffuseLightDirection, m_diffuseLightColor);
-
-			// Create the normal parameter
-			GraphicsProgram::ShaderAttribute n_data =
-			{
-				2,										// layout
-				GraphicsProgram::Types::FLOAT,			// Type
-				3,										// nb components per value
-				false,									// Should data be normalized?
-				m_normals.size()*sizeof(m_normals[0]),	// data size
-				&m_normals[0]							// data
-			};
-
-			// Add normals to the program
-			m_shaderAttributes.push_back(n_data);
-		}
-		else
-		{
-			// Light sources are not supported so a raw display shader is used
-			Shader vert(FALLBACK_VERTEX_SHADER_NAME, GL_VERTEX_SHADER);
-			m_program.add(vert.getId());
-
-			NEP_LOG("Warning PolygonFactory::initPolygonData(): normal data are not implemented for polygon with address %x", this);
 		}
 	}
 }
