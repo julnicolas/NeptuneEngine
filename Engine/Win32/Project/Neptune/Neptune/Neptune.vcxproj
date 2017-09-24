@@ -282,6 +282,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\CubeSpawner.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\PlanSpawner.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\TriangleSpawner.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.cpp" />
@@ -382,6 +383,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewFactory.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\CubeSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\PlanSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\TriangleSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.h" />
