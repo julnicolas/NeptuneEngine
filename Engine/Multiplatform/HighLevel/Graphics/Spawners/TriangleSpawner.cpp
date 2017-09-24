@@ -1,6 +1,5 @@
 #include "Graphics/Spawners/TriangleSpawner.h"
 #include "Graphics/VAOView.h"
-#include "Debug/NeptuneDebug.h"
 
 using namespace Neptune;
 
