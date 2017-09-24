@@ -13,7 +13,7 @@
 
 #ifndef NEP_FINAL
 	// Variadic macros have become standard since c++11
-	#define NEP_LOG(...) std::fprintf(stderr, __VA_ARGS__) // TODO: Change stderr by something more useful
+	#define NEP_LOG(...) std::fprintf(stderr, __VA_ARGS__); std::fprintf(stderr, "\n") // TODO: Change stderr by something more useful
 #else
 	// The statement between NEP_LOG's brackets won't be executed 
 	#define NEP_LOG(err) ((void) 0)
