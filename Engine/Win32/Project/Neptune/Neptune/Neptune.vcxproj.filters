@@ -442,5 +442,8 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\CubeSpawner.h">
       <Filter>Engine</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebugInlineImplementations.h">
+      <Filter>Engine</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
