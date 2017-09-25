@@ -150,6 +150,9 @@ namespace Neptune
 
 		ProgramName getName() const									{ return m_programName;					}	/// Returns the user-defined name. Useful for high level classes.
 
+#ifndef NEP_FINAL
+		const char* getDebugName() const							{ return m_debugName;			 }
+#endif
 		void add(u32 shader); // TODO: take a const Shader& instead of a u32
 		bool build();
 		u32  getResourceID() const	{ return m_programId; }														/// Returns the resource ID given by the graphics library. Useful for low-level rendering-related classes.
@@ -201,12 +204,12 @@ namespace Neptune
 		// Bad design
 		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored
 
-#ifdef NEP_DEBUG
+#ifndef NEP_FINAL
 		///
 		/// Non-hashed program name for debug purpose only.
-		/// \Attention For debug use only.
+		/// \Attention For debug use only. Could cause crashes if not used in the right configuration.
 		///
-		char* m_stringProgramName;
+		char* m_debugName;
 
 #endif
 

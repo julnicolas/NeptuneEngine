@@ -30,7 +30,7 @@ static void GenerateUniqueDefaultPgmName(GraphicsProgram::ProgramName* _pgmName,
 	*_pgmName     = Fnv1a32(reinterpret_cast<const u8*>(default_name.c_str()), length);
 
 	// Create the debug name if necessary
-#ifdef NEP_DEBUG
+#ifndef NEP_FINAL
 	NEP_ASSERT(_stringName != nullptr);
 	*_stringName = new char[length+1];
 	strcpy_s(*_stringName, length+1, default_name.c_str());
@@ -55,8 +55,8 @@ GraphicsProgram::GraphicsProgram():
 {
 	CommonCreate(m_programId);
 
-#ifdef NEP_DEBUG
-		GenerateUniqueDefaultPgmName(&m_programName, &m_stringProgramName);
+#ifndef NEP_FINAL
+		GenerateUniqueDefaultPgmName(&m_programName, &m_debugName);
 #else
 		GenerateUniqueDefaultPgmName(&m_programName, nullptr);
 #endif
@@ -72,9 +72,9 @@ GraphicsProgram::GraphicsProgram(const char* _programName):
 	// Set the program name
 	size_t length   = strlen(_programName);
 	m_programName   = Fnv1a32(reinterpret_cast<const u8*>(_programName), length);
-#ifdef NEP_DEBUG
-	m_stringProgramName = new char[length+1];
-	strcpy_s(m_stringProgramName, length+1, _programName);
+#ifndef NEP_FINAL
+	m_debugName = new char[length+1];
+	strcpy_s(m_debugName, length+1, _programName);
 #endif
 }
 
@@ -97,8 +97,8 @@ GraphicsProgram::~GraphicsProgram()
 	// Delete the program from VRAM
 	glDeleteProgram( m_programId );
 
-#ifdef NEP_DEBUG
-	delete[] m_stringProgramName;
+#ifndef NEP_FINAL
+	delete[] m_debugName;
 #endif
 }
 
