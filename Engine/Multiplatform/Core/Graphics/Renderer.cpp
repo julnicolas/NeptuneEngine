@@ -305,8 +305,10 @@ void Renderer::bindUniformVars(ConstGraphicalProgramIterator& it)
 		s32 location = glGetUniformLocation( (*it)->getResourceID(), uni_it->second.getName() );
 		
 		NEP_GRAPHICS_ASSERT();
-		NEP_ASSERT(location >= 0); // Uniform variable not found or not used in the shader (removed by the GLSL compiler)
-
+		NEP_ASSERT_ERR_MSG( location >= 0, 
+			"Uniform variable %s not found or not used in shader %s (removed by the GLSL compiler)", 
+			uni_it->second.getName(), (*it)->getDebugName() );
+		
 		SetUniform(location, uni_it->second);
 	}
 }
