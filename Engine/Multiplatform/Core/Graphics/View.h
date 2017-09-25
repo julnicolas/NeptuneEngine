@@ -32,8 +32,8 @@ namespace Neptune
 		bool		updateUniform(const char* _uniformName, void* _value);														/// Updates _uniformName for every program with value _value. Returns true if it has been updated at least once. False means the variable doesn't exist for any program.
 		void		addGraphicsProgram(GraphicsProgram* _pgm);																	/// \warning _pgm must be available (not deallocated) for the entire lifetime of the view object. _pgm is referenced not copied.
 
-		void		bindToCamera(Camera* c)									{ m_camera = c;								}
-		void		unbindFromCamera()										{ m_camera = nullptr;						}
+		void		bindToCamera(Camera* c);
+		void		unbindFromCamera();
 
 		void		setDrawingPrimitive(Renderer::DrawingPrimitive _prim)	{ m_renderer->setDrawingPrimitive(_prim);	}
 		void		setNbVerticesToRender(u32 _nb)							{ m_renderer->setNbverticesToRender(_nb);	}

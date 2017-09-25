@@ -5,6 +5,8 @@ layout (location = 1) in vec3 color;
 layout (location = 2) in vec3 normal;
 
 uniform mat4 ModelView;
+uniform mat4 Projection;
+
 uniform vec3 DiffuseLightDirection; // Left-handed frame. Frame is the world frame
 uniform vec3 DiffuseLightColor;
 
@@ -32,5 +34,5 @@ void main()
 	v_color = vec4(ComputeDiffuseLight(), 1.0);
 
 	// Transition to eye frame then Perspective projection
-	gl_Position = ModelView * vec4( position, 1.0 );
+	gl_Position = Projection * ModelView * vec4( position, 1.0 );
 }

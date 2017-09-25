@@ -1,6 +1,7 @@
 #include "Graphics/Spawners/ViewSpawner.h"
 #include "Graphics/View.h"
 #include "Graphics/Texture.h"
+#include "Graphics/UniformVarNames.h"
 #include "Physics/Mechanics/Position.h"
 #include "Debug/NeptuneDebug.h"
 #include "System/Hashing/FastHashFunctions.h"
@@ -237,9 +238,10 @@ void ViewSpawner::setWorldPosition(const Position& _pos)
 	// memcpy(m_worldMatrix[3], _pos, sizeof(_pos));
 }
 
-void ViewSpawner::useWorldMatrix(GraphicsProgram::ProgramName _pgmName, const char* _uniformName)
+void ViewSpawner::useWorldAndProjectionMatrices(GraphicsProgram::ProgramName _pgmName)
 {
-	GraphicsProgram::UniformVarInput world_matrix(_uniformName,
+	// Add World matrix
+	GraphicsProgram::UniformVarInput world_matrix(NEP_UNIVNAME_MV_MATRIX,
 		GraphicsProgram::FLOAT,
 		4,
 		4,
@@ -247,6 +249,17 @@ void ViewSpawner::useWorldMatrix(GraphicsProgram::ProgramName _pgmName, const ch
 		&m_worldMatrix);
 
 	addUniformVariable(_pgmName, world_matrix);
+
+	// Add a default projection
+	Mat4 I;
+	GraphicsProgram::UniformVarInput projection_matrix(NEP_UNIVNAME_PROJ_MATRIX,
+		GraphicsProgram::FLOAT,
+		4,
+		4,
+		sizeof(m_worldMatrix),
+		&I);
+
+	addUniformVariable(_pgmName, projection_matrix);
 }
 
 void ViewSpawner::movePgmParameters()

@@ -100,7 +100,7 @@ namespace Neptune
 		bool map2DTextureMapData(  GraphicsProgram::ProgramName _pgmName, u8 _layout);														/// Add the spawner's 2d texture map coordinates as an input for the program _pgmName at GLSL layout position _layout
 
 		void setWorldPosition(const Position& _pos);																						/// Changes the spawn position for every View to position _pos. The position is expressed in world coordinates.
-		void useWorldMatrix  (GraphicsProgram::ProgramName _pgmName,	const char* _uniformName);											/// Use a world matrix for the program _pgmName, set with the values from setWorldPosition. It is passed as an uniform variable with the name _uniformName.
+		void useWorldAndProjectionMatrices (GraphicsProgram::ProgramName _pgmName);											/// Use a world matrix for the program _pgmName, set with the values from setWorldPosition. It is passed as an uniform variable with the name _uniformName.
 
 
 	protected:

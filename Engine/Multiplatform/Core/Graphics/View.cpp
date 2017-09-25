@@ -20,18 +20,31 @@ bool View::update()
 
 	if ( m_camera != nullptr )
 	{
-		// Ouch dirtyyyyyyyy! mvp sent in mv uniform because the camera binding is messy! FIXME PLEASE
-		Mat4 mvp = m_camera->getProjectionMatrix() * m_camera->getViewMatrix() * m_transform.getMatrix();
+		Mat4 MV         = m_camera->getViewMatrix() * m_transform.getMatrix();
 		
-		updateUniform(NEP_UNIVNAME_MV_MATRIX,(void*)mvp.getPtr());
+		updateUniform(NEP_UNIVNAME_MV_MATRIX,(void*)MV.getPtr());
 	}
 	else 
-	{
 		updateUniform(NEP_UNIVNAME_MV_MATRIX,(void*)m_transform.getDataPtr());
-	}
 
 	status = status && m_renderer->update();
 	return status;
+}
+
+void View::bindToCamera(Camera* c)
+{
+	NEP_ASSERT( c != nullptr );
+
+	m_camera = c;
+	updateUniform(NEP_UNIVNAME_PROJ_MATRIX,(void*)m_camera->getProjectionMatrix().getPtr());
+}
+
+void View::unbindFromCamera()
+{
+	m_camera = nullptr;
+
+	Mat4 I;
+	updateUniform(NEP_UNIVNAME_PROJ_MATRIX,(void*)I.getPtr());
 }
 
 bool View::updateUniform(GraphicsProgram::ProgramName _pgmName, const char* _uniformName, void* _value)
