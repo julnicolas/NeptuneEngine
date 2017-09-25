@@ -64,6 +64,17 @@ View* PolygonFactory::create()
 
 	m_program.addUniformVariable(mv);
 
+	// Add a default projection
+	Mat4 I;
+	GraphicsProgram::UniformVarInput projection_matrix(NEP_UNIVNAME_PROJ_MATRIX,
+		GraphicsProgram::FLOAT,
+		4,
+		4,
+		16*sizeof(float),
+		&I);
+
+	m_program.addUniformVariable(projection_matrix);
+
 	// Build the program
 	m_program.build();
 

@@ -256,7 +256,7 @@ void ViewSpawner::useWorldAndProjectionMatrices(GraphicsProgram::ProgramName _pg
 		GraphicsProgram::FLOAT,
 		4,
 		4,
-		sizeof(m_worldMatrix),
+		16*sizeof(float),
 		&I);
 
 	addUniformVariable(_pgmName, projection_matrix);
