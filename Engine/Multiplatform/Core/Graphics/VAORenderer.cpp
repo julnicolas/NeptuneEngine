@@ -8,7 +8,7 @@ using namespace Neptune;
 const u32 INVALID_VAO_HANDLE = ~0;
 
 VAORenderer::VAORenderer():
-m_vao(INVALID_VAO_HANDLE)
+	m_vao(INVALID_VAO_HANDLE)
 {
 
 }

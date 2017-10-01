@@ -7,6 +7,13 @@ using namespace Neptune;
 
 const u32 INVALID_INDEX_BUFFER_HANDLE = ~0;
 
+ElementRenderer::ElementRenderer():
+	m_indexBuffer(INVALID_INDEX_BUFFER_HANDLE),
+	m_indexType(IndexType::U8)
+{
+
+}
+
 bool ElementRenderer::init()
 {
 	// Init check

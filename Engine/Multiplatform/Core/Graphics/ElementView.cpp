@@ -1,5 +1,4 @@
 #include "Graphics/ElementView.h"
-#include "Graphics/ElementRenderer.h"
 
 using namespace Neptune;
 
