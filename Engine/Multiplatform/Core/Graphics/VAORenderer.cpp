@@ -15,7 +15,8 @@ m_vao(INVALID_VAO_HANDLE)
 
 bool VAORenderer::init()
 {
-	NEP_ASSERT(m_vao == INVALID_VAO_HANDLE); // Renderer hasn't been initialized
+	// Init check
+	NEP_ASSERT(m_vao == INVALID_VAO_HANDLE); // Error Renderer has already been initialized
 	
 	// Generate VAO
 	glGenVertexArrays( 1, &m_vao );
@@ -29,6 +30,22 @@ bool VAORenderer::init()
 
 	NEP_ASSERT( status );
 	return status;
+}
+
+bool Neptune::VAORenderer::cloneInit(const Renderer& _source)
+{
+	// Init check
+	NEP_ASSERT(m_vao == INVALID_VAO_HANDLE); // Error Renderer has already been initialized
+	
+	// Type check
+	const VAORenderer* source = dynamic_cast<const VAORenderer*>(&_source);
+	NEP_ASSERT( source != nullptr ); // Invalid argument, _source must be a VAORenderer
+
+	// Copy object
+	*this = *source;
+
+	// Call parent
+	return Renderer::cloneInit(*source);
 }
 
 void VAORenderer::terminate()

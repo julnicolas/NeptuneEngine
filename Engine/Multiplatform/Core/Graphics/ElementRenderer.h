@@ -16,18 +16,26 @@ namespace Neptune
 		};
 
 		ElementRenderer();
-		virtual ~ElementRenderer()							= default;
-		ElementRenderer(const ElementRenderer&)				= delete;
-		ElementRenderer& operator=(const ElementRenderer&)	= delete;
+		virtual ~ElementRenderer()								= default;
 
-		bool init()      override; /// Allocate all the VBOs to store the vertex attributes
-		void terminate() override;
+		bool init()												override; /// Allocate all the VBOs to store the vertex attributes
+		bool cloneInit(const Renderer& _source)					override;
+		void terminate()										override;
 
 		void setIndexBufferData(const void* data, u32 dataSize, IndexType dataType);
 
 	protected:
+		// Enable copy
+		ElementRenderer(const ElementRenderer&)					= default;
+		ElementRenderer& operator=(const ElementRenderer&)		= default;
+
+		// Disable move
+		ElementRenderer(ElementRenderer&&)						= delete;
+		ElementRenderer&& operator=(ElementRenderer&&)			= delete;
+
+		// Other methods
 		void draw() override;                                                   /// Display graphics to the window
-		void bindShaderAttributes(const GraphicsProgram& pgm) override;
+		void bindShaderAttributes(const GraphicsProgram& pgm)	 override;
 
 	private:
 		u32                                                           m_indexBuffer;

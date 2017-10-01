@@ -10,13 +10,21 @@ namespace Neptune
 	public:
 		VAORenderer();
 		virtual ~VAORenderer()						= default;
-		VAORenderer(const VAORenderer&)				= delete;
-		VAORenderer& operator=(const VAORenderer&)	= delete;
 
-		bool init()      override; /// Allocate all the VBOs to store the vertex attributes
-		void terminate() override;
+		bool init()									  override; /// Allocate all the VBOs to store the vertex attributes
+		bool cloneInit(const Renderer& _source)		  override;
+		void terminate()							  override;
 
 	protected:
+		// Enable copy
+		VAORenderer(const VAORenderer&)				= default;
+		VAORenderer& operator=(const VAORenderer&)	= default;
+
+		// Disable move
+		VAORenderer(VAORenderer&&)					= delete;
+		VAORenderer&& operator=(VAORenderer&&)		= delete;
+
+		// Other methods
 		void draw() override;                                                   /// Display graphics to the window
 		void bindShaderAttributes(const GraphicsProgram& pgm) override;
 

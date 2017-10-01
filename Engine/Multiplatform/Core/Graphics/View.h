@@ -22,9 +22,16 @@ namespace Neptune
 		View(const View&)            =		delete;
 		View& operator=(const View&) =		delete;
 
-		bool		init()					override;
-		bool		update()				override;
-		void		terminate()				override;
+		bool		init()						override;		/// Init view's renderer 
+
+		/// \brief		Initialize view's renderer so that it shares the same rendering parameters as _source (i.e. buffers and handles).
+		/// \warning	The view will become tightly coupled to _source because they'll share most of their rendering parameters.
+		///				As a consequence, terminate must be called once and only once for all clones and _source (any objects can call it
+		///				but I would suggest to let _source make the call for the sake of clarity).
+		bool		cloneInit(View& _source);
+		
+		bool		update()					override;
+		void		terminate()					override;
 
 		Transform&	getTransform()			{ return m_transform; }
 

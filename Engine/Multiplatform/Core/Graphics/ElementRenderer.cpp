@@ -9,7 +9,8 @@ const u32 INVALID_INDEX_BUFFER_HANDLE = ~0;
 
 bool ElementRenderer::init()
 {
-	NEP_ASSERT( m_indexBuffer == INVALID_INDEX_BUFFER_HANDLE ); // Renderer hasn't been initialized
+	// Init check
+	NEP_ASSERT( m_indexBuffer == INVALID_INDEX_BUFFER_HANDLE ); // Error Renderer has already been initialized
 	
 	// Generate the index buffer
 	glGenBuffers( 1, &m_indexBuffer );
@@ -19,6 +20,22 @@ bool ElementRenderer::init()
 
 	NEP_ASSERT( status );
 	return status;
+}
+
+bool Neptune::ElementRenderer::cloneInit(const Renderer& _source)
+{
+	// Init check
+	NEP_ASSERT( m_indexBuffer == INVALID_INDEX_BUFFER_HANDLE ); // Error Renderer has already been initialized
+
+	// Type check
+	const ElementRenderer* source = dynamic_cast<const ElementRenderer*>(&_source);
+	NEP_ASSERT( source != nullptr ); // Invalid argument, _source must be an ElementRenderer
+
+	// Copy object
+	*this = *source;
+
+	// Call parent
+	return Renderer::cloneInit(*source);
 }
 
 void ElementRenderer::terminate()

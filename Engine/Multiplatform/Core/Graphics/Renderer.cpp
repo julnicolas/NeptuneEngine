@@ -20,14 +20,14 @@ bool Renderer::init()
 		biggest_nb_pms = ( biggest_nb_pms < (*it)->getNbVertexAttributes() ) ? (*it)->getNbVertexAttributes() : biggest_nb_pms;
 
 	// Allocate the VBOs to store the vertex attributes and fill them
-	GLuint* vbos_handle = new GLuint[ biggest_nb_pms ];
+	m_vboHandles = new u32[ biggest_nb_pms ];
 
 	// Iterate over the programs to set their parameter data
 	for ( ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it )
 	{
 		// Allocate the program's VBOs
 		const u8 nb_attribs = (*it)->getNbVertexAttributes();
-		glGenBuffers(nb_attribs,vbos_handle);
+		glGenBuffers(nb_attribs,m_vboHandles);
 
 		// Populate them and enable them to be used in the graphical pipeline
 		u8 attrib_index = 0;
@@ -35,19 +35,48 @@ bool Renderer::init()
 		for ( GraphicsProgram::ConstShaderAttributeIterator att = (*it)->shaderAttributeCBegin(); att != att_end; ++att, attrib_index++ )
 		{
 			// Fill the buffers
-			glBindBuffer( GL_ARRAY_BUFFER, vbos_handle[ attrib_index ] );
+			glBindBuffer( GL_ARRAY_BUFFER, m_vboHandles[ attrib_index ] );
 			NEP_GRAPHICS_ASSERT();
 
 			glBufferData( GL_ARRAY_BUFFER, att->m_size, att->m_data, GL_STATIC_DRAW );
 			NEP_GRAPHICS_ASSERT();
-			m_vbos[ &(**it) ].push_back( vbos_handle[ attrib_index ] );
+			m_vbos[ &(**it) ].push_back( m_vboHandles[ attrib_index ] );
 
 			// Enable the shader's input interfaces
 			glEnableVertexAttribArray( att->m_layout );
 			NEP_GRAPHICS_ASSERT();
 		}
 	}
-	delete[] vbos_handle;
+
+	return true;
+}
+
+bool Renderer::cloneInit(const	Renderer& _source)
+{
+	// Object's copy is done in subclass
+
+	// Iterate over the programs to set their parameter data
+	ConstGraphicalProgramIterator it_end = m_programs.cend();
+	for ( ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it )
+	{
+		// Populate them and enable them to be used in the graphical pipeline
+		u8 attrib_index = 0;
+		GraphicsProgram::ConstShaderAttributeIterator att_end = (*it)->shaderAttributeCEnd();
+		for ( GraphicsProgram::ConstShaderAttributeIterator att = (*it)->shaderAttributeCBegin(); att != att_end; ++att, attrib_index++ )
+		{
+			// Fill the buffers
+			glBindBuffer( GL_ARRAY_BUFFER, m_vboHandles[ attrib_index ] );
+			NEP_GRAPHICS_ASSERT();
+
+			glBufferData( GL_ARRAY_BUFFER, att->m_size, att->m_data, GL_STATIC_DRAW );
+			NEP_GRAPHICS_ASSERT();
+			m_vbos[ &(**it) ].push_back( m_vboHandles[ attrib_index ] );
+
+			// Enable the shader's input interfaces
+			glEnableVertexAttribArray( att->m_layout );
+			NEP_GRAPHICS_ASSERT();
+		}
+	}
 
 	return true;
 }
@@ -72,6 +101,10 @@ bool Renderer::update()
 
 void Renderer::terminate()
 {
+	// Delete vbo handles
+	delete[] m_vboHandles;
+	m_vboHandles = nullptr;
+	
 	// Free the vbos (allocated VRAM)
 	GraphicalProgramIterator it_end = m_programs.end();
 	for(GraphicalProgramIterator it = m_programs.begin(); it != it_end; ++it) // Browse every program
@@ -93,12 +126,7 @@ void Renderer::terminate()
 
 
 Neptune::Renderer::Renderer():
-	 m_nbverticesToRender(0)
-{
-	
-}
-
-Neptune::Renderer::~Renderer()
+	 m_nbverticesToRender(0), m_vboHandles(nullptr)
 {
 	
 }

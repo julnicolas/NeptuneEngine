@@ -14,6 +14,11 @@ bool View::init()
 	return m_renderer->init();
 }
 
+bool View::cloneInit(View& _source)
+{
+	return m_renderer->cloneInit(*_source.m_renderer);
+}
+
 bool View::update()
 {
 	bool status = true;
