@@ -14,7 +14,7 @@
 
 #ifndef NEP_FINAL
 	// Variadic macros have become standard since c++11
-	#define NEP_LOG(...) std::fprintf(stderr, __VA_ARGS__); std::fprintf(stderr, "\n") // TODO: Change stderr by something more useful
+	#define NEP_LOG(...) Neptune::Debug::Private::NepLog(__VA_ARGS__)
 #else
 	// The statement between NEP_LOG's brackets won't be executed 
 	#define NEP_LOG(...) ((void) 0)
@@ -35,7 +35,7 @@
 	#define NEP_ASSERT	assert
 	
 	// Standard assert with custom error message (printf format)
-	#define NEP_ASSERT_ERR_MSG(_cond, ...) Neptune::Debug::Private::LogAssertErrMsg(_cond, #_cond, __LINE__, __FUNCTION__, __VA_ARGS__); if (_cond == false){ abort();}
+#define NEP_ASSERT_ERR_MSG(_cond, ...) {Neptune::Debug::Private::LogAssertErrMsg(_cond, #_cond, __LINE__, __FUNCTION__, __VA_ARGS__); if (_cond == false){ abort();}}
 	
 	// Graphics assert - use to check whether a call to the graphics API generated an error
 	#define NEP_GRAPHICS_ASSERT() Neptune::Debug::Private::GL_Assert()
