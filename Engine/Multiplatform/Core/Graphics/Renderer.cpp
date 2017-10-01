@@ -12,6 +12,8 @@ using namespace Neptune;
 
 bool Renderer::init()
 {
+	NEP_ASSERT( m_vboHandles == nullptr); // Error object is already initialized
+	
 	// First reading through the programs to get the one that uses the biggest number of parameters
 	size_t biggest_nb_pms = 0;
 	
@@ -53,6 +55,8 @@ bool Renderer::init()
 
 bool Renderer::cloneInit(const	Renderer& _source)
 {
+	NEP_ASSERT( m_vboHandles == nullptr); // Error object is already initialized
+	
 	// Object's copy is done in subclass
 
 	// Iterate over the programs to set their parameter data
