@@ -8,9 +8,15 @@ namespace Neptune
 	class Updatable
 	{
 	public:
-		virtual bool init() =0;        /// Prepares the object to be updated.
-		virtual bool update() =0;      /// Executed once per frame.
-		virtual void terminate() =0;   /// Executed once the object gets out of the update loop.
+		/// \brief		Prepares object to be updated.
+		virtual bool init()						= 0;
+
+		/// Updates		object's data and performs its update task. Generally executed once per-frame.
+		virtual bool update()					= 0;
+
+		/// \brief		Frees update-related resources.
+		/// \note		Clones must call this method once for them all because they share the same data to update().
+		virtual void terminate()				= 0;   
 	};
 
 }
