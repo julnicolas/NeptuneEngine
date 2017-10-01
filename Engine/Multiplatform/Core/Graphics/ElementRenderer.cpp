@@ -48,6 +48,8 @@ bool Neptune::ElementRenderer::cloneInit(const Renderer& _source)
 void ElementRenderer::terminate()
 {
 	glDeleteBuffers( 1, &m_indexBuffer );
+	m_indexBuffer = INVALID_INDEX_BUFFER_HANDLE; // Necessary so that init can be called again
+
 	Renderer::terminate();
 }
 

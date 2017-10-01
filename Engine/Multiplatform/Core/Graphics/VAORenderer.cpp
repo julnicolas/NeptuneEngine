@@ -51,6 +51,8 @@ bool Neptune::VAORenderer::cloneInit(const Renderer& _source)
 void VAORenderer::terminate()
 {
 	glDeleteVertexArrays( 1, &m_vao );
+	m_vao = INVALID_VAO_HANDLE; // Necessary so that init can be called again
+
 	Renderer::terminate();
 }
 
