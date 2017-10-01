@@ -16,9 +16,9 @@ namespace Neptune
 		};
 
 		ElementRenderer();
-		virtual ~ElementRenderer();
-		ElementRenderer(const ElementRenderer&)            = delete;
-		ElementRenderer& operator=(const ElementRenderer&) = delete;
+		virtual ~ElementRenderer()							= default;
+		ElementRenderer(const ElementRenderer&)				= delete;
+		ElementRenderer& operator=(const ElementRenderer&)	= delete;
 
 		bool init()      override; /// Allocate all the VBOs to store the vertex attributes
 		void terminate() override;

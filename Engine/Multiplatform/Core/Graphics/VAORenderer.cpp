@@ -5,66 +5,35 @@
 
 using namespace Neptune;
 
-VAORenderer::VAORenderer()
-{
-	glGenVertexArrays( 1, &m_vao );
-}
+const u32 INVALID_VAO_HANDLE = ~0;
 
-VAORenderer::~VAORenderer()
+VAORenderer::VAORenderer():
+m_vao(INVALID_VAO_HANDLE)
 {
-	glDeleteVertexArrays( 1, &m_vao );
+
 }
 
 bool VAORenderer::init()
 {
-	NEP_ASSERT( Renderer::init() );
+	NEP_ASSERT(m_vao == INVALID_VAO_HANDLE); // Renderer hasn't been initialized
 	
-	// First reading through the programs to get the one that uses the biggest number of parameters
-	size_t biggest_nb_pms = 0;
+	// Generate VAO
+	glGenVertexArrays( 1, &m_vao );
 	
-	ConstGraphicalProgramIterator it_end = m_programs.cend();
-	for ( ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it )
-		biggest_nb_pms = ( biggest_nb_pms < (*it)->getNbVertexAttributes() ) ? (*it)->getNbVertexAttributes() : biggest_nb_pms;
-
 	// Bind the VAO 
 	glBindVertexArray( m_vao );
 	NEP_GRAPHICS_ASSERT();
 
-	// Allocate the VBOs to store the vertex attributes and fill them
-	GLuint* vbos_handle = new GLuint[ biggest_nb_pms ];
+	// Execute parent's renderer
+	bool status = Renderer::init();
 
-	// Iterate over the programs to set their parameter data
-	for ( ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it )
-	{
-		// Allocate the program's VBOs
-		const u8 nb_attribs = (*it)->getNbVertexAttributes();
-		glGenBuffers(nb_attribs,vbos_handle);
-
-		// Populate them and enable them to be used in the graphical pipeline
-		u8 attrib_index = 0;
-		GraphicsProgram::ConstShaderAttributeIterator att_end = (*it)->shaderAttributeCEnd();
-		for ( GraphicsProgram::ConstShaderAttributeIterator att = (*it)->shaderAttributeCBegin(); att != att_end; ++att, attrib_index++ )
-		{
-			// Fill the buffers
-			glBindBuffer( GL_ARRAY_BUFFER, vbos_handle[ attrib_index ] );
-			NEP_GRAPHICS_ASSERT();
-
-			glBufferData( GL_ARRAY_BUFFER, att->m_size, att->m_data, GL_STATIC_DRAW );
-			NEP_GRAPHICS_ASSERT();
-			m_vbos[ &(**it) ].push_back( vbos_handle[ attrib_index ] );
-
-			// Enable the shader's input interfaces
-			glEnableVertexAttribArray( att->m_layout );
-			NEP_GRAPHICS_ASSERT();
-		}
-	}
-	delete[] vbos_handle;
-
-	return true;
+	NEP_ASSERT( status );
+	return status;
 }
 
 void VAORenderer::terminate()
 {
+	glDeleteVertexArrays( 1, &m_vao );
 	Renderer::terminate();
 }
 

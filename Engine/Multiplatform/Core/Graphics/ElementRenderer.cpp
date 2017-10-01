@@ -5,16 +5,26 @@
 
 using namespace Neptune;
 
-ElementRenderer::ElementRenderer()
+const u32 INVALID_INDEX_BUFFER_HANDLE = ~0;
+
+bool ElementRenderer::init()
 {
+	NEP_ASSERT( m_indexBuffer == INVALID_INDEX_BUFFER_HANDLE ); // Renderer hasn't been initialized
+	
 	// Generate the index buffer
 	glGenBuffers( 1, &m_indexBuffer );
+	
+	// Execute parent's renderer
+	bool status = Renderer::init();
+
+	NEP_ASSERT( status );
+	return status;
 }
 
-ElementRenderer::~ElementRenderer()
+void ElementRenderer::terminate()
 {
-	// Free the index buffer
 	glDeleteBuffers( 1, &m_indexBuffer );
+	Renderer::terminate();
 }
 
 void ElementRenderer::setIndexBufferData(const void* data, u32 dataSize, ElementRenderer::IndexType dataType)
@@ -22,51 +32,6 @@ void ElementRenderer::setIndexBufferData(const void* data, u32 dataSize, Element
 	m_indexType = dataType;
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
-}
-
-bool ElementRenderer::init()
-{
-	NEP_ASSERT(Renderer::init());
-
-	// First reading through the programs to get the one that uses the biggest number of parameters
-	size_t biggest_nb_pms = 0;
-
-	ConstGraphicalProgramIterator it_end = m_programs.cend();
-	for(ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it)
-		biggest_nb_pms = (biggest_nb_pms < (*it)->getNbVertexAttributes()) ? (*it)->getNbVertexAttributes() : biggest_nb_pms;
-
-	// Allocate the VBOs to store the vertex attributes and fill them
-	GLuint* vbos_handle = new GLuint[biggest_nb_pms];
-
-	// Iterate over the programs to set their parameter data
-	for(ConstGraphicalProgramIterator it = m_programs.cbegin(); it != it_end; ++it)
-	{
-		// Allocate the program's VBOs
-		const u8 nb_attribs = (*it)->getNbVertexAttributes();
-		glGenBuffers(nb_attribs,vbos_handle);
-
-		// Populate them and enable them to be used in the graphical pipeline
-		u8 attrib_index = 0;
-		GraphicsProgram::ConstShaderAttributeIterator att_end = (*it)->shaderAttributeCEnd();
-		for(GraphicsProgram::ConstShaderAttributeIterator att = (*it)->shaderAttributeCBegin(); att != att_end; ++att,attrib_index++)
-		{
-			// Fill the buffers
-			glBindBuffer(GL_ARRAY_BUFFER,vbos_handle[attrib_index]);
-			glBufferData(GL_ARRAY_BUFFER,att->m_size,att->m_data,GL_STATIC_DRAW);
-			m_vbos[&(**it)].push_back(vbos_handle[attrib_index]);
-
-			// Enable the shader's input interfaces
-			glEnableVertexAttribArray(att->m_layout);
-		}
-	}
-	delete[] vbos_handle;
-
-	return true;
-}
-
-void ElementRenderer::terminate()
-{
-	Renderer::terminate();
 }
 
 static GLenum MapType(const ElementRenderer::IndexType type)

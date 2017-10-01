@@ -9,9 +9,9 @@ namespace Neptune
 	{
 	public:
 		VAORenderer();
-		virtual ~VAORenderer();
-		VAORenderer(const VAORenderer&)            = delete;
-		VAORenderer& operator=(const VAORenderer&) = delete;
+		virtual ~VAORenderer()						= default;
+		VAORenderer(const VAORenderer&)				= delete;
+		VAORenderer& operator=(const VAORenderer&)	= delete;
 
 		bool init()      override; /// Allocate all the VBOs to store the vertex attributes
 		void terminate() override;
