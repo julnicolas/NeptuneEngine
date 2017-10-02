@@ -55,8 +55,6 @@ bool Renderer::init()
 
 bool Renderer::cloneInit(const	Renderer& _source)
 {
-	NEP_ASSERT( m_vboHandles == nullptr); // Error object is already initialized
-	
 	// Object's copy is done in subclass
 
 	// Iterate over the programs to set their parameter data
