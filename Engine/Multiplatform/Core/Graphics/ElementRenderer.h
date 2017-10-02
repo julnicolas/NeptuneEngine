@@ -38,7 +38,9 @@ namespace Neptune
 		void bindShaderAttributes(const GraphicsProgram& pgm)	 override;
 
 	private:
-		u32                                                           m_indexBuffer;
-		IndexType                                                     m_indexType;
+		u32				m_indexBufferID;
+		IndexType		m_indexType;
+		u32				m_indexBufferSize;
+		const void*		m_indexBuffer;		/// \note The type is opaque as it can vary depending on the view
 	};
 }

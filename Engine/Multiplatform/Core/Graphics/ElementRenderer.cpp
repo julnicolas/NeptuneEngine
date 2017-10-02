@@ -8,8 +8,10 @@ using namespace Neptune;
 const u32 INVALID_INDEX_BUFFER_HANDLE = ~0;
 
 ElementRenderer::ElementRenderer():
-	m_indexBuffer(INVALID_INDEX_BUFFER_HANDLE),
-	m_indexType(IndexType::U8)
+	m_indexBufferID(INVALID_INDEX_BUFFER_HANDLE),
+	m_indexType(IndexType::U8),
+	m_indexBufferSize(0),
+	m_indexBuffer(nullptr)
 {
 
 }
@@ -17,10 +19,13 @@ ElementRenderer::ElementRenderer():
 bool ElementRenderer::init()
 {
 	// Init check
-	NEP_ASSERT( m_indexBuffer == INVALID_INDEX_BUFFER_HANDLE ); // Error Renderer has already been initialized
+	NEP_ASSERT( m_indexBufferID == INVALID_INDEX_BUFFER_HANDLE );	// Error Renderer has already been initialized
+	NEP_ASSERT( m_indexBufferSize != 0 );							// Error setIndexBufferData() hasn't been called
 	
-	// Generate the index buffer
-	glGenBuffers( 1, &m_indexBuffer );
+	// Populate the index buffer
+	glGenBuffers( 1, &m_indexBufferID );
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferID);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferSize, m_indexBuffer, GL_STATIC_DRAW);
 	
 	// Execute parent's renderer
 	bool status = Renderer::init();
@@ -31,12 +36,13 @@ bool ElementRenderer::init()
 
 bool Neptune::ElementRenderer::cloneInit(const Renderer& _source)
 {
-	// Init check
-	NEP_ASSERT( m_indexBuffer == INVALID_INDEX_BUFFER_HANDLE ); // Error Renderer has already been initialized
-
 	// Type check
 	const ElementRenderer* source = dynamic_cast<const ElementRenderer*>(&_source);
 	NEP_ASSERT( source != nullptr ); // Invalid argument, _source must be an ElementRenderer
+
+	// Init check
+	NEP_ASSERT( source->m_indexBufferID != INVALID_INDEX_BUFFER_HANDLE ); // Error _source hasn't been initialized
+	NEP_ASSERT( m_indexBufferID			== INVALID_INDEX_BUFFER_HANDLE ); // Error Renderer has already been initialized
 
 	// Copy object
 	*this = *source;
@@ -47,17 +53,17 @@ bool Neptune::ElementRenderer::cloneInit(const Renderer& _source)
 
 void ElementRenderer::terminate()
 {
-	glDeleteBuffers( 1, &m_indexBuffer );
-	m_indexBuffer = INVALID_INDEX_BUFFER_HANDLE; // Necessary so that init can be called again
+	glDeleteBuffers( 1, &m_indexBufferID );
+	m_indexBufferID = INVALID_INDEX_BUFFER_HANDLE; // Necessary so that init can be called again
 
 	Renderer::terminate();
 }
 
 void ElementRenderer::setIndexBufferData(const void* data, u32 dataSize, ElementRenderer::IndexType dataType)
 {
-	m_indexType = dataType;
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, dataSize, data, GL_STATIC_DRAW);
+	m_indexType			= dataType;
+	m_indexBufferSize	= dataSize;
+	m_indexBuffer		= data;
 }
 
 static GLenum MapType(const ElementRenderer::IndexType type)
@@ -95,7 +101,7 @@ void ElementRenderer::draw()
 void ElementRenderer::bindShaderAttributes(const GraphicsProgram& pgm)
 {
 	// Bind the indices
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBuffer);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, m_indexBufferID);
 
 	// Bind the attributes
 	Renderer::bindShaderAttributes( pgm );
