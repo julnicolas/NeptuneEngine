@@ -89,9 +89,14 @@ void PLYLoader::load(const char* relativeFilePath)
 {
 	std::ifstream model_file( relativeFilePath );
 	NEP_ASSERT( model_file.is_open() );
-	NEP_ASSERT( processFileHeader( model_file ) );
+
+	bool success = processFileHeader( model_file );
+	NEP_ASSERT( success );
+	
 	allocateBuffers();
-	NEP_ASSERT( processFileBody( model_file ) );
+
+	success = processFileBody( model_file );
+	NEP_ASSERT( success );
 }
 
 static const size_t getBiggestSupportedTypeSize()
@@ -355,6 +360,8 @@ bool Neptune::PLYLoader::parseBodyLines(std::ifstream& file, char* fileLine, con
 
 void PLYLoader::allocateBuffers()
 {
+	bool success = false;
+
 	std::vector< Element >::iterator it_element_end = m_propertyListReadOrder.end();
 	for ( std::vector< Element >::iterator it_element = m_propertyListReadOrder.begin(); it_element != it_element_end; ++it_element )
 	{
@@ -364,7 +371,9 @@ void PLYLoader::allocateBuffers()
 			size_t buffer_size = 0;
 			buffer_size     = ( it_property->m_propType != COLOR_ALPHA ) ? 3*it_property->m_typeSize : 4*it_property->m_typeSize; // Horrendous! Each and every property should be able to retrieve its size!
 			buffer_size     *= it_element->getDataLinesNb();
-			NEP_ASSERT( allocateBuffer( it_property->m_propType, it_property->m_valueType, buffer_size ) );
+			
+			success = allocateBuffer( it_property->m_propType, it_property->m_valueType, buffer_size );
+			NEP_ASSERT( success );
 		}
 	}
 }
