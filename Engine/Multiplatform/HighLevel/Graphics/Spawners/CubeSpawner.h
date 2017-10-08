@@ -24,7 +24,7 @@ namespace Neptune
 		// D E F A U L T   G E N E R A T E D   M E T H O D S
 		//
 
-		virtual ~CubeSpawner()											= default;
+		virtual ~CubeSpawner()										= default;
 		CubeSpawner(const CubeSpawner&)								= delete;
 		virtual CubeSpawner& operator=(const CubeSpawner&)			= delete;
 
