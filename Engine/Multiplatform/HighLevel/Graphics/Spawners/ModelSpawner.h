@@ -39,7 +39,7 @@ namespace Neptune
 		/// \brief In this method you must dynamically allocate a View object
 		/// (called v). Then call v->getRenderer().setDrawingPrimitive(_prim)  
 		/// and v->getRenderer().setNbverticesToRender(nb).
-		virtual View* createViewAndSetUpRenderParameters()	=0;
+		View* createViewAndSetUpRenderParameters() override;
 
 	private:
 		u32							m_nbVerticesToRender;

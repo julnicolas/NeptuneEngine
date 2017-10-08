@@ -49,11 +49,11 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
     // just triangles are supported at the moment
     NEP_ASSERT (mesh->mPrimitiveTypes & aiPrimitiveType_TRIANGLE); // Error: Drawing primitive is not supported
 
-    u32 num_vertices	= mesh->mNumVertices;
-    u32 num_faces		= mesh->mNumFaces; // Faces to construct a mesh, if 0 a VAORenderer must be used
+    m_nbVerticesToRender	= mesh->mNumVertices;
+    u32 num_faces			= mesh->mNumFaces; // Faces to construct a mesh, if 0 a VAORenderer must be used
 
 	// Populate the vertex buffer
-	for (u32 i = 0; i < num_vertices; i++)
+	for (u32 i = 0; i < m_nbVerticesToRender; i++)
 	{
 		m_vertices.push_back(mesh->mVertices[i].x);
 		m_vertices.push_back(mesh->mVertices[i].y);
@@ -83,7 +83,7 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 		const u8 nb_color_sets = 1; // AI_MAX_NUMBER_OF_COLOR_SETS
 		for (u8 color_set_index = 0; color_set_index < nb_color_sets; color_set_index++)
 		{
-			for (u32 i = 0; i < num_vertices; i++)
+			for (u32 i = 0; i < m_nbVerticesToRender; i++)
 			{
 				c.r = mesh->mColors[color_set_index][i].r;
 				c.g = mesh->mColors[color_set_index][i].g;
@@ -98,7 +98,7 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 	// Populate the normal buffer
 	if ( mesh->mNormals != nullptr )
 	{
-		for ( u32 i = 0; i < num_vertices; i++ )
+		for ( u32 i = 0; i < m_nbVerticesToRender; i++ )
 		{
 			m_normals.push_back( mesh->mNormals[i].x );
 			m_normals.push_back( mesh->mNormals[i].y );
@@ -107,21 +107,21 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 	}
 
 	// Populate the texture coordinates buffer
-	if ( mesh->mTextureCoords != nullptr )
+	/*if ( mesh->mTextureCoords != nullptr )
 	{
 		// AT the moment only one set of texture coordinate is supported per vertex
 		const u8 nb_set_tex_coords = 1; // AI_MAX_NUMBER_OF_TEXTURECOORDS
 
 		for (u8 tex_coord_set = 0; tex_coord_set < nb_set_tex_coords; tex_coord_set++)
 		{
-			for ( u32 i = 0; i < num_vertices; i++ )
+			for ( u32 i = 0; i < m_nbVerticesToRender; i++ )
 			{
 				m_2DTexCoords.push_back( mesh->mTextureCoords[tex_coord_set][i].x ); // u component
 				m_2DTexCoords.push_back( mesh->mTextureCoords[tex_coord_set][i].y ); // v component
 				// m_2DTexCoords.push_back( mesh->mTextureCoords[tex_coord_set][i].z ); // w component
 			}
 		}
-	}
+	}*/
 }
 
 View* ModelSpawner::createViewAndSetUpRenderParameters()
