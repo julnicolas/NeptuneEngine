@@ -47,10 +47,14 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 
     // check rendering primitive
     // just triangles are supported at the moment
-    NEP_ASSERT (mesh->mPrimitiveTypes & aiPrimitiveType_TRIANGLE); // Error: Drawing primitive is not supported
+	NEP_ASSERT_ERR_MSG( !(mesh->mPrimitiveTypes & aiPrimitiveType_POINT) &&
+						!(mesh->mPrimitiveTypes & aiPrimitiveType_LINE)  &&
+						!(mesh->mPrimitiveTypes & aiPrimitiveType_POLYGON), "Only triangles are supported.");
 
-    m_nbVerticesToRender	= mesh->mNumVertices;
-    u32 num_faces			= mesh->mNumFaces; // Faces to construct a mesh, if 0 a VAORenderer must be used
+    NEP_ASSERT_ERR_MSG((mesh->mPrimitiveTypes & aiPrimitiveType_TRIANGLE) != 0, "Error, no drawing primitive has been provided. Check your model file.");
+
+    u32 num_faces			= mesh->mNumFaces;	// Number of primitives present in the mesh (triangles, lines, points)
+	m_nbVerticesToRender	= num_faces * 3;	// A face is made up of 3 vertices
 
 	// Populate the vertex buffer
 	for (u32 i = 0; i < m_nbVerticesToRender; i++)
@@ -133,8 +137,8 @@ View* ModelSpawner::createViewAndSetUpRenderParameters()
 		v = new ElementView;
 		static_cast<ElementView*>(v)->setIndexBufferData( 
 															&m_vertexIndices[0], 
-															static_cast<u32>(m_vertexIndices.size()), // Assimp's mNumVertices' type is u32
-															ElementRenderer::IndexType::U32 
+															static_cast<u32>(m_vertexIndices.size()*sizeof(u32)),
+															ElementRenderer::IndexType::U32							// Assimp's mNumVertices' type is u32
 		);
 	}
 	else
