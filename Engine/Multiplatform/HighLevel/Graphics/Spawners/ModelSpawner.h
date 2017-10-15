@@ -2,6 +2,10 @@
 
 #include "Graphics/Spawners/ViewSpawner.h"
 
+struct aiScene;
+struct aiNode;
+struct aiMesh;
+
 namespace Neptune
 {
 	/// \class Instantiate models. The class is limited t the instantiation of 1 mesh per file.
@@ -45,5 +49,9 @@ namespace Neptune
 		u32							m_nbVerticesToRender;
 		Renderer::DrawingPrimitive	m_drawingPrimitive;
 		std::vector<u32>			m_vertexIndices;
+
+		void fillMeshData(aiMesh* _mesh);
+		void ProcessMeshes(const aiScene* _scene, aiNode* _node);
+		void PostFixDepthSearch(const aiScene* _scene, aiNode* _root);
 	};
 }
