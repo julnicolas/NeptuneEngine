@@ -211,8 +211,12 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\CubeSpawner.cpp" />
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ModelSpawner.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\CubeSpawner.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ModelSpawner.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -440,14 +444,14 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\CubeSpawner.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebugInlineImplementations.h">
-      <Filter>Engine</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ModelSpawner.h">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\CubeSpawner.h">
+      <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebugInlineImplementations.h">
+      <Filter>Engine\Multiplatform\Core\Debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
