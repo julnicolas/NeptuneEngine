@@ -121,7 +121,7 @@ static bool NEP_LoadImage(const char* _path, u32& _textureID, Texture::MetaData&
 	// Error?
 	if (data == nullptr)
 	{
-		NEP_ASSERT(false); // File probably doesn't exist or format is not supported
+		NEP_ASSERT_ERR_MSG(data != nullptr, "File probably doesn't exist or format is not supported");
 		return false;
 	}
 	
@@ -234,7 +234,7 @@ void Texture::terminate()
 u32 Texture::getMaxTextureCount() const
 {
 	s32 max_count = 0;
-	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &max_count); // Never sets a negative value
+	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_count); // Never sets a negative value
 
 	return static_cast<u32>(max_count);
 }
