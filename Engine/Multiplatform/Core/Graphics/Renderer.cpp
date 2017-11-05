@@ -180,7 +180,7 @@ static void SetSingleValuedUniform(s32 location, const GraphicsProgram::UniformV
 	NEP_GRAPHICS_ASSERT();
 }
 
-static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
+static void SetVectorOrArrayUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
 {
 	switch( var.getDataType() )
 	{
@@ -202,8 +202,10 @@ static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarI
 			glUniform4fv( location, 1, (float*) var.getData() );
 			break;
 
+		// More than 4 values,  it is necessarily an array and cannot be represented by a vector in GLSL
 		default:
-			NEP_ASSERT( false );
+			// Is there a limit for array sizes in OpenGL?
+			glUniform1fv( location, var.getNbRows(), (float*) var.getData() );
 			break;
 		}
 
@@ -228,8 +230,10 @@ static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarI
 			glUniform4uiv( location, 1, (u32*) var.getData() );
 			break;
 
+		// More than 4 values,  it is necessarily an array and cannot be represented by a vector in GLSL
 		default:
-			NEP_ASSERT(false);
+			// Is there a limit for array sizes in OpenGL?
+			glUniform1uiv( location, var.getNbRows(), (u32*) var.getData() );
 			break;
 		}
 
@@ -254,8 +258,10 @@ static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarI
 			glUniform4iv(location,1,(s32*)var.getData());
 			break;
 
+		// More than 4 values,  it is necessarily an array and cannot be represented by a vector in GLSL
 		default:
-			NEP_ASSERT(false);
+			// Is there a limit for array sizes in OpenGL?
+			glUniform1iv( location, var.getNbRows(), (s32*) var.getData() );
 			break;
 		}
 
@@ -323,11 +329,11 @@ static void SetUniform(s32 location, const GraphicsProgram::UniformVarInput& var
 {
 	// First check if the data is a single value, a vector or a matrix
 
-	if ( var.getNbRows() > 1 ) // It's either a vector or a matrix
+	if ( var.getNbRows() > 1 ) // It's either an array, a vector or a matrix
 	{
-		if ( var.getNbColumns() == 1 ) // It's a vector
+		if ( var.getNbColumns() == 1 ) // It's a vector or an array
 		{
-			SetVectorialUniform( location, var );
+			SetVectorOrArrayUniform( location, var );
 		}
 		else // It's a matrix
 		{
