@@ -5,6 +5,7 @@
 struct aiScene;
 struct aiNode;
 struct aiMesh;
+struct aiMaterial;
 
 template <typename T>
 class  aiMatrix4x4t;
@@ -54,7 +55,7 @@ namespace Neptune
 		Renderer::DrawingPrimitive	m_drawingPrimitive;
 		std::vector<u32>			m_vertexIndices;
 
-		void fillMeshData(aiMesh* _mesh, const aiMatrix4x4& _transformation);
+		void fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation);
 		void ProcessMeshes(const aiScene* _scene, aiNode* _node);
 		void PostFixDepthSearch(const aiScene* _scene, aiNode* _root);
 		void PreFixDepthSearch(const aiScene* _scene, aiNode* _root);
