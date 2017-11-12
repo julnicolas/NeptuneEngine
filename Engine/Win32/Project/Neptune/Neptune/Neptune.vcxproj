@@ -110,7 +110,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86\Debug;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -128,7 +128,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64\Debug;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -150,7 +150,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -173,7 +173,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
@@ -195,7 +195,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
@@ -217,7 +217,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
