@@ -14,6 +14,8 @@
 
 #include <stack>
 
+#include <algorithm>
+
 using namespace Neptune;
 
 static const aiMaterial* GetMaterial(const aiScene* _scene, const aiMesh* _mesh)
@@ -168,6 +170,11 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 	float*  normals				= new float[normals_length];
 	float*	tex_coords			= new float[texture_lenght];
 
+	// Texture indexing
+	u32 mesh_first_index = m_vertices.size()/3 - 1;			// divided by 3 because we want the number of sets of x,y,z coordinates.
+	u32 mesh_last_index  = mesh_first_index + num_vertices;
+	////
+
 	// Populate the vertex buffer
 	for (u32 i = 0, j = 0; i < num_vertices; i++, j +=3)
 	{
@@ -244,15 +251,26 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 			u32 texture_count		= _material->GetTextureCount(aiTextureType_DIFFUSE);
 			NEP_ASSERT_ERR_MSG( texture_count == 1, "Only one diffuse color texture is supported per mesh. Current mesh has %u.", texture_count );
 
-			aiString			texture_path; // Init to empty string
+			aiString			texture_relative_path; // Init to empty string
 			aiTextureMapping	texture_mapping = aiTextureMapping_OTHER;
 			u32					uv_index		= 0;
 			auto get_texture_error	= _material->GetTexture(	aiTextureType_DIFFUSE,
 																0,
-																&texture_path,
+																&texture_relative_path,
 																&texture_mapping,
 																&uv_index
 															);
+			// Set texture binding
+			TextureIndex t_index;
+			t_index.m_lastTextureIndex	= mesh_last_index;
+			t_index.m_textureBinding	= resolveTextureBindingPoint(texture_relative_path.C_Str());
+
+			// Add texture binding
+			m_textureIndices.push_back(t_index);
+
+			// Sort in vertex order for easier processing from vertex shaders
+			std::sort( m_textureIndices.begin(), m_textureIndices.end(), [](const TextureIndex& t1, const TextureIndex& t2){ return t1.m_lastTextureIndex < t2.m_lastTextureIndex; } );
+
 			NEP_ASSERT_ERR_MSG( texture_mapping == aiTextureMapping_UV, "Only UV Mapping is supported at the moment. Current mapping mode is %u", texture_mapping );
 			NEP_ASSERT_ERR_MSG( get_texture_error == aiReturn_SUCCESS, "Texture couldn't be accessed" );
 		}
@@ -286,6 +304,8 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 {
 	// L O A D   M O D E L
 	NEP_ASSERT(_modelPath != nullptr); // Error: Invalid file name
+	NEP_ASSERT_ERR_MSG(std::string(_modelPath).find('\\') == std::string::npos,
+		"Error, paths should only contain slashes '/'.\n Path provided is %s\n", _modelPath); // Check no forward slashes is present
 
 	// Create an instance of the Importer class
     Assimp::Importer importer;
@@ -303,8 +323,11 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 	NEP_ASSERT_ERR_MSG(!(scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE), "Error in file content... something is wrong with the data.");
 
 	// Check content
-	NEP_ASSERT(scene->mNumMeshes > 0); // Error the file doesn't define a mesh
-	//NEP_ASSERT_ERR_MSG(scene->mNumMeshes == 1, "Error the file contains several meshes. Use a different importer.");
+	NEP_ASSERT(scene->mNumMeshes > 0); // Error the file doesn't define any mesh
+
+	// Set working directory
+	m_modelWorkingDir = _modelPath;
+	m_modelWorkingDir = m_modelWorkingDir.substr(0,m_modelWorkingDir.find_last_of('/')+1);
 
 	// P O P U L A T E   T H E   B U F F E R S
     
@@ -346,4 +369,19 @@ bool ModelSpawner::create2DTextureMapData()
 void ModelSpawner::createVertexData()
 {
 	
+}
+
+// Binding point retrieved is the position of _textureName in m_textureBindings
+u32 ModelSpawner::resolveTextureBindingPoint(const std::string& _textureName)
+{
+	// Does the texture have a binding point allocated?
+	for (u32 i = 0; i < m_textureBindings.size(); i++)
+	{
+		if (m_textureBindings[i] == _textureName)
+			return i;	// Yes, return it
+	}
+
+	// Texture doesn't have a binding point yet
+	m_textureBindings.push_back(_textureName);	// Allocating a binding point
+	return m_textureBindings.size()-1;			// Retrieve the binding point
 }

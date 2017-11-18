@@ -1,6 +1,8 @@
 #pragma once
 
 #include "Graphics/Spawners/ViewSpawner.h"
+#include <string> // WIP
+
 
 struct aiScene;
 struct aiNode;
@@ -51,10 +53,28 @@ namespace Neptune
 		View* createViewAndSetUpRenderParameters() override;
 
 	private:
-		u32							m_nbVerticesToRender;
-		Renderer::DrawingPrimitive	m_drawingPrimitive;
-		std::vector<u32>			m_vertexIndices;
+		/// \brief	Contains information to choose which texture to sample from
+		///			for each and every vertex.
+		///	\Note	This struct is supposed to be contained in array.
+		struct TextureIndex
+		{
+			/// \brief		Value used to choose which texture to sample from for the current vertex.
+			///				Read the following example for further information.
+			/// \example	Let us consider an array of TextureIndex called tindex.
+			///				If tindex[i-1].m_lastTextureIndex < vertex_id <= tindex[i].m_lastTextureIndex
+			///				then use texture whose texture binding is tindex[i].m_textureBinding.
+			u32	m_lastTextureIndex;
+			u8	m_textureBinding;		/// Texture binding number to use for the current vertex
+		};
 
+		u32								m_nbVerticesToRender;
+		Renderer::DrawingPrimitive		m_drawingPrimitive;
+		std::string						m_modelWorkingDir;
+		std::vector<std::string>		m_textureBindings;	// Binds a texture name to a binding point. Could be good to create an inner class with resolveTextureBinding
+		std::vector<TextureIndex>		m_textureIndices;
+		std::vector<u32>				m_vertexIndices;
+
+		u32 resolveTextureBindingPoint(const std::string& _textureName); // May add an element to m_textureBindings
 		void fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation);
 		void ProcessMeshes(const aiScene* _scene, aiNode* _node);
 		void PostFixDepthSearch(const aiScene* _scene, aiNode* _root);
