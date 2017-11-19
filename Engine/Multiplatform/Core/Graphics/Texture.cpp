@@ -160,10 +160,49 @@ Texture::Texture(const char* _path, Type _type /*= TextureType::TEXTURE_2D*/):
 	m_metaData.m_type = _type;
 }
 
+Texture::Texture(Texture&& _texture)
+{
+	m_name		= _texture.m_name;
+	m_index		= _texture.m_index;
+	m_metaData	= _texture.m_metaData;
+	m_path		= _texture.m_path;
+
+	_texture.m_name							= 0;
+	_texture.m_index						= 0;
+	_texture.m_path							= nullptr;
+	_texture.m_metaData.m_width				= 0;
+	_texture.m_metaData.m_height			= 0;
+	_texture.m_metaData.m_depth				= 0;
+	_texture.m_metaData.m_size				= 0;
+	_texture.m_metaData.m_mipmapLevels		= 0;
+	_texture.m_metaData.m_type				= Type::NOT_SUPPORTED;
+	_texture.m_metaData.m_internalFormat	= InternalFormat::NOT_SUPPORTED;
+}
+
+Texture& Texture::operator=(Texture&& _texture)
+{
+	m_name		= _texture.m_name;
+	m_index		= _texture.m_index;
+	m_metaData	= _texture.m_metaData;
+	m_path		= _texture.m_path;
+
+	_texture.m_name							= 0;
+	_texture.m_index						= 0;
+	_texture.m_path							= nullptr;
+	_texture.m_metaData.m_width				= 0;
+	_texture.m_metaData.m_height			= 0;
+	_texture.m_metaData.m_depth				= 0;
+	_texture.m_metaData.m_size				= 0;
+	_texture.m_metaData.m_mipmapLevels		= 0;
+	_texture.m_metaData.m_type				= Type::NOT_SUPPORTED;
+	_texture.m_metaData.m_internalFormat	= InternalFormat::NOT_SUPPORTED;
+
+	return *this;
+}
+
 Texture::~Texture()
 {
 	delete[] m_path;
-	glDeleteTextures(1, &m_name);
 }
 
 void Texture::setPath(const char* _path)
