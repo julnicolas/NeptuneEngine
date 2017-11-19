@@ -47,7 +47,7 @@ namespace Neptune
 			u32				m_size;																	/// Size of the texture data
 			u8				m_mipmapLevels;															/// Number of mipmap levels (>0)
 			Type			m_type;
-			InternalFormat	m_internalFormat;
+			InternalFormat	m_internalFormat;														/// \warning Cannot always be determined
 		};
 
 		/// 

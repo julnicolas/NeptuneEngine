@@ -150,7 +150,8 @@ Texture::Texture():
 	m_metaData({0}),
 	m_path(nullptr)
 {
-	m_metaData.m_type = Type::TEXTURE_2D;
+	m_metaData.m_type			= Type::TEXTURE_2D;
+	m_metaData.m_internalFormat	= InternalFormat::NOT_SUPPORTED;
 }
 
 Texture::Texture(const char* _path, Type _type /*= TextureType::TEXTURE_2D*/): 
@@ -233,20 +234,26 @@ bool Texture::init()
 {
 	// GET FILE EXTENSION
 	NEP_ASSERT( m_path != nullptr && m_path[0] != '\0' ); // Error! Texture path is invalid
-	std::string extension = GetExtension(m_path);
-
-	// LOAD TEXTURE DATA
-	if ( extension == ".ktx" )		// If it's a texture format
+	
+	if ( !IsTextureInitialised(m_name) )
 	{
-		u32 texture_target = LoadAndCreateKTXTexture(m_path, &m_name, &m_metaData);
+		std::string extension = GetExtension(m_path);
 
-		NEP_ASSERT(texture_target != LOAD_KTX_ERROR); // Error, texture couldn't be loaded.
-		return texture_target != LOAD_KTX_ERROR;
+		// LOAD TEXTURE DATA
+		if ( extension == ".ktx" )		// If it's a texture format
+		{
+			u32 texture_target = LoadAndCreateKTXTexture(m_path, &m_name, &m_metaData);
+
+			NEP_ASSERT_ERR_MSG(texture_target != LOAD_KTX_ERROR, "Error, Texture couldn't be loaded. Path: %s", m_path);
+			return texture_target != LOAD_KTX_ERROR;
+		}
+		else							// If it's an image format
+		{
+			return NEP_LoadImage(m_path, m_name, m_metaData);
+		}
 	}
-	else							// If it's an image format
-	{
-		return NEP_LoadImage(m_path, m_name, m_metaData);
-	}
+
+	return false; // texture already initialised
 }
 
 bool Texture::update()
