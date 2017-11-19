@@ -11,6 +11,7 @@
 #include <fstream>
 
 #include "Debug/NeptuneDebug.h"
+#include <sstream>
 
 #include <stack>
 
@@ -251,25 +252,42 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 			u32 texture_count		= _material->GetTextureCount(aiTextureType_DIFFUSE);
 			NEP_ASSERT_ERR_MSG( texture_count == 1, "Only one diffuse color texture is supported per mesh. Current mesh has %u.", texture_count );
 
-			aiString			texture_relative_path; // Init to empty string
+			aiString			texture_relative_path_from_model; // Init to empty string
 			aiTextureMapping	texture_mapping = aiTextureMapping_OTHER;
 			u32					uv_index		= 0;
 			auto get_texture_error	= _material->GetTexture(	aiTextureType_DIFFUSE,
 																0,
-																&texture_relative_path,
+																&texture_relative_path_from_model,
 																&texture_mapping,
 																&uv_index
 															);
+			
+			//////////////// TEXTURE BINDING SETUP
+			std::string texture_realtive_path = m_modelWorkingDir + std::string(texture_relative_path_from_model.C_Str());
+
+			// Map texture name to binding point
+			m_textureBindingInfo[texture_realtive_path] = resolveTextureBindingPoint(texture_realtive_path.c_str());
+
+			// Map last vertex for sampling current texture to texture name
+			BindingMap binding_map;
+			binding_map.m_textureName		= texture_realtive_path;
+			binding_map.m_lastVertexIndex	= mesh_last_index;
+			m_textureBindingTable.push_back(binding_map);
+
+			/////////////////////////////////////////////
+
+			//////////////////// DEBUG
 			// Set texture binding
 			TextureIndex t_index;
 			t_index.m_lastTextureIndex	= mesh_last_index;
-			t_index.m_textureBinding	= resolveTextureBindingPoint(texture_relative_path.C_Str());
+			t_index.m_textureBinding	= resolveTextureBindingPoint(texture_realtive_path.c_str());
 
 			// Add texture binding
 			m_textureIndices.push_back(t_index);
 
 			// Sort in vertex order for easier processing from vertex shaders
 			std::sort( m_textureIndices.begin(), m_textureIndices.end(), [](const TextureIndex& t1, const TextureIndex& t2){ return t1.m_lastTextureIndex < t2.m_lastTextureIndex; } );
+			///////////////////////////////////////////////
 
 			NEP_ASSERT_ERR_MSG( texture_mapping == aiTextureMapping_UV, "Only UV Mapping is supported at the moment. Current mapping mode is %u", texture_mapping );
 			NEP_ASSERT_ERR_MSG( get_texture_error == aiReturn_SUCCESS, "Texture couldn't be accessed" );
@@ -371,17 +389,83 @@ void ModelSpawner::createVertexData()
 	
 }
 
-// Binding point retrieved is the position of _textureName in m_textureBindings
+// Binding point retrieved is the position of _textureName in m_textureNames
 u32 ModelSpawner::resolveTextureBindingPoint(const std::string& _textureName)
 {
 	// Does the texture have a binding point allocated?
-	for (u32 i = 0; i < m_textureBindings.size(); i++)
+	for (u32 i = 0; i < m_textureNames.size(); i++)
 	{
-		if (m_textureBindings[i] == _textureName)
+		if (m_textureNames[i] == _textureName)
 			return i;	// Yes, return it
 	}
 
 	// Texture doesn't have a binding point yet
-	m_textureBindings.push_back(_textureName);	// Allocating a binding point
-	return m_textureBindings.size()-1;			// Retrieve the binding point
+	m_textureNames.push_back(_textureName);	// Allocating a binding point
+	return m_textureNames.size()-1;			// Retrieve the binding point
+}
+
+// Returns true if every key matches
+static bool DEBUG_CheckKeys(const std::unordered_map<std::string, u8>& _map1, const std::unordered_map<std::string, u8>& _map2)
+{
+#ifdef NEP_FINAL
+	NEP_STATIC_ASSERT(false, "Error: Debug function is called in Final config.");
+	return false; // Shouldn't be called at all;
+#endif
+
+	auto it1_end = _map1.cend();
+	auto it2_end = _map2.cend();
+
+	for ( auto it1 = _map1.cbegin(), it2 = _map2.cbegin(); it1 != it1_end && it2 != it2_end; ++it1, ++it2  )
+	{
+		if ( it1->first != it2->first )
+			return false;
+	}
+
+	return true;
+}
+
+static std::string DEBUG_ToString(const std::unordered_map<std::string, u8>& _map1)
+{
+	std::stringstream stream;
+	stream << "[";
+
+	for (const auto& entry : _map1)
+	{
+		stream << "{" << entry.first << " : " << entry.second << "}, ";
+	}
+	stream << "]";
+
+	return stream.str();
+}
+
+void ModelSpawner::getTextureBindingInfo(std::unordered_map<std::string, u8>& _info) const
+{
+	_info = m_textureBindingInfo;
+}
+
+void ModelSpawner::setTextureBindingInfo(const std::unordered_map<std::string, u8>& _info)
+{
+	NEP_ASSERT_ERR_MSG(_info.size() == m_textureBindingInfo.size(), "Error, binding info doesn't match.");
+	NEP_ASSERT_ERR_MSG( DEBUG_CheckKeys(_info, m_textureBindingInfo), "Error, texture names are different.\nYou provided : %s\nWas expected : %s", 
+		DEBUG_ToString(_info).c_str(), DEBUG_ToString(m_textureBindingInfo).c_str());
+
+	m_textureBindingInfo = _info;
+}
+
+// Vector of {lastVertex, bindingPoint}
+void ModelSpawner::generateTextureBindingTable(std::vector<u32>& _table)
+{
+	_table.clear();
+
+	u32 i = 0;
+	for ( const auto& entry : m_textureBindingTable )
+	{
+		_table.push_back(entry.m_lastVertexIndex);
+
+		NEP_ASSERT( m_textureBindingInfo.find(entry.m_textureName) != m_textureBindingInfo.end() ); // Error, incoherent texture names
+		u8 binding = m_textureBindingInfo[entry.m_textureName];
+		_table.push_back(binding); // Get texture's binding point
+
+		i++;
+	}
 }

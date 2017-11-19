@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Graphics/Spawners/ViewSpawner.h"
+#include <unordered_map>
 #include <string> // WIP
 
 
@@ -36,6 +37,15 @@ namespace Neptune
 		virtual ModelSpawner& operator=(const ModelSpawner&)	= delete;
 		virtual ModelSpawner& operator=(ModelSpawner&&)			= delete;
 
+		//
+		// M O D E L ' S   T E X T U R E   M A N A G E M E N T   M E T H O D S
+		//
+
+		//void getTextureBindingInfo(std::unordered_map<const char*, u8>& _info)			const;
+		void getTextureBindingInfo(std::unordered_map<std::string, u8>& _info)			const;
+		//void setTextureBindingInfo(const std::unordered_map<const char*, u8>& _info);
+		void setTextureBindingInfo(const std::unordered_map<std::string, u8>& _info);
+		void generateTextureBindingTable(std::vector<u32>& _table);
 
 		//
 		// P U R E   V I R T U A L   M E T H O D S 
@@ -53,6 +63,13 @@ namespace Neptune
 		View* createViewAndSetUpRenderParameters() override;
 
 	private:
+		struct BindingInfo
+		{
+			std::string	m_textureName;
+			//const char* m_textureName	= nullptr;
+			u8			m_binding		= 0;
+		};
+
 		/// \brief	Contains information to choose which texture to sample from
 		///			for each and every vertex.
 		///	\Note	This struct is supposed to be contained in array.
@@ -67,11 +84,21 @@ namespace Neptune
 			u8	m_textureBinding;		/// Texture binding number to use for the current vertex
 		};
 
+		struct BindingMap
+		{
+			u32			m_lastVertexIndex;
+			std::string m_textureName;
+		};
+
+		std::string							m_modelWorkingDir;
+		std::unordered_map<std::string, u8>	m_textureBindingInfo;	/// key : texture's name, value : binding point
+		std::vector<BindingMap>				m_textureBindingTable;	/// Table to map a texture to a vertex
+		// Debug
+		std::vector<TextureIndex>		m_textureIndices;
+		std::vector<std::string>		m_textureNames;	// Binds a texture name to a binding point. Could be good to create an inner class with resolveTextureBinding
+
 		u32								m_nbVerticesToRender;
 		Renderer::DrawingPrimitive		m_drawingPrimitive;
-		std::string						m_modelWorkingDir;
-		std::vector<std::string>		m_textureBindings;	// Binds a texture name to a binding point. Could be good to create an inner class with resolveTextureBinding
-		std::vector<TextureIndex>		m_textureIndices;
 		std::vector<u32>				m_vertexIndices;
 
 		u32 resolveTextureBindingPoint(const std::string& _textureName); // May add an element to m_textureBindings
