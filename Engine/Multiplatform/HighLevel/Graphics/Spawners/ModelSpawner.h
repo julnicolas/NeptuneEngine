@@ -42,9 +42,9 @@ namespace Neptune
 		//
 
 		//void getTextureBindingInfo(std::unordered_map<const char*, u8>& _info)			const;
-		void getTextureBindingInfo(std::unordered_map<std::string, u8>& _info)			const;
+		void getTextureBindingPoints(std::unordered_map<std::string, u8>& _bindingPoints)			const;
 		//void setTextureBindingInfo(const std::unordered_map<const char*, u8>& _info);
-		void setTextureBindingInfo(const std::unordered_map<std::string, u8>& _info);
+		void setTextureBindingPoints(const std::unordered_map<std::string, u8>& _bindingPoints);
 		void generateTextureBindingTable(std::vector<u32>& _table);
 
 		//
@@ -63,41 +63,31 @@ namespace Neptune
 		View* createViewAndSetUpRenderParameters() override;
 
 	private:
-		struct BindingInfo
-		{
-			std::string	m_textureName;
-			//const char* m_textureName	= nullptr;
-			u8			m_binding		= 0;
-		};
+		using TextureName	= std::string;
+		using BindingPoint	= u8;
 
-		/// \brief	Contains information to choose which texture to sample from
-		///			for each and every vertex.
-		///	\Note	This struct is supposed to be contained in array.
-		struct TextureIndex
+		/// Entry in the texture binding table
+		/// A texture binding table is a table that maps vertices to a texture
+		/// for sampling from shaders.
+		struct TextureBindingTableEntry
 		{
 			/// \brief		Value used to choose which texture to sample from for the current vertex.
 			///				Read the following example for further information.
-			/// \example	Let us consider an array of TextureIndex called tindex.
+			/// \example	Let us consider an array of TextureBindingTableEntry called tindex.
 			///				If tindex[i-1].m_lastTextureIndex < vertex_id <= tindex[i].m_lastTextureIndex
-			///				then use texture whose texture binding is tindex[i].m_textureBinding.
-			u32	m_lastTextureIndex;
-			u8	m_textureBinding;		/// Texture binding number to use for the current vertex
+			///				then use texture whose texture binding is m_textureBindingPoints[tindex[i].m_textureName].
+			u32				m_lastVertexIndex;
+			std::string		m_textureName;		/// Texture name. Used as a key to get texture's binding point from m_textureBindingPoints.
 		};
 
-		struct BindingMap
-		{
-			u32			m_lastVertexIndex;
-			std::string m_textureName;
-		};
+		std::string										m_modelWorkingDir;
+		std::unordered_map<TextureName, BindingPoint>	m_textureBindingPoints;	/// key : texture's name, value : binding point
+		std::vector<TextureBindingTableEntry>			m_textureBindingTable;	/// Table to map a texture to a vertex
+		std::vector<std::string>						m_textureNames;
 
-		std::string							m_modelWorkingDir;
-		std::unordered_map<std::string, u8>	m_textureBindingInfo;	/// key : texture's name, value : binding point
-		std::vector<BindingMap>				m_textureBindingTable;	/// Table to map a texture to a vertex
-		std::vector<std::string>			m_textureNames;
-
-		u32								m_nbVerticesToRender;
-		Renderer::DrawingPrimitive		m_drawingPrimitive;
-		std::vector<u32>				m_vertexIndices;
+		u32												m_nbVerticesToRender;
+		Renderer::DrawingPrimitive						m_drawingPrimitive;
+		std::vector<u32>								m_vertexIndices;
 
 		u32 resolveTextureBindingPoint(const std::string& _textureName); // May add an element to m_textureBindings
 		void generateDefaultTextureBinding(u32 _meshLastIndex, const char* _textureRelativePathFromModel);

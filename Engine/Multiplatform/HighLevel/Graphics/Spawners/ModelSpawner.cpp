@@ -413,18 +413,18 @@ static std::string DEBUG_ToString(const std::unordered_map<std::string, u8>& _ma
 	return stream.str();
 }
 
-void ModelSpawner::getTextureBindingInfo(std::unordered_map<std::string, u8>& _info) const
+void ModelSpawner::getTextureBindingPoints(std::unordered_map<std::string, u8>& _bindingPoints) const
 {
-	_info = m_textureBindingInfo;
+	_bindingPoints = m_textureBindingPoints;
 }
 
-void ModelSpawner::setTextureBindingInfo(const std::unordered_map<std::string, u8>& _info)
+void ModelSpawner::setTextureBindingPoints(const std::unordered_map<std::string, u8>& _bindingPoints)
 {
-	NEP_ASSERT_ERR_MSG(_info.size() == m_textureBindingInfo.size(), "Error, binding info doesn't match.");
-	NEP_ASSERT_ERR_MSG( DEBUG_CheckKeys(_info, m_textureBindingInfo), "Error, texture names are different.\nYou provided : %s\nWas expected : %s", 
-		DEBUG_ToString(_info).c_str(), DEBUG_ToString(m_textureBindingInfo).c_str());
+	NEP_ASSERT_ERR_MSG(_bindingPoints.size() == m_textureBindingPoints.size(), "Error, binding info doesn't match.");
+	NEP_ASSERT_ERR_MSG( DEBUG_CheckKeys(_bindingPoints, m_textureBindingPoints), "Error, texture names are different.\nYou provided : %s\nWas expected : %s", 
+		DEBUG_ToString(_bindingPoints).c_str(), DEBUG_ToString(m_textureBindingPoints).c_str());
 
-	m_textureBindingInfo = _info;
+	m_textureBindingPoints = _bindingPoints;
 }
 
 void ModelSpawner::generateDefaultTextureBinding(u32 _meshLastIndex, const char* _textureRelativePathFromModel)
@@ -434,10 +434,10 @@ void ModelSpawner::generateDefaultTextureBinding(u32 _meshLastIndex, const char*
 	std::string texture_relative_path = m_modelWorkingDir + std::string(_textureRelativePathFromModel);
 
 	// Map texture name to binding point
-	m_textureBindingInfo[texture_relative_path] = resolveTextureBindingPoint(texture_relative_path.c_str());
+	m_textureBindingPoints[texture_relative_path] = resolveTextureBindingPoint(texture_relative_path.c_str());
 
 	// Map last vertex for sampling current texture to texture name
-	BindingMap binding_map;
+	TextureBindingTableEntry binding_map;
 	binding_map.m_textureName		= texture_relative_path;
 	binding_map.m_lastVertexIndex	= _meshLastIndex;
 	m_textureBindingTable.push_back(binding_map);
@@ -453,8 +453,8 @@ void ModelSpawner::generateTextureBindingTable(std::vector<u32>& _table)
 	{
 		_table.push_back(entry.m_lastVertexIndex);
 
-		NEP_ASSERT( m_textureBindingInfo.find(entry.m_textureName) != m_textureBindingInfo.end() ); // Error, incoherent texture names
-		u8 binding = m_textureBindingInfo[entry.m_textureName];
+		NEP_ASSERT( m_textureBindingPoints.find(entry.m_textureName) != m_textureBindingPoints.end() ); // Error, incoherent texture names
+		u8 binding = m_textureBindingPoints[entry.m_textureName];
 		_table.push_back(binding); // Get texture's binding point
 
 		i++;
