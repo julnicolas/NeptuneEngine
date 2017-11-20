@@ -276,19 +276,6 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 
 			/////////////////////////////////////////////
 
-			//////////////////// DEBUG
-			// Set texture binding
-			TextureIndex t_index;
-			t_index.m_lastTextureIndex	= mesh_last_index;
-			t_index.m_textureBinding	= resolveTextureBindingPoint(texture_realtive_path.c_str());
-
-			// Add texture binding
-			m_textureIndices.push_back(t_index);
-
-			// Sort in vertex order for easier processing from vertex shaders
-			std::sort( m_textureIndices.begin(), m_textureIndices.end(), [](const TextureIndex& t1, const TextureIndex& t2){ return t1.m_lastTextureIndex < t2.m_lastTextureIndex; } );
-			///////////////////////////////////////////////
-
 			NEP_ASSERT_ERR_MSG( texture_mapping == aiTextureMapping_UV, "Only UV Mapping is supported at the moment. Current mapping mode is %u", texture_mapping );
 			NEP_ASSERT_ERR_MSG( get_texture_error == aiReturn_SUCCESS, "Texture couldn't be accessed" );
 		}

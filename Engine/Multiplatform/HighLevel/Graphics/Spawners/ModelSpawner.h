@@ -93,9 +93,7 @@ namespace Neptune
 		std::string							m_modelWorkingDir;
 		std::unordered_map<std::string, u8>	m_textureBindingInfo;	/// key : texture's name, value : binding point
 		std::vector<BindingMap>				m_textureBindingTable;	/// Table to map a texture to a vertex
-		// Debug
-		std::vector<TextureIndex>		m_textureIndices;
-		std::vector<std::string>		m_textureNames;	// Binds a texture name to a binding point. Could be good to create an inner class with resolveTextureBinding
+		std::vector<std::string>			m_textureNames;
 
 		u32								m_nbVerticesToRender;
 		Renderer::DrawingPrimitive		m_drawingPrimitive;
