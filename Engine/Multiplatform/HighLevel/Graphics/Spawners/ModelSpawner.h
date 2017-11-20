@@ -41,10 +41,26 @@ namespace Neptune
 		// M O D E L ' S   T E X T U R E   M A N A G E M E N T   M E T H O D S
 		//
 
-		//void getTextureBindingInfo(std::unordered_map<const char*, u8>& _info)			const;
+		/// Retrieves an unordered_map of {texture path, binding point}
 		void getTextureBindingPoints(std::unordered_map<std::string, u8>& _bindingPoints)			const;
-		//void setTextureBindingInfo(const std::unordered_map<const char*, u8>& _info);
+		//void getTextureBindingInfo(std::unordered_map<const char*, u8>& _info)			const;
+
+		/// Sets new binding points for textures. One should call getTextureBindingPoints() first to get the base information.
+		/// \example	std::unordered_map<std::string, u8> binding_points;
+		///				getTextureBindingPoints(binding_points);	// Returns [{"Resources/a.png" : 0}, {"b.png" : 1}]
+		///				binding_points["b.png"] = 3;				// Useful if b.png is already used for rendering and bound to index 3
+		///				setTextureBindingPoints(binding_points);
 		void setTextureBindingPoints(const std::unordered_map<std::string, u8>& _bindingPoints);
+		//void setTextureBindingInfo(const std::unordered_map<const char*, u8>& _info);
+
+		/// \brief		Generates a table with the following format - {last_vertex, binding_point}.
+		///				Where last_vertex is the index of the last vertex to be used with the texture 
+		///				at binding point binding_point.
+		/// \note		This table is used by shaders implementing diffuse multi-texturing.
+		///
+		/// \example	Let us consider a table called bindings.
+		///				If bindings[0] < vertex_id <= bindings[2]
+		///				then use texture whose texture binding is bindings[3].
 		void generateTextureBindingTable(std::vector<u32>& _table);
 
 		//
