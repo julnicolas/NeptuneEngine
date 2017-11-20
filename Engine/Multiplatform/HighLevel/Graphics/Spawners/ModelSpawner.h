@@ -100,6 +100,9 @@ namespace Neptune
 		std::vector<u32>				m_vertexIndices;
 
 		u32 resolveTextureBindingPoint(const std::string& _textureName); // May add an element to m_textureBindings
+		void generateDefaultTextureBinding(u32 _meshLastIndex, const char* _textureRelativePathFromModel);
+		
+		
 		void fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation);
 		void ProcessMeshes(const aiScene* _scene, aiNode* _node);
 		void PostFixDepthSearch(const aiScene* _scene, aiNode* _root);

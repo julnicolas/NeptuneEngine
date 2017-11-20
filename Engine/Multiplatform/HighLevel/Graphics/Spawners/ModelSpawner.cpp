@@ -262,19 +262,7 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 																&uv_index
 															);
 			
-			//////////////// TEXTURE BINDING SETUP
-			std::string texture_realtive_path = m_modelWorkingDir + std::string(texture_relative_path_from_model.C_Str());
-
-			// Map texture name to binding point
-			m_textureBindingInfo[texture_realtive_path] = resolveTextureBindingPoint(texture_realtive_path.c_str());
-
-			// Map last vertex for sampling current texture to texture name
-			BindingMap binding_map;
-			binding_map.m_textureName		= texture_realtive_path;
-			binding_map.m_lastVertexIndex	= mesh_last_index;
-			m_textureBindingTable.push_back(binding_map);
-
-			/////////////////////////////////////////////
+			generateDefaultTextureBinding(mesh_last_index, texture_relative_path_from_model.C_Str());
 
 			NEP_ASSERT_ERR_MSG( texture_mapping == aiTextureMapping_UV, "Only UV Mapping is supported at the moment. Current mapping mode is %u", texture_mapping );
 			NEP_ASSERT_ERR_MSG( get_texture_error == aiReturn_SUCCESS, "Texture couldn't be accessed" );
@@ -437,6 +425,22 @@ void ModelSpawner::setTextureBindingInfo(const std::unordered_map<std::string, u
 		DEBUG_ToString(_info).c_str(), DEBUG_ToString(m_textureBindingInfo).c_str());
 
 	m_textureBindingInfo = _info;
+}
+
+void ModelSpawner::generateDefaultTextureBinding(u32 _meshLastIndex, const char* _textureRelativePathFromModel)
+{
+	NEP_ASSERT(_textureRelativePathFromModel != nullptr); // Error, Invalid path
+
+	std::string texture_relative_path = m_modelWorkingDir + std::string(_textureRelativePathFromModel);
+
+	// Map texture name to binding point
+	m_textureBindingInfo[texture_relative_path] = resolveTextureBindingPoint(texture_relative_path.c_str());
+
+	// Map last vertex for sampling current texture to texture name
+	BindingMap binding_map;
+	binding_map.m_textureName		= texture_relative_path;
+	binding_map.m_lastVertexIndex	= _meshLastIndex;
+	m_textureBindingTable.push_back(binding_map);
 }
 
 // Vector of {lastVertex, bindingPoint}
