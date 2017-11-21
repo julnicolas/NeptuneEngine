@@ -105,7 +105,8 @@ namespace Neptune
 		Renderer::DrawingPrimitive						m_drawingPrimitive;
 		std::vector<u32>								m_vertexIndices;
 
-		u32 resolveTextureBindingPoint(const std::string& _textureName); // May add an element to m_textureBindings
+		void FillTextureData(const aiMesh* _mesh, const aiMaterial* _material, u32 _lastIndex); /// _lastIndex : vertex index until which the texture must be applied
+		u32  resolveTextureBindingPoint(const std::string& _textureName); // May add an element to m_textureBindings
 		void generateDefaultTextureBinding(u32 _meshLastIndex, const char* _textureRelativePathFromModel);
 		
 		

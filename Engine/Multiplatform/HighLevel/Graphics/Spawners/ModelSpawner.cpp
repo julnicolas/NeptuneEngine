@@ -143,39 +143,13 @@ void ModelSpawner::ProcessMeshes(const aiScene* _scene, aiNode* _node)
 	}
 }
 
-void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation)
+static void FillVertexData(const aiMesh* _mesh, const aiMatrix4x4& _transformation, std::vector<float>& _vertices, u32& _nbVerticesToRender)
 {
-	// check rendering primitive
-	// just triangles are supported at the moment
-	NEP_ASSERT_ERR_MSG( !(_mesh->mPrimitiveTypes & aiPrimitiveType_POINT) &&
-						!(_mesh->mPrimitiveTypes & aiPrimitiveType_LINE)  &&
-						!(_mesh->mPrimitiveTypes & aiPrimitiveType_POLYGON), "Only triangles are supported.");
+	u32			num_faces			= _mesh->mNumFaces;
+	const u32	num_vertices		= _mesh->mNumVertices;
+	const u32	positions_length	= num_vertices*3;
+	float*		positions			= new float[positions_length];
 	
-	NEP_ASSERT_ERR_MSG((_mesh->mPrimitiveTypes & aiPrimitiveType_TRIANGLE) != 0, "Error, no drawing primitive has been provided. Check your model file.");
-
-	u32 num_faces			= _mesh->mNumFaces;		// Number of primitives present in the mesh (triangles, lines, points)
-	u32 num_vertices		= _mesh->mNumVertices;
-	m_nbVerticesToRender	+= num_faces * 3;		// A face is made up of 3 vertices
-
-	static u32 total_num_vertices = -1;
-	total_num_vertices += num_vertices;
-
-	const u32 positions_length	= num_vertices*3;
-	const u32 colors_length		= num_vertices;
-	const u32 indices_length	= num_faces*3;
-	const u32 normals_length	= num_vertices*3;
-	const u32 texture_lenght	= num_vertices*2;
-	float*  positions			= new float[positions_length];
-	Color*	colors				= new Color[colors_length];
-	float*  indices_array		= new float[indices_length];
-	float*  normals				= new float[normals_length];
-	float*	tex_coords			= new float[texture_lenght];
-
-	// Texture indexing
-	u32 mesh_first_index = m_vertices.size()/3 - 1;			// divided by 3 because we want the number of sets of x,y,z coordinates.
-	u32 mesh_last_index  = mesh_first_index + num_vertices;
-	////
-
 	// Populate the vertex buffer
 	for (u32 i = 0, j = 0; i < num_vertices; i++, j +=3)
 	{
@@ -185,29 +159,48 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 		positions[j+1] = pos.y;
 		positions[j+2] = pos.z;
 	}
-	m_vertices.insert(m_vertices.cend(), positions, positions + positions_length);
+	_vertices.insert(_vertices.cend(), positions, positions + positions_length);
 
-	// Populate the index buffer
+	// Set number of vertices to render
+	_nbVerticesToRender	+= num_faces * 3;		// A face is made up of 3 vertices
+
+	// Clean up
+	delete[] positions;
+}
+
+static void FillVertexIndexData(const aiMesh* _mesh, std::vector<u32>& _vertexIndices)
+{
+	const u32	num_faces		= _mesh->mNumFaces;		// Number of primitives present in the mesh (triangles, lines, points)
+	const u32	indices_length	= num_faces*3;
+	u32*		indices_array	= new u32[indices_length];
+	
+	u32 face_index_in_array = 0;
+	for (u32 face_index = 0; face_index < num_faces; face_index++)
 	{
-		u32 face_index_in_array = 0;
-		for (u32 face_index = 0; face_index < num_faces; face_index++)
-		{
-			// The model is broken down into faces; set of vertices which 
-			// represent a geometrical surface. A triangle if mesh->mPrimitiveTypes
-			// is aiPrimitiveType_TRIANGLE.
-			// Each vertex is referenced by an index (position in mesh->mVertices).
-			u32  num_indices	= _mesh->mFaces[face_index].mNumIndices;
-			u32* indices		= _mesh->mFaces[face_index].mIndices;
+		// The model is broken down into faces; set of vertices which 
+		// represent a geometrical surface. A triangle if mesh->mPrimitiveTypes
+		// is aiPrimitiveType_TRIANGLE.
+		// Each vertex is referenced by an index (position in mesh->mVertices).
+		u32  num_indices	= _mesh->mFaces[face_index].mNumIndices;
+		u32* indices		= _mesh->mFaces[face_index].mIndices;
 
 
-			for (u32 i = 0; i < num_indices; i++)
-				indices_array[face_index_in_array+i] = indices[i];
+		for (u32 i = 0; i < num_indices; i++)
+			indices_array[face_index_in_array+i] = indices[i];
 
-			face_index_in_array += num_indices;
-		}
-		m_vertexIndices.insert(m_vertexIndices.cend(), indices_array, indices_array+indices_length);
+		face_index_in_array += num_indices;
 	}
+	_vertexIndices.insert(_vertexIndices.cend(), indices_array, indices_array+indices_length);
 
+	delete[] indices_array;
+}
+
+static void FillColorData(const aiMesh* _mesh, std::vector<Color>& _colors)
+{
+	const u32 num_vertices		= _mesh->mNumVertices;
+	const u32 colors_length		= num_vertices;
+	Color*	colors				= new Color[colors_length];
+	
 	// Populate the color buffer
 	if ( *(_mesh->mColors) != nullptr )
 	{
@@ -224,13 +217,21 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 				c.b = _mesh->mColors[color_set_index][i].b;
 				c.a = _mesh->mColors[color_set_index][i].a;
 
-				//m_colors.push_back(c);
 				colors[i] = c;
 			}
 		}
 	}
-	m_colors.insert(m_colors.cend(), colors, colors + colors_length);
+	_colors.insert(_colors.cend(), colors, colors + colors_length);
 
+	delete[] colors;
+}
+
+static void FillNormalData(const aiMesh* _mesh, std::vector<float>& _normals)
+{
+	const u32 num_vertices		= _mesh->mNumVertices;
+	const u32 normals_length	= num_vertices*3;
+	float*  normals				= new float[normals_length];
+	
 	// Populate the normal buffer
 	if ( _mesh->mNormals != nullptr )
 	{
@@ -241,7 +242,16 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 			normals[j+2] = _mesh->mNormals[i].z;
 		}
 	}
-	m_normals.insert(m_normals.cend(), normals, normals + normals_length);
+	_normals.insert(_normals.cend(), normals, normals + normals_length);
+
+	delete[] normals;
+}
+
+void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _material, u32 _lastIndex)
+{
+	const u32 num_vertices		= _mesh->mNumVertices;
+	const u32 texture_lenght	= num_vertices*2;
+	float*	tex_coords			= new float[texture_lenght];
 
 	// Populate the texture coordinates buffer
 	if ( _mesh->mTextureCoords != nullptr )
@@ -262,7 +272,7 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 																&uv_index
 															);
 			
-			generateDefaultTextureBinding(mesh_last_index, texture_relative_path_from_model.C_Str());
+			generateDefaultTextureBinding(_lastIndex, texture_relative_path_from_model.C_Str());
 
 			NEP_ASSERT_ERR_MSG( texture_mapping == aiTextureMapping_UV, "Only UV Mapping is supported at the moment. Current mapping mode is %u", texture_mapping );
 			NEP_ASSERT_ERR_MSG( get_texture_error == aiReturn_SUCCESS, "Texture couldn't be accessed" );
@@ -283,11 +293,30 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 	}
 	m_2DTexCoords.insert(m_2DTexCoords.cend(), tex_coords, tex_coords + texture_lenght);
 
-	delete[] positions;		
-	delete[] colors;			
-	delete[] indices_array;
-	delete[] normals;
 	delete[] tex_coords;
+}
+
+void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation)
+{
+	// check rendering primitive
+	// just triangles are supported at the moment
+	NEP_ASSERT_ERR_MSG( !(_mesh->mPrimitiveTypes & aiPrimitiveType_POINT) &&
+						!(_mesh->mPrimitiveTypes & aiPrimitiveType_LINE)  &&
+						!(_mesh->mPrimitiveTypes & aiPrimitiveType_POLYGON), "Only triangles are supported.");
+	
+	NEP_ASSERT_ERR_MSG((_mesh->mPrimitiveTypes & aiPrimitiveType_TRIANGLE) != 0, "Error, no drawing primitive has been provided. Check your model file.");
+
+	// Texture indexing
+	// Get current mesh's first vertex's index and
+	// Get current mesh's last vertex's index
+	u32 mesh_first_index = static_cast<u32>(m_vertices.size())/3 - 1;			// divided by 3 because we want the number of sets of x,y,z coordinates.
+	u32 mesh_last_index  = mesh_first_index + _mesh->mNumVertices;
+
+	FillVertexData(_mesh, _transformation, m_vertices, m_nbVerticesToRender);
+	FillVertexIndexData(_mesh, m_vertexIndices);
+	FillColorData(_mesh, m_colors);
+	FillNormalData(_mesh,m_normals);
+	FillTextureData(_mesh, _material, mesh_last_index);
 }
 
 ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
@@ -375,18 +404,13 @@ u32 ModelSpawner::resolveTextureBindingPoint(const std::string& _textureName)
 	}
 
 	// Texture doesn't have a binding point yet
-	m_textureNames.push_back(_textureName);	// Allocating a binding point
-	return m_textureNames.size()-1;			// Retrieve the binding point
+	m_textureNames.push_back(_textureName);				// Allocating a binding point
+	return static_cast<u32>(m_textureNames.size())-1;	// Retrieve the binding point
 }
 
 // Returns true if every key matches
 static bool DEBUG_CheckKeys(const std::unordered_map<std::string, u8>& _map1, const std::unordered_map<std::string, u8>& _map2)
 {
-#ifdef NEP_FINAL
-	NEP_STATIC_ASSERT(false, "Error: Debug function is called in Final config.");
-	return false; // Shouldn't be called at all;
-#endif
-
 	auto it1_end = _map1.cend();
 	auto it2_end = _map2.cend();
 
