@@ -138,6 +138,8 @@ void ModelSpawner::ProcessMeshes(const aiScene* _scene, aiNode* _node)
 
 static void FillVertexData(const aiMesh* _mesh, const aiMatrix4x4& _transformation, std::vector<float>& _vertices, u32& _nbVerticesToRender)
 {
+	NEP_ASSERT(_mesh != nullptr); // Error, wrong pointer
+
 	u32			num_faces			= _mesh->mNumFaces;
 	const u32	num_vertices		= _mesh->mNumVertices;
 	const u32	positions_length	= num_vertices*3;
@@ -163,6 +165,8 @@ static void FillVertexData(const aiMesh* _mesh, const aiMatrix4x4& _transformati
 
 static void FillVertexIndexData(const aiMesh* _mesh, std::vector<u32>& _vertexIndices)
 {
+	NEP_ASSERT(_mesh != nullptr); // Error, wrong pointer
+	
 	const u32	num_faces		= _mesh->mNumFaces;		// Number of primitives present in the mesh (triangles, lines, points)
 	const u32	indices_length	= num_faces*3;
 	u32*		indices_array	= new u32[indices_length];
@@ -190,6 +194,8 @@ static void FillVertexIndexData(const aiMesh* _mesh, std::vector<u32>& _vertexIn
 
 static void FillColorData(const aiMesh* _mesh, std::vector<Color>& _colors)
 {
+	NEP_ASSERT(_mesh != nullptr); // Error, wrong pointer
+	
 	const u32 num_vertices		= _mesh->mNumVertices;
 	const u32 colors_length		= num_vertices;
 	Color*	colors				= new Color[colors_length];
@@ -221,6 +227,8 @@ static void FillColorData(const aiMesh* _mesh, std::vector<Color>& _colors)
 
 static void FillNormalData(const aiMesh* _mesh, std::vector<float>& _normals)
 {
+	NEP_ASSERT(_mesh != nullptr); // Error, wrong pointer
+	
 	const u32 num_vertices		= _mesh->mNumVertices;
 	const u32 normals_length	= num_vertices*3;
 	float*  normals				= new float[normals_length];
@@ -242,6 +250,8 @@ static void FillNormalData(const aiMesh* _mesh, std::vector<float>& _normals)
 
 void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _material, u32 _lastIndex)
 {
+	NEP_ASSERT(_mesh != nullptr);		// Error, wrong pointer
+	
 	const u32 num_vertices		= _mesh->mNumVertices;
 	const u32 texture_lenght	= num_vertices*2;
 	float*	tex_coords			= new float[texture_lenght];
@@ -291,6 +301,8 @@ void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _mater
 
 void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation)
 {
+	NEP_ASSERT(_mesh != nullptr); // Error, wrong pointer
+	
 	// check rendering primitive
 	// just triangles are supported at the moment
 	NEP_ASSERT_ERR_MSG( !(_mesh->mPrimitiveTypes & aiPrimitiveType_POINT) &&
