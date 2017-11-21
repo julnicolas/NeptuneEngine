@@ -411,12 +411,12 @@ u32 ModelSpawner::resolveTextureBindingPoint(const std::string& _textureName)
 // Returns true if every key matches
 static bool DEBUG_CheckKeys(const std::unordered_map<std::string, u8>& _map1, const std::unordered_map<std::string, u8>& _map2)
 {
-	auto it1_end = _map1.cend();
-	auto it2_end = _map2.cend();
-
-	for ( auto it1 = _map1.cbegin(), it2 = _map2.cbegin(); it1 != it1_end && it2 != it2_end; ++it1, ++it2  )
+	// Check that every key is found only once. Since it is sure both containers have the same size (determined in caller function)
+	// then it is possible to conclude that both containers have exactly the same keys.
+	// If container sizes are different, it means that _map2 has the exact same keys as _map1, plus potentially others.
+	for (const auto& entry : _map1)
 	{
-		if ( it1->first != it2->first )
+		if ( _map2.count(entry.first) != 1 )
 			return false;
 	}
 
@@ -430,10 +430,11 @@ static std::string DEBUG_ToString(const std::unordered_map<std::string, u8>& _ma
 
 	for (const auto& entry : _map1)
 	{
-		stream << "{" << entry.first << " : " << entry.second << "}, ";
+		stream << "{" << entry.first << " : " << std::to_string(entry.second) << "}, ";
 	}
 	stream << "]";
 
+	std::string str = stream.str();
 	return stream.str();
 }
 
