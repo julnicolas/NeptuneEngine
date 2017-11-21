@@ -127,19 +127,12 @@ void ModelSpawner::ProcessMeshes(const aiScene* _scene, aiNode* _node)
 	NEP_ASSERT( _scene != nullptr ); // Error invalid pointer
 	NEP_ASSERT( _node  != nullptr ); // Error, invalid pointer
 	
-	//const u32 NB_ITER = 4;
-	//static u32 j = 0;
-
 	u32 num_meshes = _node->mNumMeshes;
 	for ( u32 i = 0; i < num_meshes; i++ )
 	{
-		//if ( j < NB_ITER)
-		//{
 			u32 mesh_index = _node->mMeshes[i];
 			aiMesh* mesh = _scene->mMeshes[mesh_index]; 
 			fillMeshData( mesh, GetMaterial(_scene, mesh), _node->mTransformation );
-			//j++;
-		//}
 	}
 }
 
