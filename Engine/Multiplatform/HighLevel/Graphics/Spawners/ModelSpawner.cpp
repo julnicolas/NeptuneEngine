@@ -70,18 +70,6 @@ void ModelSpawner::PostFixDepthSearch(const aiScene* _scene, aiNode* _root)
 	} while ( node.m_node != nullptr ); // Have we processed the whole tree?
 }
 
-void ModelSpawner::BrutForceSearch(const aiScene* _scene, aiNode* _root)
-{
-	aiMatrix4x4 I;
-
-	u32 num_meshes = _scene->mNumMeshes;
-	for (u32 i = 0; i < num_meshes; i++)
-	{
-		aiMesh* mesh = _scene->mMeshes[i]; 
-		fillMeshData( mesh, GetMaterial(_scene, mesh), I );
-	}
-}
-
 void ModelSpawner::PreFixDepthSearch(const aiScene* _scene, aiNode* _root)
 {
 	NEP_ASSERT( _root  != nullptr ); // Error invalid pointer
@@ -399,18 +387,18 @@ void ModelSpawner::createVertexData()
 }
 
 // Binding point retrieved is the position of _textureName in m_textureNames
-u32 ModelSpawner::resolveTextureBindingPoint(const std::string& _textureName)
+static u32 ResolveTextureBindingPoint(std::vector<std::string>& _textureNameList, const std::string& _textureName)
 {
 	// Does the texture have a binding point allocated?
-	for (u32 i = 0; i < m_textureNames.size(); i++)
+	for (u32 i = 0; i < _textureNameList.size(); i++)
 	{
-		if (m_textureNames[i] == _textureName)
+		if (_textureNameList[i] == _textureName)
 			return i;	// Yes, return it
 	}
 
 	// Texture doesn't have a binding point yet
-	m_textureNames.push_back(_textureName);				// Allocating a binding point
-	return static_cast<u32>(m_textureNames.size())-1;	// Retrieve the binding point
+	_textureNameList.push_back(_textureName);				// Allocating a binding point
+	return static_cast<u32>(_textureNameList.size())-1;	// Retrieve the binding point
 }
 
 // Returns true if every key matches
@@ -464,7 +452,7 @@ void ModelSpawner::generateDefaultTextureBinding(u32 _meshLastIndex, const char*
 	std::string texture_relative_path = m_modelWorkingDir + std::string(_textureRelativePathFromModel);
 
 	// Map texture name to binding point
-	m_textureBindingPoints[texture_relative_path] = resolveTextureBindingPoint(texture_relative_path.c_str());
+	m_textureBindingPoints[texture_relative_path] = ResolveTextureBindingPoint(m_textureNames, texture_relative_path.c_str());
 
 	// Map last vertex for sampling current texture to texture name
 	TextureBindingTableEntry binding_map;
