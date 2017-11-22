@@ -105,13 +105,11 @@ namespace Neptune
 		Renderer::DrawingPrimitive						m_drawingPrimitive;
 		std::vector<u32>								m_vertexIndices;
 
+		// Mesh traversing and buffer filling
+		void PostFixDepthSearch(const aiScene* _scene, aiNode* _root);
+		void ProcessMeshes(const aiScene* _scene, aiNode* _node);
+		void fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation);
 		void FillTextureData(const aiMesh* _mesh, const aiMaterial* _material, u32 _lastIndex);				/// _lastIndex : vertex index until which the texture must be applied
 		void generateDefaultTextureBinding(u32 _meshLastIndex, const char* _textureRelativePathFromModel);
-		
-		
-		void fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation);
-		void ProcessMeshes(const aiScene* _scene, aiNode* _node);
-		void PostFixDepthSearch(const aiScene* _scene, aiNode* _root);
-		void PreFixDepthSearch(const aiScene* _scene, aiNode* _root);
 	};
 }

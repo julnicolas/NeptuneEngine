@@ -70,46 +70,6 @@ void ModelSpawner::PostFixDepthSearch(const aiScene* _scene, aiNode* _root)
 	} while ( node.m_node != nullptr ); // Have we processed the whole tree?
 }
 
-void ModelSpawner::PreFixDepthSearch(const aiScene* _scene, aiNode* _root)
-{
-	NEP_ASSERT( _root  != nullptr ); // Error invalid pointer
-	NEP_ASSERT( _scene != nullptr ); // Error invalid pointer
-	
-	std::stack<Node, std::vector<Node>> stack;
-	Node node;
-	node.m_node			= _root;
-	node.m_childIndex	= 0;
-
-	unsigned int depth = 0;
-	do 
-	{
-		if ( node.m_childIndex == 0 )
-				ProcessMeshes( _scene, node.m_node );
-
-		u32 num_children = node.m_node->mNumChildren;
-		if ( num_children != 0 && node.m_childIndex < num_children )
-		{
-			node.m_childIndex++;
-			stack.push(node);
-
-			node.m_node = node.m_node->mChildren[node.m_childIndex-1];
-			node.m_childIndex = 0;
-			depth++;
-		}
-		else
-		{
-			if ( !stack.empty() ) // Get parent
-			{
-				node = stack.top();
-				stack.pop();
-				depth--;
-			}
-			else // we processed the root
-				node.m_node = nullptr;
-		}
-	} while ( node.m_node != nullptr ); // Have we processed the whole tree?
-}
-
 void ModelSpawner::ProcessMeshes(const aiScene* _scene, aiNode* _node)
 {
 	NEP_ASSERT( _scene != nullptr ); // Error invalid pointer
@@ -236,6 +196,22 @@ static void FillNormalData(const aiMesh* _mesh, std::vector<float>& _normals)
 	delete[] normals;
 }
 
+static void FormatTexturePath(std::string& _dst, const char* _path)
+{
+	NEP_ASSERT(_path != nullptr); // Error, invalid pointer
+	_dst = _path;
+
+	// Replace every \ by /
+
+
+	// Remove leading ./
+	if ( _dst[0] == '.' )
+	{
+		NEP_ASSERT_ERR_MSG(_dst[1] == '/', "Error, invalid texture path. Path == %s", _dst.c_str());
+		_dst.erase(0, 2);
+	}
+}
+
 void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _material, u32 _lastIndex)
 {
 	NEP_ASSERT(_mesh != nullptr);		// Error, wrong pointer
@@ -263,7 +239,9 @@ void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _mater
 																&uv_index
 															);
 			
-			generateDefaultTextureBinding(_lastIndex, texture_relative_path_from_model.C_Str());
+			std::string relative_path_from_model;
+			FormatTexturePath(relative_path_from_model, texture_relative_path_from_model.C_Str());
+			generateDefaultTextureBinding(_lastIndex, relative_path_from_model.c_str());
 
 			NEP_ASSERT_ERR_MSG( texture_mapping == aiTextureMapping_UV, "Only UV Mapping is supported at the moment. Current mapping mode is %u", texture_mapping );
 			NEP_ASSERT_ERR_MSG( get_texture_error == aiReturn_SUCCESS, "Texture couldn't be accessed" );
@@ -347,11 +325,8 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 	// P O P U L A T E   T H E   B U F F E R S
     
 	u32 num_meshses	= scene->mNumMeshes;
-	aiNode* node = scene->mRootNode;
-
-	//BrutForceSearch( scene, scene->mRootNode );
+	aiNode* node	= scene->mRootNode;
 	PostFixDepthSearch( scene, scene->mRootNode );
-	//PreFixDepthSearch( scene, scene->mRootNode );
 }
 
 View* ModelSpawner::createViewAndSetUpRenderParameters()
