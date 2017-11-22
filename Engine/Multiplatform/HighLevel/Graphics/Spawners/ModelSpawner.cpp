@@ -320,8 +320,8 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 	NEP_ASSERT(scene->mNumMeshes > 0); // Error the file doesn't define any mesh
 
 	// Set working directory
-	m_modelWorkingDir = _modelPath;
-	m_modelWorkingDir = m_modelWorkingDir.substr(0,m_modelWorkingDir.find_last_of('/')+1);
+	m_modelDir = _modelPath;
+	m_modelDir = m_modelDir.substr(0,m_modelDir.find_last_of('/')+1);
 
 	// P O P U L A T E   T H E   B U F F E R S
     
@@ -425,7 +425,7 @@ void ModelSpawner::generateDefaultTextureBinding(u32 _meshLastIndex, const char*
 {
 	NEP_ASSERT(_textureRelativePathFromModel != nullptr); // Error, Invalid path
 
-	std::string texture_relative_path = m_modelWorkingDir + std::string(_textureRelativePathFromModel);
+	std::string texture_relative_path = m_modelDir + std::string(_textureRelativePathFromModel);
 
 	// Map texture name to binding point
 	m_textureBindingPoints[texture_relative_path] = ResolveTextureBindingPoint(m_textureNames, texture_relative_path.c_str());
