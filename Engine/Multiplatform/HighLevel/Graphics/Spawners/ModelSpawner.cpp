@@ -201,15 +201,16 @@ static void FormatTexturePath(std::string& _dst, const char* _path)
 	NEP_ASSERT(_path != nullptr); // Error, invalid pointer
 	_dst = _path;
 
-	// Replace every \ by /
+	// Replace every '\' by '/'
+	std::replace_if(_dst.begin(), _dst.end(), [](char _c){return _c == '\\';}, '/' );
 
-
-	// Remove leading ./
+	// Remove leading '.'
 	if ( _dst[0] == '.' )
-	{
-		NEP_ASSERT_ERR_MSG(_dst[1] == '/', "Error, invalid texture path. Path == %s", _dst.c_str());
-		_dst.erase(0, 2);
-	}
+		_dst.erase(0, 1);
+
+	// Remove leading '/'
+	if ( _dst[0] == '/' )
+		_dst.erase(0, 1);
 }
 
 void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _material, u32 _lastIndex)
