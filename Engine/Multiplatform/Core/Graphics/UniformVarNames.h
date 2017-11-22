@@ -27,4 +27,10 @@
 ///			at binding point 0. Then pair <11, 1> meaning -
 ///			from vertices 6 to 11 use texture at binding
 ///			point 1.
+///
+/// \note	If you decide to use this uniform, then you must also use
+///			NEP_UNIVNAME_TEXTURE_BINDING_INDEX_ARRAY_SIZE.
 #define NEP_UNIVNAME_TEXTURE_BINDING_INDEX_ARRAY	"TextureBindingIndexArray"
+
+/// Size of NEP_UNIVNAME_TEXTURE_BINDING_INDEX_ARRAY
+#define NEP_UNIVNAME_TEXTURE_BINDING_INDEX_ARRAY_SIZE "TextureBindingIndexArraySize"

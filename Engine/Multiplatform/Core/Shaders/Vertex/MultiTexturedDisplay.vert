@@ -18,6 +18,7 @@ uniform mat4 Projection;
 // From 11 to last_vertex, it must be the second.
 uniform int TextureBindingIndexArray[26]; // i: vertex id, i+1: texture binding value
 
+
 int getCurrentTextureBinding()
 {
 	for (int i = 0; i < 26; i+=2)
@@ -28,6 +29,27 @@ int getCurrentTextureBinding()
 	
 	return 0; // error, the index array is misconfigured
 }
+
+
+// Solution using shader storage blocks (compiles)
+/*
+layout (std430, binding = 0) buffer IndexStruct
+{
+	int _size;
+	int _indexArray[];
+};
+
+int getCurrentTextureBinding()
+{
+	for (int i = 0; i < _size; i+=2)
+	{
+		if (gl_VertexID <= _indexArray[i])
+			return _indexArray[i+1];
+	}
+	
+	return 0; // error, the index array is misconfigured
+}
+*/
 
 void main()
 {
