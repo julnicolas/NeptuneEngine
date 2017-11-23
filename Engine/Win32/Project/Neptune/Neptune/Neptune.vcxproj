@@ -103,6 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -121,6 +122,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -141,6 +143,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;NEP_RELEASE;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -164,6 +167,7 @@
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;NEP_RELEASE;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -186,6 +190,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -208,6 +213,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
