@@ -399,6 +399,7 @@ static std::string DEBUG_ToString(const std::unordered_map<std::string, u8>& _ma
 
 	for (const auto& entry : _map1)
 	{
+		// to_string must be used to avoid (u8) 0 to be considered as '\0'
 		stream << "{" << entry.first << " : " << std::to_string(entry.second) << "}, ";
 	}
 	stream << "]";
