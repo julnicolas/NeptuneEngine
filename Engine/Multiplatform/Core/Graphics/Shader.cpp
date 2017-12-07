@@ -35,10 +35,22 @@ Neptune::Shader::Shader(const GLchar* file_name, GLuint shader_type):
 	glGetShaderiv(m_shader, GL_COMPILE_STATUS, &comp_status);
 	if ( comp_status != GL_TRUE )
 	{
-		NEP_LOG("Error. Shader hasn't been compiled successfully.");
-		NEP_LOG(code);
+		NEP_LOG("Error. Shader hasn't been compiled successfully.\nShader's name: %s\nCode:\n%s", file_name, code);
+		
+		// Get error message's size
+		int buffer_size = 0;
+		glGetShaderiv(m_shader, GL_INFO_LOG_LENGTH, &buffer_size);
+
+		// Get error message
+		char* buffer = new char[buffer_size];
+		int returned_buffer_length = 0;
+		glGetShaderInfoLog(m_shader, buffer_size, &returned_buffer_length, buffer);
+
+		// Print message
+		NEP_ASSERT_ERR_MSG(buffer_size == returned_buffer_length+1, "Log buffer mismatch - Could glGetShaderiv access the log's message length?");
+		NEP_LOG("Error message : %s ", buffer);
+		delete[] buffer;
 		NEP_ASSERT(false);
-		return;
 	}
 
 	// Cleaning out
