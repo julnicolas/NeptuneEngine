@@ -59,8 +59,8 @@ namespace Neptune
 		/// \note		This table is used by shaders implementing diffuse multi-texturing.
 		///
 		/// \example	Let us consider a table called bindings.
-		///				If bindings[0] < vertex_id <= bindings[2]
-		///				then use texture whose texture binding is bindings[3].
+		///				If bindings[0] < vertex_id <= bindings[1]
+		///				then use texture whose texture binding point is bindings[1].
 		void generateTextureBindingTable(std::vector<u32>& _table);
 
 		//
