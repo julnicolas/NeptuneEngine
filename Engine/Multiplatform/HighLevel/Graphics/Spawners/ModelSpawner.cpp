@@ -91,24 +91,20 @@ static void FillVertexData(const aiMesh* _mesh, const aiMatrix4x4& _transformati
 	u32			num_faces			= _mesh->mNumFaces;
 	const u32	num_vertices		= _mesh->mNumVertices;
 	const u32	positions_length	= num_vertices*3;
-	float*		positions			= new float[positions_length];
 	
 	// Populate the vertex buffer
+	_vertices.reserve(positions_length);
 	for (u32 i = 0, j = 0; i < num_vertices; i++, j +=3)
 	{
 		aiVector3D& pos = _transformation * _mesh->mVertices[i]; // _transformation == I
 		
-		positions[j]   = pos.x;
-		positions[j+1] = pos.y;
-		positions[j+2] = pos.z;
+		_vertices.push_back(pos.x);
+		_vertices.push_back(pos.y);
+		_vertices.push_back(pos.z);
 	}
-	_vertices.insert(_vertices.cend(), positions, positions + positions_length);
 
 	// Set number of vertices to render
 	_nbVerticesToRender	+= num_faces * 3;		// A face is made up of 3 vertices
-
-	// Clean up
-	delete[] positions;
 }
 
 static void FillVertexIndexData(const aiMesh* _mesh, std::vector<u32>& _vertexIndices)
@@ -117,9 +113,8 @@ static void FillVertexIndexData(const aiMesh* _mesh, std::vector<u32>& _vertexIn
 	
 	const u32	num_faces		= _mesh->mNumFaces;		// Number of primitives present in the mesh (triangles, lines, points)
 	const u32	indices_length	= num_faces*3;
-	u32*		indices_array	= new u32[indices_length];
 	
-	u32 face_index_in_array = 0;
+	_vertexIndices.reserve(indices_length);
 	for (u32 face_index = 0; face_index < num_faces; face_index++)
 	{
 		// The model is broken down into faces; set of vertices which 
@@ -131,13 +126,8 @@ static void FillVertexIndexData(const aiMesh* _mesh, std::vector<u32>& _vertexIn
 
 
 		for (u32 i = 0; i < num_indices; i++)
-			indices_array[face_index_in_array+i] = indices[i];
-
-		face_index_in_array += num_indices;
+			_vertexIndices.push_back(indices[i]);
 	}
-	_vertexIndices.insert(_vertexIndices.cend(), indices_array, indices_array+indices_length);
-
-	delete[] indices_array;
 }
 
 static void FillColorData(const aiMesh* _mesh, std::vector<Color>& _colors)
@@ -146,11 +136,11 @@ static void FillColorData(const aiMesh* _mesh, std::vector<Color>& _colors)
 	
 	const u32 num_vertices		= _mesh->mNumVertices;
 	const u32 colors_length		= num_vertices;
-	Color*	colors				= new Color[colors_length];
 	
 	// Populate the color buffer
 	if ( *(_mesh->mColors) != nullptr )
 	{
+		_colors.reserve(colors_length);
 		Color c;
 
 		// At the moment we support only one color set per model
@@ -164,13 +154,10 @@ static void FillColorData(const aiMesh* _mesh, std::vector<Color>& _colors)
 				c.b = _mesh->mColors[color_set_index][i].b;
 				c.a = _mesh->mColors[color_set_index][i].a;
 
-				colors[i] = c;
+				_colors.push_back(c);
 			}
 		}
 	}
-	_colors.insert(_colors.cend(), colors, colors + colors_length);
-
-	delete[] colors;
 }
 
 static void FillNormalData(const aiMesh* _mesh, std::vector<float>& _normals)
@@ -179,21 +166,18 @@ static void FillNormalData(const aiMesh* _mesh, std::vector<float>& _normals)
 	
 	const u32 num_vertices		= _mesh->mNumVertices;
 	const u32 normals_length	= num_vertices*3;
-	float*  normals				= new float[normals_length];
 	
 	// Populate the normal buffer
 	if ( _mesh->mNormals != nullptr )
 	{
+		_normals.reserve(normals_length);
 		for ( u32 i = 0, j = 0; i < num_vertices; i++, j += 3 )
 		{
-			normals[j]   = _mesh->mNormals[i].x;
-			normals[j+1] = _mesh->mNormals[i].y;
-			normals[j+2] = _mesh->mNormals[i].z;
+			_normals.push_back(_mesh->mNormals[i].x);
+			_normals.push_back(_mesh->mNormals[i].y);
+			_normals.push_back(_mesh->mNormals[i].z);
 		}
 	}
-	_normals.insert(_normals.cend(), normals, normals + normals_length);
-
-	delete[] normals;
 }
 
 static void FormatTexturePath(std::string& _dst, const char* _path)
@@ -218,8 +202,7 @@ void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _mater
 	NEP_ASSERT(_mesh != nullptr);		// Error, wrong pointer
 	
 	const u32 num_vertices		= _mesh->mNumVertices;
-	const u32 texture_lenght	= num_vertices*2;
-	float*	tex_coords			= new float[texture_lenght];
+	const u32 texture_length	= num_vertices*2;
 
 	// Populate the texture coordinates buffer
 	if ( _mesh->mTextureCoords != nullptr )
@@ -251,19 +234,16 @@ void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _mater
 		// AT the moment only one set of texture coordinate is supported per vertex
 		const u8 nb_set_tex_coords = 1; // AI_MAX_NUMBER_OF_TEXTURECOORDS
 
+		m_2DTexCoords.reserve(texture_length);
 		for (u8 tex_coord_set = 0; tex_coord_set < nb_set_tex_coords; tex_coord_set++)
 		{
 			for ( u32 i = 0, j = 0; i < num_vertices; i++, j += 2 )
 			{
-				tex_coords[j]   = _mesh->mTextureCoords[tex_coord_set][i].x;
-				tex_coords[j+1] = _mesh->mTextureCoords[tex_coord_set][i].y;
-				//tex_coords[j+2] = _mesh->mNormals[i].z;
+				m_2DTexCoords.push_back(_mesh->mTextureCoords[tex_coord_set][i].x);
+				m_2DTexCoords.push_back(_mesh->mTextureCoords[tex_coord_set][i].y);
 			}
 		}
 	}
-	m_2DTexCoords.insert(m_2DTexCoords.cend(), tex_coords, tex_coords + texture_lenght);
-
-	delete[] tex_coords;
 }
 
 void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation)
