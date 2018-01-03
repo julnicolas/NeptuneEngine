@@ -110,6 +110,9 @@
     <Filter Include="Engine\Multiplatform\HighLevel\Graphics\Spawners">
       <UniqueIdentifier>{ccb90319-a1c6-400e-a886-ffc2495ad3fc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\Core\Profiling">
+      <UniqueIdentifier>{1d3a8b62-f5d2-412b-9e55-7af1d8e38802}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -216,6 +219,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ModelSpawner.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
+	</ClCompile> 
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Profiling\Chrono.cpp">
+      <Filter>Engine\Multiplatform\Core\Profiling</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -452,6 +458,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebugInlineImplementations.h">
       <Filter>Engine\Multiplatform\Core\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Profiling\Chrono.h">
+      <Filter>Engine\Multiplatform\Core\Profiling</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
