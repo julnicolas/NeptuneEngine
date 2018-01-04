@@ -17,7 +17,9 @@ namespace Neptune
 		{
 			TRIANGLES,
 			TRIANGLE_STRIP,
-			TRIANGLE_FAN
+			TRIANGLE_FAN,
+			QUADS,
+			QUAD_STRIP
 		};
 
 		Renderer();
