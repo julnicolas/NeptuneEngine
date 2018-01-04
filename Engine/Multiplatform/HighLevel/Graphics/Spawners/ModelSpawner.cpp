@@ -1,6 +1,7 @@
 #include "Graphics/Spawners/ModelSpawner.h"
 #include "Graphics/VAOView.h"
 #include "Graphics/ElementView.h"
+#include "Graphics/Texture.h"	// To get textures' standard storage location
 
 // To improve performance, compile Assimp in C
 // It will enable direct buffer copies
@@ -299,10 +300,6 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 	// Check content
 	NEP_ASSERT(scene->mNumMeshes > 0); // Error the file doesn't define any mesh
 
-	// Set working directory
-	m_modelDir = _modelPath;
-	m_modelDir = m_modelDir.substr(0,m_modelDir.find_last_of('/')+1);
-
 	// P O P U L A T E   T H E   B U F F E R S
     
 	u32 num_meshses	= scene->mNumMeshes;
@@ -406,7 +403,7 @@ void ModelSpawner::generateDefaultTextureBinding(u32 _meshLastIndex, const char*
 {
 	NEP_ASSERT(_textureRelativePathFromModel != nullptr); // Error, Invalid path
 
-	std::string texture_relative_path = m_modelDir + std::string(_textureRelativePathFromModel);
+	std::string texture_relative_path = Texture::GetStandardDir() + std::string(_textureRelativePathFromModel);
 
 	// Map texture name to binding point
 	m_textureBindingPoints[texture_relative_path] = ResolveTextureBindingPoint(m_textureNames, texture_relative_path.c_str());

@@ -96,7 +96,6 @@ namespace Neptune
 			std::string		m_textureName;		/// Texture name. Used as a key to get texture's binding point from m_textureBindingPoints.
 		};
 
-		std::string										m_modelDir;
 		std::unordered_map<TextureName, BindingPoint>	m_textureBindingPoints;	/// key : texture's name, value : binding point
 		std::vector<TextureBindingTableEntry>			m_textureBindingTable;	/// Table to map a texture to a vertex
 		std::vector<std::string>						m_textureNames;
