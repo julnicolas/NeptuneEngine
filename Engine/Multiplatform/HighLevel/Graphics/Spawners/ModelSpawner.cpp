@@ -286,7 +286,7 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 
     //check if file exists
     std::ifstream fin(_modelPath);
-	NEP_ASSERT(!fin.fail()); // Error file doesn't exist
+	NEP_ASSERT_ERR_MSG(!fin.fail(), "File not found. Path : %s", _modelPath); // Error file doesn't exist
 
 	// Load mesh
 	const aiScene* scene = nullptr; 
