@@ -121,7 +121,9 @@ static bool NEP_LoadImage(const char* _path, u32& _textureID, Texture::MetaData&
 	// Error?
 	if (data == nullptr)
 	{
-		NEP_ASSERT_ERR_MSG(data != nullptr, "File probably doesn't exist or format is not supported. \n Path is %s", _path); // path can't be nullptr because checked beforehand
+		NEP_ASSERT_ERR_MSG(data != nullptr, "File couldn't be found or format is not supported.\n\t"
+											"Textures are expected to be stored in %s. A full path can also be provided.\n\t"
+											"Path value is : %s", Texture::GetStandardDir().c_str(), _path); // path can't be nullptr because checked beforehand
 		return false;
 	}
 	

@@ -2,6 +2,7 @@
 
 #include "StdInterface/Updatable.h"
 #include "System/Type/Integers.h"
+#include <string>
 
 
 namespace Neptune
@@ -83,10 +84,12 @@ namespace Neptune
 		u32			getMaxTextureCount()	const;													/// Returns the number of textures supported
 		u32			getIndex()				const	{	return m_index;							}	/// Get texture's shader index
 
+		static std::string GetStandardDir()		{	return "Resources/Textures/";			}	/// Standard path where textures should be stored. This path can be used as a reference by higher level tools.
+
 	private:
-		u32				m_name;
-		u32				m_index;																	/// Texture index in shaders
-		MetaData		m_metaData;
-		char*			m_path;
+		u32					m_name;
+		u32					m_index;																	/// Texture index in shaders
+		MetaData			m_metaData;
+		char*				m_path;
 	};
 }
