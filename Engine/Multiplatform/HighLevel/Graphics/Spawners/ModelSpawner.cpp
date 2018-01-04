@@ -205,7 +205,7 @@ void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _mater
 	const u32 texture_length	= num_vertices*2;
 
 	// Populate the texture coordinates buffer
-	if ( _mesh->mTextureCoords != nullptr )
+	if ( _mesh->mTextureCoords[0] != nullptr )
 	{
 		// Get Texture's name or id for further processing
 		if (_material != nullptr)
