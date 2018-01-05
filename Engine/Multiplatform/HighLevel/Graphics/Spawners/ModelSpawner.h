@@ -2,7 +2,7 @@
 
 #include "Graphics/Spawners/ViewSpawner.h"
 #include <unordered_map>
-#include <string> // WIP
+#include <string> // Replace by const char* if needed. std::string simplified the implementation a lot.
 
 
 struct aiScene;
@@ -41,9 +41,12 @@ namespace Neptune
 		// M O D E L ' S   T E X T U R E   M A N A G E M E N T   M E T H O D S
 		//
 
+		/// \warning	The methods below give all the data necessary to use models' textures.
+		///				However, one needs to manually instantiate textures to use them.
+		///				For further information, please refer to code example xxxx.
+
 		/// Retrieves an unordered_map of {texture path, binding point}
 		void getTextureBindingPoints(std::unordered_map<std::string, u8>& _bindingPoints)			const;
-		//void getTextureBindingInfo(std::unordered_map<const char*, u8>& _info)			const;
 
 		/// Sets new binding points for textures. One should call getTextureBindingPoints() first to get the base information.
 		/// \example	std::unordered_map<std::string, u8> binding_points;
@@ -51,7 +54,6 @@ namespace Neptune
 		///				binding_points["b.png"] = 3;				// Useful if b.png is already used for rendering and bound to index 3
 		///				setTextureBindingPoints(binding_points);
 		void setTextureBindingPoints(const std::unordered_map<std::string, u8>& _bindingPoints);
-		//void setTextureBindingInfo(const std::unordered_map<const char*, u8>& _info);
 
 		/// \brief		Generates a table with the following format - {last_vertex, binding_point}.
 		///				Where last_vertex is the index of the last vertex to be used with the texture 
@@ -59,9 +61,9 @@ namespace Neptune
 		/// \note		This table is used by shaders implementing diffuse multi-texturing.
 		///
 		/// \example	Let us consider a table called bindings.
-		///				If bindings[0] < vertex_id <= bindings[1]
-		///				then use texture whose texture binding point is bindings[1].
-		void generateTextureBindingTable(std::vector<u32>& _table);
+		///				If bindings[0].last_vertex < vertex_id <= bindings[1].last_vertex
+		///				then use texture whose texture binding point is bindings[1].binding_point.
+		void generateTextureBindingTable(std::vector<u32>& _table) const;
 
 		//
 		// P U R E   V I R T U A L   M E T H O D S 
