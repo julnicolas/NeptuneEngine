@@ -220,7 +220,7 @@ void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _mater
 			
 			std::string relative_path_from_model;
 			FormatTexturePath(relative_path_from_model, texture_relative_path_from_model.C_Str());
-			generateDefaultTextureBinding(_lastIndex, relative_path_from_model.c_str());
+			generateDefaultMapToVerticesAndTextureBindingPoints(_lastIndex, relative_path_from_model.c_str());
 
 			NEP_ASSERT_ERR_MSG( texture_mapping == aiTextureMapping_UV, "Only UV Mapping is supported at the moment. Current mapping mode is %u", texture_mapping );
 			NEP_ASSERT_ERR_MSG( get_texture_error == aiReturn_SUCCESS, "Texture couldn't be accessed" );
@@ -416,7 +416,7 @@ void ModelSpawner::setTextureBindingPoints(const std::unordered_map<std::string,
 	m_textureBindingPoints = _bindingPoints;
 }
 
-void ModelSpawner::generateDefaultTextureBinding(u32 _meshLastIndex, const char* _textureRelativePathFromModel)
+void ModelSpawner::generateDefaultMapToVerticesAndTextureBindingPoints(u32 _meshLastIndex, const char* _textureRelativePathFromModel)
 {
 	NEP_ASSERT(_textureRelativePathFromModel != nullptr); // Error, Invalid path
 

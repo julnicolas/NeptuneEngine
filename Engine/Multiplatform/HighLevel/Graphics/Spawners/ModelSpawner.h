@@ -114,10 +114,10 @@ namespace Neptune
 		std::vector<u32>								m_vertexIndices;
 
 		// Mesh traversing and buffer filling
-		void PostFixDepthSearch(const aiScene* _scene, aiNode* _root);
-		void ProcessMeshes(const aiScene* _scene, aiNode* _node);
-		void fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation);
-		void FillTextureData(const aiMesh* _mesh, const aiMaterial* _material, u32 _lastIndex);				/// _lastIndex : vertex index until which the texture must be applied
-		void generateDefaultTextureBinding(u32 _meshLastIndex, const char* _textureRelativePathFromModel);
+		void PostFixDepthSearch(const aiScene* _scene, aiNode* _root);																/// Browses a Node hierarchy and apply ProcessMeshes. 
+		void ProcessMeshes(const aiScene* _scene, aiNode* _node);																	/// Applies fillMeshData on every mesh.
+		void fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation);							/// Applies various functions to its mesh to fill ModelSpawner's buffers (calls FillTextureData).
+		void FillTextureData(const aiMesh* _mesh, const aiMaterial* _material, u32 _lastIndex);										/// Fills texture-related buffers. Note: _lastIndex : vertex index until which the texture must be applied
+		void generateDefaultMapToVerticesAndTextureBindingPoints(u32 _meshLastIndex, const char* _textureRelativePathFromModel);	/// Default filling for m_vertexToTextureBindingPointMap so that models can be used with their textures straight after ModelSpawner has finished the loading process.
 	};
 }
