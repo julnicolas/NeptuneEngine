@@ -43,27 +43,34 @@ namespace Neptune
 
 		/// \warning	The methods below give all the data necessary to use models' textures.
 		///				However, one needs to manually instantiate textures to use them.
-		///				For further information, please refer to code example xxxx.
+		///				For further information, please refer to code example 
+		///				ViewSpawner::MultiTexturedModelExample() in NeptunePracticeApp
+		///				(available on github).
 
 		/// Retrieves an unordered_map of {texture path, binding point}
 		void getTextureBindingPoints(std::unordered_map<std::string, u8>& _bindingPoints)			const;
 
+
 		/// Sets new binding points for textures. One should call getTextureBindingPoints() first to get the base information.
+		///
 		/// \example	std::unordered_map<std::string, u8> binding_points;
 		///				getTextureBindingPoints(binding_points);	// Returns [{"Resources/a.png" : 0}, {"b.png" : 1}]
 		///				binding_points["b.png"] = 3;				// Useful if b.png is already used for rendering and bound to index 3
 		///				setTextureBindingPoints(binding_points);
 		void setTextureBindingPoints(const std::unordered_map<std::string, u8>& _bindingPoints);
 
-		/// \brief		Generates a table with the following format - {last_vertex, binding_point}.
+
+		/// \brief		Retrieves a table with the following format - {last_vertex, binding_point}.
 		///				Where last_vertex is the index of the last vertex to be used with the texture 
 		///				at binding point binding_point.
+		///
 		/// \note		This table is used by shaders implementing diffuse multi-texturing.
+		///				It provides a way to know for what group of vertices a texture is to be used.
 		///
 		/// \example	Let us consider a table called bindings.
 		///				If bindings[0].last_vertex < vertex_id <= bindings[1].last_vertex
 		///				then use texture whose texture binding point is bindings[1].binding_point.
-		void generateTextureBindingTable(std::vector<u32>& _table) const;
+		void mapVerticesToTextureBindingPoints(std::vector<u32>& _outTable) const;
 
 		//
 		// P U R E   V I R T U A L   M E T H O D S 
@@ -98,8 +105,8 @@ namespace Neptune
 			std::string		m_textureName;		/// Texture name. Used as a key to get texture's binding point from m_textureBindingPoints.
 		};
 
-		std::unordered_map<TextureName, BindingPoint>	m_textureBindingPoints;	/// key : texture's name, value : binding point
-		std::vector<TextureBindingTableEntry>			m_textureBindingTable;	/// Table to map a texture to a vertex
+		std::unordered_map<TextureName, BindingPoint>	m_textureBindingPoints;				/// key : texture's name, value : binding point
+		std::vector<TextureBindingTableEntry>			m_vertexToTextureBindingPointMap;	/// Table to map vertices to texture binding points. Allows one to know for what group of vertices a texture is to be used.
 		std::vector<std::string>						m_textureNames;
 
 		u32												m_nbVerticesToRender;

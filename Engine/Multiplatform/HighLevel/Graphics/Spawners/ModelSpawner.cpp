@@ -429,22 +429,22 @@ void ModelSpawner::generateDefaultTextureBinding(u32 _meshLastIndex, const char*
 	TextureBindingTableEntry binding_map;
 	binding_map.m_textureName		= texture_relative_path;
 	binding_map.m_lastVertexIndex	= _meshLastIndex;
-	m_textureBindingTable.push_back(binding_map);
+	m_vertexToTextureBindingPointMap.push_back(binding_map);
 }
 
 // Vector of {lastVertex, bindingPoint}
-void ModelSpawner::generateTextureBindingTable(std::vector<u32>& _table) const
+void ModelSpawner::mapVerticesToTextureBindingPoints(std::vector<u32>& _outTable) const
 {
-	_table.clear();
+	_outTable.clear();
 
 	u32 i = 0;
-	for ( const auto& entry : m_textureBindingTable )
+	for ( const auto& entry : m_vertexToTextureBindingPointMap )
 	{
-		_table.push_back(entry.m_lastVertexIndex);
+		_outTable.push_back(entry.m_lastVertexIndex);
 
 		NEP_ASSERT( m_textureBindingPoints.find(entry.m_textureName) != m_textureBindingPoints.end() ); // Error, incoherent texture names
 		u8 binding = m_textureBindingPoints.find(entry.m_textureName)->second;
-		_table.push_back(binding); // Get texture's binding point
+		_outTable.push_back(binding); // Get texture's binding point
 
 		i++;
 	}
