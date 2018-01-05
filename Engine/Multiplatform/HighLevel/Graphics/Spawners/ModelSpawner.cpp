@@ -314,7 +314,7 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 
 	// Load mesh
 	const aiScene* scene = nullptr; 
-    scene = importer.ReadFile( _modelPath, aiProcess_Triangulate | aiProcess_ConvertToLeftHanded);
+    scene = importer.ReadFile( _modelPath, aiProcess_ConvertToLeftHanded);
 	
 	NEP_ASSERT(scene != nullptr); // Error Import failed
 	
