@@ -247,6 +247,27 @@ void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _mater
 	}
 }
 
+static std::string Debug_MapDrawingPrimitiveToString(u32 _prim)
+{
+	switch (_prim)
+	{
+	case aiPrimitiveType_POINT:
+		return "aiPrimitiveType_POINT";
+
+	case aiPrimitiveType_LINE:
+		return "aiPrimitiveType_LINE";
+
+	case aiPrimitiveType_TRIANGLE:
+		return "aiPrimitiveType_TRIANGLE";
+
+	case aiPrimitiveType_POLYGON:
+		return "aiPrimitiveType_POLYGON";
+
+	default:
+		return "UNKOWN PRIMITIVE";
+	}
+}
+
 void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, const aiMatrix4x4& _transformation)
 {
 	NEP_ASSERT(_mesh != nullptr); // Error, wrong pointer
@@ -255,7 +276,9 @@ void ModelSpawner::fillMeshData(aiMesh* _mesh, const aiMaterial* _material, cons
 	// just triangles are supported at the moment
 	NEP_ASSERT_ERR_MSG( !(_mesh->mPrimitiveTypes & aiPrimitiveType_POINT) &&
 						!(_mesh->mPrimitiveTypes & aiPrimitiveType_LINE)  &&
-						!(_mesh->mPrimitiveTypes & aiPrimitiveType_POLYGON), "Only triangles are supported.");
+						!(_mesh->mPrimitiveTypes & aiPrimitiveType_POLYGON), 
+						"Wrong primitive, only aiPrimitiveType_TRIANGLE is supported (current is %s).", 
+						Debug_MapDrawingPrimitiveToString(_mesh->mPrimitiveTypes).c_str());
 	
 	NEP_ASSERT_ERR_MSG((_mesh->mPrimitiveTypes & aiPrimitiveType_TRIANGLE) != 0, "Error, no drawing primitive has been provided. Check your model file.");
 
