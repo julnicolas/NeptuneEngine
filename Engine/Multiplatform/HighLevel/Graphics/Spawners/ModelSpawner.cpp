@@ -1,22 +1,16 @@
 #include "Graphics/Spawners/ModelSpawner.h"
 #include "Graphics/VAOView.h"
-#include "Graphics/ElementView.h"
 #include "Graphics/Texture.h"	// To get textures' standard storage location
 
-// To improve performance, compile Assimp in C
-// It will enable direct buffer copies
 #include "Assimp/Importer.hpp"
 #include "Assimp/scene.h"
 #include "Assimp/postprocess.h"
-
 #include <fstream>
 
 #include "Debug/NeptuneDebug.h"
 #include <sstream>
 
 #include <stack>
-
-#include <algorithm>
 
 using namespace Neptune;
 
