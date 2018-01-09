@@ -196,8 +196,6 @@ GraphicsProgram::UniformVarIterator GraphicsProgram::getUniformVar(const char* n
 GraphicsProgram::UniformVarInput::UniformVarInput(const char* name,Types type,u8 rows,u8 columns,u64 dataSize,const void* data):
 m_type(type),m_nbColumns(columns),m_nbRows(rows)
 {
-	NEP_ASSERT( m_nbRows > 0 && m_nbRows <= 4 );
-	NEP_ASSERT( m_nbColumns > 0 && m_nbColumns <= 4 );
 	NEP_ASSERT( name != nullptr && data != nullptr );
 	
 	size_t name_length = strlen(name)+1;
@@ -234,6 +232,7 @@ size_t GraphicsProgram::getTypeSize(Types t)
 
 void GraphicsProgram::UniformVarInput::setData(const void* data)
 {
+	NEP_ASSERT(data != nullptr); // Error, empty data.
 	memcpy( m_data, data, m_nbColumns*m_nbRows*GraphicsProgram::getTypeSize(m_type) );
 }
 

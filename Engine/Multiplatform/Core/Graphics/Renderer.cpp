@@ -180,7 +180,26 @@ static void SetSingleValuedUniform(s32 location, const GraphicsProgram::UniformV
 	NEP_GRAPHICS_ASSERT();
 }
 
-static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
+// Can only check if an array is not outrageously long and takes
+// up all the space reserved by uniforms.
+static bool CheckArrayMaxSize(GLenum _shaderStage, u32 _size)
+{
+	GLint max_size = 0;
+	glGetIntegerv(_shaderStage, &max_size);
+
+	// REASON FOR MULTIPLYING BY 4
+	// SOURCE : khronos.org
+	// OpenGL implementations are allowed to reject shaders for 
+	// implementation-dependent reasons. So you can have fewer active 
+	// uniform components by your reckoning and still fail to link due 
+	// to uniform limits. This is usually on hardware that is innately 
+	// vector hardware. Pre-GeForce 8xxx hardware, and all ATi hardware
+	// does this. In this case, you should assume that each separate 
+	// uniform takes up 4 components, much like it would in D3D.
+	return _size*4 < max_size; 
+}
+
+static void SetVectorOrArrayUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
 {
 	switch( var.getDataType() )
 	{
@@ -202,8 +221,11 @@ static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarI
 			glUniform4fv( location, 1, (float*) var.getData() );
 			break;
 
+		// More than 4 values,  it is necessarily an array and cannot be represented by a vector in GLSL
 		default:
-			NEP_ASSERT( false );
+			NEP_ASSERT(CheckArrayMaxSize(GL_MAX_VERTEX_UNIFORM_COMPONENTS, var.getNbRows()));
+			NEP_ASSERT(CheckArrayMaxSize(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS, var.getNbRows()));
+			glUniform1fv( location, var.getNbRows(), (float*) var.getData() );
 			break;
 		}
 
@@ -228,8 +250,11 @@ static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarI
 			glUniform4uiv( location, 1, (u32*) var.getData() );
 			break;
 
+		// More than 4 values,  it is necessarily an array and cannot be represented by a vector in GLSL
 		default:
-			NEP_ASSERT(false);
+			NEP_ASSERT(CheckArrayMaxSize(GL_MAX_VERTEX_UNIFORM_COMPONENTS, var.getNbRows()));
+			NEP_ASSERT(CheckArrayMaxSize(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS, var.getNbRows()));
+			glUniform1uiv( location, var.getNbRows(), (u32*) var.getData() );
 			break;
 		}
 
@@ -254,8 +279,11 @@ static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarI
 			glUniform4iv(location,1,(s32*)var.getData());
 			break;
 
+		// More than 4 values,  it is necessarily an array and cannot be represented by a vector in GLSL
 		default:
-			NEP_ASSERT(false);
+			NEP_ASSERT(CheckArrayMaxSize(GL_MAX_VERTEX_UNIFORM_COMPONENTS, var.getNbRows()));
+			NEP_ASSERT(CheckArrayMaxSize(GL_MAX_FRAGMENT_UNIFORM_COMPONENTS, var.getNbRows()));
+			glUniform1iv( location, var.getNbRows(), (s32*) var.getData() );
 			break;
 		}
 
@@ -274,6 +302,7 @@ static void SetVectorialUniform(s32 location, const GraphicsProgram::UniformVarI
 static void SetMatrixUniform(s32 location, const GraphicsProgram::UniformVarInput& var)
 {
 	NEP_ASSERT( var.getDataType() == GraphicsProgram::Types::FLOAT );
+	NEP_ASSERT( var.getNbColumns() > 0 && var.getNbColumns() <= 4 );
 
 	if ( var.getNbRows() == var.getNbColumns() ) // Square matrix
 	{
@@ -323,11 +352,11 @@ static void SetUniform(s32 location, const GraphicsProgram::UniformVarInput& var
 {
 	// First check if the data is a single value, a vector or a matrix
 
-	if ( var.getNbRows() > 1 ) // It's either a vector or a matrix
+	if ( var.getNbRows() > 1 ) // It's either an array, a vector or a matrix
 	{
-		if ( var.getNbColumns() == 1 ) // It's a vector
+		if ( var.getNbColumns() == 1 ) // It's a vector or an array
 		{
-			SetVectorialUniform( location, var );
+			SetVectorOrArrayUniform( location, var );
 		}
 		else // It's a matrix
 		{

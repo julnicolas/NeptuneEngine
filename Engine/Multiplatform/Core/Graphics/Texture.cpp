@@ -121,7 +121,9 @@ static bool NEP_LoadImage(const char* _path, u32& _textureID, Texture::MetaData&
 	// Error?
 	if (data == nullptr)
 	{
-		NEP_ASSERT(false); // File probably doesn't exist or format is not supported
+		NEP_ASSERT_ERR_MSG(data != nullptr, "File couldn't be found or format is not supported.\n\t"
+											"Textures are expected to be stored in %s. A full path can also be provided.\n\t"
+											"Path value is : %s", Texture::GetStandardDir().c_str(), _path); // path can't be nullptr because checked beforehand
 		return false;
 	}
 	
@@ -150,7 +152,8 @@ Texture::Texture():
 	m_metaData({0}),
 	m_path(nullptr)
 {
-	m_metaData.m_type = Type::TEXTURE_2D;
+	m_metaData.m_type			= Type::TEXTURE_2D;
+	m_metaData.m_internalFormat	= InternalFormat::NOT_SUPPORTED;
 }
 
 Texture::Texture(const char* _path, Type _type /*= TextureType::TEXTURE_2D*/): 
@@ -160,10 +163,49 @@ Texture::Texture(const char* _path, Type _type /*= TextureType::TEXTURE_2D*/):
 	m_metaData.m_type = _type;
 }
 
+Texture::Texture(Texture&& _texture)
+{
+	m_name		= _texture.m_name;
+	m_index		= _texture.m_index;
+	m_metaData	= _texture.m_metaData;
+	m_path		= _texture.m_path;
+
+	_texture.m_name							= 0;
+	_texture.m_index						= 0;
+	_texture.m_path							= nullptr;
+	_texture.m_metaData.m_width				= 0;
+	_texture.m_metaData.m_height			= 0;
+	_texture.m_metaData.m_depth				= 0;
+	_texture.m_metaData.m_size				= 0;
+	_texture.m_metaData.m_mipmapLevels		= 0;
+	_texture.m_metaData.m_type				= Type::NOT_SUPPORTED;
+	_texture.m_metaData.m_internalFormat	= InternalFormat::NOT_SUPPORTED;
+}
+
+Texture& Texture::operator=(Texture&& _texture)
+{
+	m_name		= _texture.m_name;
+	m_index		= _texture.m_index;
+	m_metaData	= _texture.m_metaData;
+	m_path		= _texture.m_path;
+
+	_texture.m_name							= 0;
+	_texture.m_index						= 0;
+	_texture.m_path							= nullptr;
+	_texture.m_metaData.m_width				= 0;
+	_texture.m_metaData.m_height			= 0;
+	_texture.m_metaData.m_depth				= 0;
+	_texture.m_metaData.m_size				= 0;
+	_texture.m_metaData.m_mipmapLevels		= 0;
+	_texture.m_metaData.m_type				= Type::NOT_SUPPORTED;
+	_texture.m_metaData.m_internalFormat	= InternalFormat::NOT_SUPPORTED;
+
+	return *this;
+}
+
 Texture::~Texture()
 {
 	delete[] m_path;
-	glDeleteTextures(1, &m_name);
 }
 
 void Texture::setPath(const char* _path)
@@ -194,20 +236,26 @@ bool Texture::init()
 {
 	// GET FILE EXTENSION
 	NEP_ASSERT( m_path != nullptr && m_path[0] != '\0' ); // Error! Texture path is invalid
-	std::string extension = GetExtension(m_path);
-
-	// LOAD TEXTURE DATA
-	if ( extension == ".ktx" )		// If it's a texture format
+	
+	if ( !IsTextureInitialised(m_name) )
 	{
-		u32 texture_target = LoadAndCreateKTXTexture(m_path, &m_name, &m_metaData);
+		std::string extension = GetExtension(m_path);
 
-		NEP_ASSERT(texture_target != LOAD_KTX_ERROR); // Error, texture couldn't be loaded.
-		return texture_target != LOAD_KTX_ERROR;
+		// LOAD TEXTURE DATA
+		if ( extension == ".ktx" )		// If it's a texture format
+		{
+			u32 texture_target = LoadAndCreateKTXTexture(m_path, &m_name, &m_metaData);
+
+			NEP_ASSERT_ERR_MSG(texture_target != LOAD_KTX_ERROR, "Error, Texture couldn't be loaded. Path: %s", m_path);
+			return texture_target != LOAD_KTX_ERROR;
+		}
+		else							// If it's an image format
+		{
+			return NEP_LoadImage(m_path, m_name, m_metaData);
+		}
 	}
-	else							// If it's an image format
-	{
-		return NEP_LoadImage(m_path, m_name, m_metaData);
-	}
+
+	return false; // texture already initialised
 }
 
 bool Texture::update()
@@ -234,7 +282,7 @@ void Texture::terminate()
 u32 Texture::getMaxTextureCount() const
 {
 	s32 max_count = 0;
-	glGetIntegerv(GL_MAX_COMBINED_TEXTURE_IMAGE_UNITS, &max_count); // Never sets a negative value
+	glGetIntegerv(GL_MAX_TEXTURE_IMAGE_UNITS, &max_count); // Never sets a negative value
 
 	return static_cast<u32>(max_count);
 }

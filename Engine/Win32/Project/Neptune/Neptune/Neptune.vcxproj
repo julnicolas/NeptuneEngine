@@ -103,6 +103,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -110,7 +111,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86\Debug;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
@@ -121,6 +122,7 @@
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;NEP_DEBUG;WIN32;_DEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -128,7 +130,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64\Debug;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -141,6 +143,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;NEP_RELEASE;STB_IMAGE_IMPLEMENTATION;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -150,7 +153,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -164,6 +167,7 @@
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;NEP_RELEASE;STB_IMAGE_IMPLEMENTATION;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -173,7 +177,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">
@@ -186,6 +190,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_32BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -195,7 +200,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X86;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Final|x64'">
@@ -208,6 +213,7 @@
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>NEP_WINDOWS;NEP_COMPILER_VISUAL_STUDIO;KTX_OPENGL;STB_IMAGE_IMPLEMENTATION;NEP_FINAL;NEP_64BIT;WIN32;NDEBUG;_LIB;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <AdditionalIncludeDirectories>$(ProjectDir)\..\..\..\..\Win32\HighLevel;$(ProjectDir)\..\..\..\..\Win32\Core;$(ProjectDir)\..\..\..\..\Multiplatform\HighLevel;$(ProjectDir)\..\..\..\..\Multiplatform\Core;$(ProjectDir)\..\..\..\..\..\Dependencies\All\Include;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -217,7 +223,7 @@
     </Link>
     <Lib>
       <AdditionalLibraryDirectories>$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64\Release;$(ProjectDir)\..\..\..\..\..\Dependencies\Win32\Bin\X64;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib</AdditionalDependencies>
+      <AdditionalDependencies>libktx.gl.lib;opengl32.lib;glew32.lib;SDL2.lib;assimp.lib</AdditionalDependencies>
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
@@ -284,6 +290,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">false</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\CubeSpawner.cpp" />
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ModelSpawner.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\PlanSpawner.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\TriangleSpawner.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.cpp" />
@@ -387,6 +394,7 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\ViewFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\CubeSpawner.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ModelSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\PlanSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\TriangleSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.h" />

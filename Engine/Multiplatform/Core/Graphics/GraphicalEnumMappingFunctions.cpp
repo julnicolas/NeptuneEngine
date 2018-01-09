@@ -19,6 +19,14 @@ GLenum Neptune::MapDrawingPrimitive(Renderer::DrawingPrimitive const p)
 		primitive = GL_TRIANGLE_FAN;
 		break;
 
+	case Renderer::QUADS:
+		primitive = GL_QUADS;
+		break;
+
+	case Renderer::QUAD_STRIP:
+		primitive = GL_QUAD_STRIP;
+		break;
+
 	default:
 		NEP_ASSERT(false);
 		break;
