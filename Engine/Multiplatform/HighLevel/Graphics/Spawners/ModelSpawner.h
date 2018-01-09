@@ -105,6 +105,7 @@ namespace Neptune
 			std::string		m_textureName;		/// Texture name. Used as a key to get texture's binding point from m_textureBindingPoints.
 		};
 
+		static	const u8								M_MAX_BINDING_POINT_PER_MODEL = 16;	/// Max binding points usable per model for multi texturing. TODO: The source of the value must be provided and explained.
 		std::unordered_map<TextureName, BindingPoint>	m_textureBindingPoints;				/// key : texture's name, value : binding point
 		std::vector<TextureBindingTableEntry>			m_vertexToTextureBindingPointMap;	/// Table to map vertices to texture binding points. Allows one to know for what group of vertices a texture is to be used.
 		std::vector<std::string>						m_textureNames;

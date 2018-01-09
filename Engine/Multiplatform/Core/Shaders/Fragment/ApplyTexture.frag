@@ -2,11 +2,11 @@
 
 // Inputs / Outputs
 in vec2									v_text;
-flat in int								v_activeTextureBinding;
+flat in uint							v_activeTextureBinding;
 layout (location = 0) out vec4 			f_color;
 
 // Uniforms / Constants
-const int								NB_SUPPORTED_SAMPLERS = 16;
+const uint								NB_SUPPORTED_SAMPLERS = 16;
 layout (binding = 0) uniform sampler2D	Texture[NB_SUPPORTED_SAMPLERS];
 
 // Debug display

@@ -239,6 +239,11 @@ void ModelSpawner::FillTextureData(const aiMesh* _mesh, const aiMaterial* _mater
 			}
 		}
 	}
+
+	// Check the size of the vertex-to-binding-point map
+	// note - multiplied by 2 because the map is of the following format [{last vertex index, binding point},...]
+	NEP_ASSERT_ERR_MSG(m_vertexToTextureBindingPointMap.size() <= M_MAX_BINDING_POINT_PER_MODEL * 2, 
+		"Too many textures used in model. The engine only supports %u binding points per model.", M_MAX_BINDING_POINT_PER_MODEL);
 }
 
 static std::string Debug_MapDrawingPrimitiveToString(u32 _prim)
@@ -312,7 +317,7 @@ ModelSpawner::ModelSpawner(GraphicsProgram* _pgm, const char* _modelPath):
 	
 	NEP_ASSERT(scene != nullptr); // Error Import failed
 	
-	NEP_ASSERT_ERR_MSG(!(scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE), "Error in file content... something is wrong with the data.");
+	NEP_ASSERT_ERR_MSG(!(scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE), "Error in file's content... something is wrong with the data.");
 
 	// Check content
 	NEP_ASSERT(scene->mNumMeshes > 0); // Error the file doesn't define any mesh
