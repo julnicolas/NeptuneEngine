@@ -52,7 +52,7 @@ void View::unbindFromCamera()
 	updateUniform(NEP_UNIVNAME_PROJ_MATRIX,(void*)I.getPtr());
 }
 
-bool View::updateUniform(GraphicsProgram::ProgramName _pgmName, const char* _uniformName, void* _value)
+bool View::updateUniform(GraphicsProgram::ProgramName _pgmName, const char* _uniformName, const void* _value)
 {
 	auto        it  = m_programMap.find(_pgmName);
 	
@@ -61,7 +61,7 @@ bool View::updateUniform(GraphicsProgram::ProgramName _pgmName, const char* _uni
 	return m_renderer->updateUniform(it->second, _uniformName, _value);
 }
 
-bool View::updateUniform(const char* _uniformName, void* _value)
+bool View::updateUniform(const char* _uniformName, const void* _value)
 {
 	bool status = false;
 	

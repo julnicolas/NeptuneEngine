@@ -35,9 +35,9 @@ namespace Neptune
 
 		Transform&	getTransform()			{ return m_transform; }
 
-		bool		updateUniform(GraphicsProgram::ProgramName _pgmName, const char* _uniformName, void* _value);				/// Updates _uniformName with _value in program _pgmName. Returns true, if the uniform was found, false otherwise.
-		bool		updateUniform(const char* _uniformName, void* _value);														/// Updates _uniformName for every program with value _value. Returns true if it has been updated at least once. False means the variable doesn't exist for any program.
-		void		addGraphicsProgram(GraphicsProgram* _pgm);																	/// \warning _pgm must be available (not deallocated) for the entire lifetime of the view object. _pgm is referenced not copied.
+		bool		updateUniform(GraphicsProgram::ProgramName _pgmName, const char* _uniformName, const void* _value);				/// Updates _uniformName with _value in program _pgmName. Returns true, if the uniform was found, false otherwise.
+		bool		updateUniform(const char* _uniformName, const void* _value);													/// Updates _uniformName for every program with value _value. Returns true if it has been updated at least once. False means the variable doesn't exist for any program.
+		void		addGraphicsProgram(GraphicsProgram* _pgm);																		/// \warning _pgm must be available (not deallocated) for the entire lifetime of the view object. _pgm is referenced not copied.
 
 		void		bindToCamera(Camera* c);
 		void		unbindFromCamera();
