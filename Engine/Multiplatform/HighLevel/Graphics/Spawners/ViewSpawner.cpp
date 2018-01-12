@@ -238,7 +238,7 @@ void ViewSpawner::setWorldPosition(const Position& _pos)
 	// memcpy(m_worldMatrix[3], _pos, sizeof(_pos));
 }
 
-void ViewSpawner::useWorldAndProjectionMatrices(GraphicsProgram::ProgramName _pgmName)
+void ViewSpawner::useModelViewAndProjectionMatrices(GraphicsProgram::ProgramName _pgmName)
 {
 	// Add World matrix
 	GraphicsProgram::UniformVarInput world_matrix(NEP_UNIVNAME_MV_MATRIX,
@@ -262,6 +262,10 @@ void ViewSpawner::useWorldAndProjectionMatrices(GraphicsProgram::ProgramName _pg
 	addUniformVariable(_pgmName, projection_matrix);
 }
 
+//!!!!! Bottleneck! Really slow to execute
+// Idea - execute it first before calling create.
+// Then users could call a refresh method 
+// if parameters have been added since first call.
 void ViewSpawner::movePgmParameters()
 {
 	// Add the graphics programs and corresponding attributes to the view
