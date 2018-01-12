@@ -14,7 +14,9 @@ namespace Neptune
 		BaseVec3_t<T>& operator=(const BaseVec3_t<T>&) = default;
 
 		BaseVec3_t<T>(T v1, T v2, T v3): glm::tvec3<T>(v1, v2, v3) {}
-		const T* getPtr() const                                    { return glm::value_ptr(*this); }
+		const T* getPtr() const {
+			return glm::value_ptr(*static_cast<const glm::tvec3<T>*>(this));
+		}
 	};
 
 	template <typename T>
