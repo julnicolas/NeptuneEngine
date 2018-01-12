@@ -199,7 +199,7 @@ namespace Neptune
 		u32													m_programName;			/// User-defined program name
 		std::unordered_map<const char*, UniformVarInput>	m_uniformVars;			/// Contains every vertex shader's uniform variables.
 		std::vector<ShaderAttribute>						m_shaderAttributes;		/// Contains every vertex-shader-attribute description.
-		std::unordered_map<u32,Texture*>				m_textures;					/// Program's texture set. The key is the texture's ID.
+		std::unordered_map<u32,Texture*>					m_textures;				/// Program's texture set. The key is the texture's ID.
 
 		// Bad design
 		std::map<u32, u8*> m_uniformBlockBuffers;  /// Must be refactored
