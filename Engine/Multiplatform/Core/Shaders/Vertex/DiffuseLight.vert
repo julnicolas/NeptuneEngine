@@ -4,6 +4,7 @@ layout (location = 0) in vec3 position;
 layout (location = 1) in vec3 color;
 layout (location = 2) in vec3 normal;
 
+uniform mat4 World;
 uniform mat4 ModelView;
 uniform mat4 Projection;
 
@@ -19,10 +20,7 @@ vec3 BlendColors(vec3 light, vec3 obj)
 
 vec3 ComputeDiffuseLight()
 {
-	// Because of the perspective projection, the mv matrix is not orthogonal
-	// Therefore, the ModelView matrix cannot be used as is to transform normal vectors (they can end up not orthogonal to their surface...)
-	// That's why ModelView^-1 is used
-	vec4 n = inverse(ModelView) * vec4(normal, 1.0); // If the player moves normal shouldn't be recomputed. They should be if the object rotate on itself.
+	vec4 n = World * vec4(normal, 0.0);
 	float reflection_coef = max(dot(normalize(n.xyz), normalize(-DiffuseLightDirection.xyz)), 0);
 	
 	return reflection_coef * BlendColors(DiffuseLightColor, color);
