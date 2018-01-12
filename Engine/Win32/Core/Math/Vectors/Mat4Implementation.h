@@ -1,6 +1,7 @@
 #pragma once
 
 #include <glm/mat4x4.hpp>
+#include <glm/vec4.hpp>
 #include <glm/gtc/type_ptr.hpp>
 
 namespace Neptune
@@ -87,6 +88,37 @@ namespace Neptune
 
 		Mat4x4<T> r;
 		(tmat4x4<T>&) r.getBase() = (tmat4x4<T>&) ma.getBase() - (tmat4x4<T>&) mb.getBase();
+
+		return r;
+	}
+
+	template <typename T>
+	Vec4_t<T> operator*(const Mat4x4<T>& m, const Vec4_t<T>& v)
+	{
+		Vec4_t<T> r;
+		(glm::tvec4<T>&) r.getBase() = (glm::tmat4x4<T>&) m.getBase() * (glm::tvec4<T>&) v.getBase();
+
+		return r;
+	}
+
+	template <typename T> 
+	Mat4x4<T> operator*(const Mat4x4<T>& m, T v)
+	{
+		using namespace glm;
+
+		Mat4x4<T> r;
+		(tmat4x4<T>&) r.getBase() = (tmat4x4<T>&) m.getBase() * v;
+
+		return r;
+	}
+
+	template <typename T>
+	Mat4x4<T> operator*(T v, const Mat4x4<T>& m)
+	{
+		using namespace glm;
+
+		Mat4x4<T> r;
+		(tmat4x4<T>&) r.getBase() = v * (tmat4x4<T>&) m.getBase();
 
 		return r;
 	}
