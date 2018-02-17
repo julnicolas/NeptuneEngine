@@ -12,7 +12,7 @@ uniform vec3 DiffuseLightDirection; // Left-handed frame. Frame is the world fra
 uniform vec3 DiffuseLightColor;
 
 const vec3 AmbientLightColor = vec3(0.2, 0.2, 0.2);
-const vec3 SpecularLightColor = vec3(1.0, 1.0, 1.0);//vec3(1.0, 1.0, 1.0);
+const vec3 SpecularLightColor = vec3(1.0, 1.0, 1.0);
 
 out vec4 v_color;
 
@@ -42,20 +42,13 @@ vec3 ComputeSpecularLight()
 	vec4 reflection				= reflect(-light_dir_camera_space, n);
 	
 	float cos_alpha = max(dot(eye_pos_camera_space, reflection), 0.0);
-	float shininess = 5;
+	float shininess = 15;
 	
 	return SpecularLightColor * pow(cos_alpha, shininess);
 }
 
 vec3 ComputePhongLight()
-{
-	//vec3 specular = ComputeSpecularLight();
-	//vec3 zero = vec3(0.0,0.0,0.0);
-	//if (specular.r == 0.0 && specular.g == 0.0 && specular.b == 0.0 )
-	//	return vec3(0.0, 1.0, 0.0);
-	//else
-	//	return vec3(1.0, 0.0, 0.0);
-	
+{	
 	return min(ComputeAmbientLight() + ComputeDiffuseLight() + ComputeSpecularLight(), vec3(1.0, 1.0, 1.0));
 }
 
