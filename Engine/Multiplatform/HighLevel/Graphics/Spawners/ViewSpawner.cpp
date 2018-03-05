@@ -6,6 +6,8 @@
 #include "Debug/NeptuneDebug.h"
 #include "System/Hashing/FastHashFunctions.h"
 
+#include "Profiling/Chrono.h"
+
 using namespace Neptune;
 
 static void InitWorldMatrix(float (&_m)[4][4])
@@ -29,9 +31,6 @@ ViewSpawner::ViewSpawner(GraphicsProgram* _pgm)
 
 View* ViewSpawner::create()
 {
-	// Setup the programs
-	movePgmParameters();
-
 	// Create the view
 	View* view = createViewAndSetUpRenderParameters();
 
@@ -39,6 +38,8 @@ View* ViewSpawner::create()
 	for(auto& it : m_programs)
 	{
 		GraphicsProgram* pgm = it.second.m_program;
+
+		NEP_ASSERT_ERR_MSG(pgm->getNbVertexAttributes() > 0, "Program doesn't have any vertex attributes... \nDid you call ViewSpawner::movePgmParameters() before ViewSpawner::create()?");
 		view->addGraphicsProgram(pgm);
 	}
 
@@ -262,12 +263,15 @@ void ViewSpawner::useModelViewAndProjectionMatrices(GraphicsProgram::ProgramName
 	addUniformVariable(_pgmName, projection_matrix);
 }
 
-//!!!!! Bottleneck! Really slow to execute
+//!!!!! Slow! Really slow to execute
 // Idea - execute it first before calling create.
 // Then users could call a refresh method 
 // if parameters have been added since first call.
 void ViewSpawner::movePgmParameters()
 {
+	NEP_PROFILING_CHRONO_INIT;
+	NEP_PROFILING_CHRONO_START;
+	
 	// Add the graphics programs and corresponding attributes to the view
 	for(auto& it : m_programs)
 	{
@@ -309,4 +313,7 @@ void ViewSpawner::movePgmParameters()
 		it.second.m_shaderAttributesCustomData.clear();
 		it.second.m_uniformVarIDs.clear();
 	}
+
+	double t = NEP_PROFILING_CHRONO_STOP;
+	NEP_LOG("movePgmParameters time %f ms", t);
 }
