@@ -6,6 +6,7 @@
 #include "Graphics/UniformVarNames.h"
 
 #include "Debug/NeptuneDebug.h"
+#include "Profiling/Chrono.h"
 
 
 using namespace Neptune;
@@ -71,6 +72,8 @@ ModelFactory::ModelFactory(const char* fileName)
 
 ElementView* ModelFactory::create()
 {
+	NEP_PROFILING_CHRONO_INIT;
+	NEP_PROFILING_CHRONO_START;
 	// Create view
 	ElementView* v = new ElementView;
 
@@ -105,6 +108,9 @@ ElementView* ModelFactory::create()
 
 	// Add the program to the view
 	v->addGraphicsProgram(&m_program);
+	
+	double t = NEP_PROFILING_CHRONO_STOP;
+	NEP_LOG("ModelFactory::create time %f ms", t);
 
 	return v;
 }
