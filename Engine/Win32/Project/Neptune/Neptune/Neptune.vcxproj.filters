@@ -219,7 +219,7 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ModelSpawner.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Graphics\Spawners</Filter>
-	</ClCompile> 
+    </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Profiling\Chrono.cpp">
       <Filter>Engine\Multiplatform\Core\Profiling</Filter>
     </ClCompile>
@@ -461,6 +461,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Profiling\Chrono.h">
       <Filter>Engine\Multiplatform\Core\Profiling</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\StandardErrorCodes.h">
+      <Filter>Engine\Multiplatform\Core\Debug</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

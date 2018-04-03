@@ -9,8 +9,17 @@ namespace Neptune
 		typedef void* WindowHandle;
 		typedef void* GraphicalContextHandle;
 
+		enum class MULTI_SAMPLE_ANTI_ALLIASING : u8
+		{
+			NONE,	/// No multi-sampling
+			X2,		/// Sample twice 
+			X4,		/// Sample four times
+			X8,		/// Sample eight times
+			X16		/// Sample sixteen times
+		};
+
 		/// Creates a window to host the graphical context
-		WindowHandle CreateWindow(const char* name, u32 width, u32 height, bool fullScreen = false);
+		WindowHandle CreateWindow(const char* _name, u32 _width, u32 _height, MULTI_SAMPLE_ANTI_ALLIASING _antiAliasing = MULTI_SAMPLE_ANTI_ALLIASING::NONE, bool _fullScreen = false);
 
 		/// Destructs the window that holds the graphical context
 		void DestroyWindow(WindowHandle handle);

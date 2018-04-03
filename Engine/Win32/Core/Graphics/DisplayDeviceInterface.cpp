@@ -1,5 +1,6 @@
 #include "Graphics/DisplayDeviceInterface.h"
 #include "Debug/NeptuneDebug.h"
+#include "Debug/StandardErrorCodes.h"
 #include <GL/glew.h>
 #include <SDL2/SDL.h>
 
@@ -19,7 +20,34 @@ static bool InitContext()
 	return true;
 }
 
-DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const char* name, u32 width, u32 height, bool fullScreen /*= false*/)
+// Returns a value equal to the number of times a pixel can be sampled. Returns NEP_STD_U8_ERROR_CODE_0 if the input value is not supported.
+static u8 MapMultiSampleAntiAlliasingValues(DisplayDeviceInterface::MULTI_SAMPLE_ANTI_ALLIASING _v)
+{
+	using namespace DisplayDeviceInterface;
+	
+	switch (_v)
+	{
+	case MULTI_SAMPLE_ANTI_ALLIASING::NONE:
+		return 0;
+
+	case MULTI_SAMPLE_ANTI_ALLIASING::X2:
+		return 2;
+
+	case MULTI_SAMPLE_ANTI_ALLIASING::X4:
+		return 4;
+
+	case MULTI_SAMPLE_ANTI_ALLIASING::X8:
+		return 8;
+
+	case MULTI_SAMPLE_ANTI_ALLIASING::X16:
+		return 16;
+
+	default:
+		return NEP_STD_U8_ERROR_CODE_0; // Error unsupported
+	}
+}
+
+DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const char* _name, u32 _width, u32 _height, MULTI_SAMPLE_ANTI_ALLIASING _antiAliasing /*= MULTI_SAMPLE_ANTI_ALLIASING::NONE*/, bool _fullScreen /*= false*/)
 {
 	const u8 OGL_MAJOR_VERSION   = 4;
 	const u8 OGL_MINOR_VERSION   = 3;
@@ -40,24 +68,34 @@ DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OGL_MAJOR_VERSION);    // Wished work-version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OGL_MINOR_VERSION);    // Min supported version
 
+	// Enable Multi-Sample Antialiasing
+	if (_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)
+	{
+		u8 multisample = MapMultiSampleAntiAlliasingValues(_antiAliasing);
+		multisample = (multisample != NEP_STD_U8_ERROR_CODE_0) ? multisample : 0; // fallback to no anti-alliasing support
+
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);				// Enables multi-sampling anti-alliasing
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, multisample);	// Defines the number of sample buffers (also corresponds to the number of times a fragment might need to be sampled to alleviate alliasing issues).
+	}
+
 	// Create the main window
 	SDL_Window* window = nullptr;
-	if ( !fullScreen )
+	if ( !_fullScreen )
 	{
-		window = SDL_CreateWindow(name,
+		window = SDL_CreateWindow(_name,
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		width,
-		height,
+		_width,
+		_height,
 		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN);
 	}
 	else
 	{
-		window = SDL_CreateWindow(name,
+		window = SDL_CreateWindow(_name,
 		SDL_WINDOWPOS_CENTERED,
 		SDL_WINDOWPOS_CENTERED,
-		width,
-		height,
+		_width,
+		_height,
 		SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_FULLSCREEN);
 	}
 
@@ -104,6 +142,7 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 
 	// Set up basic rendering settings
 	glEnable(GL_DEPTH_TEST); // Enables depth test
+	glEnable(GL_MULTISAMPLE);
 	glDepthFunc(GL_LESS);    // Accepts fragment if it closer to the camera than the former one
 
 	return static_cast<GraphicalContextHandle*>( context );

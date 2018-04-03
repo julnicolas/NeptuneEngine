@@ -302,6 +302,7 @@
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebugInlineImplementations.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\StandardErrorCodes.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\AmbientLight.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.h" />
