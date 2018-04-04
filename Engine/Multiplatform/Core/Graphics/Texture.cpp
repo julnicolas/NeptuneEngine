@@ -48,7 +48,7 @@ static u32 LoadAndCreateKTXTexture(const char* _path, u32* _textureID, Texture::
 	_metaData->m_depth  = dimension.depth;
 
 	// Get texture type
-	_metaData->m_type   = GLTextureCallsMapping::MapTextureType(gl_target);
+	_metaData->m_type = GLTextureCallsMapping::MapTextureType(gl_target);
 
 	return gl_target;
 }

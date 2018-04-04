@@ -64,10 +64,6 @@ inline Neptune::Texture::Type Neptune::GLTextureCallsMapping::MapTextureType(Nep
 		type = Texture::Type::TEXTURE_3D;
 		break;
 
-	case GL_TEXTURE_CUBE_MAP:
-		type = Texture::Type::CUBE_MAP;
-		break;
-
 	case GL_TEXTURE_BUFFER:
 		type = Texture::Type::BUFFER;
 		break;
@@ -89,6 +85,10 @@ inline Neptune::Texture::Type Neptune::GLTextureCallsMapping::MapTextureType(Nep
 		type = Texture::Type::NOT_SUPPORTED;
 		break;
 	}
+
+	// Test for cube map (value between GL_TEXTURE_CUBE_MAP and GL_TEXTURE_CUBE_MAP_NEGATIVE_Z)
+	if (_glType >= GL_TEXTURE_CUBE_MAP && _glType <= GL_TEXTURE_CUBE_MAP_NEGATIVE_Z)
+		type = Texture::Type::CUBE_MAP;
 
 	return type;
 }
