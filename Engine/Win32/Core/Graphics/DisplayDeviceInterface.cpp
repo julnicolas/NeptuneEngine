@@ -72,7 +72,12 @@ DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const 
 	if (_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)
 	{
 		u8 multisample = MapMultiSampleAntiAlliasingValues(_antiAliasing);
-		multisample = (multisample != NEP_STD_U8_ERROR_CODE_0) ? multisample : 0; // fallback to no anti-alliasing support
+
+		if (multisample == NEP_STD_U8_ERROR_CODE_0)
+		{
+			multisample = 0; // fallback to no anti-alliasing support
+			NEP_LOG("Warning DisplayDeviceInterface::CreateWindow : Multi-sampling is not supported. Falling back to not anti-aliased mode.");
+		}
 
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);				// Enables multi-sampling anti-alliasing
 		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, multisample);	// Defines the number of sample buffers (also corresponds to the number of times a fragment might need to be sampled to alleviate alliasing issues).
@@ -119,14 +124,14 @@ void DisplayDeviceInterface::DestroyWindow(WindowHandle handle)
 DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 minCtxtVersion,u8 maxCtxtVersion)
 {
 	// Platform specifics
-	const u8 Z_BUFFER_LENGTH = 32;
+	const u8 Z_BUFFER_PRECISION = 32; // Z buffer's precision, less than 32 bits exposes to serious z-fighting risks.
 	SDL_Window* win = static_cast<SDL_Window*>( window );
 
 	// Enable hardware acceleration
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL,1);
 
 	// Set up buffer sizes
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE,Z_BUFFER_LENGTH);
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, Z_BUFFER_PRECISION);
 	
 	// Enable double buffering
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
@@ -138,12 +143,16 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 		return nullptr;
 
 	// Synchronize buffer swapping with the screen's refresh rate
-	SDL_GL_SetSwapInterval(1); // Use VSync
+	if (SDL_GL_SetSwapInterval(1) == -1) // Use VSync
+		NEP_LOG("Warning DisplayDeviceInterface::CreateGraphicalContext - Swap interval not supported.");
 
 	// Set up basic rendering settings
-	glEnable(GL_DEPTH_TEST); // Enables depth test
+	glEnable(GL_DEPTH_TEST);	// Enables depth test
+	glDepthFunc(GL_LESS);		// Accepts fragment if closer to the camera than the former one
+	glDepthRange(0.0, 1.0);		// Specify that depth-test-values must be between 0.0 and 1.0
+
+	// Enable anti-alisaing
 	glEnable(GL_MULTISAMPLE);
-	glDepthFunc(GL_LESS);    // Accepts fragment if it closer to the camera than the former one
 
 	return static_cast<GraphicalContextHandle*>( context );
 }
