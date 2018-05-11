@@ -4,6 +4,9 @@
 #include "Math/Geometry/Trigonometry.h"
 #include "Math/Math.h"
 
+// debug
+#include "Debug/NeptuneDebug.h"
+
 using namespace Neptune;
 
 const float M_INIT_NEAR = 0.1f;
@@ -84,5 +87,14 @@ void Camera::zoom(float k)
 
 void Camera::setProjection()
 {
-	m_projection = Perspective( m_fieldOfView, m_screenRatio, m_nearPos, m_farPos );
+	//m_projection = Perspective( m_fieldOfView, m_screenRatio, m_nearPos, m_farPos );
+	
+	float f = 1.0f / tan(m_fieldOfView / 2.0f);
+	Mat4 proj
+		(f / m_screenRatio,	0.0f,	0.0f,		0.0f,
+		0.0f,				f,		0.0f,		0.0f,
+		0.0f,				0.0f,	0.0f,		1.0f,
+		0.0f,				0.0f,	m_nearPos,	0.0f);
+
+	m_projection = proj;
 }

@@ -124,7 +124,7 @@ void DisplayDeviceInterface::DestroyWindow(WindowHandle handle)
 DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 minCtxtVersion,u8 maxCtxtVersion)
 {
 	// Platform specifics
-	const u8 Z_BUFFER_PRECISION = 32; // Z buffer's precision, less than 32 bits exposes to serious z-fighting risks.
+	const u8 Z_BUFFER_PRECISION = 32; // Z buffer's precision, less than 32 bits exposes to serious z-fighting risks. -> solution, reversed-z technique.
 	SDL_Window* win = static_cast<SDL_Window*>( window );
 
 	// Enable hardware acceleration
@@ -149,6 +149,7 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	// Set up basic rendering settings
 	glEnable(GL_DEPTH_TEST);	// Enables depth test
 	glDepthFunc(GL_LESS);		// Accepts fragment if closer to the camera than the former one
+	//glDepthFunc(GL_GREATER);		// Accepts fragment if closer to the camera than the former one
 	glDepthRange(0.0, 1.0);		// Specify that depth-test-values must be between 0.0 and 1.0
 
 	// Enable anti-alisaing
@@ -166,7 +167,15 @@ void DisplayDeviceInterface::DestroyGraphicalContext(GraphicalContextHandle hand
 void DisplayDeviceInterface::ClearBuffers(float backGroundColor[4])
 {
 	glClearBufferfv( GL_COLOR, 0, backGroundColor );
-	glClear( GL_DEPTH_BUFFER_BIT );
+	//glClearDepth(0.0f); // 0.0f instead of 1.0f because reversed-z is used
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 1);
+	glClearBufferfv(GL_COLOR, 0, backGroundColor);
+	glClearDepth(0.0f); // 0.0f instead of 1.0f because reversed-z is used
+	glClear(GL_DEPTH_BUFFER_BIT);
+
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }
 
 void DisplayDeviceInterface::SwapBuffer(WindowHandle handle)
