@@ -10,12 +10,16 @@
 
 //#include "Graphics/Renderer.h"
 #include "StdInterface/Updatable.h"
-#include "Input/InputSensitiveController.h"
+#include "Graphics/DisplayDeviceInterface.h"
+#include "Graphics/Camera.h"
+#include "Camera/Controller/TempFPSCameraController.h"
+#include <vector>
 
-#include <list> // Perhaps this should be reconsidered
 
 namespace Neptune
 {
+	class View;
+
 	class App : public Neptune::Updatable
 	{
 	public:
@@ -24,19 +28,19 @@ namespace Neptune
 		App(const App&)            = delete;
 		App& operator=(const App&) = delete;
 
+		void setWindowSize(u32 _height, u32 _width)	{ m_windowHeight = _height; m_windowWidth = _width; }
+
 		bool init()      override;     /// Prepares the app to be updated.
 		bool update()    override;    /// Executed once per frame.
 		void terminate() override;   /// Must be executed when the app exits from the main loop.
 
-		static InputSensitiveController::ControllerId registerController(InputSensitiveController* const ctrl);
-		static void unregisterController(InputSensitiveController* const ctrl);
-
 	protected:
-		//void executeControllers();
-		//virtual bool fetchAndCopyFirstInputEvent() = 0;
-
-		InputEvent*                                  m_inputEvent; // To be refactored
-		static std::list<InputSensitiveController*>  m_controllers;// To be refactored
-		//Renderer                                     m_renderer;   // Should be replaced by a collection of Drawables
+		u32												m_windowHeight;
+		u32												m_windowWidth;
+		DisplayDeviceInterface::WindowHandle			m_window;
+		DisplayDeviceInterface::GraphicalContextHandle	m_context;
+		Camera											m_camera;
+		TempFPSCameraController							m_controller;
+		std::vector<View*>								m_views;
 	};
 }

@@ -1,59 +1,73 @@
 #include "App.h"
 #include "Debug/NeptuneDebug.h"
-#include <algorithm>
+#include "Graphics/View.h"
+#include "System/Type/Integers.h"
+#include "Input/EventSystemInterface.h"
 
 using namespace Neptune;
 
-std::list<InputSensitiveController*>  App::m_controllers;
-
-App::App():
-	m_inputEvent(nullptr)
+App::App()
 {
-	
+	const u32 DEFAULT_WIDTH = 1024, DEFAULT_HEIGHT = 768;
+
+	m_windowHeight = DEFAULT_HEIGHT;
+	m_windowWidth  = DEFAULT_WIDTH;
+	m_controller.bindCamera(&m_camera);
 }
 
 bool App::init()
 {
+	m_window  = DisplayDeviceInterface::CreateWindow("MultiTexturedModelExample", m_windowWidth, m_windowHeight);
+	m_context = DisplayDeviceInterface::CreateGraphicalContext(m_window, 3, 4);
+	EventSystemInterface::StartUp();
+	m_controller.init();
+
 	return true;
 }
 
 
 bool App::update()
 {
-	//executeControllers();
+	float background[4] = {0.0f, 0.0f, 0.0f, 0.0f}; // opaque black
 	
-	// Draw objects
-	//{
-	//	m_renderer.draw();
-	//}
+	bool is_running = true;
+	while (is_running)
+	{
+		// Clear screen
+		DisplayDeviceInterface::ClearBuffers(background);
+
+		// Update controls
+		m_controller.update();
+
+		// TODO : Add user-function here (template method)
+		// should return true value for the main loop to continue, false otherwise.
+
+		// Draw views
+		for (auto& v : m_views)
+		{
+			v->update();
+		}
+
+		// Display draw result
+		DisplayDeviceInterface::SwapBuffer(m_window);
+	}
 
 	return true;
 }
 
-// Lousy code!!!!! Please fix me!
-InputSensitiveController::ControllerId App::registerController(InputSensitiveController* const ctrl)
+void App::terminate()
 {
-	size_t pos = m_controllers.size();
-	NEP_ASSERT( pos < (1 << sizeof(InputSensitiveController::ControllerId)*8) - 1 ); // pos doesn't exceed the max codable value?
-	m_controllers.push_back(ctrl);
-
-	return pos;
-}
-
-void App::unregisterController(InputSensitiveController* const ctrl)
-{
-	std::list<InputSensitiveController*>::iterator it = std::find( m_controllers.begin(), m_controllers.end(), ctrl );
-	NEP_ASSERT( it != m_controllers.end() );
-	
-	m_controllers.erase(it);
-}
-
-/*void App::executeControllers()
-{
-	if ( fetchAndCopyFirstInputEvent() )
-	{
-		std::list<InputSensitiveController*>::iterator it_end = m_controllers.end();
-		for ( std::list<InputSensitiveController*>::iterator it = m_controllers.begin(); it != it_end; ++it )
-			(*it)->execute(m_inputEvent);
+	// Delete views
+	for (auto& v : m_views){
+		v->terminate();
+		delete v;
 	}
-}*/
+	m_views.clear();
+
+	// Delete viewport
+	DisplayDeviceInterface::DestroyWindow(m_window);
+	DisplayDeviceInterface::DestroyGraphicalContext(m_context);
+	
+	// Delete control manager
+	EventSystemInterface::ShutDown();
+}
