@@ -43,6 +43,7 @@ namespace Neptune
 	typedef Mat4x4<float> Mat4;
 
 	// Matrix operators
+	template <typename T> bool		operator==(const Mat4x4<T>&, const Mat4x4<T>&);
 	template <typename T> Mat4x4<T> operator*(const Mat4x4<T>&, const Mat4x4<T>&);
 	template <typename T> Mat4x4<T> operator+(const Mat4x4<T>&, const Mat4x4<T>&);
 	template <typename T> Mat4x4<T> operator-(const Mat4x4<T>&, const Mat4x4<T>&);

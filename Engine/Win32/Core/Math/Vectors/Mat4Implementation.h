@@ -73,6 +73,14 @@ namespace Neptune
 	///////////////////////////////////////////////////////////////////////////
 
 	template <typename T>
+	bool operator==(const Mat4x4<T>& ma, const Mat4x4<T>& mb)
+	{
+		using namespace glm;
+
+		return (tmat4x4<T>&) ma.getBase() == (tmat4x4<T>&) mb.getBase();
+	}
+
+	template <typename T>
 	Mat4x4<T> operator*(const Mat4x4<T>& ma, const Mat4x4<T>& mb)
 	{
 		using namespace glm;
