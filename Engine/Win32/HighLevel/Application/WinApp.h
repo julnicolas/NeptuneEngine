@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Application/App.h"
-#include "InputEvent.h"
+#include "Input/InputEvent.h"
 
 namespace Neptune
 {

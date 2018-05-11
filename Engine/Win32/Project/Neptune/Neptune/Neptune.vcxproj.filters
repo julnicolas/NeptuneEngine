@@ -423,9 +423,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Maintenance\CompilerHints.h">
       <Filter>Engine\Multiplatform\Core\Maintenance</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\InputEvent.h">
-      <Filter>Engine\Win32\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.h">
       <Filter>Engine\Multiplatform\Core\File</Filter>
     </ClInclude>
@@ -464,6 +461,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\StandardErrorCodes.h">
       <Filter>Engine\Multiplatform\Core\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Input\InputEvent.h">
+      <Filter>Engine\Win32\Core\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
