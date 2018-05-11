@@ -24,17 +24,19 @@ namespace Neptune
 	{
 	public:
 		App();
+		App(const char* _appName);
 		virtual ~App()             = default;
 		App(const App&)            = delete;
 		App& operator=(const App&) = delete;
 
 		void setWindowSize(u32 _height, u32 _width)	{ m_windowHeight = _height; m_windowWidth = _width; }
 
-		bool init()      override;     /// Prepares the app to be updated.
-		bool update()    override;    /// Executed once per frame.
-		void terminate() override;   /// Must be executed when the app exits from the main loop.
+		bool init()      override;			/// Prepares the app to be updated.
+		bool update()    override;			/// Executed once per frame.
+		void terminate() override;			/// Must be executed when the app exits from the main loop.
 
 	protected:
+		const char*										m_appName;
 		u32												m_windowHeight;
 		u32												m_windowWidth;
 		DisplayDeviceInterface::WindowHandle			m_window;
