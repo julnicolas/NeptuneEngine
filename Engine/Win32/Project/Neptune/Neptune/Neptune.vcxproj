@@ -296,7 +296,6 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.cpp" />
     <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp" />
     <ClCompile Include="..\..\..\Core\Input\EventSystemInterface.cpp" />
-    <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp" />
     <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -414,7 +413,6 @@
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec2Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec3Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Vec4Implementation.h" />
-    <ClInclude Include="..\..\..\HighLevel\Application\WinApp.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
