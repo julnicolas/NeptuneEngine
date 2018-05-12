@@ -55,6 +55,15 @@ static u8 MapMultiSampleAntiAlliasingValues(DisplayDeviceInterface::MULTI_SAMPLE
 	}
 }
 
+DisplayDeviceInterface::GraphicalContextSettings::GraphicalContextSettings():
+	m_antiAliasing(MULTI_SAMPLE_ANTI_ALLIASING::NONE),
+	m_frameBufferHeight(0),
+	m_frameBufferWidth(0),
+	m_enableReversedZ(false)
+{
+
+}
+
 DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const char* _name, u32 _width, u32 _height, MULTI_SAMPLE_ANTI_ALLIASING _antiAliasing /*= MULTI_SAMPLE_ANTI_ALLIASING::NONE*/, bool _fullScreen /*= false*/)
 {
 	const u8 OGL_MAJOR_VERSION   = 4;
@@ -82,21 +91,6 @@ DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const 
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  OGL_CONTEXT_PROFILE ); // Selects the OpenGl profile to use
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OGL_MAJOR_VERSION);    // Wished work-version
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OGL_MINOR_VERSION);    // Min supported version
-
-	// Enable Multi-Sample Antialiasing
-	if (_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)
-	{
-		u8 multisample = MapMultiSampleAntiAlliasingValues(_antiAliasing);
-
-		if (multisample == NEP_STD_U8_ERROR_CODE_0)
-		{
-			multisample = 0; // fallback to no anti-alliasing support
-			NEP_LOG("Warning DisplayDeviceInterface::CreateWindow : Multi-sampling is not supported. Falling back to not anti-aliased mode.");
-		}
-
-		//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);				// Enables multi-sampling anti-alliasing
-		//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, multisample);	// Defines the number of sample buffers (also corresponds to the number of times a fragment might need to be sampled to alleviate alliasing issues).
-	}
 
 	// Create the main window
 	SDL_Window* window = nullptr;
@@ -136,10 +130,10 @@ void DisplayDeviceInterface::DestroyWindow(WindowHandle handle)
 	SDL_DestroyWindow( window );
 }
 
-DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 minCtxtVersion,u8 maxCtxtVersion, bool _setReversedZ)
+DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 _openGLMinorVersion, u8 _openGLMajorVersion, GraphicalContextSettings _userSettings /*= GraphicalContextSettings()*/)
 {
 	// Platform specifics
-	const u8 Z_BUFFER_PRECISION = 32; // Z buffer's precision, less than 32 bits exposes to serious z-fighting risks. -> solution, reversed-z technique.
+	const u8 Z_BUFFER_PRECISION = 32; // Z buffer's precision, less than 32 bits exposes to serious z-fighting risks.
 	SDL_Window* win = static_cast<SDL_Window*>( window );
 
 	// Enable hardware acceleration
@@ -150,6 +144,21 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	
 	// Enable double buffering
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
+
+	// Enable Multi-Sample Antialiasing
+	if (_userSettings.m_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)
+	{
+		u8 multisample = MapMultiSampleAntiAlliasingValues(_userSettings.m_antiAliasing);
+
+		if (multisample == NEP_STD_U8_ERROR_CODE_0)
+		{
+			multisample = 0; // fallback to no anti-alliasing support
+			NEP_LOG("Warning DisplayDeviceInterface::CreateWindow : Multi-sampling is not supported. Falling back to not anti-aliased mode.");
+		}
+
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);				// Enables multi-sampling anti-alliasing
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, multisample);	// Defines the number of sample buffers (also corresponds to the number of times a fragment might need to be sampled to alleviate alliasing issues).
+	}
 
 	// Create an OpenGL context and attach it to the window
 	SDL_GLContext context = SDL_GL_CreateContext( win );
@@ -197,7 +206,7 @@ void DisplayDeviceInterface::ClearBuffers(float backGroundColor[4])
 
 void DisplayDeviceInterface::SwapBuffer(WindowHandle handle)
 {
-	// Blit buffer
+	// Blit off-screen-frame-buffer to back buffer 
 	if (s_frame_buffer_object_index != FRAME_BUFFER_OBJECT_UNDEFINED)
 	{
 		glBindFramebuffer(GL_FRAMEBUFFER, 0);
