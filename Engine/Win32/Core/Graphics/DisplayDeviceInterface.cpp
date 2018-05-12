@@ -6,6 +6,14 @@
 
 using namespace Neptune;
 
+const  u32 FRAME_BUFFER_OBJECT_UNDEFINED = ~0;
+static u32 s_frame_buffer_object_index = 1;//FRAME_BUFFER_OBJECT_UNDEFINED; // must be renamed
+static u32 s_frame_buffer_height = 0;
+static u32 s_frame_buffer_width = 0;
+static u32 s_window_height = 0;
+static u32 s_window_width = 0;
+static float s_clear_depth_value = 0.0f; // without reversed-z, the right value is 1.0f
+
 // Must be reimplemented on each platform that uses SDL
 static bool InitContext()
 {
@@ -52,6 +60,13 @@ DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const 
 	const u8 OGL_MAJOR_VERSION   = 4;
 	const u8 OGL_MINOR_VERSION   = 3;
 
+	////////// debug
+	s_window_height = _height;
+	s_window_width  = _width;
+	s_frame_buffer_height = _height;
+	s_frame_buffer_width  = _width;
+	////////////////
+
 	// The compatibility profile must be used on Windows because of a bug in Glew
 	// that causes invalid GL_ENUM_ERRORS to be raised.
 	const u8 OGL_CONTEXT_PROFILE = SDL_GL_CONTEXT_PROFILE_COMPATIBILITY;
@@ -79,8 +94,8 @@ DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const 
 			NEP_LOG("Warning DisplayDeviceInterface::CreateWindow : Multi-sampling is not supported. Falling back to not anti-aliased mode.");
 		}
 
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);				// Enables multi-sampling anti-alliasing
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, multisample);	// Defines the number of sample buffers (also corresponds to the number of times a fragment might need to be sampled to alleviate alliasing issues).
+		//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);				// Enables multi-sampling anti-alliasing
+		//SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, multisample);	// Defines the number of sample buffers (also corresponds to the number of times a fragment might need to be sampled to alleviate alliasing issues).
 	}
 
 	// Create the main window
@@ -121,7 +136,7 @@ void DisplayDeviceInterface::DestroyWindow(WindowHandle handle)
 	SDL_DestroyWindow( window );
 }
 
-DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 minCtxtVersion,u8 maxCtxtVersion)
+DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 minCtxtVersion,u8 maxCtxtVersion, bool _setReversedZ)
 {
 	// Platform specifics
 	const u8 Z_BUFFER_PRECISION = 32; // Z buffer's precision, less than 32 bits exposes to serious z-fighting risks. -> solution, reversed-z technique.
@@ -149,7 +164,7 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	// Set up basic rendering settings
 	glEnable(GL_DEPTH_TEST);	// Enables depth test
 	glDepthFunc(GL_LESS);		// Accepts fragment if closer to the camera than the former one
-	//glDepthFunc(GL_GREATER);		// Accepts fragment if closer to the camera than the former one
+	//glDepthFunc(GL_GREATER);	// Accepts fragment if closer to the camera than the former one
 	glDepthRange(0.0, 1.0);		// Specify that depth-test-values must be between 0.0 and 1.0
 
 	// Enable anti-alisaing
@@ -167,19 +182,38 @@ void DisplayDeviceInterface::DestroyGraphicalContext(GraphicalContextHandle hand
 void DisplayDeviceInterface::ClearBuffers(float backGroundColor[4])
 {
 	glClearBufferfv( GL_COLOR, 0, backGroundColor );
-	//glClearDepth(0.0f); // 0.0f instead of 1.0f because reversed-z is used
-	glClear(GL_DEPTH_BUFFER_BIT);
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 1);
-	glClearBufferfv(GL_COLOR, 0, backGroundColor);
 	glClearDepth(0.0f); // 0.0f instead of 1.0f because reversed-z is used
 	glClear(GL_DEPTH_BUFFER_BIT);
 
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+	// If off-screen rendering is used
+	if (s_frame_buffer_object_index != FRAME_BUFFER_OBJECT_UNDEFINED)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, s_frame_buffer_object_index);
+		glClearBufferfv(GL_COLOR, 0, backGroundColor);
+		glClearDepth(s_clear_depth_value); // 0.0f instead of 1.0f because reversed-z is used
+		glClear(GL_DEPTH_BUFFER_BIT);
+	}
 }
 
 void DisplayDeviceInterface::SwapBuffer(WindowHandle handle)
 {
+	// Blit buffer
+	if (s_frame_buffer_object_index != FRAME_BUFFER_OBJECT_UNDEFINED)
+	{
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		glBindFramebuffer(GL_READ_FRAMEBUFFER, s_frame_buffer_object_index);
+		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); // default FBO
+		glBlitFramebuffer(
+			0, 0, s_frame_buffer_width, s_frame_buffer_height,
+			0, 0, s_window_width, s_window_height,
+			GL_COLOR_BUFFER_BIT, GL_LINEAR);
+		glBindFramebuffer(GL_FRAMEBUFFER, 0);
+		NEP_GRAPHICS_ASSERT();
+
+		glBindFramebuffer(GL_FRAMEBUFFER, s_frame_buffer_object_index); // set custom frame-buffer as default render-zone
+	}
+
+	// Swap buffer
 	SDL_Window* window = static_cast<SDL_Window*>( handle );
 	SDL_GL_SwapWindow( window );
 }

@@ -25,7 +25,7 @@ namespace Neptune
 		void DestroyWindow(WindowHandle handle);
 
 		/// Creates a graphical context as well as the app's main window
-		GraphicalContextHandle CreateGraphicalContext(WindowHandle window, u8 minCtxtVersion,u8 maxCtxtVersion);
+		GraphicalContextHandle CreateGraphicalContext(WindowHandle window, u8 minCtxtVersion,u8 maxCtxtVersion, bool _setReversedZ = false);
 		
 		/// Destructs a graphical context and the main window
 		void DestroyGraphicalContext(GraphicalContextHandle handle);

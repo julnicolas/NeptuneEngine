@@ -58,27 +58,7 @@ void VAORenderer::terminate()
 
 void VAORenderer::draw()
 {
-	const u32 WIDTH = 1024, HEIGHT = 768;
-
-	glBindFramebuffer(GL_FRAMEBUFFER, 1);
-	//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, 1, 0);
-	//glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, 2, 0);
-	//glClearDepth(0.0f); // 0.0f instead of 1.0f because reversed-z is used
-
-	//
-
 	glDrawArrays( MapDrawingPrimitive( m_drawingPrimitive ) , 0, m_nbverticesToRender );
-	
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
-	glBindFramebuffer(GL_READ_FRAMEBUFFER, 1);
-	glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); // default FBO
-	glBlitFramebuffer(
-		0, 0, WIDTH, HEIGHT,
-		0, 0, WIDTH, HEIGHT,
-		GL_COLOR_BUFFER_BIT, GL_LINEAR);
-	glBindFramebuffer(GL_FRAMEBUFFER, 0);
-	NEP_GRAPHICS_ASSERT();
 }
 
 void VAORenderer::bindShaderAttributes(const GraphicsProgram& pgm)
