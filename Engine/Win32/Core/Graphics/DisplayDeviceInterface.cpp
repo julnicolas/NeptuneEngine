@@ -7,32 +7,18 @@
 using namespace Neptune;
 
 const  u32 FRAME_BUFFER_OBJECT_UNDEFINED = ~0;
-static u32 s_frame_buffer_object_index = 1;//FRAME_BUFFER_OBJECT_UNDEFINED; // must be renamed
+static u32 s_frame_buffer_object_index = FRAME_BUFFER_OBJECT_UNDEFINED;//1;//FRAME_BUFFER_OBJECT_UNDEFINED; // must be renamed
 static u32 s_frame_buffer_height = 0;
 static u32 s_frame_buffer_width = 0;
 static u32 s_window_height = 0;
 static u32 s_window_width = 0;
-static float s_clear_depth_value = 0.0f; // without reversed-z, the right value is 1.0f
-
-// Must be reimplemented on each platform that uses SDL
-static bool InitContext()
-{
-	glewExperimental = GL_TRUE;
-	if(glewInit() != GLEW_OK)
-	{
-		NEP_LOG("Error: Graphical Context couldn't be initialized");
-		SDL_Quit();
-		return false;
-	}
-
-	return true;
-}
+static float s_clear_depth_value = 1.0f;//0.0f; // without reversed-z, the right value is 1.0f
 
 // Returns a value equal to the number of times a pixel can be sampled. Returns NEP_STD_U8_ERROR_CODE_0 if the input value is not supported.
 static u8 MapMultiSampleAntiAlliasingValues(DisplayDeviceInterface::MULTI_SAMPLE_ANTI_ALLIASING _v)
 {
 	using namespace DisplayDeviceInterface;
-	
+
 	switch (_v)
 	{
 	case MULTI_SAMPLE_ANTI_ALLIASING::NONE:
@@ -53,6 +39,109 @@ static u8 MapMultiSampleAntiAlliasingValues(DisplayDeviceInterface::MULTI_SAMPLE
 	default:
 		return NEP_STD_U8_ERROR_CODE_0; // Error unsupported
 	}
+}
+
+static bool DidUserTryToEnableOffScreenRendering(const DisplayDeviceInterface::GraphicalContextSettings& _userSettings)
+{
+	return _userSettings.m_frameBufferHeight > 0 && _userSettings.m_frameBufferWidth > 0;
+}
+
+static bool BindDepthBufferToBackBuffer(const DisplayDeviceInterface::GraphicalContextSettings& _userSettings)
+{
+	const u8 Z_BUFFER_PRECISION = 32; // Z buffer's precision, less than 32 bits exposes to serious z-fighting risks.
+	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, Z_BUFFER_PRECISION);
+
+	// Enable Multi-Sample Antialiasing
+	if (_userSettings.m_antiAliasing != DisplayDeviceInterface::MULTI_SAMPLE_ANTI_ALLIASING::NONE)
+	{
+		u8 multisample = MapMultiSampleAntiAlliasingValues(_userSettings.m_antiAliasing);
+
+		if (multisample == NEP_STD_U8_ERROR_CODE_0)
+		{
+			multisample = 0; // fallback to no anti-alliasing support
+			NEP_LOG("Warning DisplayDeviceInterface::CreateWindow : Multi-sampling is not supported. Falling back to not anti-aliased mode.");
+		}
+
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);				// Enables multi-sampling anti-alliasing
+		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, multisample);	// Defines the number of sample buffers (also corresponds to the number of times a fragment might need to be sampled to alleviate alliasing issues).
+	}
+
+	return true;
+}
+
+static bool CreateFBOAndEnableReversedZIfNeeded(const DisplayDeviceInterface::GraphicalContextSettings& _userSettings)
+{
+	//if ((major > 4 || (major == 4 && minor >= 5)) ||
+	if (!SDL_GL_ExtensionSupported("GL_ARB_clip_control"))
+	{
+		NEP_LOG("Error, Reversed-z is not supported.");
+	}
+
+	// Override OpenGL default clipping policy -
+	// clipping is done between [-1.0, 1.0], here it is
+	// forced to [0.0, 1.0]
+	glClipControl(GL_LOWER_LEFT, GL_ZERO_TO_ONE);
+	NEP_GRAPHICS_ASSERT();
+	
+	// Generate the colour buffer associated to the frame buffer
+	u32 color, depth, fbo;
+	u32 texture_type = (_userSettings.m_antiAliasing != DisplayDeviceInterface::MULTI_SAMPLE_ANTI_ALLIASING::NONE) ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
+	u8 multi_sampling_factor = MapMultiSampleAntiAlliasingValues(_userSettings.m_antiAliasing);
+
+	// multisampled colour bufer
+	glGenTextures(1, &color);
+	glBindTexture(texture_type, color);
+
+	if (_userSettings.m_antiAliasing != DisplayDeviceInterface::MULTI_SAMPLE_ANTI_ALLIASING::NONE){
+		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, multi_sampling_factor, GL_RGBA8, _userSettings.m_frameBufferWidth, _userSettings.m_frameBufferHeight, false);
+	}
+	else{
+		glTexStorage2D(GL_TEXTURE_2D, 1, GL_RGBA8, _userSettings.m_frameBufferWidth, _userSettings.m_frameBufferHeight);
+	}
+	glBindTexture(texture_type, 0);
+
+	// multi-sampled depth-buffer
+	u8 depth_binary_format = (_userSettings.m_enableReversedZ) ? GL_DEPTH_COMPONENT32F : GL_RGBA8; // 32-bit float if reversed-z is enabled, 32-bit int otherwise.
+	glGenTextures(1, &depth);
+	glBindTexture(texture_type, depth);
+
+	if (_userSettings.m_antiAliasing != DisplayDeviceInterface::MULTI_SAMPLE_ANTI_ALLIASING::NONE){
+		glTexImage2DMultisample(GL_TEXTURE_2D_MULTISAMPLE, multi_sampling_factor, depth_binary_format, _userSettings.m_frameBufferWidth, _userSettings.m_frameBufferHeight, false);
+	}
+	else {
+		glTexStorage2D(GL_TEXTURE_2D, 1, depth_binary_format, _userSettings.m_frameBufferWidth, _userSettings.m_frameBufferHeight);
+	}
+	glBindTexture(texture_type, 0);
+
+	// bind frame buffer
+	glGenFramebuffers(1, &fbo);
+	glBindFramebuffer(GL_FRAMEBUFFER, fbo);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture_type, color, 0);
+	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture_type, depth, 0);
+	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
+
+	if (status != GL_FRAMEBUFFER_COMPLETE) {
+		NEP_LOG("glCheckFramebufferStatus: %x\n", status);
+	}
+
+	// Bind the frame buffer
+	glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+	return true;
+}
+
+// Must be reimplemented on each platform that uses SDL
+static bool InitContext()
+{
+	glewExperimental = GL_TRUE;
+	if(glewInit() != GLEW_OK)
+	{
+		NEP_LOG("Error: Graphical Context couldn't be initialized");
+		SDL_Quit();
+		return false;
+	}
+
+	return true;
 }
 
 DisplayDeviceInterface::GraphicalContextSettings::GraphicalContextSettings():
@@ -133,32 +222,29 @@ void DisplayDeviceInterface::DestroyWindow(WindowHandle handle)
 DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 _openGLMinorVersion, u8 _openGLMajorVersion, GraphicalContextSettings _userSettings /*= GraphicalContextSettings()*/)
 {
 	// Platform specifics
-	const u8 Z_BUFFER_PRECISION = 32; // Z buffer's precision, less than 32 bits exposes to serious z-fighting risks.
 	SDL_Window* win = static_cast<SDL_Window*>( window );
 
-	// Enable hardware acceleration
-	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL,1);
+	// Enable rendering options
+	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);		// Enable hardware acceleration
+	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);			// Enable double buffering
+	glEnable(GL_DEPTH_TEST);								// Enables depth test
+	
+	// Enable anti-aliasing
+	if (_userSettings.m_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)
+		glEnable(GL_MULTISAMPLE);
+
+	if (!_userSettings.m_enableReversedZ)
+		glDepthFunc(GL_LESS);								// Accepts fragment if closer to the camera than the former one. z = 0 at camera's position
+	else
+		glDepthFunc(GL_GREATER);							// Accepts fragment if closer to the camera than the former one. z = 0 at far plane's position
+
+	glDepthRange(0.0, 1.0);									// Specify that depth-test-values must be between 0.0 and 1.0
 
 	// Set up buffer sizes
-	SDL_GL_SetAttribute(SDL_GL_DEPTH_SIZE, Z_BUFFER_PRECISION);
-	
-	// Enable double buffering
-	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER,1);
-
-	// Enable Multi-Sample Antialiasing
-	if (_userSettings.m_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)
-	{
-		u8 multisample = MapMultiSampleAntiAlliasingValues(_userSettings.m_antiAliasing);
-
-		if (multisample == NEP_STD_U8_ERROR_CODE_0)
-		{
-			multisample = 0; // fallback to no anti-alliasing support
-			NEP_LOG("Warning DisplayDeviceInterface::CreateWindow : Multi-sampling is not supported. Falling back to not anti-aliased mode.");
-		}
-
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLEBUFFERS, 1);				// Enables multi-sampling anti-alliasing
-		SDL_GL_SetAttribute(SDL_GL_MULTISAMPLESAMPLES, multisample);	// Defines the number of sample buffers (also corresponds to the number of times a fragment might need to be sampled to alleviate alliasing issues).
-	}
+	if (DidUserTryToEnableOffScreenRendering(_userSettings))
+		CreateFBOAndEnableReversedZIfNeeded(_userSettings);
+	else 
+		BindDepthBufferToBackBuffer(_userSettings);
 
 	// Create an OpenGL context and attach it to the window
 	SDL_GLContext context = SDL_GL_CreateContext( win );
@@ -169,15 +255,6 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	// Synchronize buffer swapping with the screen's refresh rate
 	if (SDL_GL_SetSwapInterval(1) == -1) // Use VSync
 		NEP_LOG("Warning DisplayDeviceInterface::CreateGraphicalContext - Swap interval not supported.");
-
-	// Set up basic rendering settings
-	glEnable(GL_DEPTH_TEST);	// Enables depth test
-	glDepthFunc(GL_LESS);		// Accepts fragment if closer to the camera than the former one
-	//glDepthFunc(GL_GREATER);	// Accepts fragment if closer to the camera than the former one
-	glDepthRange(0.0, 1.0);		// Specify that depth-test-values must be between 0.0 and 1.0
-
-	// Enable anti-alisaing
-	glEnable(GL_MULTISAMPLE);
 
 	return static_cast<GraphicalContextHandle*>( context );
 }
@@ -191,7 +268,7 @@ void DisplayDeviceInterface::DestroyGraphicalContext(GraphicalContextHandle hand
 void DisplayDeviceInterface::ClearBuffers(float backGroundColor[4])
 {
 	glClearBufferfv( GL_COLOR, 0, backGroundColor );
-	glClearDepth(0.0f); // 0.0f instead of 1.0f because reversed-z is used
+	//glClearDepth(0.0f); // 0.0f instead of 1.0f because reversed-z is used
 	glClear(GL_DEPTH_BUFFER_BIT);
 
 	// If off-screen rendering is used
