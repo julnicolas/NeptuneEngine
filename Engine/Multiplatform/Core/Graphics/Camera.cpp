@@ -89,12 +89,12 @@ void Camera::setProjection()
 {
 	m_projection = Perspective( m_fieldOfView, m_screenRatio, m_nearPos, m_farPos );
 	
-	/*float f = 1.0f / tan(m_fieldOfView / 2.0f);
-	Mat4 proj
-		(f / m_screenRatio,	0.0f,	0.0f,		0.0f,
-		0.0f,				f,		0.0f,		0.0f,
-		0.0f,				0.0f,	0.0f,		1.0f,
-		0.0f,				0.0f,	m_nearPos,	0.0f);
-
-	m_projection = proj;*/
+	//float f = 1.0f / tan(m_fieldOfView / 2.0f);
+	//Mat4 proj
+	//	(f / m_screenRatio,	0.0f,	0.0f,		0.0f,
+	//	0.0f,				f,		0.0f,		0.0f,
+	//	0.0f,				0.0f,	0.0f,		1.0f,
+	//	0.0f,				0.0f,	m_nearPos,	0.0f);
+	//
+	//m_projection = proj;
 }
