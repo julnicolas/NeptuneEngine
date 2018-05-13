@@ -155,15 +155,12 @@ DisplayDeviceInterface::GraphicalContextSettings::GraphicalContextSettings():
 
 DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const char* _name, u32 _width, u32 _height, MULTI_SAMPLE_ANTI_ALLIASING _antiAliasing /*= MULTI_SAMPLE_ANTI_ALLIASING::NONE*/, bool _fullScreen /*= false*/)
 {
+	// Default to OpenGL 4.3
 	const u8 OGL_MAJOR_VERSION   = 4;
 	const u8 OGL_MINOR_VERSION   = 3;
 
-	////////// debug
 	s_window_height = _height;
 	s_window_width  = _width;
-	s_frame_buffer_height = _height;
-	s_frame_buffer_width  = _width;
-	////////////////
 
 	// The compatibility profile must be used on Windows because of a bug in Glew
 	// that causes invalid GL_ENUM_ERRORS to be raised.
@@ -178,8 +175,8 @@ DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const 
 
 	// Prior window-creation context-initialization
 	SDL_GL_SetAttribute(SDL_GL_CONTEXT_PROFILE_MASK,  OGL_CONTEXT_PROFILE ); // Selects the OpenGl profile to use
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OGL_MAJOR_VERSION);    // Wished work-version
-	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OGL_MINOR_VERSION);    // Min supported version
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MAJOR_VERSION, OGL_MAJOR_VERSION);
+	SDL_GL_SetAttribute(SDL_GL_CONTEXT_MINOR_VERSION, OGL_MINOR_VERSION);
 
 	// Create the main window
 	SDL_Window* window = nullptr;
@@ -224,27 +221,8 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	// Platform specifics
 	SDL_Window* win = static_cast<SDL_Window*>( window );
 
-	// Enable rendering options
 	SDL_GL_SetAttribute(SDL_GL_ACCELERATED_VISUAL, 1);		// Enable hardware acceleration
 	SDL_GL_SetAttribute(SDL_GL_DOUBLEBUFFER, 1);			// Enable double buffering
-	glEnable(GL_DEPTH_TEST);								// Enables depth test
-	
-	// Enable anti-aliasing
-	if (_userSettings.m_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)
-		glEnable(GL_MULTISAMPLE);
-
-	if (!_userSettings.m_enableReversedZ)
-		glDepthFunc(GL_LESS);								// Accepts fragment if closer to the camera than the former one. z = 0 at camera's position
-	else
-		glDepthFunc(GL_GREATER);							// Accepts fragment if closer to the camera than the former one. z = 0 at far plane's position
-
-	glDepthRange(0.0, 1.0);									// Specify that depth-test-values must be between 0.0 and 1.0
-
-	// Set up buffer sizes
-	if (DidUserTryToEnableOffScreenRendering(_userSettings))
-		CreateFBOAndEnableReversedZIfNeeded(_userSettings);
-	else 
-		BindDepthBufferToBackBuffer(_userSettings);
 
 	// Create an OpenGL context and attach it to the window
 	SDL_GLContext context = SDL_GL_CreateContext( win );
@@ -255,6 +233,24 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	// Synchronize buffer swapping with the screen's refresh rate
 	if (SDL_GL_SetSwapInterval(1) == -1) // Use VSync
 		NEP_LOG("Warning DisplayDeviceInterface::CreateGraphicalContext - Swap interval not supported.");
+
+	glEnable(GL_DEPTH_TEST);								// Enables depth test
+
+	// Enable rendering options
+	if (_userSettings.m_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE) // Set anti alliasing
+		glEnable(GL_MULTISAMPLE);
+
+	if (!_userSettings.m_enableReversedZ)
+		glDepthFunc(GL_LESS);								// Accepts fragment if closer to the camera than the former one. z = 0 at camera's position
+	else
+		glDepthFunc(GL_GREATER);							// Accepts fragment if closer to the camera than the former one. z = 0 at far plane's position
+	glDepthRange(0.0, 1.0);									// Specify that depth-test-values must be between 0.0 and 1.0
+
+	// Create and bind custom or default frame buffers
+	if (DidUserTryToEnableOffScreenRendering(_userSettings))
+		CreateFBOAndEnableReversedZIfNeeded(_userSettings);
+	else
+		BindDepthBufferToBackBuffer(_userSettings);
 
 	return static_cast<GraphicalContextHandle*>( context );
 }
