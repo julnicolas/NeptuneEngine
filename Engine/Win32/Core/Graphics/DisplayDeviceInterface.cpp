@@ -7,7 +7,7 @@
 using namespace Neptune;
 
 const  u32 FRAME_BUFFER_OBJECT_UNDEFINED = ~0;
-static u32 s_frame_buffer_object_index = FRAME_BUFFER_OBJECT_UNDEFINED; // must be renamed
+static u32 s_offscreen_fbo_index = FRAME_BUFFER_OBJECT_UNDEFINED; // must be renamed
 static u32 s_frame_buffer_height = 0;
 static u32 s_frame_buffer_width = 0;
 static u32 s_window_height = 0;
@@ -68,6 +68,10 @@ static bool CreateFBOAndEnableReversedZIfNeeded(const DisplayDeviceInterface::Gr
 		// forced to [0.0, 1.0]
 		glClipControl(GL_LOWER_LEFT, GL_ZERO_TO_ONE);
 		NEP_GRAPHICS_ASSERT();
+
+		// Then set the value to reset the depth buffer.
+		// Closest objects are at z = 0.0f 
+		s_clear_depth_value = 0.0f;
 	}
 	
 	// Generate the colour buffer associated to the frame buffer
@@ -109,8 +113,8 @@ static bool CreateFBOAndEnableReversedZIfNeeded(const DisplayDeviceInterface::Gr
 	NEP_GRAPHICS_ASSERT();
 
 	// bind frame buffer
-	glGenFramebuffers(1, &s_frame_buffer_object_index);
-	glBindFramebuffer(GL_FRAMEBUFFER, s_frame_buffer_object_index);
+	glGenFramebuffers(1, &s_offscreen_fbo_index);
+	glBindFramebuffer(GL_FRAMEBUFFER, s_offscreen_fbo_index);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, texture_type, color, 0);
 	glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, texture_type, depth, 0);
 	GLenum status = glCheckFramebufferStatus(GL_FRAMEBUFFER);
@@ -289,7 +293,7 @@ static void ClearBuffer(s32 _fbo, const float _backGroundColor[4])
 	glClearBufferfv(GL_COLOR, 0, _backGroundColor);
 	NEP_GRAPHICS_ASSERT();
 
-	glClearDepth(s_clear_depth_value); // 0.0f instead of 1.0f because reversed-z is used
+	glClearDepth(s_clear_depth_value); // 0.0f instead of 1.0f when reversed-z is used
 	NEP_GRAPHICS_ASSERT();
 
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -299,7 +303,7 @@ static void ClearBuffer(s32 _fbo, const float _backGroundColor[4])
 void DisplayDeviceInterface::ClearBuffers(float backGroundColor[4])
 {
 	// If off-screen rendering is used
-	if (s_frame_buffer_object_index != FRAME_BUFFER_OBJECT_UNDEFINED)
+	if (s_offscreen_fbo_index != FRAME_BUFFER_OBJECT_UNDEFINED)
 	{
 		//NEP_GRAPHICS_ASSERT();
 		//
@@ -316,14 +320,18 @@ void DisplayDeviceInterface::ClearBuffers(float backGroundColor[4])
 		//NEP_GRAPHICS_ASSERT();
 
 		//ClearBuffer(0, backGroundColor);
-		ClearBuffer(s_frame_buffer_object_index, backGroundColor);
+		ClearBuffer(s_offscreen_fbo_index, backGroundColor);
+	}
+	else
+	{
+		ClearBuffer(0, backGroundColor);
 	}
 }
 
 void DisplayDeviceInterface::SwapBuffer(WindowHandle handle)
 {
 	// Blit off-screen-frame-buffer to back buffer 
-	if (s_frame_buffer_object_index != FRAME_BUFFER_OBJECT_UNDEFINED)
+	if (s_offscreen_fbo_index != FRAME_BUFFER_OBJECT_UNDEFINED)
 	{
 		NEP_GRAPHICS_ASSERT();
 
