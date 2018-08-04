@@ -19,7 +19,8 @@ Camera::Camera():
 	m_nearPos(M_INIT_NEAR),
 	m_farPos(M_INIT_FAR)
 {
-	setProjection();
+	setProjection(ProjectionType::PERSPECTIVE);
+	computeProjection();
 }
 
 Camera::Camera(const Vec3& eye, const Vec3& center, const Vec3& up):
@@ -28,8 +29,10 @@ Camera::Camera(const Vec3& eye, const Vec3& center, const Vec3& up):
 	m_nearPos(M_INIT_NEAR),
 	m_farPos(M_INIT_FAR)
 {
+	setProjection(ProjectionType::PERSPECTIVE);
+
 	m_origin = LookAt(eye, center, up);
-	setProjection();
+	computeProjection();
 }
 
 void  Camera::setViewFrustum(float fieldOfView, float screenRatio, float nearPos, float farPos)
@@ -39,14 +42,14 @@ void  Camera::setViewFrustum(float fieldOfView, float screenRatio, float nearPos
 	m_nearPos     = nearPos;
 	m_farPos      = farPos;
 
-	setProjection();
+	computeProjection();
 }
 
 void Camera::setScreenRatio(float ratio) 
 { 
 	m_screenRatio = ratio;
 
-	setProjection();
+	computeProjection();
 }
 
 const Mat4& Camera::lookAt(const Vec3& eye, const Vec3& center, const Vec3& up)
@@ -82,20 +85,31 @@ void Camera::zoom(float k)
 	else
 		m_fieldOfView = (k < 0.0f) ? M_INIT_FOV : m_fieldOfView;
 
-	setProjection();
+	computeProjection();
 }
 
-void Camera::setProjection()
+void Camera::computeProjection()
 {
-	m_projection = Perspective( m_fieldOfView, m_screenRatio, m_nearPos, m_farPos );
-	
-	// reversed-z-matrix with far plane to infinity
-	//float f = 1.0f / tan(m_fieldOfView / 2.0f);
-	//Mat4 proj
-	//	(f / m_screenRatio,	0.0f,	0.0f,		0.0f,
-	//	0.0f,				f,		0.0f,		0.0f,
-	//	0.0f,				0.0f,	0.0f,		1.0f,
-	//	0.0f,				0.0f,	m_nearPos,	0.0f);
-	//
-	//m_projection = proj;
+	m_projection = m_computeProjection();
+}
+
+
+void Camera::setProjection(Camera::ProjectionType _proj)
+{
+	switch (_proj)
+	{
+	case ProjectionType::PERSPECTIVE:
+		m_computeProjection = std::bind(Perspective<decltype(m_fieldOfView)>, m_fieldOfView, m_screenRatio, m_nearPos, m_farPos);
+		break;
+
+	case ProjectionType::REVERSED_Z_PERSPECTIVE:
+		m_computeProjection = std::bind(ReversedZPerspective<decltype(m_fieldOfView)>, m_fieldOfView, m_screenRatio, m_nearPos, m_farPos);
+		break;
+
+	case ProjectionType::INFINITY_REVERSED_Z_PERSPECTIVE:
+		m_computeProjection = std::bind(InfinityReversedZPerspective<decltype(m_fieldOfView)>, m_fieldOfView, m_screenRatio, m_nearPos);
+		break;
+	}
+
+	computeProjection();
 }
