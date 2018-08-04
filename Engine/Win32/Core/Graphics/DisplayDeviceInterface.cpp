@@ -301,15 +301,9 @@ static void ClearBuffer(s32 _fbo, const float _backGroundColor[4])
 
 void DisplayDeviceInterface::ClearBuffers(float backGroundColor[4])
 {
-	// If off-screen rendering is used
-	if (s_offscreen_fbo_index != FRAME_BUFFER_OBJECT_UNDEFINED)
-	{
-		ClearBuffer(s_offscreen_fbo_index, backGroundColor);
-	}
-	else
-	{
-		ClearBuffer(0, backGroundColor);
-	}
+	// Check if off-screen rendering is used
+	u32 fbo = (s_offscreen_fbo_index != FRAME_BUFFER_OBJECT_UNDEFINED) ? s_offscreen_fbo_index : 0; // 0 for the default frame buffer
+	ClearBuffer(fbo, backGroundColor);
 }
 
 void DisplayDeviceInterface::SwapBuffer(WindowHandle handle)
