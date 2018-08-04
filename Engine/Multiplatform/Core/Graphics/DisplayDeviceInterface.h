@@ -6,8 +6,10 @@ namespace Neptune
 {
 	namespace DisplayDeviceInterface
 	{
-		typedef void* WindowHandle;
-		typedef void* GraphicalContextHandle;
+		typedef void* Handle;
+		typedef Handle WindowHandle;
+		typedef Handle GraphicalContextHandle;
+		const Handle INVALID_HANDLE = nullptr;
 
 		enum class MULTI_SAMPLE_ANTI_ALLIASING : u8
 		{
@@ -25,7 +27,12 @@ namespace Neptune
 			u32							m_frameBufferWidth;		/// Set to a value greater than 0 to enable off-screen rendering - the scene is rendered in a custom frame-buffer and then blitted on the default back buffer.
 			bool						m_enableReversedZ;		/// Use the reversed z technique to deal with depth tests. ATTENTION : off screen rendering must be enabled and your app must provide a compatible projection matrix (see xxxx)
 
-			GraphicalContextSettings();
+			/// No anti aliasing, no off screen rendering, no reversed z.
+			GraphicalContextSettings() :
+				m_antiAliasing(MULTI_SAMPLE_ANTI_ALLIASING::NONE),
+				m_frameBufferHeight(0),
+				m_frameBufferWidth(0),
+				m_enableReversedZ(false) {}
 		};
 
 		/// Creates a window to host the graphical context

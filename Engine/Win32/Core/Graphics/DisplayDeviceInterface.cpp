@@ -61,21 +61,23 @@ static bool CreateFBOAndEnableReversedZIfNeeded(const DisplayDeviceInterface::Gr
 	// Modify clipping policy if reversed-z is wanted
 	if (_userSettings.m_enableReversedZ)
 	{
-		//if ((major > 4 || (major == 4 && minor >= 5)) ||
-		if (!SDL_GL_ExtensionSupported("GL_ARB_clip_control"))
+		if ( SDL_GL_ExtensionSupported("GL_ARB_clip_control") )
+		{
+			// Override OpenGL default clipping policy -
+			// clipping is done between [-1.0, 1.0], here it is
+			// forced to [0.0, 1.0]
+			glClipControl(GL_LOWER_LEFT, GL_ZERO_TO_ONE);
+			NEP_GRAPHICS_ASSERT();
+
+			// Then set the value to reset the depth buffer.
+			// Closest objects are at z = 0.0f 
+			s_clear_depth_value = 0.0f;
+		}
+		else
 		{
 			NEP_LOG("Error, Reversed-z is not supported.");
+			return false;
 		}
-
-		// Override OpenGL default clipping policy -
-		// clipping is done between [-1.0, 1.0], here it is
-		// forced to [0.0, 1.0]
-		glClipControl(GL_LOWER_LEFT, GL_ZERO_TO_ONE);
-		NEP_GRAPHICS_ASSERT();
-
-		// Then set the value to reset the depth buffer.
-		// Closest objects are at z = 0.0f 
-		s_clear_depth_value = 0.0f;
 	}
 	
 	// Generate the colour buffer associated to the frame buffer
@@ -83,7 +85,7 @@ static bool CreateFBOAndEnableReversedZIfNeeded(const DisplayDeviceInterface::Gr
 	u32 texture_type = (_userSettings.m_antiAliasing != DisplayDeviceInterface::MULTI_SAMPLE_ANTI_ALLIASING::NONE) ? GL_TEXTURE_2D_MULTISAMPLE : GL_TEXTURE_2D;
 	u8 multi_sampling_factor = MapMultiSampleAntiAlliasingValues(_userSettings.m_antiAliasing);
 
-	// multisampled colour bufer
+	// multi sampled colour buffer
 	glGenTextures(1, &color);
 	glBindTexture(texture_type, color);
 
@@ -127,9 +129,6 @@ static bool CreateFBOAndEnableReversedZIfNeeded(const DisplayDeviceInterface::Gr
 		NEP_LOG("glCheckFramebufferStatus: %x\n", status);
 	}
 
-	// Bind the frame buffer
-	//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-
 	NEP_GRAPHICS_ASSERT();
 
 	return true;
@@ -147,15 +146,6 @@ static bool InitContext()
 	}
 
 	return true;
-}
-
-DisplayDeviceInterface::GraphicalContextSettings::GraphicalContextSettings():
-	m_antiAliasing(MULTI_SAMPLE_ANTI_ALLIASING::NONE),
-	m_frameBufferHeight(0),
-	m_frameBufferWidth(0),
-	m_enableReversedZ(false)
-{
-
 }
 
 DisplayDeviceInterface::WindowHandle DisplayDeviceInterface::CreateWindow(const char* _name, u32 _width, u32 _height, MULTI_SAMPLE_ANTI_ALLIASING _antiAliasing /*= MULTI_SAMPLE_ANTI_ALLIASING::NONE*/, bool _fullScreen /*= false*/)
@@ -252,7 +242,7 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	SDL_GLContext context = SDL_GL_CreateContext( win );
 
 	if(!InitContext()) // Platform specific
-		return nullptr;
+		return DisplayDeviceInterface::INVALID_HANDLE;;
 
 	// Synchronize buffer swapping with the screen's refresh rate
 	if (SDL_GL_SetSwapInterval(1) == -1) // Use VSync
@@ -265,13 +255,18 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 
 	// Create and bind custom or default frame buffers
 	if (DidUserTryToEnableOffScreenRendering(_userSettings))
-		CreateFBOAndEnableReversedZIfNeeded(_userSettings);
+		if (!CreateFBOAndEnableReversedZIfNeeded(_userSettings))
+			return DisplayDeviceInterface::INVALID_HANDLE;
 
 	// Enable rendering options
-	if (_userSettings.m_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)	// Set anti alliasing
+	if (_userSettings.m_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)	// Set anti aliasing
 		glEnable(GL_MULTISAMPLE);
 
-	glEnable(GL_DEPTH_TEST);												// Enables depth test
+	// Enable depth test
+	// Note - Even on recent Intel architectures, depth buffers are 16-bit long... which causes z-fighting issues
+	// when displaying 3D models. 
+	// To avoid problems, create a 32-bit off-screen-depth-buffer and enable reversed z if rendering scenes with long distance views.
+	glEnable(GL_DEPTH_TEST);												
 	if (!_userSettings.m_enableReversedZ)
 		glDepthFunc(GL_LESS);												// Accepts fragment if closer to the camera than the former one. z = 0 at camera's position
 	else
@@ -297,7 +292,7 @@ static void ClearBuffer(s32 _fbo, const float _backGroundColor[4])
 	glClearBufferfv(GL_COLOR, 0, _backGroundColor);
 	NEP_GRAPHICS_ASSERT();
 
-	glClearDepth(s_clear_depth_value); // 0.0f instead of 1.0f when reversed-z is used
+	glClearDepth(s_clear_depth_value);
 	NEP_GRAPHICS_ASSERT();
 
 	glClear(GL_DEPTH_BUFFER_BIT);
@@ -309,21 +304,6 @@ void DisplayDeviceInterface::ClearBuffers(float backGroundColor[4])
 	// If off-screen rendering is used
 	if (s_offscreen_fbo_index != FRAME_BUFFER_OBJECT_UNDEFINED)
 	{
-		//NEP_GRAPHICS_ASSERT();
-		//
-		////glBindFramebuffer(GL_FRAMEBUFFER, s_frame_buffer_object_index);
-		////NEP_GRAPHICS_ASSERT();
-		//
-		//glClearBufferfv(GL_COLOR, 0, backGroundColor);
-		//NEP_GRAPHICS_ASSERT();
-		//
-		//glClearDepth(s_clear_depth_value); // 0.0f instead of 1.0f because reversed-z is used
-		//NEP_GRAPHICS_ASSERT();
-		//
-		//glClear(GL_DEPTH_BUFFER_BIT);
-		//NEP_GRAPHICS_ASSERT();
-
-		//ClearBuffer(0, backGroundColor);
 		ClearBuffer(s_offscreen_fbo_index, backGroundColor);
 	}
 	else
@@ -339,18 +319,12 @@ void DisplayDeviceInterface::SwapBuffer(WindowHandle handle)
 	{
 		NEP_GRAPHICS_ASSERT();
 
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		//
-		//glBindFramebuffer(GL_READ_FRAMEBUFFER, s_frame_buffer_object_index);
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); // default FBO
-		
 		glBlitFramebuffer(
 			0, 0, s_offscreen_fbo_width, s_offscreen_fbo_height,
 			0, 0, s_window_width, s_window_height,
 			GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
-		//glBindFramebuffer(GL_FRAMEBUFFER, 0);
-		//glBindFramebuffer(GL_FRAMEBUFFER, s_frame_buffer_object_index); // set custom frame-buffer as default render-zone
 		NEP_GRAPHICS_ASSERT();
 	}
 
