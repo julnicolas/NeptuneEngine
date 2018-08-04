@@ -40,7 +40,7 @@ namespace Neptune
 			INFINITY_REVERSED_Z_PERSPECTIVE,	/// Perspective projection which projects the space from a near plan to the infinity. Works only if reversed z is enabled.
 		};
 
-		void setProjection(ProjectionType _proj);
+		void updateProjection(ProjectionType _proj);
 
 	private:
 		void computeProjection();

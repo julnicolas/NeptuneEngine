@@ -19,7 +19,7 @@ Camera::Camera():
 	m_nearPos(M_INIT_NEAR),
 	m_farPos(M_INIT_FAR)
 {
-	setProjection(ProjectionType::PERSPECTIVE);
+	updateProjection(ProjectionType::PERSPECTIVE);
 	computeProjection();
 }
 
@@ -29,7 +29,7 @@ Camera::Camera(const Vec3& eye, const Vec3& center, const Vec3& up):
 	m_nearPos(M_INIT_NEAR),
 	m_farPos(M_INIT_FAR)
 {
-	setProjection(ProjectionType::PERSPECTIVE);
+	updateProjection(ProjectionType::PERSPECTIVE);
 
 	m_origin = LookAt(eye, center, up);
 	computeProjection();
@@ -94,7 +94,7 @@ void Camera::computeProjection()
 }
 
 
-void Camera::setProjection(Camera::ProjectionType _proj)
+void Camera::updateProjection(Camera::ProjectionType _proj)
 {
 	switch (_proj)
 	{
