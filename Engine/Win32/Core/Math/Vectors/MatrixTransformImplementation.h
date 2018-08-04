@@ -91,7 +91,15 @@ namespace Neptune
 	template <typename T>
 	Mat4x4<T> ReversedZPerspective(T fieldOfView, T screenRatio, T near, T far)
 	{
-		return Mat4x4<T>();
+		Mat4x4<T> r = Perspective(fieldOfView, screenRatio, near, far);
+		Mat4x4<T> reverse_z(
+			1, 0,  0, 0, 
+			0, 1,  0, 0,
+			0, 0, -1, 0,
+			0, 0,  1, 1
+			);
+
+		return reverse_z * r;
 	}
 
 	template <typename T>
