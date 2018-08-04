@@ -6,13 +6,17 @@
 
 using namespace Neptune;
 
-const  u32 FRAME_BUFFER_OBJECT_UNDEFINED = ~0;
-static u32 s_offscreen_fbo_index = FRAME_BUFFER_OBJECT_UNDEFINED; // must be renamed
-static u32 s_frame_buffer_height = 0;
-static u32 s_frame_buffer_width = 0;
+// Window's configuration
 static u32 s_window_height = 0;
 static u32 s_window_width = 0;
-static float s_clear_depth_value = 1.0f; // without reversed-z, the right value is 1.0f
+
+// Off screen rendering and reversed z configuration
+const  u32 FRAME_BUFFER_OBJECT_UNDEFINED = ~0;
+const float CLEAR_DEPTH_VALUE_NO_REVERSED_Z = 1.0f;
+static u32 s_offscreen_fbo_index = FRAME_BUFFER_OBJECT_UNDEFINED;
+static u32 s_offscreen_fbo_height = 0;
+static u32 s_offscreen_fbo_width = 0;
+static float s_clear_depth_value = CLEAR_DEPTH_VALUE_NO_REVERSED_Z;
 
 // Returns a value equal to the number of times a pixel can be sampled. Returns NEP_STD_U8_ERROR_CODE_0 if the input value is not supported.
 static u8 MapMultiSampleAntiAlliasingValues(DisplayDeviceInterface::MULTI_SAMPLE_ANTI_ALLIASING _v)
@@ -51,8 +55,8 @@ static bool CreateFBOAndEnableReversedZIfNeeded(const DisplayDeviceInterface::Gr
 	NEP_GRAPHICS_ASSERT();
 	
 	// Set frame-buffer's dimension
-	s_frame_buffer_height = _userSettings.m_frameBufferHeight;
-	s_frame_buffer_width  = _userSettings.m_frameBufferWidth;
+	s_offscreen_fbo_height = _userSettings.m_frameBufferHeight;
+	s_offscreen_fbo_width  = _userSettings.m_frameBufferWidth;
 	
 	// Modify clipping policy if reversed-z is wanted
 	if (_userSettings.m_enableReversedZ)
@@ -341,7 +345,7 @@ void DisplayDeviceInterface::SwapBuffer(WindowHandle handle)
 		glBindFramebuffer(GL_DRAW_FRAMEBUFFER, 0); // default FBO
 		
 		glBlitFramebuffer(
-			0, 0, s_frame_buffer_width, s_frame_buffer_height,
+			0, 0, s_offscreen_fbo_width, s_offscreen_fbo_height,
 			0, 0, s_window_width, s_window_height,
 			GL_COLOR_BUFFER_BIT, GL_LINEAR);
 
