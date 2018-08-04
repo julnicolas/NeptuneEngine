@@ -45,12 +45,12 @@ static u8 MapMultiSampleAntiAlliasingValues(DisplayDeviceInterface::MULTI_SAMPLE
 	}
 }
 
-static bool DidUserTryToEnableOffScreenRendering(const DisplayDeviceInterface::GraphicalContextSettings& _userSettings)
+static bool DidUserTryToEnableOffScreenRendering(const DisplayDeviceInterface::OffScreenRenderingSettings& _userSettings)
 {
 	return _userSettings.m_frameBufferHeight > 0 && _userSettings.m_frameBufferWidth > 0;
 }
 
-static bool CreateFBOAndEnableReversedZIfNeeded(const DisplayDeviceInterface::GraphicalContextSettings& _userSettings)
+static bool CreateFBOAndEnableReversedZIfNeeded(const DisplayDeviceInterface::OffScreenRenderingSettings& _userSettings)
 {
 	NEP_GRAPHICS_ASSERT();
 	
@@ -233,7 +233,7 @@ void DisplayDeviceInterface::DestroyWindow(WindowHandle handle)
 	SDL_DestroyWindow( window );
 }
 
-DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 _openGLMinorVersion, u8 _openGLMajorVersion, GraphicalContextSettings _userSettings /*= GraphicalContextSettings()*/)
+DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGraphicalContext(WindowHandle window, u8 _openGLMinorVersion, u8 _openGLMajorVersion, OffScreenRenderingSettings _userSettings /*= GraphicalContextSettings()*/)
 {
 	// Platform specifics
 	SDL_Window* win = static_cast<SDL_Window*>( window );
@@ -247,11 +247,6 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	// Synchronize buffer swapping with the screen's refresh rate
 	if (SDL_GL_SetSwapInterval(1) == -1) // Use VSync
 		NEP_LOG("Warning DisplayDeviceInterface::CreateGraphicalContext - Swap interval not supported.");
-
-	// Try this
-	// Enable rendering options
-	//if (_userSettings.m_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)	// Set anti alliasing
-	//	glEnable(GL_MULTISAMPLE);
 
 	// Create and bind custom or default frame buffers
 	if (DidUserTryToEnableOffScreenRendering(_userSettings))
