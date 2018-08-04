@@ -36,7 +36,6 @@ namespace Neptune
 		};
 
 		/// Creates a window to host the graphical context
-		// TODO : parameter _antiAliasing must be removed!!!!
 		WindowHandle CreateWindow(const char* _name, u32 _width, u32 _height, MULTI_SAMPLE_ANTI_ALLIASING _antiAliasing = MULTI_SAMPLE_ANTI_ALLIASING::NONE, bool _fullScreen = false);
 
 		/// Destructs the window that holds the graphical context

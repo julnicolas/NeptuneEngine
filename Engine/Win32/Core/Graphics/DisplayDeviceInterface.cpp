@@ -253,10 +253,6 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 		if (!CreateFBOAndEnableReversedZIfNeeded(_userSettings))
 			return DisplayDeviceInterface::INVALID_HANDLE;
 
-	// Enable rendering options
-	if (_userSettings.m_antiAliasing != MULTI_SAMPLE_ANTI_ALLIASING::NONE)	// Set anti aliasing
-		glEnable(GL_MULTISAMPLE);
-
 	// Enable depth test
 	// Note - Even on recent Intel architectures, depth buffers are 16-bit long... which causes z-fighting issues
 	// when displaying 3D models. 
