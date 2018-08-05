@@ -44,9 +44,6 @@
     <Filter Include="Engine\Win32\HighLevel">
       <UniqueIdentifier>{f79856e4-96ff-4c44-b0fe-b8ac0ae1711f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Win32\HighLevel\Application">
-      <UniqueIdentifier>{45ba3527-070f-421d-b97e-295c69644e5d}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Multiplatform\Core\System\Type">
       <UniqueIdentifier>{d930554f-634c-4842-a1b3-5d1027f3d14e}</UniqueIdentifier>
     </Filter>
@@ -129,9 +126,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp">
       <Filter>Engine\Win32\Core\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\HighLevel\Application\WinApp.cpp">
-      <Filter>Engine\Win32\HighLevel\Application</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\VAORenderer.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
@@ -242,9 +236,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\App.h">
       <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\HighLevel\Application\WinApp.h">
-      <Filter>Engine\Win32\HighLevel\Application</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DisplayDeviceInterface.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
@@ -423,9 +414,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Maintenance\CompilerHints.h">
       <Filter>Engine\Multiplatform\Core\Maintenance</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\Core\InputEvent.h">
-      <Filter>Engine\Win32\Core</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\File\PathHelpers.h">
       <Filter>Engine\Multiplatform\Core\File</Filter>
     </ClInclude>
@@ -464,6 +452,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\StandardErrorCodes.h">
       <Filter>Engine\Multiplatform\Core\Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Input\InputEvent.h">
+      <Filter>Engine\Win32\Core\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

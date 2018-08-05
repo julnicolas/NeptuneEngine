@@ -21,6 +21,12 @@ namespace Neptune
 	Mat4x4<T> Perspective(T fieldOfView, T screenRatio, T near, T far);
 
 	template <typename T>
+	Mat4x4<T> ReversedZPerspective(T fieldOfView, T screenRatio, T near, T far);
+
+	template <typename T>
+	Mat4x4<T> InfinityReversedZPerspective(T fieldOfView, T screenRatio, T near);
+
+	template <typename T>
 	Mat4x4<T> Transpose(const Mat4x4<T>& matrix);
 }
 
