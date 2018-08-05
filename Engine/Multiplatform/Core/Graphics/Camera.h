@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Math/Vectors/Mat4x4.h"
+#include <functional>
 
 namespace Neptune
 {
@@ -25,20 +26,31 @@ namespace Neptune
 
 		void  setViewFrustum(float fieldOfView, float screenRatio, float nearPos, float farPos); // FOV in radians, near and far in world coord
 		void  setScreenRatio(float ratio);
+		void  toggleReversedZProjection();
 
 		const Mat4& lookAt(const Vec3& eye, const Vec3& center, const Vec3& up);
 		const Mat4& translate(float x, float y, float z);
 		const Mat4& rotate(float angle_deg, const Vec3& axis); // Should be refactored using quaternions
 		void  zoom(float k);                                  // Affects the field of view
 
+		enum class ProjectionType
+		{
+			PERSPECTIVE,						/// Perspective projection bound by a near and far plan. This is the default projection.
+			REVERSED_Z_PERSPECTIVE,				/// Perspective projection bound by a near and far plan. Must be used when reversed z off screen rendering is enabled.
+			INFINITY_REVERSED_Z_PERSPECTIVE,	/// Perspective projection which projects the space from a near plan to the infinity. Works only if reversed z is enabled.
+		};
+
+		void updateProjection(ProjectionType _proj);
+
 	private:
-		void setProjection();
+		void computeProjection();
 
 		Mat4  m_origin;
 		Mat4  m_orientation;
 		Mat4  m_position;
 		Mat4  m_view;
 		Mat4  m_projection;
+		std::function <decltype(m_projection)()> m_computeProjection; /// Active projection matrix generation function
 		float m_fieldOfView;
 		float m_screenRatio;
 		float m_nearPos;    

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "InputEvent.h"
+#include "Input/InputEvent.h"
 #include "System/Type/Integers.h"
 
 namespace Neptune

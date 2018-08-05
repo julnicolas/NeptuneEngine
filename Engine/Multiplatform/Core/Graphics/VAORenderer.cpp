@@ -59,7 +59,6 @@ void VAORenderer::terminate()
 void VAORenderer::draw()
 {
 	glDrawArrays( MapDrawingPrimitive( m_drawingPrimitive ) , 0, m_nbverticesToRender );
-	NEP_GRAPHICS_ASSERT();
 }
 
 void VAORenderer::bindShaderAttributes(const GraphicsProgram& pgm)
