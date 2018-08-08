@@ -121,9 +121,6 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Camera.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\App.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp">
       <Filter>Engine\Win32\Core\Graphics</Filter>
     </ClCompile>
@@ -217,6 +214,9 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Profiling\Chrono.cpp">
       <Filter>Engine\Multiplatform\Core\Profiling</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\SimpleApp.cpp">
+      <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -233,9 +233,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Math\Math.h">
       <Filter>Engine\Multiplatform\Core\Math</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\App.h">
-      <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\DisplayDeviceInterface.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
@@ -455,6 +452,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Input\InputEvent.h">
       <Filter>Engine\Win32\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\SimpleApp.h">
+      <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

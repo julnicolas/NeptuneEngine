@@ -14,7 +14,7 @@ namespace Neptune
 			float r; /// Value between 0.0f and 1.0f
 			float g; /// Value between 0.0f and 1.0f
 			float b; /// Value between 0.0f and 1.0f
-			float a; /// Value between 0.0f and 1.0f
+			float a; /// Value between 0.0f and 1.0f where 0 is fully opaque
 		};
 	}
 
