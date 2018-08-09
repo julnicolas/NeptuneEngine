@@ -23,6 +23,7 @@ namespace Neptune
 		float getFarPlan()                const { return m_farPos;                                           }
 		const Mat4& getProjectionMatrix() const { return m_projection;                                       }
 		const Mat4& getViewMatrix()             { m_view = m_orientation*m_position*m_origin; return m_view; }
+		const Mat4& getOrientation()	  const	{ return m_orientation;										 }
 
 		void  setViewFrustum(float fieldOfView, float screenRatio, float nearPos, float farPos); // FOV in radians, near and far in world coord
 		void  setScreenRatio(float ratio);

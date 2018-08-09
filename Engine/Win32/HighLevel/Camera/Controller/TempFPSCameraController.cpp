@@ -1,6 +1,7 @@
 #include "Camera/Controller/TempFPSCameraController.h"
 #include "Graphics/Camera.h"
 #include "Math/Vectors/Vec3.h"
+#include "Math/Vectors/MatrixTransform.h"
 #include <SDL2/SDL.h>
 
 using namespace Neptune;
@@ -9,31 +10,47 @@ static void KeyDown(SDL_Event& e,Camera& camera, const float DEFAULT_STEP )
 {
 	const float DEFAULT_ANGLE = 1.0f;
 
+	const Mat4& orientation_matrix = Transpose(camera.getOrientation());
+	Vec4 step(0.0f, 0.0f, 0.0f, 0.0f);
+
+
 	switch(e.key.keysym.scancode)
 	{
 		// Modifies position
 	case SDL_SCANCODE_W:
-		camera.translate(0.0f,0.0f,DEFAULT_STEP);
+		step.z() = DEFAULT_STEP;
+		step = orientation_matrix * step;
+		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_S:
-		camera.translate(0.0f,0.0f,-DEFAULT_STEP);
+		step.z() = -DEFAULT_STEP;
+		step = orientation_matrix * step;
+		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_A:
-		camera.translate(-DEFAULT_STEP,0.0f,0.0f);
+		step.x() = -DEFAULT_STEP;
+		step = orientation_matrix * step;
+		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_D:
-		camera.translate(DEFAULT_STEP,0.0f,0.0f);
+		step.x() = DEFAULT_STEP;
+		step = orientation_matrix * step;
+		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_Q:
-		camera.translate(0.0f,-DEFAULT_STEP,0.0f);
+		step.y() = -DEFAULT_STEP;
+		step = orientation_matrix * step;
+		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_E:
-		camera.translate(0.0f,DEFAULT_STEP,0.0f);
+		step.y() = DEFAULT_STEP;
+		step = orientation_matrix * step;
+		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 
