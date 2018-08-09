@@ -9,8 +9,8 @@ namespace Neptune
 	class TempFPSCameraController: public Updatable
 	{
 	public:
-		TempFPSCameraController(): m_camera(nullptr)                       {}
-		TempFPSCameraController(Camera* camera): m_camera(camera)          {}
+		TempFPSCameraController();
+		TempFPSCameraController(Camera* camera);
 		~TempFPSCameraController()                                         = default;
 		TempFPSCameraController(const TempFPSCameraController&)            = delete;
 		TempFPSCameraController& operator=(const TempFPSCameraController&) = delete;
@@ -25,5 +25,6 @@ namespace Neptune
 		void move();
 
 		Camera* m_camera;
+		float   m_stepDistance; /// distance traveled on every keystroke
 	};
 }

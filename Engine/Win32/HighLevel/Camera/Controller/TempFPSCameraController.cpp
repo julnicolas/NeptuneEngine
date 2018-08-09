@@ -1,12 +1,29 @@
 #include "Camera/Controller/TempFPSCameraController.h"
 #include "Graphics/Camera.h"
+#include "Math/Math.h"
 #include "Math/Vectors/Vec3.h"
 #include "Math/Vectors/MatrixTransform.h"
 #include <SDL2/SDL.h>
 
 using namespace Neptune;
 
-static void KeyDown(SDL_Event& e,Camera& camera, const float DEFAULT_STEP )
+const float DEFAULT_STEP = 0.1f;
+
+TempFPSCameraController::TempFPSCameraController() :
+m_camera(nullptr),
+m_stepDistance(DEFAULT_STEP)
+{
+
+}
+
+TempFPSCameraController::TempFPSCameraController(Camera* camera) :
+m_camera(camera),
+m_stepDistance(DEFAULT_STEP)
+{
+
+}
+
+static void KeyDown(SDL_Event& e,Camera& camera, float& step_distance )
 {
 	const float DEFAULT_ANGLE = 1.0f;
 
@@ -16,45 +33,54 @@ static void KeyDown(SDL_Event& e,Camera& camera, const float DEFAULT_STEP )
 
 	switch(e.key.keysym.scancode)
 	{
-		// Modifies position
+		// Change acceleration
+	case SDL_SCANCODE_Z:
+		step_distance += 0.1f;
+		break;
+
+	case SDL_SCANCODE_X:
+		step_distance = Max(0.1f, step_distance - 0.1f);
+		break;
+		
+		// Change position
 	case SDL_SCANCODE_W:
-		step.z() = DEFAULT_STEP;
+		step.z() = step_distance;
 		step = orientation_matrix * step;
 		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_S:
-		step.z() = -DEFAULT_STEP;
+		step.z() = -step_distance;
 		step = orientation_matrix * step;
 		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_A:
-		step.x() = -DEFAULT_STEP;
+		step.x() = -step_distance;
 		step = orientation_matrix * step;
 		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_D:
-		step.x() = DEFAULT_STEP;
+		step.x() = step_distance;
 		step = orientation_matrix * step;
 		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_Q:
-		step.y() = -DEFAULT_STEP;
+		step.y() = -step_distance;
 		step = orientation_matrix * step;
 		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 	case SDL_SCANCODE_E:
-		step.y() = DEFAULT_STEP;
+		step.y() = step_distance;
 		step = orientation_matrix * step;
 		camera.translate(step.x(), step.y(), step.z());
 		break;
 
 
-		// Modifies orientation
+		// Change orientation
 	case SDL_SCANCODE_UP:
 		camera.rotate(DEFAULT_ANGLE, Vec3(1.0f, 0.0f, 0.0f));
 		break;
@@ -108,18 +134,17 @@ void TempFPSCameraController::move()
 	if ( m_camera != nullptr )
 	{
 		SDL_Event e;
-		float DEFAULT_STEP = 0.1f;
 
 		while ( SDL_PollEvent(&e) > 0 )
 		{
 			switch (e.type)
 			{
 			case SDL_KEYDOWN:
-				KeyDown(e, *m_camera, DEFAULT_STEP);
+				KeyDown(e, *m_camera, m_stepDistance);
 				break;
 
 			case SDL_MOUSEBUTTONDOWN:
-				MouseButtonDown(e, *m_camera, DEFAULT_STEP);
+				MouseButtonDown(e, *m_camera, m_stepDistance);
 				break;
 
 			case SDL_MOUSEMOTION:
