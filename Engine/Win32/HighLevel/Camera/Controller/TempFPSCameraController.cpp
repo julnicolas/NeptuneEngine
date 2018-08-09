@@ -9,48 +9,48 @@ static void KeyDown(SDL_Event& e,Camera& camera, const float DEFAULT_STEP )
 {
 	const float DEFAULT_ANGLE = 1.0f;
 
-	switch(e.key.keysym.sym)
+	switch(e.key.keysym.scancode)
 	{
 		// Modifies position
-	case SDLK_z:
+	case SDL_SCANCODE_W:
 		camera.translate(0.0f,0.0f,DEFAULT_STEP);
 		break;
 
-	case SDLK_s:
+	case SDL_SCANCODE_S:
 		camera.translate(0.0f,0.0f,-DEFAULT_STEP);
 		break;
 
-	case SDLK_q:
+	case SDL_SCANCODE_A:
 		camera.translate(-DEFAULT_STEP,0.0f,0.0f);
 		break;
 
-	case SDLK_d:
+	case SDL_SCANCODE_D:
 		camera.translate(DEFAULT_STEP,0.0f,0.0f);
 		break;
 
-	case SDLK_e:
+	case SDL_SCANCODE_Q:
 		camera.translate(0.0f,-DEFAULT_STEP,0.0f);
 		break;
 
-	case SDLK_a:
+	case SDL_SCANCODE_E:
 		camera.translate(0.0f,DEFAULT_STEP,0.0f);
 		break;
 
 
 		// Modifies orientation
-	case SDLK_UP:
+	case SDL_SCANCODE_UP:
 		camera.rotate(DEFAULT_ANGLE, Vec3(1.0f, 0.0f, 0.0f));
 		break;
 
-	case SDLK_DOWN:
+	case SDL_SCANCODE_DOWN:
 		camera.rotate(-DEFAULT_ANGLE, Vec3(1.0f, 0.0f, 0.0f));
 		break;
 
-	case SDLK_LEFT:
+	case SDL_SCANCODE_LEFT:
 		camera.rotate(-DEFAULT_ANGLE, Vec3(0.0f, 1.0f, 0.0f));
 		break;
 
-	case SDLK_RIGHT:
+	case SDL_SCANCODE_RIGHT:
 		camera.rotate(DEFAULT_ANGLE, Vec3(0.0f, 1.0f, 0.0f));
 		break;
 	}
