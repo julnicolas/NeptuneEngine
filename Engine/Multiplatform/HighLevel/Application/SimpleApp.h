@@ -65,6 +65,8 @@ namespace Neptune
 		void setOnViewUpdateCallBack(std::function<bool(View*)> _callback)		{ m_onViewUpdateCallBack = _callback;	 }
 
 	protected:
+		virtual void setFrameData(FrameData& _data);
+
 		// User frame control
 		bool onFrameStart();							/// Called before anything else in the main loop
 		bool onFrameEnd();								/// Last function called in the main loop

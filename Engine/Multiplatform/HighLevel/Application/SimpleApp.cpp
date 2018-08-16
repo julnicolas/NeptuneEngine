@@ -114,21 +114,25 @@ void SimpleApp::add(View* _view)
 		m_views.insert(m_views.end(), _list, _list + (_length - 1)*sizeof(*_list));
 }*/
 
+void SimpleApp::setFrameData(FrameData& _data)
+{
+	_data.m_camera = &m_camera;
+	_data.m_views = &m_views;
+}
+
 bool SimpleApp::onFrameStart()
 {
 	FrameData frame_data;
-	frame_data.m_camera = &m_camera;
-	frame_data.m_views  = &m_views;
 
+	setFrameData(frame_data);
 	return m_onFrameStartCallBack(frame_data);
 }
 
 bool SimpleApp::onFrameEnd()
 {
 	FrameData frame_data;
-	frame_data.m_camera = &m_camera;
-	frame_data.m_views  = &m_views;
 
+	setFrameData(frame_data);
 	return m_onFrameEndCallBack(frame_data);
 }
 
