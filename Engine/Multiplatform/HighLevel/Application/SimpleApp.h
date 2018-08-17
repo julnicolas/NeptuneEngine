@@ -58,19 +58,19 @@ namespace Neptune
 			std::vector<View*>* m_views;		/// reference to the app's view vector
 		};
 
-		using FrameCallBack = std::function<bool(FrameData)>;
+		using FrameCallBack = std::function<bool(FrameData&&)>;
 
 		void setFrameStartCallBack(FrameCallBack _callBack)						{ m_onFrameStartCallBack = _callBack;	 }
 		void setFrameEndCallback(FrameCallBack _callBack)						{ m_onFrameEndCallBack   = _callBack;	 }
 		void setOnViewUpdateCallBack(std::function<bool(View*)> _callback)		{ m_onViewUpdateCallBack = _callback;	 }
 
 	protected:
-		virtual void setFrameData(FrameData& _data);
+		virtual FrameData&& createFrameData();			/// Creates a fully-setup-instance of FrameData. This struct is used by onFrameStart and onFrameEnd
 
 		// User frame control
 		bool onFrameStart();							/// Called before anything else in the main loop
 		bool onFrameEnd();								/// Last function called in the main loop
-		bool onViewUpdate(View* _view);				/// Called for each view, right before View::update() is called.
+		bool onViewUpdate(View* _view);					/// Called for each view, right before View::update() is called.
 
 		
 		bool											m_is_update_enabled;
