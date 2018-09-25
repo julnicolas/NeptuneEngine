@@ -242,7 +242,7 @@ DisplayDeviceInterface::GraphicalContextHandle DisplayDeviceInterface::CreateGra
 	SDL_GLContext context = SDL_GL_CreateContext( win );
 
 	if(!InitContext()) // Platform specific
-		return DisplayDeviceInterface::INVALID_HANDLE;;
+		return DisplayDeviceInterface::INVALID_HANDLE;
 
 	// Synchronize buffer swapping with the screen's refresh rate
 	if (SDL_GL_SetSwapInterval(1) == -1) // Use VSync
