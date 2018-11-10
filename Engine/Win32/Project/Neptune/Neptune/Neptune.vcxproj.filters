@@ -217,6 +217,15 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\SimpleApp.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Input\InputProducer.cpp">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Input\InputConsumer.cpp">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Input\SDLInputProducer.cpp">
+      <Filter>Engine\Win32\Core\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h">
@@ -455,6 +464,18 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\SimpleApp.h">
       <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputProducer.h">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputConsumer.h">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputTypes.h">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Input\SDLInputProducer.h">
+      <Filter>Engine\Win32\Core\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
