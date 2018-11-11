@@ -8,6 +8,8 @@ using namespace Neptune;
 
 void InputProducer::addConsumer(InputConsumer* _consumer, InputType _type)
 {
+	NEP_ASSERT_ERR_MSG(_consumer != nullptr, "wrong pointer, _consumer == nullptr");
+
 	// Add the consumer to the consumer list. Consumers are sorted by event types.
 	m_consumer_list[_type].push_back(_consumer);
 
@@ -17,6 +19,8 @@ void InputProducer::addConsumer(InputConsumer* _consumer, InputType _type)
 
 void InputProducer::rmConsumer(InputConsumer* _consumer, InputType _type)
 {
+	NEP_ASSERT(_consumer != nullptr, "wrong pointer, _consumer == nullptr");
+	
 	// Delete the consumer so that it doesn't subscribe to the input feed any more
 	std::vector<InputConsumer*>& consumers = m_consumer_list[_type];
 	std::vector<InputConsumer*>::iterator it = std::find(consumers.begin(), consumers.end(), _consumer);
