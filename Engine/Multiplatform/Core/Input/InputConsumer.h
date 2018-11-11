@@ -19,7 +19,7 @@ namespace Neptune
 		InputConsumer& operator=(InputConsumer&&);
 
 		/// Callback function summoned when update is called. A callback takes action on a specified input type.
-		/// \example void myFunc(const Input&)
+		/// \note Callback functions should have the following signature - void myFunc(const Input&)
 		typedef void(*InputCallback)(const Input&);
 
 		/// Adds the current InputConsumer to the producer's consumer list
