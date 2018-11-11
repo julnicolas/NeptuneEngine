@@ -38,5 +38,5 @@ void InputProducer::update()
 
 void InputProducer::publish()
 {
-
+	NEP_ASSERT_ERR_MSG(false, "not implemented");
 }
