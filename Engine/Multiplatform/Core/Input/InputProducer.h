@@ -9,23 +9,22 @@ namespace Neptune
 {
 	class InputConsumer;
 
+	/// \warning If a consumer refers to a destructed producer, the system will crash.
+	/// Therefore make sure InputProducer last longer than their consumers.
 	class InputProducer
 	{
 	public:
 		InputProducer()									= default;
-		/// Unsubscribe every consumers
-		virtual ~InputProducer();
+		virtual ~InputProducer()						= default;
 		InputProducer(const InputProducer&)				= delete;
 		InputProducer& operator=(const InputProducer&)	= delete;
 
 		/// Adds a consumer to the consumer list. It subscribes to _type.
 		void addConsumer(InputConsumer* _consumer, InputType _type);
 		/// Removes a consumer from the consumer list for the input _type.
-		/// \return Returns false if the provided consumer doesn't subscribe 
-		/// to the input '_type'. True otherwise. 
-		bool rmConsumer(InputConsumer* _consumer, InputType _type);
+		void rmConsumer(InputConsumer* _consumer, InputType _type);
 		/// Fetches inputs and publish them to its subscribers.
-		bool update();
+		void update();
 
 	protected:
 		/// Fetches all available inputs from the source
