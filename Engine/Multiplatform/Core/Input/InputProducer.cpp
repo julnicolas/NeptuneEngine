@@ -14,12 +14,12 @@ void InputProducer::addConsumer(InputConsumer* _consumer, InputType _type)
 	m_consumer_list[_type].push_back(_consumer);
 
 	// Instantiate an input queue if it doesn't already exist
-	m_input_list.emplace(_type);
+	m_input_list.emplace(_type, std::vector<Input>());
 }
 
 void InputProducer::rmConsumer(InputConsumer* _consumer, InputType _type)
 {
-	NEP_ASSERT(_consumer != nullptr, "wrong pointer, _consumer == nullptr");
+	NEP_ASSERT_ERR_MSG(_consumer != nullptr, "wrong pointer, _consumer == nullptr");
 	
 	// Delete the consumer so that it doesn't subscribe to the input feed any more
 	std::vector<InputConsumer*>& consumers = m_consumer_list[_type];
