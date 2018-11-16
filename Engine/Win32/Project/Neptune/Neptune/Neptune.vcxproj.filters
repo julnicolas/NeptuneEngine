@@ -477,5 +477,8 @@
     <ClInclude Include="..\..\..\Core\Input\SDLInputProducer.h">
       <Filter>Engine\Win32\Core\Input</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\Core\Input\PlatformSpecificInputTypes.h">
+      <Filter>Engine\Win32\Core\Input</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

@@ -57,6 +57,13 @@ void InputConsumer::cancelSubscription(InputType _type)
 		m_producer = nullptr;
 }
 
+void InputConsumer::push(InputType _type, Input* _inputArray, u32 _length)
+{
+	NEP_ASSERT_ERR_MSG(m_input_queue.find(_type) != m_input_queue.end(), "Input type cannot be found.");
+	std::vector<Input>& input_list = m_input_queue[_type];
+	input_list.insert(input_list.end(), _inputArray, _inputArray + _length); // This is not a mistake - the end iterator points past the last index
+}
+
 void InputConsumer::update()
 {
 	// For each input queue, execute all the corresponding callbacks on all its inputs (FIFO order)
@@ -95,7 +102,7 @@ u32 InputConsumer::add(InputCallback _callback, InputType _type)
 	static_assert(std::is_same<decltype(callback_list), std::vector<InputCallbackInfo>&>::value, "Invalid type for generating resource ID");
 	NEP_LOG("Generating resource ID");
 	u32 id = Fnv1a32(reinterpret_cast<u8*>(callback_list.data()), callback_list.size()*sizeof(callback_list[0]));
-	NEP_LOG("Done generating resource ID");
+	NEP_LOG("Done generating resource ID : %u", id);
 
 	// Set the inserted element's ID
 	it->m_callbackID = id;

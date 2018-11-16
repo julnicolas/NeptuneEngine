@@ -33,7 +33,7 @@ namespace Neptune
 		/// Contains all fetched inputs. The content is flushed on every update.
 		std::unordered_map<InputType, std::vector<Input>> m_input_list;
 	private:
-		/// Publish inputs to the consumers
+		/// Publish inputs to the consumers. Inputs from m_input_list are cleared after this methods finishes.
 		void publish();
 
 		/// Contains all input consumers. Ordered by input type to ease publication.

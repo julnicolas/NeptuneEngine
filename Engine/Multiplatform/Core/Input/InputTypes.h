@@ -1,11 +1,10 @@
 #pragma once
 #include "System/Type/Integers.h"
+#include "Input/PlatformSpecificInputTypes.h"
 
 
 namespace Neptune
 {
-	typedef void* Input;
-
 	enum class InputType : u8
 	{
 		ANY,				/// Refers to all events

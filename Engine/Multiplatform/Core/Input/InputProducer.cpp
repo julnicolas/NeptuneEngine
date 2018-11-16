@@ -1,4 +1,5 @@
 #include "Input/InputProducer.h"
+#include "Input/InputConsumer.h"
 #include "Debug/NeptuneDebug.h"
 #include <algorithm>
 
@@ -42,5 +43,18 @@ void InputProducer::update()
 
 void InputProducer::publish()
 {
-	NEP_ASSERT_ERR_MSG(false, "not implemented");
+	for (auto& input_type_input_list_pair : m_input_list)
+	{
+		NEP_ASSERT_ERR_MSG(m_consumer_list.find(input_type_input_list_pair.first) != m_consumer_list.end(), 
+			"Subscription error - No matching consumer (producer fetches inputs not consumed by anyone)");
+
+		InputType input_type = input_type_input_list_pair.first;
+		std::vector<Input>& input_queue = input_type_input_list_pair.second;
+		std::vector<InputConsumer*>& consumer_list = m_consumer_list[input_type_input_list_pair.first];
+		for (InputConsumer* consumer : consumer_list)
+		{
+			consumer->push(input_type, input_queue.data(), input_queue.size());
+		}
+		input_queue.clear();
+	}
 }

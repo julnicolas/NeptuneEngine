@@ -406,6 +406,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.h" />
     <ClInclude Include="..\..\..\Core\Input\InputEvent.h" />
     <ClInclude Include="..\..\..\Core\Input\SDLInputProducer.h" />
+    <ClInclude Include="..\..\..\Core\Input\PlatformSpecificInputTypes.h" />
     <ClInclude Include="..\..\..\Core\Math\Geometry\TrigonometryImplementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat2Implementation.h" />
     <ClInclude Include="..\..\..\Core\Math\Vectors\Mat2x3Implementation.h" />

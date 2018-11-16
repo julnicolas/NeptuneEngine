@@ -32,14 +32,14 @@ void SDLInputProducer::fetchInputs()
 		// Check if any consumers subscribe to InputType::ANY (get every input)
 		std::unordered_map<InputType, std::vector<Input>>::iterator it = m_input_list.find(InputType::ANY);
 		if (it != m_input_list.end())
-			it->second.push_back(static_cast<Input>(&sdl_event));
+			it->second.push_back(std::move(static_cast<Input>(sdl_event)));
 
 		// Check if anyone subscribes to a more specific input type
 		if (input_type != InputType::ANY)
 		{
 			it = m_input_list.find(input_type);
 			if (it != m_input_list.end())
-				it->second.push_back(static_cast<Input>(&sdl_event));
+				it->second.push_back(std::move(static_cast<Input>(sdl_event)));
 		}
 	}
 }

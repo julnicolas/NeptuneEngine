@@ -32,6 +32,8 @@ namespace Neptune
 		void cancelSubscription(InputType _type);
 		/// Gets the producer the object is subscribed to
 		const InputProducer* getProducer() const { return m_producer; }
+		/// Pushes a list of events to the queue of _type events
+		void push(InputType _type, Input* _inputArray, u32 _length);
 		
 		/// Executes the callbacks on the inputs received in the input queue.
 		/// Callbacks are executed in the order they were added.
