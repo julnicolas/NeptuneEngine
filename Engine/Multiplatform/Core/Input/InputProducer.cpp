@@ -41,6 +41,23 @@ void InputProducer::update()
 	publish();
 }
 
+void InputProducer::pushInput(InputType _type, Input&& _input)
+{
+	NEP_ASSERT_ERR_MSG(m_input_list.find(_type) != m_input_list.end(), "No subscribers for input");
+	m_input_list[_type].push_back(_input);
+}
+
+void InputProducer::pushInputs(InputType _type, Input* _inputArray, u32 _size) 
+{
+	NEP_ASSERT_ERR_MSG(_inputArray != nullptr, "wrong pointer (== nullptr)");
+	NEP_ASSERT_ERR_MSG(_size >= 1, "Wrong size. Size must be greater than 1 but is equal to %u", _size);
+	NEP_ASSERT_ERR_MSG(anySubscribersFor(_type), "No subscribers for input");
+	std::vector<Input>& input_queue = m_input_list[_type];
+
+	// The Insert method deep copies scalar types and calls the copy constructor for non scalar types (i.e. objects)
+	input_queue.insert(input_queue.end(), _inputArray, _inputArray + _size);
+}
+
 void InputProducer::publish()
 {
 	for (auto& input_type_input_list_pair : m_input_list)
@@ -48,9 +65,10 @@ void InputProducer::publish()
 		NEP_ASSERT_ERR_MSG(m_consumer_list.find(input_type_input_list_pair.first) != m_consumer_list.end(), 
 			"Subscription error - No matching consumer (producer fetches inputs not consumed by anyone)");
 
-		InputType input_type = input_type_input_list_pair.first;
-		std::vector<Input>& input_queue = input_type_input_list_pair.second;
-		std::vector<InputConsumer*>& consumer_list = m_consumer_list[input_type_input_list_pair.first];
+		InputType						input_type		= input_type_input_list_pair.first;
+		std::vector<Input>&				input_queue		= input_type_input_list_pair.second;
+		std::vector<InputConsumer*>&	consumer_list	= m_consumer_list[input_type_input_list_pair.first];
+
 		for (InputConsumer* consumer : consumer_list)
 		{
 			consumer->push(input_type, input_queue.data(), input_queue.size());

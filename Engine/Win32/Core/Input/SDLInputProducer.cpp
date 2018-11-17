@@ -30,16 +30,14 @@ void SDLInputProducer::fetchInputs()
 		InputType input_type = MapSDLEventToNeptuneInputType(sdl_event);
 
 		// Check if any consumers subscribe to InputType::ANY (get every input)
-		std::unordered_map<InputType, std::vector<Input>>::iterator it = m_input_list.find(InputType::ANY);
-		if (it != m_input_list.end())
-			it->second.push_back(std::move(static_cast<Input>(sdl_event)));
+		if (anySubscribersFor(InputType::ANY))
+			pushInput(InputType::ANY, static_cast<Input>(sdl_event));
 
 		// Check if anyone subscribes to a more specific input type
 		if (input_type != InputType::ANY)
 		{
-			it = m_input_list.find(input_type);
-			if (it != m_input_list.end())
-				it->second.push_back(std::move(static_cast<Input>(sdl_event)));
+			if (anySubscribersFor(input_type))
+				pushInput(input_type, static_cast<Input>(sdl_event));
 		}
 	}
 }
