@@ -298,9 +298,10 @@
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.cpp" />
     <ClCompile Include="..\..\..\Core\Graphics\DisplayDeviceInterface.cpp" />
     <ClCompile Include="..\..\..\Core\Input\EventSystemInterface.cpp" />
+    <ClCompile Include="..\..\..\Core\Input\InputProducerFactory.cpp" />
     <ClCompile Include="..\..\..\Core\Input\SDLInputProducer.cpp" />
+    <ClCompile Include="..\..\..\HighLevel\Camera\Controller\FPSController.cpp" />
     <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp" />
-    <ClCompile Include="..\..\..\HighLevel\Input\InputProducerFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
@@ -332,6 +333,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\EventSystemInterface.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputConsumer.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputProducer.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputProducerFactory.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputSensitiveController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputTypes.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Maintenance\CompilerHints.h" />
@@ -365,6 +367,7 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\TempFPSCameraController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\CubeFactory.h">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">false</ExcludedFromBuild>
@@ -405,7 +408,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\PlanSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\TriangleSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.h" />
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Input\InputProducerFactory.h" />
     <ClInclude Include="..\..\..\Core\Input\InputEvent.h" />
     <ClInclude Include="..\..\..\Core\Input\SDLInputProducer.h" />
     <ClInclude Include="..\..\..\Core\Input\PlatformSpecificInputTypes.h" />
