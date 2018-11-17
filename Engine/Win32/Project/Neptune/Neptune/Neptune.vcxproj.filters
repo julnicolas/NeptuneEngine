@@ -110,6 +110,12 @@
     <Filter Include="Engine\Multiplatform\Core\Profiling">
       <UniqueIdentifier>{1d3a8b62-f5d2-412b-9e55-7af1d8e38802}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Input">
+      <UniqueIdentifier>{c2cda2af-2bfe-466d-b745-e8cc83f04e1a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Win32\HighLevel\Input">
+      <UniqueIdentifier>{14bff661-6e9f-4542-9947-851c70399796}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -225,6 +231,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Input\SDLInputProducer.cpp">
       <Filter>Engine\Win32\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\HighLevel\Input\InputProducerFactory.cpp">
+      <Filter>Engine\Win32\HighLevel\Input</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -479,6 +488,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\Core\Input\PlatformSpecificInputTypes.h">
       <Filter>Engine\Win32\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Input\InputProducerFactory.h">
+      <Filter>Engine\Multiplatform\HighLevel\Input</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

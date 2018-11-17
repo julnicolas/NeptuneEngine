@@ -300,6 +300,7 @@
     <ClCompile Include="..\..\..\Core\Input\EventSystemInterface.cpp" />
     <ClCompile Include="..\..\..\Core\Input\SDLInputProducer.cpp" />
     <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp" />
+    <ClCompile Include="..\..\..\HighLevel\Input\InputProducerFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Debug\NeptuneDebug.h" />
@@ -404,6 +405,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\PlanSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\TriangleSpawner.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Spawners\ViewSpawner.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Input\InputProducerFactory.h" />
     <ClInclude Include="..\..\..\Core\Input\InputEvent.h" />
     <ClInclude Include="..\..\..\Core\Input\SDLInputProducer.h" />
     <ClInclude Include="..\..\..\Core\Input\PlatformSpecificInputTypes.h" />
