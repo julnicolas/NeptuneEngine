@@ -3,7 +3,7 @@
 #include "Graphics/DisplayDeviceInterface.h"
 #include "Graphics/Camera.h"
 #include "Graphics/Color.h"
-#include "Camera/Controller/TempFPSCameraController.h"
+#include "Input/InputConsumer.h"
 #include <vector>
 #include <functional>
 
@@ -11,6 +11,7 @@
 namespace Neptune
 {
 	class View;
+	class InputProducer;
 
 	class SimpleApp
 	{
@@ -74,7 +75,8 @@ namespace Neptune
 		bool											m_is_update_enabled;
 		Color											m_backgroundColor;
 		FrameCallBack									m_onFrameStartCallBack;
-		TempFPSCameraController							m_controller;
+		InputProducer*									m_inputProducer;
+		InputConsumer									m_inputConsumer;
 		Camera											m_camera;
 		std::function<bool(View*)>						m_onViewUpdateCallBack;
 		std::vector<View*>								m_views;
