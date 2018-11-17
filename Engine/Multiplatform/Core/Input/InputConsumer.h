@@ -22,7 +22,7 @@ namespace Neptune
 		/// Callback function summoned when update is called. A callback takes action on a specified input type.
 		/// \note Callback functions should have the following signature - void myFunc(const Input&)
 		/// Please, also note that it is possible to pass lambda-closures.
-		using InputCallback = std::function<void(Input&)>;
+		using InputCallback = std::function<void(const Input&)>;
 
 		/// Adds the current InputConsumer to the producer's consumer list.
 		/// A consumer callback must be added so that inputs don't pile up indefinitely.
