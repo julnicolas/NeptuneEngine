@@ -3,6 +3,10 @@
 #include "Graphics/View.h"
 #include "System/Type/Integers.h"
 #include "Input/EventSystemInterface.h"
+#include "Input/InputProducer.h"
+#include "Input/InputProducerFactory.h"
+#include "Camera/Controller/FPSController.h"
+#include <functional>
 
 using namespace Neptune;
 
@@ -11,7 +15,8 @@ SimpleApp::SimpleApp(u32 _windowWidth, u32 _windowHeight, const char* _appName, 
 	m_is_update_enabled(true),
 	m_onFrameStartCallBack([](FrameData){return true; }),
 	m_onFrameEndCallBack([](FrameData){return true; }),
-	m_onViewUpdateCallBack([](View*){return true; })
+	m_onViewUpdateCallBack([](View*){return true; }),
+	m_inputProducer(InputProducerFactory::CreateDefaultProducer())
 {
 	// Set app's name
 	const char* app_name = (_appName != nullptr) ? _appName : "Simple App";
@@ -23,6 +28,7 @@ SimpleApp::SimpleApp(u32 _windowWidth, u32 _windowHeight, const char* _appName, 
 	gcontext.m_frameBufferHeight = _windowHeight;
 	gcontext.m_enableReversedZ = true;
 
+	// GRAPHICAL SYSTEM INIT
 	// Init viewport
 	m_window = DisplayDeviceInterface::CreateWindow(app_name,
 													_windowWidth,
@@ -30,21 +36,24 @@ SimpleApp::SimpleApp(u32 _windowWidth, u32 _windowHeight, const char* _appName, 
 													DisplayDeviceInterface::MULTI_SAMPLE_ANTI_ALLIASING::X16,
 													_fullScreen);
 	m_context = DisplayDeviceInterface::CreateGraphicalContext(m_window, 3, 4, gcontext);
-	EventSystemInterface::StartUp();
-	m_controller.init();
 
 	// Set the right projection matrix
 	m_camera.updateProjection(Camera::ProjectionType::REVERSED_Z_PERSPECTIVE);
 	m_camera.setScreenRatio(static_cast<float>(_windowWidth) / _windowHeight);
-
-	// Creates a FPS view
-	m_controller.bindCamera(&m_camera);
 
 	// set background color
 	m_backgroundColor.r = 0.0f;
 	m_backgroundColor.g = 0.0f;
 	m_backgroundColor.b = 0.0f;
 	m_backgroundColor.a = 0.0f;
+
+	// INPUT SYSTEM INIT
+	// Init input system
+	EventSystemInterface::StartUp();
+
+	// Subscribe to input streams
+	// Note : A lambda could have been used if FPSController wouldn't need to save data between each call
+	m_inputConsumer.subscribe(m_inputProducer, InputType::KEYBOARD_PUSH, FPSController(m_camera));
 }
 
 void SimpleApp::loop()
@@ -63,7 +72,8 @@ void SimpleApp::loop()
 		onFrameStart();
 
 		// Update controls
-		m_controller.update();
+		m_inputProducer->update();
+		m_inputConsumer.update();
 
 		// Draw views
 		for (auto& v : m_views)
@@ -85,7 +95,8 @@ SimpleApp::~SimpleApp()
 	}
 	m_views.clear();
 
-	// Delete control manager
+	// Delete input managers
+	InputProducerFactory::DestructDefaultProducer(m_inputProducer);
 	EventSystemInterface::ShutDown();
 
 	// Delete viewport

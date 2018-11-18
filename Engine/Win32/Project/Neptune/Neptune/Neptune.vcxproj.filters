@@ -65,9 +65,6 @@
     <Filter Include="Engine\Multiplatform\HighLevel\Menu">
       <UniqueIdentifier>{39c83982-f285-463f-8eb5-578e0bfa0be6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Engine\Multiplatform\HighLevel\Camera\Controller">
-      <UniqueIdentifier>{9dfee89a-a489-40b6-817e-b886f071af9e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Engine\Multiplatform\HighLevel\Graphics">
       <UniqueIdentifier>{2ff97016-42fd-4ee7-8f1c-d60cb45f29bf}</UniqueIdentifier>
     </Filter>
@@ -110,6 +107,9 @@
     <Filter Include="Engine\Multiplatform\Core\Profiling">
       <UniqueIdentifier>{1d3a8b62-f5d2-412b-9e55-7af1d8e38802}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Camera\Controller">
+      <UniqueIdentifier>{9dfee89a-a489-40b6-817e-b886f071af9e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -129,9 +129,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.cpp">
-      <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
@@ -165,9 +162,6 @@
     </ClCompile>
     <ClCompile Include="..\..\..\Core\Input\EventSystemInterface.cpp">
       <Filter>Engine\Win32\Core\Input</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp">
-      <Filter>Engine\Win32\HighLevel\Camera\Controller</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\LightSource.cpp">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
@@ -216,6 +210,24 @@
     </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\SimpleApp.cpp">
       <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Input\InputProducer.cpp">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\Multiplatform\Core\Input\InputConsumer.cpp">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Input\SDLInputProducer.cpp">
+      <Filter>Engine\Win32\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\Core\Input\InputProducerFactory.cpp">
+      <Filter>Engine\Win32\Core\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\HighLevel\Camera\Controller\FPSController.cpp">
+      <Filter>Engine\Win32\HighLevel\Camera\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp">
+      <Filter>Engine\Win32\HighLevel\Camera\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -315,9 +327,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\ElementRenderer.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.h">
-      <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\PLYLoader.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
     </ClInclude>
@@ -371,9 +380,6 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Graphics\GraphicsProgram.h">
       <Filter>Engine\Multiplatform\Core\Graphics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\TempFPSCameraController.h">
-      <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\EventSystemInterface.h">
       <Filter>Engine\Multiplatform\Core\Input</Filter>
@@ -455,6 +461,30 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\SimpleApp.h">
       <Filter>Engine\Multiplatform\HighLevel\Application</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputProducer.h">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputConsumer.h">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputTypes.h">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Input\SDLInputProducer.h">
+      <Filter>Engine\Win32\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\Core\Input\PlatformSpecificInputTypes.h">
+      <Filter>Engine\Win32\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\Core\Input\InputProducerFactory.h">
+      <Filter>Engine\Multiplatform\Core\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSController.h">
+      <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\TempFPSCameraController.h">
+      <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
