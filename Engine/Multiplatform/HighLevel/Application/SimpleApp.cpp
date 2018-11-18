@@ -6,6 +6,7 @@
 #include "Input/InputProducer.h"
 #include "Input/InputProducerFactory.h"
 #include "Camera/Controller/FPSController.h"
+#include "Application/Controller/WindowController.h"
 #include <functional>
 
 using namespace Neptune;
@@ -48,12 +49,17 @@ SimpleApp::SimpleApp(u32 _windowWidth, u32 _windowHeight, const char* _appName, 
 	m_backgroundColor.a = 0.0f;
 
 	// INPUT SYSTEM INIT
+	// Init callbacks
+	std::function<void(const Input&)> close_window_callback = [this](const Input& _input){
+		WindowController::Close(_input, this);
+	};
+
 	// Init input system
 	EventSystemInterface::StartUp();
 
 	// Subscribe to input streams
-	// Note : A lambda could have been used if FPSController wouldn't need to save data between each call
 	m_inputConsumer.subscribe(m_inputProducer, InputType::KEYBOARD_PUSH, FPSController(m_camera));
+	m_inputConsumer.subscribe(m_inputProducer, InputType::WINDOW, close_window_callback);
 }
 
 void SimpleApp::loop()

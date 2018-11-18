@@ -14,6 +14,9 @@ static InputType MapSDLEventToNeptuneInputType(const SDL_Event& _event)
 	case SDL_KEYUP:
 		return InputType::KEYBOARD_RELEASE;
 
+	case SDL_WINDOWEVENT:
+		return InputType::WINDOW;
+
 	default:
 		return InputType::ANY;
 	}

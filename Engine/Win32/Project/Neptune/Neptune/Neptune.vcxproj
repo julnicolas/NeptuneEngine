@@ -292,6 +292,7 @@
     <ClCompile Include="..\..\..\Core\Input\EventSystemInterface.cpp" />
     <ClCompile Include="..\..\..\Core\Input\InputProducerFactory.cpp" />
     <ClCompile Include="..\..\..\Core\Input\SDLInputProducer.cpp" />
+    <ClCompile Include="..\..\..\HighLevel\Application\Controller\WindowController.cpp" />
     <ClCompile Include="..\..\..\HighLevel\Camera\Controller\FPSController.cpp" />
     <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp" />
   </ItemGroup>
@@ -350,6 +351,7 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\StdInterface\Updatable.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Hashing\FastHashFunctions.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Type\Integers.h" />
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\Controller\WindowController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\SimpleApp.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\TempFPSCameraController.h" />

@@ -110,6 +110,15 @@
     <Filter Include="Engine\Multiplatform\HighLevel\Camera\Controller">
       <UniqueIdentifier>{9dfee89a-a489-40b6-817e-b886f071af9e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Engine\Multiplatform\HighLevel\Application\Controller">
+      <UniqueIdentifier>{628d365f-0b95-4ebd-a3f1-81afa09fc3fd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Win32\HighLevel\Application">
+      <UniqueIdentifier>{c75e0c31-5e42-4173-ade5-95c809174f28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine\Win32\HighLevel\Application\Controller">
+      <UniqueIdentifier>{53ed3740-ec70-4328-b50c-53c770f86e22}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Graphics\Shader.cpp">
@@ -228,6 +237,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\HighLevel\Camera\Controller\TempFPSCameraController.cpp">
       <Filter>Engine\Win32\HighLevel\Camera\Controller</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\HighLevel\Application\Controller\WindowController.cpp">
+      <Filter>Engine\Win32\HighLevel\Application\Controller</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -485,6 +497,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\TempFPSCameraController.h">
       <Filter>Engine\Multiplatform\HighLevel\Camera\Controller</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\Controller\WindowController.h">
+      <Filter>Engine\Multiplatform\HighLevel\Application\Controller</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
