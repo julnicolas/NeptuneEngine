@@ -250,14 +250,6 @@
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Physics\Mechanics\Position.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\Core\Profiling\Chrono.cpp" />
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Application\SimpleApp.cpp" />
-    <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\CubeFactory.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">false</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">false</ExcludedFromBuild>
@@ -359,14 +351,6 @@
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Hashing\FastHashFunctions.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\Core\System\Type\Integers.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Application\SimpleApp.h" />
-    <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSCameraController.h">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Final|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClInclude>
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\FPSController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Camera\Controller\TempFPSCameraController.h" />
     <ClInclude Include="..\..\..\..\Multiplatform\HighLevel\Graphics\Factories\CubeFactory.h">

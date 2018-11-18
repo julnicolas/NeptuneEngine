@@ -11,11 +11,6 @@
 using namespace Neptune;
 
 
-// TOD: MUST BE MOVED SOMEWHERE ELSE
-
-/////////////////////////////////////////////////////////////////////////////
-
-
 SimpleApp::SimpleApp(u32 _windowWidth, u32 _windowHeight, const char* _appName, bool _fullScreen /* = false */):
 	m_is_update_enabled(true),
 	m_onFrameStartCallBack([](FrameData){return true; }),
@@ -53,17 +48,12 @@ SimpleApp::SimpleApp(u32 _windowWidth, u32 _windowHeight, const char* _appName, 
 	m_backgroundColor.a = 0.0f;
 
 	// INPUT SYSTEM INIT
-	// Set up control callbacks
-	// Bind the input system to the camera
-	std::function<void(const Input&)> camera_controller = [&](const Input& _input) {
-		FPSController::Move(_input, m_camera);
-	};
-
 	// Init input system
 	EventSystemInterface::StartUp();
 
 	// Subscribe to input streams
-	m_inputConsumer.subscribe(m_inputProducer, InputType::KEYBOARD_PUSH, camera_controller);
+	// Note : A lambda could have been used if FPSController wouldn't need to save data between each call
+	m_inputConsumer.subscribe(m_inputProducer, InputType::KEYBOARD_PUSH, FPSController(m_camera));
 }
 
 void SimpleApp::loop()
