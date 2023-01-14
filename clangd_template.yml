@@ -4,6 +4,9 @@ CompileFlags:
   - "-I{{PROJECT_DIRECTORY}}/Engine/Multiplatform/HighLevel"
   - "-I{{PROJECT_DIRECTORY}}/Engine/{{PLATFORM}}/Core"
   - "-I{{PROJECT_DIRECTORY}}/Engine/{{PLATFORM}}/HighLevel"
+{%- if PLATFORM in ['Linux', 'Win32'] %}
+  - "-I{{PROJECT_DIRECTORY}}/Engine/SharedSpecifics/GL_SDL2"
+{%- endif %}
 #Diagnostics:
 #  # Tweak Clang-Tidy checks.
 #  ClangTidy:
