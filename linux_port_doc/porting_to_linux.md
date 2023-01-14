@@ -1,6 +1,7 @@
-# List Of Dependencies
+# Porting to Linux
 
-## .so files to compile for linux based on Windows dependencies
+## List Of Dependencies
+### .so files to compile for linux based on Windows dependencies
 
 Note - glew is Windows specific so shouldn't be imported
 
@@ -32,3 +33,6 @@ Win32
 │       │       ├── SDL2.lib
 │       │       ├── SDL2main.lib
 │       │       └── SDL2test.lib
+
+## List of classes to implement
+
