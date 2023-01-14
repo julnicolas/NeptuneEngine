@@ -1,0 +1,13 @@
+CompileFlags:
+  Add: 
+  - "-I{{PROJECT_DIRECTORY}}/Engine/Multiplatform/Core"
+  - "-I{{PROJECT_DIRECTORY}}/Engine/Multiplatform/HighLevel"
+  - "-I{{PROJECT_DIRECTORY}}/Engine/{{PLATFORM}}/Core"
+  - "-I{{PROJECT_DIRECTORY}}/Engine/{{PLATFORM}}/HighLevel"
+#Diagnostics:
+#  # Tweak Clang-Tidy checks.
+#  ClangTidy:
+#    Add: [performance*, modernize*, readability*]
+#    Remove: [modernize-use-trailing-return-type]
+#    CheckOptions:
+#      readability-identifier-naming.VariableCase: CamelCase
