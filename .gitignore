@@ -1,0 +1,4 @@
+.clangd
+*.swp
+.vscode
+.python-version
