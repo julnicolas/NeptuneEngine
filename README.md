@@ -33,3 +33,21 @@ At this point of the development, the engine supports the following features :
 - An FPS-camera controller so that players can fly, run in generated 3D worlds
 - A simple App class to be able to start an app in a few lines of code
 - This class is event-driven
+
+## Contribute
+### Generate the .clangd file
+This project is compiled using clang. Jinja is used to generate the clang configuration.
+
+Install jinja with the following command:
+``` sh
+pip3 install jinja2-cli
+```
+
+Then, to Generate the `.clangd` file on linux type:
+```
+jinja2 -D PROJECT_DIRECTORY="$(pwd)" -D PLATFORM=Linux clangd_template.yml > .clangd
+```
+
+Here is the list of all necessary variables to generate the `.clangd` file:
+- `PROJECT_DIRECTORY`: this repository's root path (i.e: `$(pwd)` on linux)
+- `PLATFORM`: one of the supported platforms (`"Linux"` or `"Win32"`)
