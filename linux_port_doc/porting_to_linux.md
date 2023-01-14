@@ -35,4 +35,42 @@ Win32
 │       │       └── SDL2test.lib
 
 ## List of classes to implement
+This is the listing of all the files to be implemented for Linux.
+It is based on listing all Windows-specific files.
 
+Linux
+├── Core
+│   ├── Graphics
+│   │   └── DisplayDeviceInterface.cpp
+│   ├── Input
+│   │   ├── EventSystemInterface.cpp
+│   │   ├── InputEvent.h
+│   │   ├── InputProducerFactory.cpp
+│   │   ├── PlatformSpecificInputTypes.h
+│   │   ├── SDLInputProducer.cpp
+│   │   └── SDLInputProducer.h
+│   └── Math
+│       ├── Geometry
+│       │   └── TrigonometryImplementation.h
+│       └── Vectors
+│           ├── Mat2Implementation.h
+│           ├── Mat2x3Implementation.h
+│           ├── Mat2x4Implementation.h
+│           ├── Mat3Implementation.h
+│           ├── Mat3x2Implementation.h
+│           ├── Mat3x4Implementation.h
+│           ├── Mat4Implementation.h
+│           ├── Mat4x2Implementation.h
+│           ├── Mat4x3Implementation.h
+│           ├── MatrixTransformImplementation.h
+│           ├── Vec2Implementation.h
+│           ├── Vec3Implementation.h
+│           └── Vec4Implementation.h
+├── HighLevel
+│   ├── Application
+│   │   └── Controller
+│   │       └── WindowController.cpp
+│   └── Camera
+│       └── Controller
+│           ├── FPSController.cpp
+│           └── TempFPSCameraController.cpp
