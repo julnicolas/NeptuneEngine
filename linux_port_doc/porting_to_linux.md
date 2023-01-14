@@ -5,39 +5,42 @@
 
 Note - glew is Windows specific so shouldn't be imported
 
+```
 Win32
-│       ├── Bin
-│       │   ├── X64
-│       │   │   ├── assimp.dll
-│       │   │   ├── assimp.lib
-│       │   │   ├── Debug
-│       │   │   │   └── libktx.gl.lib
-│       │   │   ├── glew32.dll
-│       │   │   ├── glew32.lib
-│       │   │   ├── Release
-│       │   │   │   └── libktx.gl.lib
-│       │   │   ├── SDL2.dll
-│       │   │   ├── SDL2.lib
-│       │   │   ├── SDL2main.lib
-│       │   │   └── SDL2test.lib
-│       │   └── X86
-│       │       ├── assimp.dll
-│       │       ├── assimp.lib
-│       │       ├── Debug
-│       │       │   └── libktx.gl.lib
-│       │       ├── glew32.dll
-│       │       ├── glew32.lib
-│       │       ├── Release
-│       │       │   └── libktx.gl.lib
-│       │       ├── SDL2.dll
-│       │       ├── SDL2.lib
-│       │       ├── SDL2main.lib
-│       │       └── SDL2test.lib
+├── Bin
+│   ├── X64
+│   │   ├── assimp.dll
+│   │   ├── assimp.lib
+│   │   ├── Debug
+│   │   │   └── libktx.gl.lib
+│   │   ├── glew32.dll
+│   │   ├── glew32.lib
+│   │   ├── Release
+│   │   │   └── libktx.gl.lib
+│   │   ├── SDL2.dll
+│   │   ├── SDL2.lib
+│   │   ├── SDL2main.lib
+│   │   └── SDL2test.lib
+│   └── X86
+│       ├── assimp.dll
+│       ├── assimp.lib
+│       ├── Debug
+│       │   └── libktx.gl.lib
+│       ├── glew32.dll
+│       ├── glew32.lib
+│       ├── Release
+│       │   └── libktx.gl.lib
+│       ├── SDL2.dll
+│       ├── SDL2.lib
+│       ├── SDL2main.lib
+│       └── SDL2test.lib
+```
 
 ## List of classes to implement
 This is the listing of all the files to be implemented for Linux.
 It is based on listing all Windows-specific files.
 
+```
 Linux
 ├── Core
 │   ├── Graphics
@@ -74,3 +77,4 @@ Linux
 │       └── Controller
 │           ├── FPSController.cpp
 │           └── TempFPSCameraController.cpp
+```
