@@ -5,5 +5,7 @@
 #ifdef NEP_WINDOWS
 	#include <GL/glew.h>
 #else
+	// Declare texture related prototypes
+	#define GL_GLEXT_PROTOTYPES
 	#include <GL/gl.h>
 #endif
