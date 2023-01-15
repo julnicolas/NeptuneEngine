@@ -1,11 +1,13 @@
 CompileFlags:
   Add: 
+  - "-I{{PROJECT_DIRECTORY}}/Dependencies/All/Include"
+  - "-I{{PROJECT_DIRECTORY}}/Dependencies/{{PLATFORM}}/Include"
   - "-I{{PROJECT_DIRECTORY}}/Engine/Multiplatform/Core"
   - "-I{{PROJECT_DIRECTORY}}/Engine/Multiplatform/HighLevel"
   - "-I{{PROJECT_DIRECTORY}}/Engine/{{PLATFORM}}/Core"
   - "-I{{PROJECT_DIRECTORY}}/Engine/{{PLATFORM}}/HighLevel"
 {%- if PLATFORM in ['Linux', 'Win32'] %}
-  - "-I{{PROJECT_DIRECTORY}}/Engine/SharedSpecifics/GL_SDL2"
+  - "-I{{PROJECT_DIRECTORY}}/Engine/SharedSpecifics/GL_SDL2/Core"
 {%- endif %}
 #Diagnostics:
 #  # Tweak Clang-Tidy checks.
