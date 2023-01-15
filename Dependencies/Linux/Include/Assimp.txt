@@ -1,0 +1,8 @@
+Version:
+5.2.5
+
+Compiler:
+g++ v12.2.0
+
+Language:
+C++

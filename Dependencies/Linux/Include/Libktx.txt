@@ -1,2 +1,8 @@
 Version:
 v0.4.0
+
+Compiler:
+g++ v12.2.0
+
+Language:
+C++
