@@ -4,7 +4,7 @@
 namespace Neptune {
 	namespace GL_SDL2 {
 		bool InitContext() {
-			NEP_STATIC_ASSERT(true, "InitContext is not implemented");
+			NEP_LOG("WARNING - current InitContext is empty for Linux platforms");
 			return true;
 		}
 	}
