@@ -2,9 +2,9 @@
 #include "Graphics/VAOView.h"
 #include "Graphics/Texture.h"	// To get textures' standard storage location
 
-#include "Assimp/Importer.hpp"
-#include "Assimp/scene.h"
-#include "Assimp/postprocess.h"
+#include "assimp/Importer.hpp"
+#include "assimp/scene.h"
+#include "assimp/postprocess.h"
 #include <fstream>
 
 #include "Debug/NeptuneDebug.h"
