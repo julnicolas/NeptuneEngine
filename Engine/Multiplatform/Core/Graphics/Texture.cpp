@@ -26,16 +26,30 @@ static u32 LoadAndCreateKTXTexture(const char* _path, u32* _textureID, Texture::
 {
 	NEP_ASSERT(_textureID != nullptr && _metaData != nullptr); // Error
 	
-	u32             gl_target   = 0,      gl_error = 0;
-	KTX_dimensions  dimension   = {0};
-	u8              is_mipmaped = false;
+	u32 gl_target = 0;
+	u32 gl_error = 0;
+
+	// The texture object must be deallocated
+	ktxTexture*		texture 	= nullptr;
 	
 	// _textureID must be equal to 0
 	NEP_ASSERT( *_textureID == 0 ); // Error bad initialisation
-	KTX_error_code error = ktxLoadTextureN(_path, _textureID, &gl_target, &dimension, &is_mipmaped, &gl_error, nullptr, nullptr);
 	
-	if ( error != KTX_SUCCESS )
-	{
+	// Creates a texture object so that it can allocated on OpenGL's side later on
+	KTX_error_code error = ktxTexture_CreateFromNamedFile(_path, KTX_TEXTURE_CREATE_NO_FLAGS, &texture);
+	if ( error != KTX_SUCCESS ){
+		NEP_LOG("error - ktxTexture_CreateFromNamedFile couldn't load %s ; error - %s", _path, ktxErrorString(error));
+		NEP_ASSERT(false);
+
+		return LOAD_KTX_ERROR;
+	}
+
+	// Generates a texture ID for the texture and sets its glTarget (TEXTURE2D...)
+	// then it uploads the texture data to openGL.
+	//
+	// From this point on the texture can be activated and bound
+	error = ktxTexture_GLUpload(texture, _textureID, &gl_target, &gl_error);
+	if (error != KTX_SUCCESS){
 		NEP_LOG("Error in LoadKTX : Opengl error code %u", gl_error);
 		NEP_ASSERT(false);
 
@@ -43,9 +57,9 @@ static u32 LoadAndCreateKTXTexture(const char* _path, u32* _textureID, Texture::
 	}
 
 	// Get texture dimension
-	_metaData->m_width  = dimension.width;
-	_metaData->m_height = dimension.height;
-	_metaData->m_depth  = dimension.depth;
+	_metaData->m_width  = texture->baseWidth;
+	_metaData->m_height = texture->baseHeight;
+	_metaData->m_depth  = texture->baseDepth;
 
 	// Get texture type
 	_metaData->m_type = GLTextureCallsMapping::MapTextureType(gl_target);
