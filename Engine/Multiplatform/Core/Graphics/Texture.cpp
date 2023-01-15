@@ -30,7 +30,7 @@ static u32 LoadAndCreateKTXTexture(const char* _path, u32* _textureID, Texture::
 	u32 gl_error = 0;
 
 	// The texture object must be deallocated
-	ktxTexture*		texture 	= nullptr;
+	ktxTexture* texture	= nullptr;
 	
 	// _textureID must be equal to 0
 	NEP_ASSERT( *_textureID == 0 ); // Error bad initialisation
@@ -63,6 +63,9 @@ static u32 LoadAndCreateKTXTexture(const char* _path, u32* _textureID, Texture::
 
 	// Get texture type
 	_metaData->m_type = GLTextureCallsMapping::MapTextureType(gl_target);
+
+	// Delete ktx texture from Neptune's Memory (still present in OpenGL's memory)
+	ktxTexture_Destroy(texture);
 
 	return gl_target;
 }
@@ -256,14 +259,14 @@ bool Texture::init()
 		std::string extension = GetExtension(m_path);
 
 		// LOAD TEXTURE DATA
-		if ( extension == ".ktx" )		// If it's a texture format
+		if ( extension == ".ktx" ) // If it's a texture format
 		{
 			u32 texture_target = LoadAndCreateKTXTexture(m_path, &m_name, &m_metaData);
 
 			NEP_ASSERT_ERR_MSG(texture_target != LOAD_KTX_ERROR, "Error, Texture couldn't be loaded. Path: %s", m_path);
 			return texture_target != LOAD_KTX_ERROR;
 		}
-		else							// If it's an image format
+		else // If it's an image format
 		{
 			return NEP_LoadImage(m_path, m_name, m_metaData);
 		}
